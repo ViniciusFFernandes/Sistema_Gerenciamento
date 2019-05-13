@@ -1,0 +1,51 @@
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARG</title>
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script type="text/javascript">
+      window.setTimeout(function(){
+         document.getElementById("botao_alerta").click();
+      }, 3000);
+
+    </script>
+
+  </head>
+
+  <body style="margin-top: 20px;">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 col-sm-1"></div>
+          <div class="col-md-4 col-sm-10">
+            <div class="panel panel-default" style="border: solid 2px #828282; ">
+              <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
+                <h2 class="panel-title">Criar constante (Login)</h2>
+              </div>
+              <div class="panel-body">
+                <form action="criaConstante.php" method="POST">
+                  <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha">
+                    <input type="hidden" class="form-control" id="operacao" name="operacao" value="logar">
+                  </div>
+                  <center><button type="submit" class="btn btn-success" >Logar</button></center>
+                  <p style="margin: 0px;">&nbsp;</p>
+                  <!-- <center><a href="cadastro.php"><button type="button" class="btn btn-primary" >Cadastra-se</button></a></center> -->
+                </form>
+              </div>
+          </div>
+        <div class="col-md-4 col-sm-1"></div>
+      </div>
+  </div>
+    </div>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="../../js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+.Obs_claro{
+  color: #c8c8c8;
+  font-size: 12px;
+  font-family: cursive;
+}
+
+.campoMoney{
+  direction: rtl;
+}
+
+.divChatPrincipal{
+    position:fixed;
+    bottom: 50%;
+    right: 0;
+    border: 1px solid black;
+    border-right: 0;
+    border-radius: 6px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    text-align: center;
+    padding: 3px 6px;
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+
+.chatPrincipalUsers{
+    position:fixed;
+    display:none;
+    right: 0;
+    bottom: 0;
+    height: 70%;
+    width: 8cm;
+    background-color: #FFFFFF;
+    border: 1px solid black;
+    border-radius: 6px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.userName{
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.userName:hover{
+    font-weight: bold;
+}
+
+.fechaDiv{
+    cursor: pointer;
+    border-bottom: 1px solid black;
+    background-color: #efefef;
+    padding: 5px;
+    border-radius: 6px;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.msgRemet{
+  float:left;
+  margin: 2px;
+  width: 80%;
+  padding: 2px;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+.msgDesti{
+  float:right;
+  margin: 2px;
+  width: 80%;
+  padding: 2px;
+  border: 1px solid black;
+  border-radius: 6px;
+}
+.inputMensage{
+  min-width: 88%;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 1px;
+  border: 1px solid black;
+}
+
+.divMensagem{
+    width: 100%;
+    min-height:88%;
+    height:88%;
+    max-height:88%;
+    overflow:auto; 
+}
+
+body{
+  overflow: hidden;
+}

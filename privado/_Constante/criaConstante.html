@@ -1,0 +1,59 @@
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARG</title>
+
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/padrao.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  </head>
+
+  <body style="margin-top: 20px;">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 col-sm-1"></div>
+          <div class="col-md-4 col-sm-10">
+            <div class="panel panel-default" style="border: solid 2px #828282; ">
+              <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
+                <h2 class="panel-title">Criar Constante</h2>
+              </div>
+              <div class="panel-body">
+                <form action="criaConstante_grava.php" method="POST">
+                  <div class="form-group">
+                    <label for="servidor">Servidor</label>
+                    <input type="text" class="form-control" id="servidor" name="servidor" placeholder="localhost" autofocus>
+                  </div>
+                  <div class="form-group">
+                    <label for="porta">Porta</label>
+                    <input type="text" class="form-control" id="porta" name="porta" placeholder="3306">
+                  </div>
+                  <div class="form-group">
+                    <label for="usuario">Usuario</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="root">
+                  </div>
+                  <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Sem senha">
+                  </div>
+                  <div class="form-group">
+                    <label for="nomeBase">Banco de dados</label>
+                    <input type="text" class="form-control" id="nomeBase" name="nomeBase" placeholder="DB_Base">
+                  </div>
+                  <center><button type="submit" class="btn btn-success" >Logar</button></center>
+                  <span class="Obs_claro" >*Dados usados para criar o banco de dados <br> *Campos em branco assumirão um valor padrão</span>
+                </form>
+              </div>
+          </div>
+        <div class="col-md-4 col-sm-1"></div>
+      </div>
+  </div>
+    </div>
+
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="../../js/bootstrap.min.js"></script>
+  </body>
+</html>

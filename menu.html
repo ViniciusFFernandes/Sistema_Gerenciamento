@@ -1,0 +1,30 @@
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a  href="inicio.php"><img src="../imagens/logo.jpg" class="img-rounded" width='60px' height='50px' style="padding-right: 5px;"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li ##inicio##><a href="../_Inicio/inicio.php">Inicio</a></li>
+            <li ##cadastros##><a href="../_Cadastros/cadastros_index.php">Cadastros</a></li>
+            <li ##lancamentos##><a href="../_Lancamentos/lancamentos_index.php">Lançamentos</a></li>
+            <li ##relatorios##><a href="../_Relatorios/relatorios_index.php">Relatorios</a></li>
+            <li ##QuemSomos##><a href="../_QuemSomos/quemSomos.php">Quem Somos</a></li>
+          </ul>
+          <form class="navbar-form navbar-right" action="../_BD/conecta_login.php" method="post">
+            <div align="Right">
+              <span style='cursor: default;'><img src='../icones/pessoas.png' width='20px' height='20px'> ##NomeUsuario## &nbsp;&nbsp;</span>  
+              <input type="submit" name="operacao" class="btn btn-default" value="Sair">
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>

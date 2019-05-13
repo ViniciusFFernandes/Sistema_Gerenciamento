@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   	<title>Trabalho de desenvolvimento web</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/padrao.css" rel="stylesheet">
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      function direciona(link){
+        $(location).attr('href', link);
+      }
+    </script>
+  </head>
+  <style>
+    #divLink:hover{
+      background-color: #e2e2e2;
+    }
+
+    #divLink{
+      padding: 30px;
+      cursor: pointer;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+  </style>
+  <body style="overflow: hidden;">
+
+    <div>
+     ##Menu##
+    </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('cadastro_pessoas.php')">
+            <img src="../icones/cliente.png"> &nbsp; Pessoas
+        </div> 
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('cadastro_produtos.php')">
+            <img src="../icones/produto.png"> &nbsp;Produtos
+        </div> 
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('cadastro_cidades.php')">
+            <img src="../icones/cidade.png"> &nbsp; Cidades
+        </div> 
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('cadastro_estados.php')">
+            <img src="../icones/estado.png"> &nbsp; Estados
+        </div> 
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('cadastro_unidades.php')">
+            <img src="../icones/unidade.png"> &nbsp; Unidades
+        </div> 
+        <div class="col-md-3 col-sm-3 col-xs-12" id="divLink" onclick="direciona('?????.php')">
+            <img src="../icones/interrogacao.png"> &nbsp; ??????
+        </div>
+    </div>
+</div>
+  </body>
+</html>
+
