@@ -11,6 +11,8 @@
 		$_POST['where'] = str_replace("##valor##", $_POST['consulta'], $_POST['where']);
 		$sql .= $_POST['where'];
 	}
+	//
+	$sql .= " LIMIT {$_POST['qteLimit']}";
 	//echo $sql;
 	//
 	$dados = $db->executaSQL($sql);

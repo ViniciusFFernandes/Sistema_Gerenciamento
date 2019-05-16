@@ -42,7 +42,7 @@
 		}
 
 		//função antiga para fazer login
-		public function buscarUsuario($login = '', $id = ''){
+		public function buscarUsuario($login){
 			if (empty($login) && empty($id)) {
 				return;
 			}
@@ -80,6 +80,31 @@
 			}
 			//echo $sql;
 			return $this->executaSQL($sql);
+		}
+
+		public function retornaUmReg($where="", $campos="*"){
+			$sql = "SELECT " . $campos . " FROM " . $this->tabela;
+			if($where != ""){
+				$sql = $sql . " WHERE " . $where;
+			}
+			//echo $sql;
+			$sql = trim($sql);
+			//echo $sql;
+			try{
+				$this->conexao->beginTransaction();
+				$resultado=$this->conexao->query($sql);
+				$this->conexao->commit();
+			}
+			catch(PDOException $e) {
+				$this->conexao->rollBack();
+				$resultado = NULL;
+				$mensagem  = $e->getMessage();
+				file_put_contents("erro.log", $mensagem);
+			}
+			 if ($resultado){
+			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
+			  }
+			 return $dados;
 		}
 
     public function executaSQL($sql){

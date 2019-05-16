@@ -1,7 +1,7 @@
 <?php
 	class autoComplete{
 
-		public function gerar($inputConsulta, $inputId, $tabela, $campoMostra, $campoId, $campoValor = '', $where = ''){
+		public function gerar($inputConsulta, $inputId, $tabela, $campoMostra, $campoId, $campoValor = '', $where = '', $qteLimite = 10){
 			//Caso esteja em branco vai setar o campoMostra
 			if(empty($campoValor)){
 				$campoValor = $campoMostra;
@@ -29,6 +29,7 @@
 					                      campoValor: '{$campoValor}',
 					                      tabela: '{$tabela}',
 					                      where: '{$where}',
+					                      qteLimit : {$qteLimite},
 					                      consulta:  $('#{$inputConsulta}').val()
 					                    },
 					                    success: function(data) {

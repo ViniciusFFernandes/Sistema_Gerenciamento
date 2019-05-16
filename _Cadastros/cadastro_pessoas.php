@@ -2,12 +2,11 @@
   include_once("../_BD/conecta_login.php");
   include_once("../Class/autoComplete.class.php");
   //
-  $pagina = "cadastros.php";
-  //
   //Operações do banco de dados
   if(!empty($_REQUEST['idpessoas'])){
-    $db->setTabela("pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades)");
-    $reg = $db->buscarUsuario('', $_REQUEST['idpessoas']);
+    $db->setTabela("pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)");
+    $where = "idpessoas = {$_REQUEST['idpessoas']}";
+    $reg = $db->retornaUmReg($where);
   }
   //
   //Gera o autoComplete 
@@ -26,6 +25,10 @@
     $checkCliente = $util->defineChecked($reg['pess_cliente']);
     $checkFornecedor = $util->defineChecked($reg['pess_fornecedor']);
     $checkFuncionario = $util->defineChecked($reg['pess_funcionario']);
+    //
+    if(!empty($reg['cid_nome'])){
+      $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
+    }
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -48,7 +51,7 @@
   $html = str_replace("##pess_rg##", $reg['pess_rg'], $html);
   $html = str_replace("##pess_endereco##", $reg['pess_endereco'], $html);
   $html = str_replace("##pess_endereco_numero##", $reg['pess_endereco_numero'], $html);
-  $html = str_replace("##pess_cidades##", $reg['cid_nome'], $html);
+  $html = str_replace("##pess_cidades##", $cidade, $html);
   $html = str_replace("##pess_idcidades##", $reg['idcidades'], $html);
   $html = str_replace("##pess_bairro##", $reg['pess_bairro'], $html);
   $html = str_replace("##pess_cep##", $reg['pess_cep'], $html);

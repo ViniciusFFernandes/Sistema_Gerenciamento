@@ -1,9 +1,10 @@
 <?php
 include_once("../_BD/conecta_login.php");
+include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
   if ($_POST['operacao'] == "buscaPessoas") {
-    $db->setTabela("pessoas");
+    $db->setTabela("pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)");
     //
     if ($_POST['pesquisa'] == "") {
        $res = $db->consultar();
@@ -13,7 +14,8 @@ include_once("../_BD/conecta_login.php");
                   OR pess_cidade LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
        $res = $db->consultar($where);
     }
-    $util->geraTabelaPes($res, $db);
+    $tabelas = new Tabelas();
+    $tabelas->geraTabelaPes($res, $db);
     exit;
   }
 
@@ -37,7 +39,9 @@ include_once("../_BD/conecta_login.php");
     $db->setTabela("pessoas_numeros");
     $where = " pnum_idpessoas = " . $_POST['idpessoas'];
     $res = $db->consultar($where);
-    $util->geraTabelaTel($res);
+    //
+    $tabelas = new Tabelas();
+    $tabelas->geraTabelaTel($res);
     exit;
   }
 
@@ -83,7 +87,7 @@ include_once("../_BD/conecta_login.php");
   		$db->alterar($where, $dados);
   		$_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
       $_SESSION['tipoMsg'] = "info";
-      header('location: /cadastro_pessoas.php?idpessoas=' . $_POST['idpessoas']);
+      header('location: ../_Cadastros/cadastro_pessoas.php?idpessoas=' . $_POST['idpessoas']);
   		exit;
     }else{
   		$db->gravar($dados);

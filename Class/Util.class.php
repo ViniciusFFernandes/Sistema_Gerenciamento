@@ -4,20 +4,34 @@ class Util{
 
 	public function sgr($string){
 		if ($string != "") {
-          $string = "'" . $string . "'";
-        }else {
-          return "NULL";
+          	return "'" . $string . "'";
+        }else{
+          	return "NULL";
         }
-        return $string;
 	}
 	
 	public function pgr($string){
 		if ($string != "") {
-          $string = "(" . $string . ")";
-        }else {
-          return "NULL";
+          	return "(" . $string . ")";
+        }else{
+          	return "NULL";
         }
-        return $string;
+	}
+
+	public function igr($num){
+		if ($num != "") {
+         	return intval($num);
+        }else{
+          	return "NULL";
+        }
+	}
+
+	public function vgr($num){
+		if ($num != "") {
+         	return floatval($num);
+        }else{
+          	return "NULL";
+        }
 	}
 
 	public function dgr($string, $incluiHora = ""){
@@ -115,29 +129,6 @@ class Util{
 		  }
 	  	}
 	  echo "</table>";
-	}
-
-	public function geraTabelaPes($res, $db){
-		 $linhaColorida = false;
-	    echo "<div style='max-height: 250px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
-	    //echo $res;
-	    foreach ($res as $reg) {
-	      echo '<tr';
-				if ($linhaColorida) {echo " class='info'";}
-				echo ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasPessoas">
-	        <td width="6%">' . $reg['idpessoas'] . '</td>
-	        <td width="30%">' . $reg['pess_nome'] . '</td>
-	        <td width="28%">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
-	        <td>' . $reg['pess_endereco'] . '</td>
-	        <td>' . $reg['pess_cidade'] . '</td>
-	      </tr>';
-			if ($linhaColorida) {
-		    $linhaColorida = false;
-		  }else {
-		    $linhaColorida = true;
-		  }
-	  }
-	  echo "</table></div>";
 	}
 
 	public function comboboxSql($campoMostra, $campoValue, $where, $db, $tabela){
