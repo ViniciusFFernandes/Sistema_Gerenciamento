@@ -138,8 +138,8 @@
         $("#resultBusca").html("");
       }
 
-      function abrePessoa(idpessoas){
-        var siteRetorno = 'cadastro_pessoas.php?idpessoas=' + idpessoas;
+      function abrePessoa(id){
+        var siteRetorno = 'cadastro_pessoas.php?idpessoas=' + id;
         $(location).attr('href', siteRetorno);
       }
 

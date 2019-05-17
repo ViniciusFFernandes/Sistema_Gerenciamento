@@ -49,7 +49,7 @@ function zeraBusca(){
   $("#resultBusca").html("");
 }
 
-function abreCidades(idpessoas){
-  var siteRetorno = 'cadastro_cidades.php?idcidades=' + idpessoas;
+function abreCidades(id){
+  var siteRetorno = 'cadastro_cidades.php?idcidades=' + id;
   $(location).attr('href', siteRetorno);
 }

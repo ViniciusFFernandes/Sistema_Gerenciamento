@@ -15,6 +15,12 @@ include_once("../Class/Tabelas.class.php");
        $res = $db->consultar($where);
     }
     $tabelas = new Tabelas();
+    //
+    unset($dados);
+    $dados['idcidades'] = "width='6%'";
+    $dados['cid_nome'] = "";
+    $dados['est_uf'] = "width='10%'";
+    //
     $tabelas->geraTabelaCid($res, $db);
     exit;
   }

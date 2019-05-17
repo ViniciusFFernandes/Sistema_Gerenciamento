@@ -18,7 +18,7 @@
     <script src="../js/_Cadastros/unidades.js"></script>
     <script>##autoComplete_Estados##</script>
     <style>
-      #linhasUnidades:hover {color: #4169E1;font-weight: bold;}
+      #linhasBusca:hover {color: #4169E1;font-weight: bold;}
     </style>
   </head>
   <body>
@@ -48,11 +48,11 @@
             <div class="row">
               <div class="col-md-6 col-sm-12">
                 <label for="Nome">Nome</label>
-                <input type="text" class="form-control" id="est_nome" name="est_nome" value="##est_nome##" placeholder="Nome" autofocus >
+                <input type="text" class="form-control" id="uni_nome" name="uni_nome" value="##uni_nome##" placeholder="Nome" autofocus maxlength="100">
               </div>
               <div class="col-md-6 col-sm-12">
                 <label for="Sigla">Sigla</label>
-                <input type="text" class="form-control" id="est_sigla" name="est_sigla" value="##est_sigla##" placeholder="sigla">
+                <input type="text" class="form-control" id="uni_sigla" name="uni_sigla" value="##uni_sigla##" placeholder="Sigla" maxlength="4">
               </div>
             </div>
             <br>
@@ -61,7 +61,7 @@
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
                 <center>
                   <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
-                  <button type="button" onclick="novaEstado()" class="btn btn-info">Novo</button>
+                  <button type="button" onclick="novaUnidade()" class="btn btn-info">Novo</button>
                   ##btnExcluir##
                 </center>
               </div>

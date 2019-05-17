@@ -27,14 +27,21 @@ class Tabelas{
 	    echo "<div style='max-height: 350px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
 	    //echo $res;
 	    foreach ($res as $reg) {
+	    	//
+	    	//Monta o nome da cidade com a sigla do estado
+	    	$cidadeEstado = '';
+	    	if(!empty($reg['idcidades'])){
+	    		$cidadeEstado = $reg['cid_nome'] . " - " . $reg['est_uf'];
+	    	}
+	    	//
 	      echo '<tr';
 				if ($linhaColorida) {echo " class='info'";}
-				echo ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasPessoas">
+				echo ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasBusca">
 	        <td width="6%">' . $reg['idpessoas'] . '</td>
 	        <td width="25%">' . $reg['pess_nome'] . '</td>
 	        <td width="25%">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
 	        <td>' . $reg['pess_endereco'] . '</td>
-	        <td>' . $reg['cid_nome'] . " - " . $reg['est_uf'] . '</td>
+	        <td>' . $cidadeEstado . '</td>
 	      </tr>';
 			if ($linhaColorida) {
 		    $linhaColorida = false;
@@ -44,26 +51,36 @@ class Tabelas{
 	  }
 	  echo "</table></div>";
 	}
-
-	public function geraTabelaCid($res, $db){
-		 $linhaColorida = false;
-	    echo "<div style='max-height: 250px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
-	    //echo $res;
-	    foreach ($res as $reg) {
-	      echo '<tr';
-				if ($linhaColorida) {echo " class='info'";}
-				echo ' onclick="abreCidades(' . $reg['idcidades'] . ')" style="cursor:pointer" id="linhasCidades">
-	        <td width="6%">' . $reg['idcidades'] . '</td>
-	        <td>' . $reg['cid_nome'] . '</td>
-	        <td>' . $reg['est_uf'] . '</td>
-	      </tr>';
+	
+	public function geraTabelaBusca($res, $db, $colunas){
+		$linhaColorida = false;
+	    $tabela = "<div style='max-height: 250px; overflow: auto;'>";
+	    $tabela .= "<table class='table' style='margin-top: 3px'>";
+		foreach ($res as $reg) {
+			//
+			//Define se a linha vai ser de outra cor
+			$class = '';
 			if ($linhaColorida) {
-		    $linhaColorida = false;
-		  }else {
-		    $linhaColorida = true;
-		  }
-	  }
-	  echo "</table></div>";
+				$class = "class='info'";
+				$linhaColorida = false;
+			}else{
+				$linhaColorida = true;
+			}
+			//
+			$primeiraLinha = true;
+			foreach ($colunas as $coluna => $tamanho) {
+				if($primeiraLinha){
+					$tabela .= "<tr {$class} onclick='abreUnidades({$reg[$coluna]})' style='cursor:pointer' id='linhasBusca'>";
+					$primeiraLinha = false;
+				}
+				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";
+			}
+			$tabela .- "</tr>";
+		}
+		$tabela .= "</table>";
+		$tabela .= "</div>";
+		//
+		echo $tabela;
 	}
 }
 ?>

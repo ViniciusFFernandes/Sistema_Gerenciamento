@@ -1,3 +1,6 @@
+--
+-- Criação da Tabela Pessoas e Insert de Valores Padrões
+--
 CREATE TABLE IF NOT EXISTS `pessoas` (
   `idpessoas` int(11) NOT NULL AUTO_INCREMENT,
   `pess_nome` varchar(255) COLLATE utf8_bin NOT NULL,
@@ -17,6 +20,12 @@ CREATE TABLE IF NOT EXISTS `pessoas` (
   PRIMARY KEY (idpessoas)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`) VALUES
+('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM');
+
+--
+-- Criação da Tabela Pessoas
+--
 CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
   `idpessoas_numeros` int(11) NOT NULL AUTO_INCREMENT,
   `pnum_idpessoas` int(11) NOT NULL,
@@ -25,18 +34,41 @@ CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
   PRIMARY KEY (idpessoas_numeros)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-CREATE TABLE IF NOT EXISTS `folhaponto` (
-  `idfolhaPonto` int(11) NOT NULL AUTO_INCREMENT,
-  `fopo_idpessoas` int(11) NOT NULL,
-  `fopo_idoperador` int(11) NOT NULL,
-  `fopo_entrada` datetime NOT NULL,
-  `fopo_saida` datetime NOT NULL,
-  PRIMARY KEY (idfolhaPonto)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+--
+-- Criação da Tabela Folha de Ponto
+--
+-- Desabilitado ate que começe as mudanças na folha de ponto
+-- 
+-- CREATE TABLE IF NOT EXISTS `folhaponto` (
+--   `idfolhaPonto` int(11) NOT NULL AUTO_INCREMENT,
+--   `fopo_idpessoas` int(11) NOT NULL,
+--   `fopo_idoperador` int(11) NOT NULL,
+--   `fopo_entrada` datetime NOT NULL,
+--   `fopo_saida` datetime NOT NULL,
+--   PRIMARY KEY (idfolhaPonto)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`) VALUES
-('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM');
+--
+-- Criação da Tabela Unidades E Insert de Valores Padrões
+--
+CREATE TABLE IF NOT EXISTS `unidades` (
+  `idunidades` int(11) NOT NULL AUTO_INCREMENT,
+  `uni_nome` varchar(100) NOT NULL,
+  `uni_sigla` varchar(4) NOT NULL,
+  PRIMARY KEY (idunidades)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+INSERT INTO `unidades` (`uni_nome`, `uni_sigla`)VALUES
+('Toneladas', 't'),
+('Quilogramas', 'kg'),
+('Gramas', 'g'),
+('Metros', 'm'),
+('Centimetros', 'cm'),
+('Milimetros', 'mm');
+
+-- 
+-- Criação das Tableas Cidades e Estads e Insert de Valores Padrões
+-- 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
