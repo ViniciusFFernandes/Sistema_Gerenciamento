@@ -4,9 +4,10 @@
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['idunidades'])){
-    $db->setTabela("unidades");
-    $where = "idunidades = {$_REQUEST['idunidades']}";
-    $reg = $db->retornaUmReg($where);
+    $sql = "SELECT * 
+            FROM unidades 
+            WHERE idunidades = {$_REQUEST['idunidades']}";
+    $reg = $db->retornaUmReg($sql);
   }
   //
   //Monta variaveis de exibição

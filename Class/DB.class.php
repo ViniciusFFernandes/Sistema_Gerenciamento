@@ -73,20 +73,12 @@
 			return $resultado[$nomeID];
 		}
 
-		public function consultar($where="", $campos="*"){
-			$sql = "SELECT " . $campos . " FROM " . $this->tabela;
-			if($where != ""){
-				$sql = $sql . " WHERE " . $where;
-			}
+		public function consultar($sql){
 			//echo $sql;
 			return $this->executaSQL($sql);
 		}
 
-		public function retornaUmReg($where="", $campos="*"){
-			$sql = "SELECT " . $campos . " FROM " . $this->tabela;
-			if($where != ""){
-				$sql = $sql . " WHERE " . $where;
-			}
+		public function retornaUmReg($sql){
 			//echo $sql;
 			$sql = trim($sql);
 			//echo $sql;
@@ -142,8 +134,7 @@
 			return $this->executaSQL($query);
 		 }
 
-		 public function alterar($where = null,
-								  $dados = null){
+		 public function alterar($where = null, $dados = null){
 		  if(!is_null($where)){
 			  $valores = array();
 			  foreach($dados as $key=>$value){

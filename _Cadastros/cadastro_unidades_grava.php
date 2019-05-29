@@ -4,16 +4,16 @@ include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
   if ($_POST['operacao'] == "buscaUnidades") {
+    $sql = "SELECT * FROM unidades";
     $db->setTabela("unidades");
     //
-    if ($_POST['pesquisa'] == "") {
-       $res = $db->consultar();
-    }else{
-      $where = "  idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+    if ($_POST['pesquisa'] != "") {
+      $sql .= "  idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR uni_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR uni_sigla LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
-       $res = $db->consultar($where);
     }
+    //
+    $res = $db->consultar($sql);
     $tabelas = new Tabelas();
     //
     unset($dados);
@@ -21,7 +21,7 @@ include_once("../Class/Tabelas.class.php");
     $dados['uni_nome'] = "";
     $dados['uni_sigla'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados);
+    $tabelas->geraTabelaBusca($res, $db, $dados, "abreUnidades");
     exit;
   }
 

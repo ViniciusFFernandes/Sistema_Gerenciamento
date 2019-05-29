@@ -4,16 +4,17 @@ include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
   if ($_POST['operacao'] == "buscaCidades") {
-    $db->setTabela("cidades LEFT JOIN estados ON (cid_idestados = idestados)");
-    //
-    if ($_POST['pesquisa'] == "") {
-       $res = $db->consultar();
-    }else{
-      $where = "  idcidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+    $sql = "SELECT * 
+            FROM cidades 
+              LEFT JOIN estados ON (cid_idestados = idestados)";
+    
+    if ($_POST['pesquisa'] != "") {
+        $sql .= "  idcidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR cid_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR est_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
-       $res = $db->consultar($where);
     }
+    //
+    $res = $db->consultar($sql);
     $tabelas = new Tabelas();
     //
     unset($dados);
@@ -21,7 +22,7 @@ include_once("../Class/Tabelas.class.php");
     $dados['cid_nome'] = "";
     $dados['est_uf'] = "width='10%'";
     //
-    $tabelas->geraTabelaCid($res, $db);
+    $tabelas->geraTabelaBusca($res, $db, $dados, "abreCidades");
     exit;
   }
 
@@ -32,10 +33,10 @@ include_once("../Class/Tabelas.class.php");
 
   if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("cidades");
-
+    //
   	$dados['cid_nome'] 			= $util->sgr($_POST['cid_nome']);
   	$dados['cid_idestados'] = $util->igr($_POST['cid_idestados']);
-
+    //
   	if ($_POST['idcidades'] > 0) {
   		$where = " idcidades = " . $_POST['idcidades'];
   		$db->alterar($where, $dados);

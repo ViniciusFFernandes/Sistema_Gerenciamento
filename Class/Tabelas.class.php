@@ -52,7 +52,7 @@ class Tabelas{
 	  echo "</table></div>";
 	}
 	
-	public function geraTabelaBusca($res, $db, $colunas){
+	public function geraTabelaBusca($res, $db, $colunas, $functionAbreReg){
 		$linhaColorida = false;
 	    $tabela = "<div style='max-height: 250px; overflow: auto;'>";
 	    $tabela .= "<table class='table' style='margin-top: 3px'>";
@@ -70,7 +70,7 @@ class Tabelas{
 			$primeiraLinha = true;
 			foreach ($colunas as $coluna => $tamanho) {
 				if($primeiraLinha){
-					$tabela .= "<tr {$class} onclick='abreUnidades({$reg[$coluna]})' style='cursor:pointer' id='linhasBusca'>";
+					$tabela .= "<tr {$class} onclick='{$functionAbreReg}({$reg[$coluna]})' style='cursor:pointer' id='linhasBusca'>";
 					$primeiraLinha = false;
 				}
 				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";

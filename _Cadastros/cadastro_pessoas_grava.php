@@ -4,16 +4,17 @@ include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
   if ($_POST['operacao'] == "buscaPessoas") {
-    $db->setTabela("pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)");
+    $sql = "SELECT * 
+            FROM pessoas 
+              LEFT JOIN cidades ON (pess_idcidades = idcidades) 
+              LEFT JOIN estados ON (cid_idestados = idestados)";
     //
-    if ($_POST['pesquisa'] == "") {
-       $res = $db->consultar();
-    }else{
-      $where = "  idpessoas LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
-                  OR pess_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
-                  OR pess_cidade LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
-       $res = $db->consultar($where);
+    if ($_POST['pesquisa'] != "") {
+      $sql .= " WHERE idpessoas LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+                OR pess_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+                OR pess_cidade LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
     }
+    $res = $db->consultar($sql);
     $tabelas = new Tabelas();
     $tabelas->geraTabelaPes($res, $db);
     exit;

@@ -4,9 +4,11 @@
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['idcidades'])){
-    $db->setTabela("cidades LEFT JOIN estados ON (cid_idestados = idestados)");
-    $where = "idcidades = {$_REQUEST['idcidades']}";
-    $reg = $db->retornaUmReg($where);
+    $sql = "SELECT * 
+            FROM cidades 
+              LEFT JOIN estados ON (cid_idestados = idestados) 
+            WHERE idcidades = {$_REQUEST['idcidades']}";
+    $reg = $db->retornaUmReg($sql);
   }
   //
   //Gera o autoComplete 
