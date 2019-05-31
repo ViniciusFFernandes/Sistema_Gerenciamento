@@ -70,7 +70,7 @@ if (!$_SESSION['logado']) {
 	exit;
 }
 
-if ((time() - $_SESSION['ultima_atividade']) > 600) {
+if ((time() - $_SESSION['ultima_atividade']) > 1800) {
     // última atividade foi mais de 10 minutos atrás
     session_unset();     // unset $_SESSION
     session_destroy();   // destroindo session data

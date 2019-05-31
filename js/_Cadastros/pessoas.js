@@ -1,16 +1,58 @@
 
       window.setTimeout(function(){
          document.getElementById("botao_alerta").click();
-      }, 6000);
+      }, 4000);
 
       $(document).ready(function(){
 	      buscaTelefones();
-        $("#pess_cpf").mask("999.999.999-99");
-        $("#pess_rg").mask("99.999.999-9");
-        $("#pess_cnpj").mask("99.999.999/9999-99");
-        $("#pnum_numero").mask("9999-99999");
-        $("#pnum_DDD").mask(" 999");
-        $("#pess_cep").mask("99999-999");
+        $("#pess_cpf").mask("999.999.999-AA", 
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
+        $("#pess_rg").mask("99.999.999-A", 
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
+        $("#pess_cnpj").mask("99.999.999/9999-99",
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
+        $("#pnum_numero").mask("9999-99999",
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
+        $("#pnum_DDD").mask(" 999",
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
+        $("#pess_cep").mask("99999-999",
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }
+          });
        });
 
        function validarLogin(){

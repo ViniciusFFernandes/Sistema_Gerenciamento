@@ -32,34 +32,25 @@ include_once("../Class/Tabelas.class.php");
     }
 
   if ($_POST['operacao'] == 'gravar'){
-  	$db->setTabela("cidades");
+  	$db->setTabela("cidades", "idcidades");
     //
+    $dados['id']            = $_POST['idcidades'];
   	$dados['cid_nome'] 			= $util->sgr($_POST['cid_nome']);
   	$dados['cid_idestados'] = $util->igr($_POST['cid_idestados']);
+    $db->gravarInserir($dados);
     //
   	if ($_POST['idcidades'] > 0) {
-  		$where = " idcidades = " . $_POST['idcidades'];
-  		$db->alterar($where, $dados);
-  		$_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location: ../_Cadastros/cadastro_cidades.php?idcidades=' . $_POST['idcidades']);
-  		exit;
+  		$id = $_POST['idcidades'];
     }else{
-  		$db->gravar($dados);
-  		$ultimoID = $db->getUltimoID();
-  		$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location:../_Cadastros/cadastro_cidades.php?idcidades=' . $ultimoID);
-  		exit;
+  		$id = $db->getUltimoID();
   }
+    header('location: ../_Cadastros/cadastro_cidades.php?idcidades=' . $id);
+    exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("cidades");
-    $where = "idcidades = " . $_POST['idcidades'];
-    $db->excluir($where);
-    $_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
-    $_SESSION['tipoMsg'] = "danger";
+    $db->setTabela("cidades", "idcidades");
+    $db->excluir($_POST['idcidades']);
     header('location:../_Cadastros/cadastro_cidades.php');
     exit;
   }
