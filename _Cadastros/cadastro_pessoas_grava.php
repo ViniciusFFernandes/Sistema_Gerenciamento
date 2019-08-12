@@ -21,25 +21,23 @@ include_once("../Class/Tabelas.class.php");
   }
 
   if ($_POST['operacao'] == "excluiTelefones") {
-    $db->setTabela("pessoas_numeros");
-    $where = "idpessoas_numeros = " . $_POST['idtelefone'];
-    $db->excluir($where);
+    $db->setTabela("pessoas_numeros", "idpessoas_numeros");
+    $db->excluir($_POST['idtelefone']);
     exit;
   }
 
   if ($_POST['operacao'] == "gravaTelefones") {
-    $db->setTabela("pessoas_numeros");
+    $db->setTabela("pessoas_numeros", "idpessoas_numeros");
     $dados['pnum_idpessoas']        = $util->sgr($_POST['idpessoas']);
     $dados['pnum_DDD']              = $util->sgr($_POST['pnum_DDD']);
     $dados['pnum_numero']           = $util->sgr($_POST['pnum_numero']);
-    $db->gravar($dados);
+    $db->gravarInserir($dados);
     exit;
   }
 
   if ($_POST['operacao'] == "buscaTelefones") {
-    $db->setTabela("pessoas_numeros");
-    $where = " pnum_idpessoas = " . $_POST['idpessoas'];
-    $res = $db->consultar($where);
+    $sql = "SELECT * FROM pessoas_numeros WHERE pnum_idpessoas = " . $_POST['idpessoas'];
+    $res = $db->consultar($sql);
     //
     $tabelas = new Tabelas();
     $tabelas->geraTabelaTel($res);
@@ -58,54 +56,46 @@ include_once("../Class/Tabelas.class.php");
     }
 
   if ($_POST['operacao'] == 'gravaLogin'){
-    $db->setTabela("pessoas");
+    $db->setTabela("pessoas", "idpessoas");
 
+    $dados['id']                 = $_POST['idpessoas'];
     $dados['pess_usuario']       = $util->sgr($_POST['pess_usuario']);
     $dados['pess_senha']         = $util->sgr($_POST['pess_senha']);
 
-    $where = " idpessoas = " . $_POST['idpessoas'];
-    $db->alterar($where, $dados);
+    $db->gravarInserir($dados);
     }
 
   if ($_POST['operacao'] == 'pess_gravar'){
-  	$db->setTabela("pessoas");
+  	$db->setTabela("pessoas", "idpessoas");
 
-  	$dados['pess_nome'] 			= $util->sgr($_POST['pess_nome']);
-  	$dados['pess_rg'] 				= $util->sgr($_POST['pess_rg']);
-  	$dados['pess_cpf'] 				= $util->sgr($_POST['pess_cpf']);
-  	$dados['pess_cnpj'] 			= $util->sgr($_POST['pess_cnpj']);
-  	$dados['pess_cep'] 				= $util->sgr($_POST['pess_cep']);
-  	$dados['pess_endereco'] 		= $util->sgr($_POST['pess_endereco']);
-  	$dados['pess_endereco_numero'] 	= $util->sgr($_POST['pess_endereco_numero']);
-    $dados['pess_idcidades']  = $util->igr($_POST['pess_idcidades']);
-  	$dados['pess_bairro'] 			= $util->sgr($_POST['pess_bairro']);
-  	$dados['pess_cliente'] 			= $util->sgr($_POST['pess_cliente']);
-  	$dados['pess_fornecedor'] 		= $util->sgr($_POST['pess_fornecedor']);
-  	$dados['pess_funcionario'] 		= $util->sgr($_POST['pess_funcionario']);
+  	$dados['pess_nome'] 			       = $util->sgr($_POST['pess_nome']);
+  	$dados['pess_rg'] 				       = $util->sgr($_POST['pess_rg']);
+  	$dados['pess_cpf'] 				       = $util->sgr($_POST['pess_cpf']);
+  	$dados['pess_cnpj'] 			       = $util->sgr($_POST['pess_cnpj']);
+  	$dados['pess_cep'] 				       = $util->sgr($_POST['pess_cep']);
+  	$dados['pess_endereco'] 		     = $util->sgr($_POST['pess_endereco']);
+  	$dados['pess_endereco_numero'] 	 = $util->sgr($_POST['pess_endereco_numero']);
+    $dados['pess_idcidades']         = $util->igr($_POST['pess_idcidades']);
+  	$dados['pess_bairro'] 			     = $util->sgr($_POST['pess_bairro']);
+  	$dados['pess_cliente'] 			     = $util->sgr($_POST['pess_cliente']);
+  	$dados['pess_fornecedor'] 		   = $util->sgr($_POST['pess_fornecedor']);
+  	$dados['pess_funcionario'] 		   = $util->sgr($_POST['pess_funcionario']);
+
+    $db->gravarInserir($dados);
+
 
   	if ($_POST['idpessoas'] > 0) {
-  		$where = " idpessoas = " . $_POST['idpessoas'];
-  		$db->alterar($where, $dados);
-  		$_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location: ../_Cadastros/cadastro_pessoas.php?idpessoas=' . $_POST['idpessoas']);
-  		exit;
+      $id = $_POST['idpessoas'];
     }else{
-  		$db->gravar($dados);
-  		$ultimoID = $db->getUltimoID();
-  		$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location:../_Cadastros/cadastro_pessoas.php?idpessoas=' . $ultimoID);
-  		exit;
-  }
+  		$id = $db->getUltimoID();
+    }
+    header('location:../_Cadastros/cadastro_pessoas.php?idpessoas=' . $id);
+    exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("pessoas");
-    $where = "idpessoas = " . $_POST['idpessoas'];
-    $db->excluir($where);
-    $_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
-    $_SESSION['tipoMsg'] = "danger";
+    $db->setTabela("pessoas", "idpessoas");
+    $db->excluir($_POST['idpessoas']);
     header('location:../_Cadastros/cadastro_pessoas.php');
     exit;
   }

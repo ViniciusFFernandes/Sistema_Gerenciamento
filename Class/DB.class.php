@@ -7,6 +7,7 @@
 		private $senhadb;
 		private $conexao;
 		private $tabela;
+		private $idtabela;
 
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */
@@ -37,8 +38,9 @@
 			}
 		}
 
-		public function setTabela($tabela){
+		public function setTabela($tabela, $idtabela){
 			$this->tabela = $tabela;
+			$this->idtabela = $idtabela;
 		}
 
 		//função antiga para fazer login
@@ -124,6 +126,15 @@
 
 	  	}
 
+	  	public function gravarInserir($dados){
+	  		if($dados['id'] > 0){
+	  			return $this->alterar($dados);
+	  		}else{
+	  			unset($dados['id']);
+	  			return $this->gravar($dados);
+	  		}
+	  	}
+
 		 public function gravar($dados = null){
 			$campos   = implode(",",array_keys($dados));
 			$valores  = implode(",",array_values($dados));
@@ -131,29 +142,34 @@
 					  $campos." ) VALUES ( " . $valores . " ) ";
 			//echo "$query<br>";
 			//exit;
+			$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
+		    $_SESSION['tipoMsg'] = "info";
+		    //
 			return $this->executaSQL($query);
 		 }
 
-		 public function alterar($where = null, $dados = null){
-		  if(!is_null($where)){
-			  $valores = array();
-			  foreach($dados as $key=>$value){
-				$valores[] = $key . " = " . $value;
-			  }
-			  $valores = implode(',',$valores);
-			  $query = "UPDATE ".$this->tabela." SET ".
-						$valores." WHERE ".$where;
-		      //echo "$query<br>";
-			  return $this->executaSQL($query);
-		  }
-		  else {
-				 return false;
-			   }
+		 public function alterar($dados = null){
+			if(!is_null($dados)){
+				$valores = array();
+				foreach($dados as $key=>$value){
+					if($key != 'id') $valores[] = $key . " = " . $value;
+				}
+				$valores = implode(',',$valores);
+				$query = "UPDATE " . $this->tabela . " SET " . $valores . " WHERE " . $this->idtabela . " = " . $dados['id'];
+			    //echo "$query<br>";
+			    $_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
+      			$_SESSION['tipoMsg'] = "info"; 
+			return $this->executaSQL($query);
+		  }else{
+			return false;
+			}
 		}
 
-		public function excluir($where = null){
-				if(!is_null($where)){
-					$query = "DELETE FROM " . $this->tabela . " WHERE " . $where;
+		public function excluir($id = null){
+				if(!is_null($id)){
+					$query = "DELETE FROM " . $this->tabela . " WHERE " . $this->idtabela . " = " . $id;
+					$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
+    				$_SESSION['tipoMsg'] = "danger";
 					return $this->executaSQL($query);
 				}
 				else{

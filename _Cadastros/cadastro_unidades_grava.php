@@ -5,7 +5,6 @@ include_once("../Class/Tabelas.class.php");
 // exit;
   if ($_POST['operacao'] == "buscaUnidades") {
     $sql = "SELECT * FROM unidades";
-    $db->setTabela("unidades");
     //
     if ($_POST['pesquisa'] != "") {
       $sql .= "  idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
@@ -31,34 +30,25 @@ include_once("../Class/Tabelas.class.php");
     }
 
   if ($_POST['operacao'] == 'gravar'){
-  	$db->setTabela("unidades");
+  	$db->setTabela("unidades", "idunidades");
 
+    $dados['id']         = $_POST['idunidades'];
   	$dados['uni_nome'] 	 = $util->sgr($_POST['uni_nome']);
   	$dados['uni_sigla']  = $util->sgr($_POST['uni_sigla']);
+    $db->gravarInserir($dados);
 
   	if ($_POST['idunidades'] > 0) {
-  		$where = " idunidades = " . $_POST['idunidades'];
-  		$db->alterar($where, $dados);
-  		$_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location: ../_Cadastros/cadastro_unidades.php?idunidades=' . $_POST['idunidades']);
-  		exit;
+  		$id = $_POST['idunidades'];
     }else{
-  		$db->gravar($dados);
-  		$ultimoID = $db->getUltimoID();
-  		$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
-      $_SESSION['tipoMsg'] = "info";
-      header('location:../_Cadastros/cadastro_unidades.php?idunidades=' . $ultimoID);
-  		exit;
+  		$id = $db->getUltimoID();
   }
+  header('location:../_Cadastros/cadastro_unidades.php?idunidades=' . $id);
+  exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("unidades");
-    $where = "idunidades = " . $_POST['idunidades'];
-    $db->excluir($where);
-    $_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
-    $_SESSION['tipoMsg'] = "danger";
+    $db->setTabela("unidades", "idunidades");
+    $db->excluir($_POST['idunidades']);
     header('location:../_Cadastros/cadastro_unidades.php');
     exit;
   }
