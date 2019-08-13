@@ -1,4 +1,5 @@
-<?php $SERVIDOR   = "localhost";
+<?php 
+	$SERVIDOR   = "localhost";
   $PORTA    = "3306";
   $USUARIO  = "root";
   $SENHA    = "";
