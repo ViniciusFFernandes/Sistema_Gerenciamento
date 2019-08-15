@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   	<title>Trabalho de desenvolvimento web</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/padrao.css" rel="stylesheet">
+    <link href="../js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
+    <script src="../js/html5shiv.min.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/_Configuracoes/parametros.js"></script>
+  </head>
+  <body>
+    <div>
+     ##Menu##
+    </div>
+    <div class="container conteudo">
+      <div class="row" style="margin: 1px;">
+        <div class="col-md-4 col-sm-1"></div>
+        <div class="col-md-4 col-sm-10">##Mensagem##</div>
+        <div class="col-md-4 col-sm-1"></div>
+      </div>
+
+      <div class="panel panel-default" style="border: solid 2px #828282; ">
+        <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
+          <div class="panel-title">
+            Parametros
+          </div>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <div class="input-group">
+                  <span class="input-group-addon"><img src="../icones/lupa.png"></span>
+                  <input type="text" class="form-control" name="consulta" id="consulta" placeholder="consultar">
+                </div>
+              </div>
+            </div>
+            <div class="row" align="center">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <button class="btn btn-success" onclick="buscaParametros()">Consultar</button>
+              </div>
+            </div>
+            <div class="row" align="center">
+              <div class="col-md-12 col-sm-12 col-xs-12" id="retParametros">
+                <img src="../icones/carregando2.gif" width="25px;">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="editaParametros" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Editar Parametro</h4>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="idparametros" name="idparametros">
+            <div class="row" name="espera" align="center">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <img src="../icones/carregando2.gif" width="25px;">
+              </div> 
+            </div>
+            <div class="row" name="conteudo">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <label for="para_nome">Parametro:</label>
+                <input type="text" class="form-control" name="para_nome" id="para_nome" readonly>
+              </div> 
+            </div>
+            <div class="row" name="conteudo">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <label for="para_valor">Valor:</label>
+                <input type="text" class="form-control" name="para_valor" id="para_valor">
+              </div> 
+            </div>
+            <div class="row" name="conteudo">
+              <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
+                <label for="para_obs">Observações:</label>
+                <textarea class="form-control" name="para_obs" id="para_obs" rows="5"></textarea>
+              </div> 
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="btnFechaModal" class="btn btn-default" data-dismiss="modal">cancelar</button>
+            <button type="button" name="btnGrava" onclick="gravarParametros()" class="btn btn-primary">Gravar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

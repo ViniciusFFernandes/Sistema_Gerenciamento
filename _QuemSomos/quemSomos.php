@@ -12,9 +12,9 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/padrao.css" rel="stylesheet">
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../js/html5shiv.min.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
     <script src="../js/_Worker/attAcessos_workers.js"></script>
     <script src="../js/_Chat/chat.js"></script>
     <script src="../js/_Worker/attChat_workers.js"></script>
@@ -59,7 +59,7 @@
 </div>
 
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+     <script src="../js/jquery.min.js"></script>
      <script src="../js/bootstrap.min.js"></script>
      <?php
     //

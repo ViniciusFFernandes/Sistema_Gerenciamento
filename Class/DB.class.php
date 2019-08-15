@@ -194,7 +194,7 @@
 		private function criaBanco($nomeBD, $host, $user){
 			$sql = "CREATE DATABASE IF NOT EXISTS `{$nomeBD}`
 			DEFAULT character SET UTF8
-			DEFAULT collate utf8_bin;
+			DEFAULT collate utf8_general_ci;
 			GRANT ALL ON `{$nomeBD}`.* TO '{$user}'@'{$host}';
     		FLUSH PRIVILEGES;";
     		if(!$this->conexao->exec($sql)){

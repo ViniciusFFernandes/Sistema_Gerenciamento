@@ -4,12 +4,12 @@ class Tabelas{
 
 	public function geraTabelaTel($res){
 		$linhaColorida = false;
-    	echo "<table class='table' width='100%' style='margin-top: 3px;'>";
+    	$tabela = "<table class='table' width='100%' style='margin-top: 3px;'>";
 	    foreach ($res as $reg) {
-	     echo '<tr ';
-			 if ($linhaColorida) echo "class='info'";
-			 echo '>';
-	     echo '<td width="80px">(' . $reg['pnum_DDD'] . ')</td>
+	     $tabela .= '<tr ';
+			 if ($linhaColorida) $tabela .= "class='info'";
+			 $tabela .= '>';
+	     $tabela .= '<td width="80px">(' . $reg['pnum_DDD'] . ')</td>
 	        <td>' . $reg['pnum_numero'] . '</td>
 	        <td width="20px;" align="left"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
 	      </tr>';
@@ -19,13 +19,15 @@ class Tabelas{
 		    $linhaColorida = true;
 		  }
 	  	}
-	  echo "</table>";
+	  $tabela .= "</table>";
+	  //
+	  //escreve a tabela
+	  echo $tabela;
 	}
 
 	public function geraTabelaPes($res, $db){
 		 $linhaColorida = false;
-	    echo "<div style='max-height: 350px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
-	    //echo $res;
+	    $tabela = "<div style='max-height: 350px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
 	    foreach ($res as $reg) {
 	    	//
 	    	//Monta o nome da cidade com a sigla do estado
@@ -34,9 +36,9 @@ class Tabelas{
 	    		$cidadeEstado = $reg['cid_nome'] . " - " . $reg['est_uf'];
 	    	}
 	    	//
-	      echo '<tr';
-				if ($linhaColorida) {echo " class='info'";}
-				echo ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasBusca">
+	      $tabela .= '<tr';
+				if ($linhaColorida) {$tabela .= " class='info'";}
+				$tabela .= ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasBusca">
 	        <td width="6%">' . $reg['idpessoas'] . '</td>
 	        <td width="25%">' . $reg['pess_nome'] . '</td>
 	        <td width="25%">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
@@ -49,7 +51,10 @@ class Tabelas{
 		    $linhaColorida = true;
 		  }
 	  }
-	  echo "</table></div>";
+	  $tabela .= "</table></div>";
+	  //
+	  //escreve a tabela
+	  echo $tabela;
 	}
 	
 	public function geraTabelaBusca($res, $db, $colunas, $functionAbreReg){
@@ -80,6 +85,7 @@ class Tabelas{
 		$tabela .= "</table>";
 		$tabela .= "</div>";
 		//
+	  	//escreve a tabela
 		echo $tabela;
 	}
 }

@@ -7,7 +7,7 @@ include_once("../Class/Tabelas.class.php");
     $sql = "SELECT * FROM unidades";
     //
     if ($_POST['pesquisa'] != "") {
-      $sql .= "  idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+      $sql .= " WHERE idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR uni_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR uni_sigla LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
     }

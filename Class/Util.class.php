@@ -144,6 +144,7 @@ class Util{
 
 	public function buscaHtml($btnMenu = ''){
 		$menu = file_get_contents('../menu.html');
+		$opcoes_config = file_get_contents('../menu__opcoes_config.html');
 		//
 		if ($btnMenu == "inicio"){
 			$busca = '##inicio##';
@@ -158,6 +159,7 @@ class Util{
 		}
 		$menu = str_replace($busca, 'class="active"', $menu);
 		$menu = str_replace("##NomeUsuario##", $_SESSION['user'], $menu);
+		$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
 		//
 		$nome = explode(".", basename($_SERVER['PHP_SELF']));
 		$nomeArquivo = $nome[0] . ".html";

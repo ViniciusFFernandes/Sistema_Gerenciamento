@@ -12,7 +12,7 @@ include_once("../Class/Tabelas.class.php");
     if ($_POST['pesquisa'] != "") {
       $sql .= " WHERE idpessoas LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                 OR pess_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
-                OR pess_cidade LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
+                OR pess_idcidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
     }
     $res = $db->consultar($sql);
     $tabelas = new Tabelas();
@@ -68,6 +68,7 @@ include_once("../Class/Tabelas.class.php");
   if ($_POST['operacao'] == 'pess_gravar'){
   	$db->setTabela("pessoas", "idpessoas");
 
+    $dados['id']                     = $_POST['idpessoas'];
   	$dados['pess_nome'] 			       = $util->sgr($_POST['pess_nome']);
   	$dados['pess_rg'] 				       = $util->sgr($_POST['pess_rg']);
   	$dados['pess_cpf'] 				       = $util->sgr($_POST['pess_cpf']);

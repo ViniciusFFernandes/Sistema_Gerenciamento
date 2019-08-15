@@ -9,6 +9,7 @@ require_once("../Class/DB.class.php");
 require_once("../Class/Util.class.php");
 require_once("../Class/usuario.class.php");
 require_once("../Class/logs.class.php");
+require_once("../Class/parametros.class.php");
 require_once("../privado/constantes.vf");
 //
 //Se não existe define como null para evitar avisos de erro
@@ -23,6 +24,7 @@ if (!isset($_SESSION['logado'])) {
 $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
+$parametros = new Parametros();
 //$chat = new Chat();
 //
 //Conecta com o banco de dados

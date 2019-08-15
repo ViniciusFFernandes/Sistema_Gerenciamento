@@ -9,7 +9,7 @@ include_once("../Class/Tabelas.class.php");
               LEFT JOIN estados ON (cid_idestados = idestados)";
     
     if ($_POST['pesquisa'] != "") {
-        $sql .= "  idcidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+        $sql .= " WHERE idcidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR cid_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
                   OR est_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
     }

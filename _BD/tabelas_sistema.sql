@@ -3,37 +3,50 @@
 --
 CREATE TABLE IF NOT EXISTS `pessoas` (
   `idpessoas` int(11) NOT NULL AUTO_INCREMENT,
-  `pess_nome` varchar(255) COLLATE utf8_bin NOT NULL,
-  `pess_cpf` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_cnpj` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_cep` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_rg` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_endereco` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_endereco_numero` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_bairro` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_idcidades` int(11) COLLATE utf8_bin DEFAULT NULL,
-  `pess_usuario` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_senha` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-  `pess_cliente` varchar(5) COLLATE utf8_bin DEFAULT 'NAO',
-  `pess_fornecedor` varchar(5) COLLATE utf8_bin DEFAULT 'NAO',
-  `pess_funcionario` varchar(5) COLLATE utf8_bin DEFAULT 'NAO',
+  `pess_nome` varchar(255) NOT NULL,
+  `pess_cpf` varchar(255) DEFAULT NULL,
+  `pess_cnpj` varchar(255) DEFAULT NULL,
+  `pess_cep` varchar(255) DEFAULT NULL,
+  `pess_rg` varchar(255) DEFAULT NULL,
+  `pess_endereco` varchar(255) DEFAULT NULL,
+  `pess_endereco_numero` varchar(255) DEFAULT NULL,
+  `pess_bairro` varchar(255) DEFAULT NULL,
+  `pess_idcidades` int(11) DEFAULT NULL,
+  `pess_usuario` varchar(255) DEFAULT NULL,
+  `pess_senha` varchar(255) DEFAULT NULL,
+  `pess_cliente` varchar(5) DEFAULT 'NAO',
+  `pess_fornecedor` varchar(5) DEFAULT 'NAO',
+  `pess_funcionario` varchar(5) DEFAULT 'NAO',
   PRIMARY KEY (idpessoas)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`) VALUES
 ('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM');
 
 --
--- Criação da Tabela Pessoas
+-- Criação da Tabela Pessoas_numeros
 --
 CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
   `idpessoas_numeros` int(11) NOT NULL AUTO_INCREMENT,
   `pnum_idpessoas` int(11) NOT NULL,
-  `pnum_DDD` varchar(5) COLLATE utf8_bin DEFAULT NULL,
-  `pnum_numero` varchar(20) COLLATE utf8_bin NOT NULL,
+  `pnum_DDD` varchar(5) DEFAULT NULL,
+  `pnum_numero` varchar(20) NOT NULL,
   PRIMARY KEY (idpessoas_numeros)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+
+--
+-- Criação da Tabela Parametros
+--
+CREATE TABLE IF NOT EXISTS `parametros` (
+  `idparametros` int(11) NOT NULL AUTO_INCREMENT,
+  `para_nome` varchar(255) NOT NULL,
+  `para_valor` text DEFAULT NULL,
+  `para_obs` text NULL,
+  PRIMARY KEY (idparametros)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'numero usado para controle de atualizacoes do sistema');
 --
 -- Criação da Tabela Folha de Ponto
 --
@@ -46,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
 --   `fopo_entrada` datetime NOT NULL,
 --   `fopo_saida` datetime NOT NULL,
 --   PRIMARY KEY (idfolhaPonto)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Criação da Tabela Unidades E Insert de Valores Padrões
@@ -56,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `unidades` (
   `uni_nome` varchar(100) NOT NULL,
   `uni_sigla` varchar(4) NOT NULL,
   PRIMARY KEY (idunidades)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `unidades` (`uni_nome`, `uni_sigla`)VALUES
 ('Toneladas', 't'),
@@ -76,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `cidades` (
   `idcidades` int(11) NOT NULL,
   `cid_nome` varchar(120) DEFAULT NULL,
   `cid_idestados` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5565 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=5565 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `cidades` (`idcidades`, `cid_nome`, `cid_idestados`) VALUES
 (1, 'Afonso Claudio', 8),
@@ -5650,7 +5663,7 @@ CREATE TABLE IF NOT EXISTS `estados` (
   `idestados` int(11) NOT NULL,
   `est_nome` varchar(75) DEFAULT NULL,
   `est_uf` varchar(5) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `estados` (`idestados`, `est_nome`, `est_uf`) VALUES
 (1, 'Acre', 'AC'),
