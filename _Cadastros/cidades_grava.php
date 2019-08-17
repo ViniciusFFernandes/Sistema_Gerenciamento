@@ -27,7 +27,7 @@ include_once("../Class/Tabelas.class.php");
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/cadastro_cidades.php');
+    header('location:../_Cadastros/cidades_edita.php');
     exit;
     }
 
@@ -44,14 +44,14 @@ include_once("../Class/Tabelas.class.php");
     }else{
   		$id = $db->getUltimoID();
   }
-    header('location: ../_Cadastros/cadastro_cidades.php?idcidades=' . $id);
+    header('location: ../_Cadastros/cidades_edita.php?idcidades=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("cidades", "idcidades");
     $db->excluir($_POST['idcidades']);
-    header('location:../_Cadastros/cadastro_cidades.php');
+    header('location:../_Cadastros/cidades_edita.php');
     exit;
   }
 

@@ -37,7 +37,7 @@ function excluiCadastro(){
 
 function buscaCidades(){
   var _pesquisa = $("#pesquisa").val();
-  $.post("cadastro_cidades_grava.php",
+  $.post("cidades_grava.php",
   {operacao: "buscaCidades", pesquisa: _pesquisa},
   function(result){
     $("#pesquisa").val("");
@@ -50,6 +50,6 @@ function zeraBusca(){
 }
 
 function abreCidades(id){
-  var siteRetorno = 'cadastro_cidades.php?idcidades=' + id;
+  var siteRetorno = 'cidades_edita.php?idcidades=' + id;
   $(location).attr('href', siteRetorno);
 }

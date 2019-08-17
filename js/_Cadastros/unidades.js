@@ -39,7 +39,7 @@ function excluiCadastro(){
 
 function buscaUnidades(){
   var _pesquisa = $("#pesquisa").val();
-  $.post("cadastro_unidades_grava.php",
+  $.post("unidades_grava.php",
   {operacao: "buscaUnidades", pesquisa: _pesquisa},
   function(result){
     $("#pesquisa").val("");
@@ -52,6 +52,6 @@ function zeraBusca(){
 }
 
 function abreUnidades(id){
-  var siteRetorno = 'cadastro_unidades.php?idunidades=' + id;
+  var siteRetorno = 'unidades_edita.php?idunidades=' + id;
   $(location).attr('href', siteRetorno);
 }

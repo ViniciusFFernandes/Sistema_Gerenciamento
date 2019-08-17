@@ -35,7 +35,7 @@ $db->conectar();
 //
 //Efetua o login
 if ($_POST['operacao'] == "logar") {
- 	$db->setTabela("pessoas");
+ 	$db->setTabela("pessoas", "idpessoas");
  	$user = new Usuario($_POST['usuario'], $_POST['senha']);
 	$resultado = $user->conferirSenha($db);
 	if ($resultado['retorno']){
