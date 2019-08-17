@@ -111,26 +111,6 @@ class Util{
 		}
 	}
 
-	public function geraTabelaTel($res){
-		$linhaColorida = false;
-    	echo "<table class='table' width='100%' style='margin-top: 3px;'>";
-	    foreach ($res as $reg) {
-	     echo '<tr ';
-			 if ($linhaColorida) echo "class='info'";
-			 echo '>';
-	     echo '<td width="80px">(' . $reg['pnum_DDD'] . ')</td>
-	        <td>' . $reg['pnum_numero'] . '</td>
-	        <td width="20px;" align="left"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
-	      </tr>';
-	 if ($linhaColorida) {
-		    $linhaColorida = false;
-		  }else {
-		    $linhaColorida = true;
-		  }
-	  	}
-	  echo "</table>";
-	}
-
 	public function comboboxSql($campoMostra, $campoValue, $where, $db, $tabela){
 		$db->setTabela($tabela);
 		$res = $db->consultar($where);

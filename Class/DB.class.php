@@ -36,6 +36,10 @@
 					echo 'ERROR: ' . $e->getMessage();
 				}
 			}
+			$this->executaSQL("SET NAMES 'utf8'");
+			$this->executaSQL('SET character_set_connection=utf8');
+			$this->executaSQL('SET character_set_client=utf8');
+			$this->executaSQL('SET character_set_results=utf8');
 		}
 
 		public function setTabela($tabela, $idtabela){

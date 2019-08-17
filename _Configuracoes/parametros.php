@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   include_once("../_BD/conecta_login.php");
   
   if (isset($_SESSION['mensagem'])) {

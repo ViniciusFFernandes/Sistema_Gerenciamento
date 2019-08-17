@@ -2,6 +2,7 @@
       
       $(document).ready(function(){
 	      buscaParametros();
+        $('[data-toggle="tooltip"]').tooltip();
        });
 
       function buscaParametros(){

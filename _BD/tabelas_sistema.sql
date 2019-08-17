@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS `pessoas` (
   `pess_cliente` varchar(5) DEFAULT 'NAO',
   `pess_fornecedor` varchar(5) DEFAULT 'NAO',
   `pess_funcionario` varchar(5) DEFAULT 'NAO',
+  `pess_inativo` varchar(5) DEFAULT 'N',
   PRIMARY KEY (idpessoas)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -46,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (idparametros)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'numero usado para controle de atualizacoes do sistema');
+INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'numero usado para controle de atualizações do sistema');
 --
 -- Criação da Tabela Folha de Ponto
 --

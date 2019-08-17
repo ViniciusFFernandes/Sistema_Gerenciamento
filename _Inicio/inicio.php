@@ -1,4 +1,4 @@
-<?php
+﻿<?php
   include_once '../_BD/conecta_login.php';
   //
   //Monta variaveis de exibição

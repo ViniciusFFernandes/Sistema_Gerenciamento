@@ -44,7 +44,7 @@
 				//
 				$tabela .= "<tr {$class} data-toggle='modal' data-target='#editaParametros' onclick='editaParametros({$reg["idparametros"]})' style='cursor:pointer'>";
 					$tabela .= "<td width='6%'>{$reg["idparametros"]}</td>";
-					$tabela .= "<td>{$reg["para_nome"]}</td>";
+					$tabela .= "<td>{$reg["para_nome"]}<img src='../icones/duvida.png' width='10px' data-toggle='tooltip' title='{$reg["para_obs"]}' style='cursor: '></td>";
 					$tabela .= "<td align='right' width='20%' id='para_valor_{$reg["idparametros"]}'>{$reg["para_valor"]}</td>";
 				$tabela .- "</tr>";
 			}
