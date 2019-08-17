@@ -87,7 +87,7 @@
          var _pess_usuario = $("#pess_usuario").val();
          var _pess_senha = $("#pess_senha").val();
 
-         $.post("cadastro_pessoas_grava.php",
+         $.post("pessoas_grava.php",
          {operacao: "validaUsuario", idpessoas: _idpessoas, pess_usuario: _pess_usuario},
          function(result){
           //alert(result);
@@ -105,7 +105,7 @@
        }
 
        function gravarUser(idpessoas, pess_usuario, pess_senha){
-         $.post("cadastro_pessoas_grava.php",
+         $.post("pessoas_grava.php",
           {operacao: "gravaLogin", idpessoas: idpessoas, pess_usuario: pess_usuario, pess_senha: pess_senha},
          function(result){
            $("#fechaAlteraLogin").click();
@@ -141,7 +141,7 @@
 
       function buscaPessoas(){
         var _pesquisa = $("#pesquisa").val();
-        $.post("cadastro_pessoas_grava.php",
+        $.post("pessoas_grava.php",
         {operacao: "buscaPessoas", pesquisa: _pesquisa},
         function(result){
           $("#pesquisa").val("");
@@ -151,7 +151,7 @@
 
       function buscaTelefones(){
         var _idpessoas = $("#idpessoas").val();
-        $.post("cadastro_pessoas_grava.php",
+        $.post("pessoas_grava.php",
         {operacao: "buscaTelefones", idpessoas: _idpessoas},
         function(result){
             //alert(result);
@@ -166,7 +166,7 @@
         }
         var _pnum_DDD = $("#pnum_DDD").val();
         var _pnum_numero = $("#pnum_numero").val();
-        $.post("cadastro_pessoas_grava.php",
+        $.post("pessoas_grava.php",
         {operacao: "gravaTelefones", idpessoas: _idpessoas, pnum_DDD: _pnum_DDD, pnum_numero: _pnum_numero},
         function(result){
           $("#pnum_DDD").val("");
@@ -181,12 +181,12 @@
       }
 
       function abrePessoa(id){
-        var siteRetorno = 'cadastro_pessoas.php?idpessoas=' + id;
+        var siteRetorno = 'pessoas_edita.php?idpessoas=' + id;
         $(location).attr('href', siteRetorno);
       }
 
       function excluirTelefone(idtelefone){
-        $.post("cadastro_pessoas_grava.php",
+        $.post("pessoas_grava.php",
         {operacao: "excluiTelefones", idtelefone: idtelefone},
         function(result){
           buscaTelefones();

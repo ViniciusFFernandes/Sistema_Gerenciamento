@@ -45,7 +45,7 @@ include_once("../Class/Tabelas.class.php");
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/cadastro_pessoas.php');
+    header('location:../_Cadastros/pessoas_edita.php');
     exit;
     }
 
@@ -90,14 +90,14 @@ include_once("../Class/Tabelas.class.php");
     }else{
   		$id = $db->getUltimoID();
     }
-    header('location:../_Cadastros/cadastro_pessoas.php?idpessoas=' . $id);
+    header('location:../_Cadastros/pessoas_edita.php?idpessoas=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
     $db->excluir($_POST['idpessoas']);
-    header('location:../_Cadastros/cadastro_pessoas.php');
+    header('location:../_Cadastros/pessoas_edita.php');
     exit;
   }
 

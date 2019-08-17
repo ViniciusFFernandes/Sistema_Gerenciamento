@@ -15,7 +15,7 @@
     <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mask.js"></script>
-    <script src="../js/_Cadastros/unidades.js"></script>
+    <script src="../js/_Cadastros/cidades.js"></script>
     <script>##autoComplete_Estados##</script>
     <style>
       #linhasBusca:hover {color: #4169E1;font-weight: bold;}
@@ -36,23 +36,24 @@
       <div class="panel panel-default" style="border: solid 2px #828282; ">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
-            Cadastro de Unidades
-            <span align="right" data-toggle="modal" title="Buscar unidades" data-target="#buscaUnidades" style="cursor: pointer;">
+            Cadastro de Cidades
+            <span align="right" data-toggle="modal" title="Buscar cidades" data-target="#buscaCidades" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
             </span>
           </div>
         </div>
         <div class="panel-body">
-          <form action="cadastro_unidades_grava.php" id="cadastro_unidades" method="POST" enctype="multipart/form-data" autocomplete="off">
-            <input type="hidden" name="idunidades" id="idunidades" value="##idunidades##">
+          <form action="cidades_grava.php" id="cadastro_cidades" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <input type="hidden" name="idcidades" id="idcidades" value="##idcidades##">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="Nome">Nome</label>
-                <input type="text" class="form-control" id="uni_nome" name="uni_nome" value="##uni_nome##" placeholder="Nome" autofocus maxlength="100">
+                <input type="text" class="form-control" id="cid_nome" name="cid_nome" value="##cid_nome##" placeholder="Nome" autofocus >
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
-                <label for="Sigla">Sigla</label>
-                <input type="text" class="form-control" id="uni_sigla" name="uni_sigla" value="##uni_sigla##" placeholder="Sigla" maxlength="4">
+                <label for="Estado">Estado</label>
+                <input type="text" class="form-control" id="cid_estados" name="cid_estados" value="##cid_estados##" placeholder="Estado">
+                <input type="hidden" id="cid_idestados" name="cid_idestados" value="##cid_idestados##">
               </div>
             </div>
             <br>
@@ -61,7 +62,7 @@
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
                 <center>
                   <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
-                  <button type="button" onclick="novaUnidade()" class="btn btn-info">Novo</button>
+                  <button type="button" onclick="novaCidade()" class="btn btn-info">Novo</button>
                   ##btnExcluir##
                 </center>
               </div>
@@ -73,7 +74,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="buscaUnidades" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+    <div class="modal fade" id="buscaCidades" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -85,7 +86,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaUnidades()" class="btn btn-primary">Buscar</button>
+            <button type="button" onclick="buscaCidades()" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>
