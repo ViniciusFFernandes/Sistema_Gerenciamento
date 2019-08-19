@@ -39,24 +39,30 @@
         </div>
         <div class="panel-body">
             <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <label for="Nome">Versão do Sistema</label>
-                ##versaoSistema##
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-12">
+              <div class="col-md-12 col-sm-12 col-xs-12" >
                 <label for="Sigla">Ultima Versão do Sistema</label>
                 ##ultimaVersaoSistema##
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <label for="Nome">Versão do Sistema</label>
+                <span id="versaoAtualSistema">##versaoSistema##</span>
               </div>
             </div>
             <br>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-                <center>
+                <center id="btnAtualizar">
                   ##btnAtualizar##
                 </center>
               </div>
             </div>
+            <div class="row" style="display: none;" id="relatorioAtualizacaoTitulo">
+              <div class="col-md-12 col-sm-12 col-xs-12"><b>Relatório da Atualização</b></div>
+            </div>
+            <div id="relatorioAtualizacao" style="display: none;"></div>
           </form>
         </div>
       </div>
