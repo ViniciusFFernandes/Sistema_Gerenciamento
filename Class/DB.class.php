@@ -105,6 +105,27 @@
 			 return $dados;
 		}
 
+		public function retornaUmCampoSql($sql, $campo){
+			//echo $sql;
+			$sql = trim($sql);
+			//echo $sql;
+			try{
+				$this->conexao->beginTransaction();
+				$resultado=$this->conexao->query($sql);
+				$this->conexao->commit();
+			}
+			catch(PDOException $e) {
+				$this->conexao->rollBack();
+				$resultado = NULL;
+				$mensagem  = $e->getMessage();
+				file_put_contents("erro.log", $mensagem);
+			}
+			 if ($resultado){
+			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
+			  }
+			 return $dados[$campo];
+		}
+
     public function executaSQL($sql){
 		  $dados = array();
 		  $sql = trim($sql);
@@ -131,7 +152,7 @@
 	  	}
 
 	  	public function gravarInserir($dados){
-	  		if($dados['id'] > 0){
+	  		if(!empty($dados['id'])){
 	  			return $this->alterar($dados);
 	  		}else{
 	  			unset($dados['id']);
