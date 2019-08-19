@@ -24,7 +24,7 @@ if (!isset($_SESSION['logado'])) {
 $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
-$parametros = new Parametros();
+$parametros = new Parametros($db);
 //$chat = new Chat();
 //
 //Conecta com o banco de dados

@@ -2,12 +2,12 @@
   include_once("../_BD/conecta_login.php");
 
   if($_POST['operacao'] == "consultaAjax"){
-  	$parametros->tabelaParametros($_POST['filtro'], $db, $util);
+  	$parametros->tabelaParametros($_POST['filtro'], $util);
   	exit;
   }
 
   if($_POST['operacao'] == "buscaDadosAjax"){
-  	$dados = $parametros->retornaDados($_POST['idparametros'], $db);
+  	$dados = $parametros->retornaDados($_POST['idparametros']);
   	//print_r($res);
   	echo json_encode($dados);
   	exit;
