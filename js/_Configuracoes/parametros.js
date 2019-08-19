@@ -2,7 +2,6 @@
       
       $(document).ready(function(){
 	      buscaParametros();
-        $('[data-toggle="tooltip"]').tooltip();
        });
 
       function buscaParametros(){
@@ -12,7 +11,12 @@
                 filtro: $("#consulta").val()},
               function(data){
                 $("#retParametros").html(data);
+                $('[data-toggle="tooltip"]').tooltip();
               }, "html");
+      }
+
+      function setToolTipo(){
+        $('[data-toggle="tooltip"]').tooltip();
       }
 
       function editaParametros(idparametros){
@@ -43,6 +47,7 @@
               function(data){
                 $("[name=btnGrava]").attr("disabled", false);
                 $("#para_valor_" + $("#idparametros").val()).html($("#para_valor").val());
+                $("#help_" + $("#idparametros").val()).attr("title", $("#para_obs").val());
                 $("#btnFechaModal").click();
               }, 'html');
       }
