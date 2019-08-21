@@ -35,7 +35,7 @@ include_once("../Class/Tabelas.class.php");
     $dados['id']         = $_POST['idunidades'];
   	$dados['uni_nome'] 	 = $util->sgr($_POST['uni_nome']);
   	$dados['uni_sigla']  = $util->sgr($_POST['uni_sigla']);
-    $db->gravarInserir($dados);
+    $db->gravarInserir($dados, true);
 
   	if ($_POST['idunidades'] > 0) {
   		$id = $_POST['idunidades'];
@@ -48,7 +48,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("unidades", "idunidades");
-    $db->excluir($_POST['idunidades']);
+    $db->excluir($_POST['idunidades'], true);
     header('location:../_Cadastros/unidades_edita.php');
     exit;
   }

@@ -82,7 +82,7 @@ include_once("../Class/Tabelas.class.php");
   	$dados['pess_fornecedor'] 		   = $util->sgr($_POST['pess_fornecedor']);
   	$dados['pess_funcionario'] 		   = $util->sgr($_POST['pess_funcionario']);
 
-    $db->gravarInserir($dados);
+    $db->gravarInserir($dados, true);
 
 
   	if ($_POST['idpessoas'] > 0) {
@@ -96,7 +96,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
-    $db->excluir($_POST['idpessoas']);
+    $db->excluir($_POST['idpessoas'], true);
     header('location:../_Cadastros/pessoas_edita.php');
     exit;
   }

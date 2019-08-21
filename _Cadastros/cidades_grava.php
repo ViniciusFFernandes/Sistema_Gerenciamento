@@ -37,7 +37,7 @@ include_once("../Class/Tabelas.class.php");
     $dados['id']            = $_POST['idcidades'];
   	$dados['cid_nome'] 			= $util->sgr($_POST['cid_nome']);
   	$dados['cid_idestados'] = $util->igr($_POST['cid_idestados']);
-    $db->gravarInserir($dados);
+    $db->gravarInserir($dados, true);
     //
   	if ($_POST['idcidades'] > 0) {
   		$id = $_POST['idcidades'];
@@ -50,7 +50,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("cidades", "idcidades");
-    $db->excluir($_POST['idcidades']);
+    $db->excluir($_POST['idcidades'], true);
     header('location:../_Cadastros/cidades_edita.php');
     exit;
   }
