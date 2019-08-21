@@ -15,10 +15,10 @@
 
   if($_POST['operacao'] == "gravar"){
   	unset($dados);
-  	$dados['id']            = $_POST['idparametros'];
+  	$dados['id']          = $util->sgr($_POST['idparametros']);
   	$dados['para_valor'] 	= $util->sgr($_POST['para_valor']);
   	$dados['para_obs'] 		= $util->sgr($_POST['para_obs']);
-  	$parametros->gravaValor($_POST['idparametros'], $dados, $db);
+  	$parametros->gravaValor($dados);
   	exit;
   } 
 ?>

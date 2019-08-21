@@ -10,6 +10,7 @@ require_once("../Class/Util.class.php");
 require_once("../Class/usuario.class.php");
 require_once("../Class/logs.class.php");
 require_once("../Class/parametros.class.php");
+require_once("../Class/tarefas_diarias.class.php");
 require_once("../privado/constantes.vf");
 //
 //Se não existe define como null para evitar avisos de erro
@@ -24,7 +25,7 @@ if (!isset($_SESSION['logado'])) {
 $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
-$parametros = new Parametros($db);
+$parametros = new Parametros($db, $util);
 //$chat = new Chat();
 //
 //Conecta com o banco de dados
@@ -32,6 +33,9 @@ $db->conectar();
 //
 //inicio das operações
 //
+//Executa tarefas diarias
+$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util);
+$tarefasDiarias->executa_tarefas();
 //
 //Efetua o login
 if ($_POST['operacao'] == "logar") {

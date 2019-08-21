@@ -111,15 +111,24 @@ class Util{
 		}
 	}
 
-	public function comboboxSql($campoMostra, $campoValue, $where, $db, $tabela){
-		$db->setTabela($tabela);
-		$res = $db->consultar($where);
-		echo '<select class="form-control" name="' . $campoValue . '" id="' . $campoValue . '" >';
-		echo '<option value="0" selected="selected">-----------</option>';
-		foreach ($res as $reg) {
-			echo '<option value="' . $reg[$campoValue] . '">' . $reg[$campoMostra] . '</option>';
+	public function defineSelected($valorPadrao, $valor){
+		if($valorPadrao == $valor){
+			return 'selected="selected"';
+		}else{
+			return "";
 		}
-		echo '</select>';
+	}
+
+	public function comboBoxSql($nomeInput, $campoMostra, $campoValue, $sql, $db){
+		$res = $db->consultar($sql);
+		$comboBox = '<select class="form-control" name="' . $nomeInput . '" id="' . $nomeInput . '" >';
+		$comboBox .= '<option value="0" selected="selected">-----------</option>';
+		foreach ($res as $reg) {
+			$comboBox .= '<option value="' . $reg[$campoValue] . '">' . $reg[$campoMostra] . '</option>';
+		}
+		$comboBox .= '</select>';
+		//
+		return $comboBox;
 	}
 
 	public function buscaHtml($btnMenu = ''){

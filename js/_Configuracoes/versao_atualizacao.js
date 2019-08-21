@@ -16,3 +16,12 @@
               }
             }, 'json')
     }
+
+    function abrirHistoricoAtt(){
+      $("#conteudoHistoricoAtt").html("Buscando histórico, aguarde... <img src='../icones/carregando2.gif' width='12px;'>");
+      $.post("versao_atualizacao_grava.php",
+              {operacao: 'buscarHistorico'},
+              function(data){
+                $("#conteudoHistoricoAtt").html(data);
+              }, "html");
+    }

@@ -1,9 +1,20 @@
 <?php
 	class Parametros {
 		private $db;
+		private $util;
 
-		function __construct($db){
+		function __construct($db, $util){
 			$this->db = $db;
+			$this->util = $util;
+		}
+
+		public function cadastraParametros($para_nome, $para_valor, $para_obs){
+			$this->db->setTabela("parametros", "idparametros");
+			unset($dados);
+			$dados['para_nome'] 	= $this->util->sgr($para_nome);
+			$dados['para_valor'] 	= $this->util->sgr($para_valor);
+			$dados['para_obs'] 		= $this->util->sgr($para_obs);
+		    $this->db->gravarInserir($dados);
 		}
 
 		public function buscaValor($para_nome){
@@ -12,8 +23,8 @@
 			return $para_valor;
 		}
 
-		public function gravaValor($id, $dados){
-			if(intval($id) > 0){
+		public function gravaValor($dados){
+			if(intval($dados['id']) > 0){
 				$campoID = "idparametros";
 			}else{
 				$campoID = "para_nome";

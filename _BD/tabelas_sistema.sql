@@ -35,6 +35,17 @@ CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
   PRIMARY KEY (idpessoas_numeros)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Criação da Tabela Versao_hist
+--
+CREATE TABLE IF NOT EXISTS `versao_hist` (
+  `idversao_hist` int(11) NOT NULL AUTO_INCREMENT,
+  `vhist_versao` varchar(255) NOT NULL,
+  `vhist_mensagem` text NULL,
+  `vhist_data` date NOT NULL,
+  PRIMARY KEY (idversao_hist)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 
 --
 -- Criação da Tabela Parametros
@@ -47,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   PRIMARY KEY (idparametros)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'numero usado para controle de atualizações do sistema');
+INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'Numero usado para controle de atualizações do sistema');
 --
 -- Criação da Tabela Folha de Ponto
 --
