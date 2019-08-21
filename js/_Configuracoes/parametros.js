@@ -47,7 +47,6 @@
               function(data){
                 $("[name=btnGrava]").attr("disabled", false);
                 $("#para_valor_" + $("#idparametros").val()).html($("#para_valor").val());
-                $("#help_" + $("#idparametros").val()).attr("title", $("#para_obs").val());
                 $("#btnFechaModal").click();
               }, 'html');
       }
