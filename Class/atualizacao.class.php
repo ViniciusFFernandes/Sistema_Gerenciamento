@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.04;
+		private $ultimaVersao = 0.05;
 		private $db;
 		private $parametros;
 		private $util;
@@ -60,6 +60,27 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_05(){
+			//
+			// 29/08/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS produtos(
+						idprodutos int(11) NOT NULL AUTO_INCREMENT,
+						prod_nome VARCHAR(255) NOT NULL,
+						prod_idgrupos int(11) NULL,
+						prod_idsubgrupos int(11) NULL,
+						prod_idunidades int(11) NULL,
+						prod_tipo_produto VARCHAR(255) NULL,
+						prod_qte_estoque decimal(10,2) NULL,
+						prod_preco_tabela decimal(10,2) NULL,
+						PRIMARY KEY (idprodutos)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela Produtos";
+		}
 
 		private function versao_00_04(){
 			//
