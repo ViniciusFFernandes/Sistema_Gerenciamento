@@ -33,23 +33,24 @@ $db->conectar();
 //
 //inicio das operações
 //
-//Executa tarefas diarias
-$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util);
-$tarefasDiarias->executa_tarefas();
-//
 //Efetua o login
 if ($_POST['operacao'] == "logar") {
  	$db->setTabela("pessoas", "idpessoas");
  	$user = new Usuario($_POST['usuario'], $_POST['senha']);
 	$resultado = $user->conferirSenha($db);
 	if ($resultado['retorno']){
+		//
+		//Executa tarefas diarias no primeiro login bem sucedido do dia
+		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util);
+		$tarefasDiarias->executa_tarefas();
+		//
 		$_SESSION['logado'] 						= true;
 		$_SESSION['user'] 							= $_POST['usuario'];
 		$_SESSION['senha'] 							= $_POST['senha'];
 		$_SESSION['idusuario']				 	    = $resultado['idpessoas'];
 		$_SESSION['mensagem'] 					    = "Logado com sucesso!<br>Bem vindo!!!";
-    $_SESSION['tipoMsg'] 						    = "success";
-    $_SESSION['ultima_atividade'] 	= time();
+	    $_SESSION['tipoMsg'] 						    = "success";
+	    $_SESSION['ultima_atividade'] 	= time();
 		header('Location: ../_Inicio/inicio.php');
 		exit;
 	}else{

@@ -15,7 +15,7 @@
 		}
 
 		public function executa_tarefas(){
-	      	if ($this->ultima_execucao >= $this->data_atual) {
+	      	if (strtotime($this->ultima_execucao) >= strtotime($this->data_atual)) {
 	        	return;
 		  	}
 		  	//Atualiza a data de execução.

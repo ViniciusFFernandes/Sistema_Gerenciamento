@@ -151,16 +151,16 @@
 
 	  	}
 
-	  	public function gravarInserir($dados){
+	  	public function gravarInserir($dados, $geraMensagem = false){
 	  		if(!empty($dados['id'])){
-	  			return $this->alterar($dados);
+	  			return $this->alterar($dados, $geraMensagem);
 	  		}else{
 	  			unset($dados['id']);
-	  			return $this->gravar($dados);
+	  			return $this->gravar($dados, $geraMensagem);
 	  		}
 	  	}
 
-		 public function gravar($dados = null){
+		 public function gravar($dados = null, $geraMensagem = false){
 			$campos   = implode(",",array_keys($dados));
 			$valores  = implode(",",array_values($dados));
 			$query = "INSERT INTO " . $this->tabela . " (" .
@@ -173,7 +173,7 @@
 			return $this->executaSQL($query);
 		 }
 
-		 public function alterar($dados = null){
+		 public function alterar($dados = null, $geraMensagem = false){
 			if(!is_null($dados)){
 				$valores = array();
 				foreach($dados as $key=>$value){
@@ -182,19 +182,23 @@
 				$valores = implode(',',$valores);
 				$query = "UPDATE " . $this->tabela . " SET " . $valores . " WHERE " . $this->idtabela . " = " . $dados['id'];
 			    //echo "$query<br>";
-			    $_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
-      			$_SESSION['tipoMsg'] = "info"; 
+			    if($geraMensagem){
+				    $_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
+	      			$_SESSION['tipoMsg'] = "info"; 
+	      		}
 			return $this->executaSQL($query);
 		  }else{
 			return false;
 			}
 		}
 
-		public function excluir($id = null){
+		public function excluir($id = null, $geraMensagem = false{
 				if(!is_null($id)){
 					$query = "DELETE FROM " . $this->tabela . " WHERE " . $this->idtabela . " = " . $id;
-					$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
-    				$_SESSION['tipoMsg'] = "danger";
+					if($geraMensagem){
+						$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
+	    				$_SESSION['tipoMsg'] = "danger";
+					}
 					return $this->executaSQL($query);
 				}
 				else{

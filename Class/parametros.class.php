@@ -24,7 +24,7 @@
 		}
 
 		public function gravaValor($dados){
-			if(intval($dados['id']) > 0){
+			if(is_numeric(str_replace("'", "", $dados['id']))){
 				$campoID = "idparametros";
 			}else{
 				$campoID = "para_nome";

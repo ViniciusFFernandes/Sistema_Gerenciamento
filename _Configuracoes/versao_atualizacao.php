@@ -2,7 +2,7 @@
   include_once("../_BD/conecta_login.php");
   include_once("../Class/atualizacao.class.php");
   
-  $atualizacao = new Atualizacao();
+  $atualizacao = new Atualizacao($db, $parametros, $util);
   $ultimaVersao = $atualizacao->getUltimaVersao();
   $versaoAtual = $parametros->buscaValor("sistema: versao do sistema");
   if($ultimaVersao > $versaoAtual){
