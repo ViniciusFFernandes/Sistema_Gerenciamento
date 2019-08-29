@@ -15,7 +15,7 @@
     <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mask.js"></script>
-    <script src="../js/_Cadastros/pessoas.js"></script>
+    <script src="../js/_Cadastros/produtos.js"></script>
   </head>
   <body>
 
@@ -33,7 +33,7 @@
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
             Cadastro de Produtos
-            <span align="right" data-toggle="modal" title="Buscar pessoas" data-target="#buscaPrduto" style="cursor: pointer;">
+            <span align="right" data-toggle="modal" title="Buscar produtos" data-target="#buscaProdutos" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
             </span>
           </div>
@@ -48,11 +48,11 @@
                 </div>
                 <div class="col-md-3 col-sm-12 col-xs-12">
                   <label for="Grupo">Grupo</label>
-                  ##comboBoxGrupo##
+                  ##comboBoxGrupos##
                 </div>
                 <div class="col-md-3 col-sm-12 col-xs-12">
                   <label for="SubGrupo">SubGrupo</label>
-                  ##comboBoxSubGrupo##
+                  ##comboBoxSubGrupos##
                 </div>
               </div>
               <div class="row">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="SubGrupo">Unidade</label>
-                  ##comboBoxUnidade##
+                  ##comboBoxUnidades##
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="Nome">Qte Estoque</label>
@@ -109,7 +109,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="buscaPessoas" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+<div class="modal fade" id="buscaProdutos" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -121,7 +121,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-        <button type="button" onclick="buscaProduto()" class="btn btn-primary">Buscar</button>
+        <button type="button" onclick="buscaProdutos()" class="btn btn-primary">Buscar</button>
       </div>
     </div>
   </div>
