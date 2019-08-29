@@ -26,8 +26,15 @@ class Tabelas{
 	}
 
 	public function geraTabelaPes($res, $db){
-		 $linhaColorida = false;
-	    $tabela = "<div style='max-height: 350px; overflow: auto;'><table class='table' style='margin-top: 3px'>";
+		$linhaColorida = false;
+	    $tabela = "<div style='max-height: 350px; overflow: auto;'>";
+	    //
+	    if(empty($res)){
+	    	$tabela .= "Nenhum registro encontrado!";
+	    	$escondeTabela = "display: none;";
+	    }
+	    //
+	   	$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}'>";
 	    foreach ($res as $reg) {
 	    	//
 	    	//Monta o nome da cidade com a sigla do estado
@@ -60,7 +67,11 @@ class Tabelas{
 	public function geraTabelaBusca($res, $db, $colunas, $functionAbreReg){
 		$linhaColorida = false;
 	    $tabela = "<div style='max-height: 250px; overflow: auto;'>";
-	    $tabela .= "<table class='table' style='margin-top: 3px'>";
+	    if(empty($res)){
+	    	$tabela .= "Nenhum registro encontrado!";
+	    	$escondeTabela = "display: none;";
+	    }
+	    $tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}' >";
 		foreach ($res as $reg) {
 			//
 			//Define se a linha vai ser de outra cor
