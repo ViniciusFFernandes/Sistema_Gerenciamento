@@ -32,6 +32,7 @@ include_once("../Class/Tabelas.class.php");
   if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("unidades", "idunidades");
 
+    unset($dados);
     $dados['id']         = $_POST['idunidades'];
   	$dados['uni_nome'] 	 = $util->sgr($_POST['uni_nome']);
   	$dados['uni_sigla']  = $util->sgr($_POST['uni_sigla']);
