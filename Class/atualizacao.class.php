@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.05;
+		private $ultimaVersao = 0.07;
 		private $db;
 		private $parametros;
 		private $util;
@@ -60,6 +60,36 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_07(){
+			//
+			// 02/09/2019 Vinicius
+			//
+			$this->parametros->cadastraParametros("empresa: permite trabalhar com estoque negativo", "false", "Parametro usado para bloquear operações de estoque quando o mesmo estiver zerado ou negativo");
+			$this->parametros->cadastraParametros("empresa: libera estoque negativo com senha", "false", "Parametro usado para permitir operações de estoque (negativo ou zerado) com senha");
+			$this->parametros->cadastraParametros("empresa: senha para liberacao do estoque", "senha não informada", "Senha usada para liberação do estoque quando negativo ou zerado");
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para manipulações de estoque";
+		}
+
+		private function versao_00_06(){
+			//
+			// 02/09/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS produtos_formulas(
+						idprodutos_formulas int(11) NOT NULL AUTO_INCREMENT,
+						pfor_idproduto_final int(11) NOT NULL,
+						pfor_idprodutos int(11) NOT NULL,
+						pfor_qte decimal(10,2) NOT NULL,
+						pfor_porc_perca decimal(10,2) NULL,
+						PRIMARY KEY (idprodutos_formulas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela produtos_formulas";
+		}
 
 		private function versao_00_05(){
 			//

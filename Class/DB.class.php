@@ -192,7 +192,7 @@
 			}
 		}
 
-		public function excluir($id = null, $geraMensagem = false{
+		public function excluir($id = null, $geraMensagem = false){
 				if(!is_null($id)){
 					$query = "DELETE FROM " . $this->tabela . " WHERE " . $this->idtabela . " = " . $id;
 					if($geraMensagem){

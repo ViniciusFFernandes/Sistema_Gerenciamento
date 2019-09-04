@@ -16,6 +16,10 @@
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mask.js"></script>
     <script src="../js/_Cadastros/produtos.js"></script>
+    <script>##autoComplete_Produtos##</script>
+    <style>
+      #linhasBusca:hover {color: #4169E1;font-weight: bold;}
+    </style>
   </head>
   <body>
 
@@ -58,21 +62,21 @@
               <div class="row">
                 <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="RG">Tipo</label>
-                  <select name="prod_tipo_produto" class="form-control" id="prod_tipo_produto">
-                    <option ##comboBoxTipo## value="">-----</option>
-                    <option ##comboBoxTipoPR## value="Produto Revenda">Produto Revenda</option>
-                    <option ##comboBoxTipoMP## value="Materia Prima">Matéria Prima</option>
-                    <option ##comboBoxTipoPC## value="Produto para Consumo">Produto para Consumo</option>
-                    <option ##comboBoxTipoPP## value="Producao Propria">Produção Própria</option>
-                    <option ##comboBoxTipoPV## value="Producao para Venda">Produção para Venda</option>
-                    <option ##comboBoxTipoV## value="Veiculo">Veículo</option>
-                    <option ##comboBoxTipoBT## value="Brindes de Terceiros">Brindes de Terceiros</option>
-                    <option ##comboBoxTipoBP## value="Brindes Próprios">Brindes de Próprios</option>
-                    <option ##comboBoxTipoE## value="Embalagem">Embalagem</option>
-                    <option ##comboBoxTipoIP## value="Imobilizado Proprio">Imobilizado Próprio</option>
-                    <option ##comboBoxTipoPAT## value="Terceiros">Produto Adquirido de Terceiros</option>
-                    <option ##comboBoxTipoO## value="Outros">Outros</option>
-                  </select>
+                    <select name="prod_tipo_produto" class="form-control" id="prod_tipo_produto">
+                      <option ##comboBoxTipo## value="">-----</option>
+                      <option ##comboBoxTipoPR## value="Produto Revenda">Produto Revenda</option>
+                      <option ##comboBoxTipoMP## value="Materia Prima">Matéria Prima</option>
+                      <option ##comboBoxTipoPC## value="Produto para Consumo">Produto para Consumo</option>
+                      <option ##comboBoxTipoPP## value="Producao Propria">Produção Própria</option>
+                      <option ##comboBoxTipoPV## value="Producao para Venda">Produção para Venda</option>
+                      <option ##comboBoxTipoV## value="Veiculo">Veículo</option>
+                      <option ##comboBoxTipoBT## value="Brindes de Terceiros">Brindes de Terceiros</option>
+                      <option ##comboBoxTipoBP## value="Brindes Próprios">Brindes de Próprios</option>
+                      <option ##comboBoxTipoE## value="Embalagem">Embalagem</option>
+                      <option ##comboBoxTipoIP## value="Imobilizado Proprio">Imobilizado Próprio</option>
+                      <option ##comboBoxTipoPAT## value="Terceiros">Produto Adquirido de Terceiros</option>
+                      <option ##comboBoxTipoO## value="Outros">Outros</option>
+                    </select>
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="SubGrupo">Unidade</label>
@@ -80,27 +84,25 @@
                 </div>
                 <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="Nome">Qte Estoque</label>
-                  <input type="text" class="form-control" id="prod_qte_estoque" name="prod_qte_estoque" value="##prod_qte_estoque##" placeholder="Estoque" autofocus >
+                  <input type="text" class="form-control" id="prod_qte_estoque" readonly name="prod_qte_estoque" value="##prod_qte_estoque##" placeholder="Estoque" autofocus >
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="margin-bottom: 5px;">
               <div class="col-md-4 col-sm-12 col-xs-12">
                   <label for="Endereço">Preço de Tabela</label>
                   <input type="text" class="form-control" id="prod_preco_tabela" name="prod_preco_tabela" value="##prod_preco_tabela##" placeholder="Preço de Tabela">
               </div>
           </div>
+          ##conteudoFormulas##
             <br>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row" style="margin-bottom: 5px;">
+              <div class="col-md-12 col-sm-12 col-xs-12" align="center">
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-              <!-- <center><button type="button" class="btn btn-success" onclick="testaDados()">Cadastrar-se</button></center> -->
-              <center>
                 <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
                 <button type="button" onclick="novoProduto()" class="btn btn-info">Novo</button>
                 ##btnExcluir##
-              </center>
+              </div>
             </div>
-          </div>
           </form>
         </div>
     </div>

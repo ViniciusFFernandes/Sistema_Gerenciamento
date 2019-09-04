@@ -1,9 +1,16 @@
 ﻿<?php
   include_once("../_BD/conecta_login.php");
-  require_once("../Class/html.class.php");
+  include_once("../Class/html.class.php");
+  include_once("../Class/produtos.class.php");
+  include_once("../Class/autoComplete.class.php");
   //
   //Inicia classes nescessarias
   $html = new html($db, $util);
+  $produtos = new produtos($db, $util);
+  //
+  //Gera o autoComplete 
+  $autoComplete = new autoComplete();
+  $codigo_js = $autoComplete->gerar("produtos", "pfor_idprodutos", "produtos JOIN unidades ON (prod_idunidades = idunidades)", "prod_nome", "idprodutos", "", "WHERE prod_tipo_produto = 'Materia Prima' AND UPPER(prod_nome) LIKE UPPER('##valor##%')");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['idprodutos'])){
@@ -45,6 +52,11 @@
     $comboBoxTipoPAT  = $util->defineSelected("Terceiros", $reg['prod_tipo_produto']);
     $comboBoxTipoO    = $util->defineSelected("Outros", $reg['prod_tipo_produto']);
     //
+    if($reg['prod_tipo_produto'] == "Producao Propria"){
+       $itensFormula = $produtos->getItensFormula($reg['idprodutos']);
+    }
+    //
+   
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -75,6 +87,8 @@
   $html = str_replace("##comboBoxGrupos##", $comboBoxGrupos, $html);
   $html = str_replace("##comboBoxSubGrupos##", $comboBoxSubGrupos, $html);
   $html = str_replace("##comboBoxUnidades##", $comboBoxUnidades, $html);
+  $html = str_replace("##autoComplete_Produtos##", $codigo_js, $html);
+  $html = str_replace("##conteudoFormulas##", $itensFormula, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;
   exit;

@@ -22,7 +22,37 @@ window.setTimeout(function(){
             }, 
           reverse: true
           });
+    $("#pfor_qte").mask("9999999999.99", 
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }, 
+          reverse: true
+          });
+    $("#pfor_porc_perca").mask("9999999999.99", 
+          {translation: {
+              '9': {
+                pattern: /[0-9]/,
+                optional: false
+              }
+            }, 
+          reverse: true
+          });
  });
+
+function mostraFormula(){
+  if($('#formulaCabecalho').is(':visible')){
+    $('#formulaCabecalho').hide();
+    $('#formulaItens').hide();
+    $('#btnExibeFormula').html('<img src="../icones/visivel.png">');
+  }else{
+    $('#formulaCabecalho').show();
+    $('#formulaItens').show();
+    $('#btnExibeFormula').html('<img src="../icones/invisivel.png">');
+  }
+}
 
 function testaDados(){
   // alert('sadnsa');
@@ -52,7 +82,7 @@ function testaDados(){
   $("#cadastro_produtos").submit();
 }
 
-function novaUnidade(){
+function novoProduto(){
   $("#operacao").val('novoCadastro')
   $("#cadastro_produtos").submit();
 }
