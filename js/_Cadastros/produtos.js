@@ -42,15 +42,11 @@ window.setTimeout(function(){
           });
  });
 
-function mostraFormula(){
-  if($('#formulaCabecalho').is(':visible')){
-    $('#formulaCabecalho').hide();
-    $('#formulaItens').hide();
-    $('#btnExibeFormula').html('<img src="../icones/visivel.png">');
+function trocaOlho(visivel){
+  if(visivel){
+    $('#btnMostraEsconde').html('<img src="../icones/visivel.png">');
   }else{
-    $('#formulaCabecalho').show();
-    $('#formulaItens').show();
-    $('#btnExibeFormula').html('<img src="../icones/invisivel.png">');
+    $('#btnMostraEsconde').html('<img src="../icones/invisivel.png">');
   }
 }
 

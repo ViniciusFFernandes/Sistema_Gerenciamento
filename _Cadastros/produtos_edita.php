@@ -52,9 +52,19 @@
     $comboBoxTipoPAT  = $util->defineSelected("Terceiros", $reg['prod_tipo_produto']);
     $comboBoxTipoO    = $util->defineSelected("Outros", $reg['prod_tipo_produto']);
     //
+    //Carrega Tabs
+    $tabs = '<ul class="nav nav-tabs">
+              <li class="active" onclick="trocaOlho(0)"><a data-toggle="tab" href="#divVazia"><span id="btnMostraEsconde"><img src="../icones/invisivel.png"></span></a></li>';
+    if($reg['prod_tipo_produto'] == "Producao Propria"){          
+        $tabs .= '<li onclick="trocaOlho(1)"><a data-toggle="tab" href="#formula">Formula</a></li>';
+            }
+    $tabs .=  '</ul>';
+    $tabs .= '<div class="tab-content">
+                <div id="divVazia" class="tab-pane fade in active"></div>';
     if($reg['prod_tipo_produto'] == "Producao Propria"){
-       $itensFormula = $produtos->getItensFormula($reg['idprodutos']);
+       $tabs .= $produtos->getItensFormula($reg['idprodutos']);
     }
+    $tabs .= '</div>';
     //
    
   }
@@ -88,7 +98,7 @@
   $html = str_replace("##comboBoxSubGrupos##", $comboBoxSubGrupos, $html);
   $html = str_replace("##comboBoxUnidades##", $comboBoxUnidades, $html);
   $html = str_replace("##autoComplete_Produtos##", $codigo_js, $html);
-  $html = str_replace("##conteudoFormulas##", $itensFormula, $html);
+  $html = str_replace("##tabsProdutos##", $tabs, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;
   exit;

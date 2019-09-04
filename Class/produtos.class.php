@@ -9,13 +9,8 @@ class produtos{
 		$this->util = $util;
 	}
 	public function getItensFormula($idprodutos){
-		$itensFormula = '<div class="row" style="margin-bottom: 5px;">
-							<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
-								<b>Formula para Produção</b>
-								<span id="btnExibeFormula" onclick="mostraFormula()" style="cursor: pointer"><img src="../icones/visivel.png"></span>
-							</div>
-						</div>
-				          <div class="row" id="formulaCabecalho" style="margin-bottom: 5px;display:none;">
+		$itensFormula = '<div id="formula" class="tab-pane fade" style="padding-top: 5px;">
+				          <div class="row" id="formulaCabecalho" style="margin-bottom: 5px;">
 				          <div class="col-xs-12 col-md-7 col-sm-7 col-lg-7">
 				            <input type="text" class="form-control" id="produtos" name="produtos" placeholder="Materia Prima">
 				            <input type="hidden" id="pfor_idprodutos" name="pfor_idprodutos">
@@ -31,7 +26,7 @@ class produtos{
 				           <button class="btn btn-default" type="button"><img src="../icones/adiciona.png"></button>
 				          </div>
 				        </div>
-				        <div class="row" id="formulaItens" style="display:none;">
+				        <div class="row" id="formulaItens">
 				          <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">';
 		$sqlFormulas = "SELECT * 
             FROM produtos_formulas 
@@ -54,6 +49,7 @@ class produtos{
 		    $itensFormula .= '</tr>'; 
 	    }
 	    $itensFormula .= '</table>';
+	    $itensFormula .= '</div>';
 	    $itensFormula .= '</div>';
 	    $itensFormula .= '</div>';
 	    //
