@@ -49,8 +49,9 @@ if ($_POST['operacao'] == "logar") {
 		$_SESSION['senha'] 							= $_POST['senha'];
 		$_SESSION['idusuario']				 	    = $resultado['idpessoas'];
 		$_SESSION['mensagem'] 					    = "Logado com sucesso!<br>Bem vindo!!!";
-	    $_SESSION['tipoMsg'] 						    = "success";
-	    $_SESSION['ultima_atividade'] 	= time();
+	    $_SESSION['tipoMsg'] 						= "success";
+	    $_SESSION['ultima_atividade'] 				= time();
+	    $_SESSION['permanece_logado'] 				= $_POST['permanece_logado'];
 		header('Location: ../_Inicio/inicio.php');
 		exit;
 	}else{
@@ -77,13 +78,13 @@ if (!$_SESSION['logado']) {
 	exit;
 }
 
-if ((time() - $_SESSION['ultima_atividade']) > 1800) {
+if (((time() - $_SESSION['ultima_atividade']) > 1800) && !$_SESSION['permanece_logado']) {
     // última atividade foi mais de 10 minutos atrás
     session_unset();     // unset $_SESSION
     session_destroy();   // destroindo session data
 		//
     header('Location: ../index.php');
-		exit;
+	exit;
 }
 
 $_SESSION['ultima_atividade'] = time(); // update ultima ativ.
