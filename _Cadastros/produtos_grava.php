@@ -3,7 +3,34 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaProdutos") {
+if($_POST['operacao'] == 'gravarItem'){
+    $db->setTabela("produtos_formulas", "idprodutos_formulas");
+    //
+    unset($dados);
+    $dados['pfor_idproduto_final']   = $util->igr($_POST['pfor_idproduto_final']);
+    $dados['pfor_idprodutos']       = $util->igr($_POST['pfor_idprodutos']);
+    $dados['pfor_qte']              = $util->vgr($_POST['pfor_qte']);
+    $dados['pfor_porc_perca']       = $util->vgr($_POST['pfor_porc_perca']);
+    //
+    $ret = $db->gravarInserir($dados, false, true);
+    //print_r($ret);
+    //exit;
+    //
+    if($ret['retorno']){
+        $sql = "SELECT prod_nome FROM produtos WHERE idprodutos = {$_POST['pfor_idprodutos']}";
+        $nomeProd = $db->retornaUmCampoSql($sql, "prod_nome");
+        ob_clean();
+        $retorno = "<tr>";
+        $retorno .= "<td>{$_POST['pfor_idprodutos']}</td>";
+        $retorno .= "<td>{$nomeProd}</td>";
+        $retorno .= "<td>{$_POST['pfor_qte']}</td>";
+        $retorno .= "<td>{$_POST['pfor_porc_perca']}%</td>";
+        $retorno .= "</tr>";
+        echo $retorno;
+    }
+}
+
+if ($_POST['operacao'] == "buscaProdutos") {
     $sql = "SELECT * 
             FROM produtos 
               LEFT JOIN unidades ON (prod_idunidades = idunidades) 
@@ -62,6 +89,12 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("produtos", "idprodutos");
     $db->excluir($_POST['idprodutos']);
     header('location:../_Cadastros/produtos_edita.php');
+    exit;
+  }
+
+  if ($_POST['operacao'] == "excluirItemFormula") {
+    $db->setTabela("produtos_formulas", "idprodutos_formulas");
+    $db->excluir($_POST['idItemFormula']);
     exit;
   }
 

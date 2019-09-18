@@ -15,8 +15,7 @@
     <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mask.js"></script>
-    <script src="../js/_Cadastros/forma_pagto.js"></script>
-    <script>##autoComplete_Estados##</script>
+    <script src="../js/_Cadastros/grupos.js"></script>
     <style>
       #linhasBusca:hover {color: #4169E1;font-weight: bold;}
     </style>
@@ -36,40 +35,19 @@
       <div class="panel panel-default" style="border: solid 2px #828282; ">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
-            Cadastro de Forma de Pagamento
-            <span align="right" data-toggle="modal" title="Buscar forma de pagamento" data-target="#buscaFormaPagto" style="cursor: pointer;">
+            Cadastro de Grupos
+            <span align="right" data-toggle="modal" title="Buscar cidades" data-target="#buscaGrupos" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
             </span>
           </div>
         </div>
         <div class="panel-body">
-          <form action="forma_pagto_grava.php" id="cadastro_forma_pagto" method="POST" enctype="multipart/form-data" autocomplete="off">
-            <input type="hidden" name="idforma_pagto" id="idforma_pagto" value="##idforma_pagto##">
+          <form action="grupos_grava.php" id="cadastro_grupos" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <input type="hidden" name="idgrupos" id="idgrupos" value="##idgrupos##">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="Nome">Nome</label>
-                <input type="text" class="form-control" id="forp_nome" name="forp_nome" value="##forp_nome##" placeholder="Nome" autofocus >
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <label for="Estado">Tipo</label>
-                <select name="forp_tipo" id="forp_tipo" class="form-control">
-                  <option ##comboBoxTipo## value="" selected="">----</option>
-                  <option ##comboBoxTipoAV## value="A Vista">A vista</option>
-                  <option ##comboBoxTipoMCE## value="Mensal com Entrada">Mensal com Entrada</option>
-                  <option ##comboBoxTipoMSE## value="Mensal sem Entrada">Mensal sem Entrada</option>
-                  <option ##comboBoxTipoDU## value="Dias Uteis">Dias Uteis</option>
-                  <option ##comboBoxTipoDDL## value="DDL" disabled="disabled">DDL</option>
-                  <option ##comboBoxTipoDI## value="Dias informados">Dias informados</option>
-                  <option ##comboBoxTipoPL## value="Parcelamento Livre">Parcelamento Livre</option>
-                  <option ##comboBoxTipoG## value="Garantia">Garantia</option>
-                  <option ##comboBoxTipoD## value="Devolucao">Devolucao</option>
-                  <option ##comboBoxTipoT## value="Troca">Troca</option>
-                  <option ##comboBoxTipoR## value="Retorno">Retorno</option>
-                  <option ##comboBoxTipoB## value="Bonificacao">Bonificação</option>
-                  <option ##comboBoxTipoCD## value="Condicional">Condicional</option>  
-                  <option ##comboBoxTipoCS## value="Consignacao">Consignação</option>
-                  <option ##comboBoxTipoFM## value="Faturado" disabled="disabled">Faturado Mensalmente</option>
-                </select>
+                <input type="text" class="form-control" id="grup_nome" name="grup_nome" value="##grup_nome##" placeholder="Nome" autofocus >
               </div>
             </div>
             <br>
@@ -78,7 +56,7 @@
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
                 <center>
                   <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
-                  <button type="button" onclick="novaFormaPagto()" class="btn btn-info">Novo</button>
+                  <button type="button" onclick="novoGrupo()" class="btn btn-info">Novo</button>
                   ##btnExcluir##
                 </center>
               </div>
@@ -90,7 +68,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="buscaFormaPagto" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+    <div class="modal fade" id="buscaGrupos" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -102,7 +80,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaforma_pagto()" class="btn btn-primary">Buscar</button>
+            <button type="button" onclick="buscaGrupos()" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>

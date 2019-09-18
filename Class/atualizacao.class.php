@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.07;
+		private $ultimaVersao = 0.09;
 		private $db;
 		private $parametros;
 		private $util;
@@ -38,6 +38,7 @@
 		public function atualizarSistema($versaoAtual){
 			$dados['executaNovamente'] = true;
 			$versaoAtual += 0.01;
+			$versaoFormatada = (str_pad(intval($versaoAtual), 2, "0", STR_PAD_LEFT)) . "." . (str_pad( round(($versaoAtual - intval($versaoAtual)), 2) * 100  , 2, "0", STR_PAD_LEFT));
 			//
 			$versao = '$this->versao_';
 			$versao .= (str_pad(intval($versaoAtual), 2, "0", STR_PAD_LEFT));
@@ -52,7 +53,7 @@
 			}
 			//
 			if($versaoAtual >= $this->ultimaVersao) $dados['executaNovamente'] = false;
-			$dados['novaVersao'] = $versaoAtual;
+			$dados['novaVersao'] = $versaoFormatada;
 			$dados['msg'] = $msg;
 			return $dados;
 		}
@@ -60,6 +61,38 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_09(){
+			//
+			// 18/09/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS meio_pagto(
+						idmeio_pagto int(11) NOT NULL AUTO_INCREMENT,
+						mpag_nome varchar(255) NOT NULL,
+						PRIMARY KEY (idmeio_pagto)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela meio_pagto";
+		}
+
+		private function versao_00_08(){
+			//
+			// 14/09/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS forma_pagto(
+						idforma_pagto int(11) NOT NULL AUTO_INCREMENT,
+						forp_nome varchar(255) NOT NULL,
+						forp_tipo varchar(255) NULL,
+						forp_dias varchar(255) NULL,
+						PRIMARY KEY (idforma_pagto)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela forma_pagto";
+		}
 
 		private function versao_00_07(){
 			//
@@ -129,7 +162,6 @@
 			$sql = "CREATE TABLE IF NOT EXISTS subgrupos(
 						idsubgrupos int(11) NOT NULL AUTO_INCREMENT,
 						subg_nome VARCHAR(255) NOT NULL,
-						subg_descricao TEXT NULL,
 						PRIMARY KEY (idsubgrupos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
 			$this->db->executaSQL($sql);
@@ -145,7 +177,6 @@
 			$sql = "CREATE TABLE IF NOT EXISTS grupos(
 						idgrupos int(11) NOT NULL AUTO_INCREMENT,
 						grup_nome VARCHAR(255) NOT NULL,
-						grup_descricao TEXT NULL,
 						PRIMARY KEY (idgrupos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
 			$this->db->executaSQL($sql);

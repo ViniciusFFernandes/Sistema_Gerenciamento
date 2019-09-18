@@ -126,54 +126,58 @@
 			 return $dados[$campo];
 		}
 
-    public function executaSQL($sql){
+    public function executaSQL($sql, $geraRetorno = false){
 		  $dados = array();
 		  $sql = trim($sql);
 		  //echo $sql;
-		  try{
-			$this->conexao->beginTransaction();
-			$resultado=$this->conexao->query($sql);
-			$this->conexao->commit();
+			try{
+				$this->conexao->beginTransaction();
+				$resultado=$this->conexao->query($sql);
+				$this->conexao->commit();
 			}
-		  catch(PDOException $e) {
-			$this->conexao->rollBack();
-			$resultado = NULL;
-			$mensagem  = $e->getMessage();
-			file_put_contents("erro.log", $mensagem);
+		  	catch(PDOException $e) {
+				$this->conexao->rollBack();
+				$resultado = NULL;
+				$dados['retorno'] = false;
+				$mensagem  = $e->getMessage();
+				file_put_contents("erro.log", $mensagem);
 			}
-		  if ($resultado){
-		   while($row=$resultado->fetch(PDO::FETCH_ASSOC))
-			{
-			  $dados[] = $row;
+			//
+		  	if ($resultado){
+		  		if($geraRetorno)$dados['retorno'] = true;
+		   		while($row=$resultado->fetch(PDO::FETCH_ASSOC)){
+			  		$dados[] = $row;
+				}
 			}
-		  }
 		  return $dados;
 
 	  	}
 
-	  	public function gravarInserir($dados, $geraMensagem = false){
+	  	public function gravarInserir($dados, $geraMensagem = false, $geraRetorno = false){
 	  		if(!empty($dados['id'])){
-	  			return $this->alterar($dados, $geraMensagem);
+	  			return $this->alterar($dados, $geraMensagem, $geraRetorno);
 	  		}else{
 	  			unset($dados['id']);
-	  			return $this->gravar($dados, $geraMensagem);
+	  			return $this->gravar($dados, $geraMensagem, $geraRetorno);
 	  		}
 	  	}
 
-		 public function gravar($dados = null, $geraMensagem = false){
+		 public function gravar($dados = null, $geraMensagem = false, $geraRetorno = false){
 			$campos   = implode(",",array_keys($dados));
 			$valores  = implode(",",array_values($dados));
 			$query = "INSERT INTO " . $this->tabela . " (" .
 					  $campos." ) VALUES ( " . $valores . " ) ";
 			//echo "$query<br>";
 			//exit;
-			$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
-		    $_SESSION['tipoMsg'] = "info";
+			if(geraMensagem){
+				$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
+			    $_SESSION['tipoMsg'] = "info";
+			}
 		    //
-			return $this->executaSQL($query);
+			return $this->executaSQL($query, $geraRetorno);
 		 }
 
-		 public function alterar($dados = null, $geraMensagem = false){
+		 public function alterar($dados = null, $geraMensagem = false, $geraRetorno = false){
 			if(!is_null($dados)){
 				$valores = array();
 				foreach($dados as $key=>$value){
@@ -186,7 +190,7 @@
 				    $_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
 	      			$_SESSION['tipoMsg'] = "info"; 
 	      		}
-			return $this->executaSQL($query);
+			return $this->executaSQL($query, $geraRetorno);
 		  }else{
 			return false;
 			}

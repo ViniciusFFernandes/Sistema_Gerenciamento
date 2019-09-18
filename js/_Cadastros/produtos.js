@@ -42,14 +42,6 @@ window.setTimeout(function(){
           });
  });
 
-function trocaOlho(visivel){
-  if(visivel){
-    $('#btnMostraEsconde').html('<img src="../icones/visivel.png">');
-  }else{
-    $('#btnMostraEsconde').html('<img src="../icones/invisivel.png">');
-  }
-}
-
 function testaDados(){
   // alert('sadnsa');
   // return;
@@ -67,12 +59,12 @@ function testaDados(){
     $("#prod_idunidade").css("border-color", "green");
   }
   //
-  // if($("#prod_idgrupos").val() == ""){
-  //   $("#prod_idgrupos").css("border-color", "red");
-  //   return;
-  // }else{
-  //   $("#prod_idgrupos").css("border-color", "green");
-  // }
+  if($("#prod_idgrupos").val() == ""){
+    $("#prod_idgrupos").css("border-color", "red");
+    return;
+  }else{
+    $("#prod_idgrupos").css("border-color", "green");
+  }
   //
   $("#operacao").val('gravar')
   $("#cadastro_produtos").submit();
@@ -88,6 +80,17 @@ function excluiCadastro(){
   if (result) {
     $("#operacao").val('excluiCad')
     $("#cadastro_produtos").submit();
+  }
+}
+
+function excluirItemFormula(idItemFormula){
+  var result = confirm("Deseja excluir este item?");
+  if (result) {
+    $.post("produtos_grava.php", {operacao: 'excluirItemFormula', idItemFormula: idItemFormula},
+      function(data){
+        $("#itemFormula_" + idItemFormula).remove();
+        alert("Item removido com sucesso!");
+      }, "html");
   }
 }
 
@@ -108,4 +111,32 @@ function zeraBusca(){
 function abreProdutos(id){
   var siteRetorno = 'produtos_edita.php?idprodutos=' + id;
   $(location).attr('href', siteRetorno);
+}
+
+function gravaItensFormula(){
+  var pfor_porc_perca = 0;
+  if($("#idprodutos").val() == ''){
+    alert("Nenhum produto base selecionado!");
+    return;
+  }
+  if($("#pfor_idprodutos").val() == ''){
+    alert("Selecione um item antes de inserir!");
+    return;
+  }
+  if($("#pfor_qte").val() == '' || $("#pfor_qte").val() <= 0){
+    alert("Informe a quantidade!");
+    return;
+  }
+  if($("#pfor_porc_perca").val() > 0){
+    pfor_porc_perca = $("#pfor_porc_perca").val();
+  }
+  $.post("produtos_grava.php",
+        {operacao: 'gravarItem',
+        pfor_idproduto_final: $("#idprodutos").val(),
+        pfor_idprodutos: $("#pfor_idprodutos").val(),
+        pfor_qte: $("#pfor_qte").val(),
+        pfor_porc_perca: pfor_porc_perca},
+        function(data){
+          $("#tableItensFormula").append(data);
+        }, "html");
 }

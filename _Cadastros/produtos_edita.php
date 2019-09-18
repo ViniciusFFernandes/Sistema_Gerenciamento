@@ -54,15 +54,15 @@
     //
     //Carrega Tabs
     $tabs = '<ul class="nav nav-tabs">
-              <li class="active" onclick="trocaOlho(0)"><a data-toggle="tab" href="#divVazia"><span id="btnMostraEsconde"><img src="../icones/invisivel.png"></span></a></li>';
+              <li class="active" ><a data-toggle="tab" href="#divVazia">-</a></li>';
     if($reg['prod_tipo_produto'] == "Producao Propria"){          
-        $tabs .= '<li onclick="trocaOlho(1)"><a data-toggle="tab" href="#formula">Formula</a></li>';
+        $tabs .= '<li><a data-toggle="tab" href="#formula">Formula</a></li>';
             }
     $tabs .=  '</ul>';
     $tabs .= '<div class="tab-content">
-                <div id="divVazia" class="tab-pane fade in active"></div>';
+                <div id="divVazia" class="tab-pane fade "></div>';
     if($reg['prod_tipo_produto'] == "Producao Propria"){
-       $tabs .= $produtos->getItensFormula($reg['idprodutos']);
+       $tabs .= $produtos->getItensFormulaEdita($reg['idprodutos']);
     }
     $tabs .= '</div>';
     //
