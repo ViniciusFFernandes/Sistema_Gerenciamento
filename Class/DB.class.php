@@ -169,7 +169,7 @@
 					  $campos." ) VALUES ( " . $valores . " ) ";
 			//echo "$query<br>";
 			//exit;
-			if(geraMensagem){
+			if($geraMensagem == "true"){
 				$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
 			    $_SESSION['tipoMsg'] = "info";
 			}

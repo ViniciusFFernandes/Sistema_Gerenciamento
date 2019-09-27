@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.09;
+		private $ultimaVersao = 0.11;
 		private $db;
 		private $parametros;
 		private $util;
@@ -61,6 +61,45 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+		
+		private function versao_00_11(){
+			//
+			// 20/09/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS produtcao_itens(
+						idprodutcao_itens int(11) NOT NULL AUTO_INCREMENT,
+						pdci_idproducao int(11) NOT NULL,
+						pdci_idprodutos int(11) NOT NULL,
+						pdci_qte decimal(10,2) NULL,
+						pdci_perca decimal(10,2) NULL,
+						pdci_qte_perca decimal(10,2) NULL,
+						PRIMARY KEY (idprodutcao_itens)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela produtcao_itens";
+		}
+
+		private function versao_00_10(){
+			//
+			// 20/09/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS producao(
+						idproducao int(11) NOT NULL AUTO_INCREMENT,
+						pdc_data_abertura datetime NULL,
+						pdc_data_fechamento datetime NULL,
+						pdc_situacao varchar(255) NOT NULL DEFAULT 'Aberta',
+						pdc_idprodutos Iint NOT NULL,
+						pdc_qte_produzida decimal(10,2) NULL,
+						pdc_calcula_automatico varchar(5) NOT NULL DEFAULT 'SIM',
+						PRIMARY KEY (idproducao)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela producao";
+		}
 
 		private function versao_00_09(){
 			//
