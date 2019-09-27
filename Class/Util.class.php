@@ -48,6 +48,8 @@ class Util{
 					}
 
 				return "'" . $dataFormatada . "'";
+		}else{
+			return "NULL";
 		}
 	}
 
@@ -60,7 +62,7 @@ class Util{
 						$dataFormatada .= " " . $string[1];
 					}
 				}else {
-					return "NULL";
+					return "";
 				}
 				return $dataFormatada;
 	}
