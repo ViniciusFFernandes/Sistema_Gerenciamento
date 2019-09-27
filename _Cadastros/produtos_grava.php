@@ -14,7 +14,7 @@ if($_POST['operacao'] == 'gravarItem'){
     //
     $ret = $db->gravarInserir($dados, false, true);
     //print_r($ret);
-    //exit;
+    // exit;
     //
     if($ret['retorno']){
         $sql = "SELECT prod_nome FROM produtos WHERE idprodutos = {$_POST['pfor_idprodutos']}";
@@ -25,6 +25,7 @@ if($_POST['operacao'] == 'gravarItem'){
         $retorno .= "<td>{$nomeProd}</td>";
         $retorno .= "<td>{$_POST['pfor_qte']}</td>";
         $retorno .= "<td>{$_POST['pfor_porc_perca']}%</td>";
+        $retorno .= "<td onclick='excluirItemFormula({$db->getUltimoID()})' style='cursor: pointer;'><img src='../icones/excluir.png'></td>";
         $retorno .= "</tr>";
         echo $retorno;
     }
