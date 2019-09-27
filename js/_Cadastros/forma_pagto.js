@@ -24,23 +24,23 @@ function testaDados(){
   $("#cadastro_forma_pagto").submit();
 }
 
-function novaCidade(){
+function novaFormaPagto(){
   $("#operacao").val('novoCadastro')
-  $("#cadastro_cidades").submit();
+  $("#cadastro_forma_pagto").submit();
 }
 
 function excluiCadastro(){
   var result = confirm("Não é indicado excluir uma cidade!\n\nDeseja excluir este cadastro?");
   if (result) {
     $("#operacao").val('excluiCad')
-    $("#cadastro_cidades").submit();
+    $("#cadastro_forma_pagto").submit();
   }
 }
 
-function buscaCidades(){
+function buscaforma_pagto(){
   var _pesquisa = $("#pesquisa").val();
-  $.post("cidades_grava.php",
-  {operacao: "buscaCidades", pesquisa: _pesquisa},
+  $.post("forma_pagto_grava.php",
+  {operacao: "buscaFormaPagto", pesquisa: _pesquisa},
   function(result){
     $("#pesquisa").val("");
     $("#resultBusca").html(result);
@@ -51,7 +51,7 @@ function zeraBusca(){
   $("#resultBusca").html("");
 }
 
-function abreCidades(id){
-  var siteRetorno = 'cidades_edita.php?idcidades=' + id;
+function abreFormaPagto(id){
+  var siteRetorno = 'forma_pagto_edita.php?idforma_pagto=' + id;
   $(location).attr('href', siteRetorno);
 }
