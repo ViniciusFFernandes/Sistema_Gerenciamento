@@ -57,5 +57,38 @@ class produtos{
 	    //
 	   	return $itensFormula;
 	}
+
+	public function getItensFormula($idprodutos){
+		$itensFormula = '<div class="row" id="formulaItens">
+				          <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">';
+		$sqlFormulas = "SELECT * 
+            FROM produtos_formulas 
+              LEFT JOIN produtos ON (pfor_idprodutos = idprodutos) 
+            WHERE pfor_idproduto_final = {$idprodutos}";
+	    $resFormulas = $this->db->consultar($sqlFormulas);
+	    $itensFormula .= '<table class="table" id="tableItensFormula">';
+		$itensFormula .= '<tr>';
+		$itensFormula .= '<td width="10%">Cod.</td>';
+		$itensFormula .= '<td>Nome</td>';
+		$itensFormula .= '<td width="15%">Qte</td>';
+		$itensFormula .= '<td width="15%">Perca</td>';
+		$itensFormula .= '<td width="3%">&nbsp;</td>';
+		$itensFormula .= '</tr>';  
+	    foreach ($resFormulas as $regFormulas) {
+	        $itensFormula .= "<tr id='itemFormula_" . $regFormulas["idprodutos_formulas"] . "'>";
+		    $itensFormula .= "<td>{$regFormulas["idprodutos"]}</td>";
+		    $itensFormula .= "<td>{$regFormulas["prod_nome"]}</td>";
+		    $itensFormula .= "<td>{$regFormulas["pfor_qte"]}</td>";
+		    $itensFormula .= "<td>{$regFormulas["pfor_porc_perca"]}%</td>";
+		    $itensFormula .= "<td onclick='excluirItemFormula({$regFormulas["idprodutos_formulas"]})' style='cursor: pointer;'><img src='../icones/excluir.png'></td>";
+		    $itensFormula .= "</tr>"; 
+	    }
+	    $itensFormula .= '</table>';
+	    $itensFormula .= '</div>';
+	    $itensFormula .= '</div>';
+	    $itensFormula .= '</div>';
+	    //
+	   	return $itensFormula;
+	}
 }
 ?>
