@@ -4,7 +4,7 @@ include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
   if ($_POST['operacao'] == "buscaProducao") {
-    $sql = "SELECT * 
+    $sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(pdc_data_abertura, '%Y-%m-%d'), '%d/%m/%Y') as pdc_abertura
             FROM producao 
               LEFT JOIN produtos ON (idprodutos = pdc_idprodutos)";
 
@@ -28,35 +28,40 @@ include_once("../Class/Tabelas.class.php");
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/producao_edita.php');
+    header('location:../_Lancamentos/producao_edita.php');
     exit;
     }
 
   if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("producao", "idproducao");
     //
+    if(empty($_POST['pdc_data_abertura'])){
+      $dataAbertura = " NOW() ";
+    }else{
+      $dataAbertura = $util->dgr($_POST['pdc_data_abertura']);
+    }
+    //
     $dados['id']                      = $_POST['idproducao'];
-  	$dados['idproducao'] 			        = $util->igr($_POST['idproducao']);
-  	$dados['pdc_data_abertura']       = $util->dgr($_POST['pdc_data_abertura']);
+  	$dados['pdc_data_abertura']       = $dataAbertura;
     $dados['pdc_data_fechamento']     = $util->dgr($_POST['pdc_data_fechamento']);
     $dados['pdc_idprodutos']          = $util->igr($_POST['pdc_idprodutos']);
     $dados['pdc_qte_produzida']       = $util->vgr($_POST['pdc_qte_produzida']);
     $dados['pdc_calcula_automatico']  = $util->sgr($_POST['pdc_calcula_automatico']);
     $db->gravarInserir($dados, true);
     //
-  	if ($_POST['idcidades'] > 0) {
-  		$id = $_POST['idcidades'];
+  	if ($_POST['idproducao'] > 0) {
+  		$id = $_POST['idproducao'];
     }else{
   		$id = $db->getUltimoID();
   }
-    header('location: ../_Cadastros/cidades_edita.php?idcidades=' . $id);
+    header('location: ../_Lancamentos/producao_edita.php?idproducao=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("cidades", "idcidades");
-    $db->excluir($_POST['idcidades'], true);
-    header('location:../_Cadastros/cidades_edita.php');
+    $db->setTabela("producao", "idproducao");
+    $db->excluir($_POST['idproducao'], true);
+    header('location:../_Lancamentos/producao_edita.php');
     exit;
   }
 

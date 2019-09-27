@@ -15,7 +15,7 @@
     <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="../js/bootstrap.min.js"></script>
     <script src="../js/jquery.mask.js"></script>
-    <script src="../js/_Cadastros/cidades.js"></script>
+    <script src="../js/_Lancamentos/producao.js"></script>
     <script>##autoComplete_Produto##</script>
     <style>
       #linhasBusca:hover {color: #4169E1;font-weight: bold;}
@@ -36,10 +36,12 @@
       <div class="panel panel-default" style="border: solid 2px #828282; ">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
+            <div style="float: right;">##pdc_situacao##</div>
             Produção
             <span align="right" data-toggle="modal" title="Buscar produção" data-target="#buscaProducao" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
             </span>
+            
           </div>
         </div>
         <div class="panel-body">
@@ -97,7 +99,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="buscaCidades" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+    <div class="modal fade" id="buscaProducao" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -109,7 +111,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaCidades()" class="btn btn-primary">Buscar</button>
+            <button type="button" onclick="buscaProducao()" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>
