@@ -66,7 +66,7 @@
 			//
 			// 20/09/2019 Vinicius
 			//
-			$sql = "CREATE TABLE IF NOT EXISTS produtcao_itens(
+			$sql = "CREATE TABLE IF NOT EXISTS producao_itens(
 						idprodutcao_itens int(11) NOT NULL AUTO_INCREMENT,
 						pdci_idproducao int(11) NOT NULL,
 						pdci_idprodutos int(11) NOT NULL,
@@ -78,7 +78,7 @@
 			$this->db->executaSQL($sql);
 			//
 			//Mensagem para o usuario
-			return "Criação da tabela produtcao_itens";
+			return "Criação da tabela producao_itens";
 		}
 
 		private function versao_00_10(){
@@ -90,7 +90,7 @@
 						pdc_data_abertura datetime NULL,
 						pdc_data_fechamento datetime NULL,
 						pdc_situacao varchar(255) NOT NULL DEFAULT 'Aberta',
-						pdc_idprodutos Iint NOT NULL,
+						pdc_idprodutos int NOT NULL,
 						pdc_qte_produzida decimal(10,2) NULL,
 						pdc_calcula_automatico varchar(5) NOT NULL DEFAULT 'SIM',
 						PRIMARY KEY (idproducao)
