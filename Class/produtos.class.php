@@ -58,8 +58,9 @@ class produtos{
 	   	return $itensFormula;
 	}
 
-	public function getItensFormula($idprodutos){
+	public function getItensFormula($idprodutos, $qteProduzir){
 		$itensFormula = '<div class="row" id="formulaItens">
+						<label style="margin-left: 15px;">Itens a serem consumidos</label>
 				          <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">';
 		$sqlFormulas = "SELECT * 
             FROM produtos_formulas 
@@ -72,15 +73,14 @@ class produtos{
 		$itensFormula .= '<td>Nome</td>';
 		$itensFormula .= '<td width="15%">Qte</td>';
 		$itensFormula .= '<td width="15%">Perca</td>';
-		$itensFormula .= '<td width="3%">&nbsp;</td>';
 		$itensFormula .= '</tr>';  
 	    foreach ($resFormulas as $regFormulas) {
+			$qteConsumir = ($qteProduzir * $regFormulas["pfor_qte"]);
 	        $itensFormula .= "<tr id='itemFormula_" . $regFormulas["idprodutos_formulas"] . "'>";
 		    $itensFormula .= "<td>{$regFormulas["idprodutos"]}</td>";
 		    $itensFormula .= "<td>{$regFormulas["prod_nome"]}</td>";
-		    $itensFormula .= "<td>{$regFormulas["pfor_qte"]}</td>";
+		    $itensFormula .= "<td>{$qteConsumir}</td>";
 		    $itensFormula .= "<td>{$regFormulas["pfor_porc_perca"]}%</td>";
-		    $itensFormula .= "<td onclick='excluirItemFormula({$regFormulas["idprodutos_formulas"]})' style='cursor: pointer;'><img src='../icones/excluir.png'></td>";
 		    $itensFormula .= "</tr>"; 
 	    }
 	    $itensFormula .= '</table>';

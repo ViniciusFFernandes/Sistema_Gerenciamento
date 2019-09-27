@@ -21,6 +21,7 @@
   if(!empty($reg['idproducao'])){ 
     //
     $produtos = new produtos($db, $util);
+    $itensFormula = $produtos->getItensFormula($reg['pdc_idprodutos'], $reg['pdc_qte_produzida']);
     //
     if($reg['pdc_calcula_automatico'] == 'SIM'){
       $pdc_calcula_automatico = 'checked="checked"';
@@ -36,18 +37,18 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("cadastros");
+  $html = $util->buscaHtml("lancamentos");
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
   $html = str_replace("##idproducao##", $reg['idproducao'], $html);
   $html = str_replace("##pdc_situacao##", $pdc_situacao, $html);
   $html = str_replace("##pdc_data_abertura##", $util->convertData($reg['pdc_data_abertura']), $html);
   $html = str_replace("##pdc_data_fechamento##", $util->convertData($reg['pdc_data_fechamento']), $html);
-  $html = str_replace("##pdc_produtos##", $reg['pdc_produtos'], $html);
+  $html = str_replace("##pdc_produtos##", $reg['prod_nome'], $html);
   $html = str_replace("##pdc_idprodutos##", $reg['pdc_idprodutos'], $html);
   $html = str_replace("##pdc_qte_produzida##", $reg['pdc_qte_produzida'], $html);
   $html = str_replace("##pdc_calcula_automatico##", $pdc_calcula_automatico, $html);
-  $html = str_replace("##ItensProducao##", '', $html);
+  $html = str_replace("##ItensProducao##", $itensFormula, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;
   exit;
