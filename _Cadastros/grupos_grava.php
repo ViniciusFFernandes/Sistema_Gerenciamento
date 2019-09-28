@@ -46,7 +46,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos", "idgrupos");
-    $db->excluir($_POST['idgrupos'], true);
+    $db->excluir($_POST['idgrupos'], "Excluir");
     header('location:../_Cadastros/grupos_edita.php');
     exit;
   }

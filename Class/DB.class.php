@@ -12,14 +12,12 @@
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */
 
-		function __construct($host, $porta, $usudb, $senhadb, $nomedb){
+		function __construct($host, $porta, $usudb, $senhadb, $nomedb, $util){
 			$this->host = $host;
 			$this->porta = $porta;
 			$this->nomedb = $nomedb;
 			$this->usudb = $usudb;
 			$this->senhadb = $senhadb;
-
-
 		}
 
 		public function conectar(){
@@ -126,7 +124,7 @@
 			 return $dados[$campo];
 		}
 
-    public function executaSQL($sql, $geraRetorno = false){
+    public function executaSQL($sql, $geraRetorno = false, $tipoMsg = ''){
 		  $dados = array();
 		  $sql = trim($sql);
 		  //echo $sql;
@@ -134,6 +132,7 @@
 				$this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
 				$this->conexao->commit();
+				if(!empty($tipoMsg)) $this->geraMensagem($tipoMsg);
 			}
 		  	catch(PDOException $e) {
 				$this->conexao->rollBack();
@@ -141,6 +140,7 @@
 				$dados['retorno'] = false;
 				$mensagem  = $e->getMessage();
 				file_put_contents("erro.log", $mensagem);
+				
 			}
 			//
 		  	if ($resultado){
@@ -154,30 +154,29 @@
 	  	}
 
 	  	public function gravarInserir($dados, $geraMensagem = false, $geraRetorno = false){
+			$tipoMsg = '';
 	  		if(!empty($dados['id'])){
-	  			return $this->alterar($dados, $geraMensagem, $geraRetorno);
+				if($geraMensagem) $tipoMsg = "Alterar";
+	  			return $this->alterar($dados, $tipoMsg, $geraRetorno);
 	  		}else{
+				if($geraMensagem) $tipoMsg = "Inserir";
 	  			unset($dados['id']);
-	  			return $this->gravar($dados, $geraMensagem, $geraRetorno);
+	  			return $this->gravar($dados, $tipoMsg, $geraRetorno);
 	  		}
 	  	}
 
-		 public function gravar($dados = null, $geraMensagem = false, $geraRetorno = false){
+		 public function gravar($dados = null, $tipoMsg = false, $geraRetorno = false){
 			$campos   = implode(",",array_keys($dados));
 			$valores  = implode(",",array_values($dados));
 			$query = "INSERT INTO " . $this->tabela . " (" .
 					  $campos." ) VALUES ( " . $valores . " ) ";
 			//echo "$query<br>";
 			//exit;
-			if($geraMensagem == "true"){
-				$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
-			    $_SESSION['tipoMsg'] = "info";
-			}
 		    //
-			return $this->executaSQL($query, $geraRetorno);
+			return $this->executaSQL($query, $geraRetorno, $tipoMsg);
 		 }
 
-		 public function alterar($dados = null, $geraMensagem = false, $geraRetorno = false){
+		 public function alterar($dados = null, $tipoMsg = false, $geraRetorno = false){
 			if(!is_null($dados)){
 				$valores = array();
 				foreach($dados as $key=>$value){
@@ -186,24 +185,17 @@
 				$valores = implode(',',$valores);
 				$query = "UPDATE " . $this->tabela . " SET " . $valores . " WHERE " . $this->idtabela . " = " . $dados['id'];
 			    //echo "$query<br>";
-			    if($geraMensagem){
-				    $_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
-	      			$_SESSION['tipoMsg'] = "info"; 
-	      		}
-			return $this->executaSQL($query, $geraRetorno);
+			    
+			return $this->executaSQL($query, $geraRetorno, $tipoMsg);
 		  }else{
 			return false;
 			}
 		}
 
-		public function excluir($id = null, $geraMensagem = false){
+		public function excluir($id = null, $tipoMsg = ""){
 				if(!is_null($id)){
 					$query = "DELETE FROM " . $this->tabela . " WHERE " . $this->idtabela . " = " . $id;
-					if($geraMensagem){
-						$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
-	    				$_SESSION['tipoMsg'] = "danger";
-					}
-					return $this->executaSQL($query);
+					return $this->executaSQL($query, false, $tipoMsg);
 				}
 				else{
 					return false;
@@ -222,6 +214,25 @@
 			}
 
 			return $telefone;
+		}
+
+		private function geraMensagem($tipoMsg){
+			switch($tipoMsg){
+				case 'Inserir':
+					$_SESSION['mensagem'] = "Cadastro efetuada com sucesso!";
+			    	$_SESSION['tipoMsg'] = "info";
+					break;
+				case 'Alterar':
+					$_SESSION['mensagem'] = "Alteração efetuado com sucesso!";
+	      			$_SESSION['tipoMsg'] = "info";
+					break;
+				case 'Excluir':
+					$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
+	    			$_SESSION['tipoMsg'] = "danger";
+					break;	
+				default:
+					break;
+			}
 		}
 
 		private function criaBanco($nomeBD, $host, $user){

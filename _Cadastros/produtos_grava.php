@@ -50,7 +50,7 @@ if ($_POST['operacao'] == "buscaProdutos") {
     $dados['idprodutos'] = "width='6%'";
     $dados['prod_nome'] = "";
     $dados['uni_sigla'] = "width='10%'";
-    $dados['grup_nome'] = "width='10%'";
+    $dados['grup_nome'] = "width='20%'";
     //
     $tabelas->geraTabelaBusca($res, $db, $dados, "abreProdutos");
     exit;
@@ -88,7 +88,7 @@ if ($_POST['operacao'] == "buscaProdutos") {
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("produtos", "idprodutos");
-    $db->excluir($_POST['idprodutos']);
+    $db->excluir($_POST['idprodutos'], "Excluir");
     header('location:../_Cadastros/produtos_edita.php');
     exit;
   }

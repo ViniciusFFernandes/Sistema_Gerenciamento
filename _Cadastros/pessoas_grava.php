@@ -96,7 +96,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
-    $db->excluir($_POST['idpessoas'], true);
+    $db->excluir($_POST['idpessoas'], "Excluir");
     header('location:../_Cadastros/pessoas_edita.php');
     exit;
   }

@@ -46,7 +46,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("meio_pagto", "idmeio_pagto");
-    $db->excluir($_POST['idmeio_pagto'], true);
+    $db->excluir($_POST['idmeio_pagto'], "Excluir");
     header('location:../_Cadastros/meio_pagto_edita.php');
     exit;
   }

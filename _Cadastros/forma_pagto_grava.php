@@ -47,7 +47,7 @@ include_once("../Class/Tabelas.class.php");
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("forma_pagto", "idforma_pagto");
-    $db->excluir($_POST['idforma_pagto'], true);
+    $db->excluir($_POST['idforma_pagto'], "Excluir");
     header('location:../_Cadastros/forma_pagto_edita.php');
     exit;
   }
