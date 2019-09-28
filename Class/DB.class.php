@@ -12,7 +12,7 @@
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */
 
-		function __construct($host, $porta, $usudb, $senhadb, $nomedb,){
+		function __construct($host, $porta, $usudb, $senhadb, $nomedb){
 			$this->host = $host;
 			$this->porta = $porta;
 			$this->nomedb = $nomedb;
