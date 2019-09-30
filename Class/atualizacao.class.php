@@ -137,8 +137,8 @@
 			//
 			// 02/09/2019 Vinicius
 			//
-			$this->parametros->cadastraParametros("empresa: permite trabalhar com estoque negativo", "false", "Parametro usado para bloquear operações de estoque quando o mesmo estiver zerado ou negativo");
-			$this->parametros->cadastraParametros("empresa: libera estoque negativo com senha", "false", "Parametro usado para permitir operações de estoque (negativo ou zerado) com senha");
+			$this->parametros->cadastraParametros("empresa: permite trabalhar com estoque negativo", "NAO", "Parametro usado para bloquear operações de estoque quando o mesmo estiver zerado ou negativo");
+			$this->parametros->cadastraParametros("empresa: libera estoque negativo com senha", "NAO", "Parametro usado para permitir operações de estoque (negativo ou zerado) com senha");
 			$this->parametros->cadastraParametros("empresa: senha para liberacao do estoque", "senha não informada", "Senha usada para liberação do estoque quando negativo ou zerado");
 			//
 			//Mensagem para o usuario
@@ -174,7 +174,7 @@
 						prod_idsubgrupos int(11) NULL,
 						prod_idunidades int(11) NULL,
 						prod_tipo_produto VARCHAR(255) NULL,
-						prod_qte_estoque decimal(10,2) NULL,
+						prod_qte_estoque decimal(10,2) NOT NULL DEFAULT 0,
 						prod_preco_tabela decimal(10,2) NULL,
 						PRIMARY KEY (idprodutos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";

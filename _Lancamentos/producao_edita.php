@@ -1,7 +1,7 @@
 ﻿<?php
   include_once("../_BD/conecta_login.php");
   include_once("../Class/autoComplete.class.php");
-  include_once("../Class/produtos.class.php");
+  include_once("../Class/producao.class.php");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['idproducao'])){
@@ -17,11 +17,12 @@
   $codigo_js = $autoComplete->gerar("pdc_produtos", "pdc_idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%') AND prod_tipo_produto = 'Producao Propria'");
   //
   //Monta variaveis de exibição
+  $btnGravar = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
   $pdc_calcula_automatico = 'checked="checked"';
   if(!empty($reg['idproducao'])){ 
     //
-    $produtos = new produtos($db, $util);
-    $itensFormula = $produtos->getItensFormula($reg['pdc_idprodutos'], $reg['pdc_qte_produzida']);
+    $producao = new producao($db, $util);
+    $itensFormula = $producao->getItensProducao($reg['idproducao']);
     //
     if($reg['pdc_calcula_automatico'] == 'SIM'){
       $pdc_calcula_automatico = 'checked="checked"';
@@ -29,6 +30,13 @@
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     $pdc_situacao = "Situação: " . $reg['pdc_situacao'];
+    //
+    if($reg['pdc_situacao'] == 'Aberta'){
+      $btnFecharReabrir = '<button type="button" onclick="testaDados(\'fechar\')" class="btn btn-warning">Fechar</button>';
+    }elseif($reg['pdc_situacao'] == 'Fechada'){
+      $btnFecharReabrir = '<button type="button" onclick="testaDados(\'reabrir\')" class="btn btn-warning">Reabrir</button>';
+      $btnGravar = '';
+    }
   }
 
   if (isset($_SESSION['mensagem'])) {
@@ -49,7 +57,9 @@
   $html = str_replace("##pdc_qte_produzida##", $reg['pdc_qte_produzida'], $html);
   $html = str_replace("##pdc_calcula_automatico##", $pdc_calcula_automatico, $html);
   $html = str_replace("##ItensProducao##", $itensFormula, $html);
+  $html = str_replace("##btnGravar##", $btnGravar, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
+  $html = str_replace("##btnFecharReabrir##", $btnFecharReabrir, $html);
   echo $html;
   exit;
 ?>

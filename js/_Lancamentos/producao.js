@@ -1,10 +1,10 @@
 
 window.setTimeout(function(){
     document.getElementById("botao_alerta").click();
-}, 6000);
+}, 5000);
 
 
-function testaDados(){
+function testaDados(operacao){
     if($("#pdc_idprodutos").val() <= 0){
         alert("Selecione um item para produzir!");
         $("#pdc_produtos").focus();
@@ -15,20 +15,20 @@ function testaDados(){
         $("#pdc_qte_produzida").focus();
         return;
     }
-    $("#operacao").val('gravar');
+    $("#operacao").val(operacao);
     $("#cadastro_producao").submit();
 }
 
 function excluiCadastro() {
     var result = confirm("Não é indicado excluir uma producao!\n\nDeseja excluir este cadastro?");
     if (result) {
-        $("#operacao").val('excluiCad')
+        $("#operacao").val('excluiCad');
         $("#cadastro_producao").submit();
     }
 }
 
 function novaProducao() {
-    $("#operacao").val('novoCadastro')
+    $("#operacao").val('novoCadastro');
     $("#cadastro_producao").submit();
 }
 

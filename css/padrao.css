@@ -4,6 +4,17 @@
   font-family: cursive;
 }
 
+.divMsg{
+  margin: 10px; 
+  position: absolute;
+  z-index: 9999; 
+  width: 100%
+}
+
+#linhasBusca:hover {
+  color: #4169E1;
+}
+
 .campoMoney{
   direction: rtl;
 }
@@ -92,4 +103,9 @@
 
 .conteudo{
   padding-top: 70px;
+}
+
+.idAutoComplementar{
+  background-color: #eeeeee;
+  border: 0px;
 }

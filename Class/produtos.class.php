@@ -11,10 +11,14 @@ class produtos{
 	public function getItensFormulaEdita($idprodutos){
 		$itensFormula = '<div id="formula" class="tab-pane fade" style="padding-top: 5px;">
 				          <div class="row" id="formulaCabecalho">
-				          <div class="col-xs-12 col-md-7 col-sm-7 col-lg-7" style="margin-bottom: 5px;" align="right">
-				            <input type="text" class="form-control" id="produtos" name="produtos" placeholder="Materia Prima">
-				            <input type="hidden" id="pfor_idprodutos" name="pfor_idprodutos">
-				          </div>
+						  <div class="col-xs-12 col-md-7 col-sm-7 col-lg-7" style="margin-bottom: 5px;" align="right">
+						  	<div class="input-group">
+								<input type="text" class="form-control" id="produtos" name="produtos" placeholder="Materia Prima">
+								<span class="input-group-addon" style="padding: 0x 6px;">
+				            		<input type="text" class="idAutoComplementar" size="2" readonly id="pfor_idprodutos" name="pfor_idprodutos">
+								</span>  
+							</div>
+						  </div>
 				          <div class="col-xs-4 col-md-2 col-sm-2 col-lg-2" style="margin-bottom: 5px;" align="right;">
 				            <input type="text" class="form-control" id="pfor_qte" name="pfor_qte" placeholder="Qte">
 				            <span id="prod_uni"></span>

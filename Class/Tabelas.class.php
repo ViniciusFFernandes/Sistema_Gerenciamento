@@ -47,10 +47,11 @@ class Tabelas{
 				if ($linhaColorida) {$tabela .= " class='info'";}
 				$tabela .= ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasBusca">
 	        <td width="6%">' . $reg['idpessoas'] . '</td>
-	        <td width="25%">' . $reg['pess_nome'] . '</td>
-	        <td width="25%">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
-	        <td>' . $reg['pess_endereco'] . '</td>
-	        <td>' . $cidadeEstado . '</td>
+	        <td>' . $reg['pess_nome'] . ' <br> <i class="visible-xs" style="font-size: 13px;">' . $db->retornaUmTel($reg['idpessoas']) . '</i> </td>
+	        <td width="25%" class="hidden-xs">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
+	        <td class="hidden-xs">' . $reg['pess_endereco'] . '</td>
+	        <td width="40%" class="visible-xs">' . $cidadeEstado . '</td>
+	        <td class="hidden-xs">' . $cidadeEstado . '</td>
 	      </tr>';
 			if ($linhaColorida) {
 		    $linhaColorida = false;

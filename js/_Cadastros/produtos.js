@@ -4,15 +4,6 @@ window.setTimeout(function(){
 }, 6000);
 
  $(document).ready(function(){
-    $("#prod_qte_estoque").mask("9999999999.99", 
-          {translation: {
-              '9': {
-                pattern: /[0-9]/,
-                optional: false
-              }
-            }, 
-          reverse: true
-          }); 
     $("#prod_preco_tabela").mask("9999999999.99", 
           {translation: {
               '9': {

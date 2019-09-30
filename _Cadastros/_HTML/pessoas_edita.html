@@ -18,22 +18,18 @@
     <script src="../js/_Cadastros/pessoas.js"></script>
     <script>##autoComplete_Cidades##</script>
   </head>
-  <style>
-    #linhasBusca:hover {color: #4169E1;font-weight: bold;}
-  </style>
   <body>
 
     <div>
      ##Menu##
     </div>
-<div class="container conteudo">
-      <div class="row" style="margin: 1px;">
-        <div class="col-md-4 col-sm-1"></div>
-        <div class="col-md-4 col-sm-10">##Mensagem##</div>
-        <div class="col-md-4 col-sm-1"></div>
-      </div>
-
-            <div class="panel panel-default" style="border: solid 2px #828282; ">
+    <div class="row divMsg">
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+      <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+    </div>
+    <div class="container conteudo">
+      <div class="panel panel-default" style="border: solid 2px #828282; ">
               <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
                 <div class="panel-title">
                   Cadastro de Pessoas
@@ -89,8 +85,12 @@
                 <div class="row">
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <label for="Cidade">Cidade</label>
-                      <input type="text" class="form-control" id="pess_cidades" name="pess_cidades" value="##pess_cidades##" placeholder="Cidade">
-                      <input type="hidden" id="pess_idcidades" name="pess_idcidades" value="##pess_idcidades##">
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="pess_cidades" name="pess_cidades" value="##pess_cidades##" placeholder="Cidade">
+                        <span class="input-group-addon" style="padding: 0x 6px;">
+                          <input type="text" class="idAutoComplementar" size="2" readonly id="pess_idcidades" name="pess_idcidades" value="##pess_idcidades##">
+                        </span>
+                      </div>
                   </div>
                   <div class="col-md-6 col-sm-6 col-xs-12">
                       <label for="CEP">CEP</label>

@@ -12,11 +12,11 @@ if($_POST['operacao'] == 'gravarItem'){
     $dados['pfor_qte']              = $util->vgr($_POST['pfor_qte']);
     $dados['pfor_porc_perca']       = $util->vgr($_POST['pfor_porc_perca']);
     //
-    $ret = $db->gravarInserir($dados, false, true);
+    $db->gravarInserir($dados, false, true);
     //print_r($ret);
     // exit;
     //
-    if($ret['retorno']){
+    if(!$db->erro()){
         $sql = "SELECT prod_nome FROM produtos WHERE idprodutos = {$_POST['pfor_idprodutos']}";
         $nomeProd = $db->retornaUmCampoSql($sql, "prod_nome");
         ob_clean();
@@ -50,7 +50,7 @@ if ($_POST['operacao'] == "buscaProdutos") {
     $dados['idprodutos'] = "width='6%'";
     $dados['prod_nome'] = "";
     $dados['uni_sigla'] = "width='10%'";
-    $dados['grup_nome'] = "width='20%'";
+    $dados['grup_nome'] = "width='25%'";
     //
     $tabelas->geraTabelaBusca($res, $db, $dados, "abreProdutos");
     exit;

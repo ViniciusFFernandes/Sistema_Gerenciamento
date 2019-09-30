@@ -82,17 +82,33 @@
 			return $this->executaSQL($sql);
 		}
 
+		public function beginTransaction(){
+			$this->conexao->beginTransaction();
+		}
+
+		public function commit(){
+			$this->conexao->commit();
+		}
+
+		public function rollBack(){
+			$this->conexao->rollBack();
+		}
+
+		public function erro(){
+			return $this->erro;
+		}
+
 		public function retornaUmReg($sql){
 			//echo $sql;
 			$sql = trim($sql);
 			//echo $sql;
 			try{
-				$this->conexao->beginTransaction();
+				// $this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
-				$this->conexao->commit();
+				// $this->conexao->commit();
 			}
 			catch(PDOException $e) {
-				$this->conexao->rollBack();
+				// $this->conexao->rollBack();
 				$resultado = NULL;
 				$mensagem  = $e->getMessage();
 				file_put_contents("erro.log", $mensagem);
@@ -108,12 +124,12 @@
 			$sql = trim($sql);
 			//echo $sql;
 			try{
-				$this->conexao->beginTransaction();
+				// $this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
-				$this->conexao->commit();
+				// $this->conexao->commit();
 			}
 			catch(PDOException $e) {
-				$this->conexao->rollBack();
+				// $this->conexao->rollBack();
 				$resultado = NULL;
 				$mensagem  = $e->getMessage();
 				file_put_contents("erro.log", $mensagem);
@@ -124,27 +140,30 @@
 			 return $dados[$campo];
 		}
 
-    public function executaSQL($sql, $geraRetorno = false, $tipoMsg = ''){
+    public function executaSQL($sql, $tipoMsg = ''){
 		  $dados = array();
 		  $sql = trim($sql);
 		  //echo $sql;
+		  $this->erro = '';
 			try{
-				$this->conexao->beginTransaction();
+				// $this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
-				$this->conexao->commit();
+				// $this->conexao->commit();
+				$this->erro = false;
 				if(!empty($tipoMsg)) $this->geraMensagem($tipoMsg);
 			}
 		  	catch(PDOException $e) {
-				$this->conexao->rollBack();
+				// $this->conexao->rollBack();
 				$resultado = NULL;
-				$dados['retorno'] = false;
+				$this->erro = true;
+				//$dados['retorno'] = false;
 				$mensagem  = $e->getMessage();
 				file_put_contents("erro.log", $mensagem);
 				
 			}
 			//
 		  	if ($resultado){
-		  		if($geraRetorno)$dados['retorno'] = true;
+		  		//if($geraRetorno)$dados['retorno'] = true;
 		   		while($row=$resultado->fetch(PDO::FETCH_ASSOC)){
 			  		$dados[] = $row;
 				}
@@ -153,19 +172,19 @@
 
 	  	}
 
-	  	public function gravarInserir($dados, $geraMensagem = false, $geraRetorno = false){
+	  	public function gravarInserir($dados, $geraMensagem = false){
 			$tipoMsg = '';
 	  		if(!empty($dados['id'])){
 				if($geraMensagem) $tipoMsg = "Alterar";
-	  			return $this->alterar($dados, $tipoMsg, $geraRetorno);
+	  			return $this->alterar($dados, $tipoMsg);
 	  		}else{
 				if($geraMensagem) $tipoMsg = "Inserir";
 	  			unset($dados['id']);
-	  			return $this->gravar($dados, $tipoMsg, $geraRetorno);
+	  			return $this->gravar($dados, $tipoMsg);
 	  		}
 	  	}
 
-		 public function gravar($dados = null, $tipoMsg = false, $geraRetorno = false){
+		 public function gravar($dados = null, $tipoMsg = false){
 			$campos   = implode(",",array_keys($dados));
 			$valores  = implode(",",array_values($dados));
 			$query = "INSERT INTO " . $this->tabela . " (" .
@@ -173,10 +192,10 @@
 			//echo "$query<br>";
 			//exit;
 		    //
-			return $this->executaSQL($query, $geraRetorno, $tipoMsg);
+			return $this->executaSQL($query, $tipoMsg);
 		 }
 
-		 public function alterar($dados = null, $tipoMsg = false, $geraRetorno = false){
+		 public function alterar($dados = null, $tipoMsg = false){
 			if(!is_null($dados)){
 				$valores = array();
 				foreach($dados as $key=>$value){
@@ -186,7 +205,7 @@
 				$query = "UPDATE " . $this->tabela . " SET " . $valores . " WHERE " . $this->idtabela . " = " . $dados['id'];
 			    //echo "$query<br>";
 			    
-			return $this->executaSQL($query, $geraRetorno, $tipoMsg);
+			return $this->executaSQL($query, $tipoMsg);
 		  }else{
 			return false;
 			}

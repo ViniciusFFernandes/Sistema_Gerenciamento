@@ -17,23 +17,19 @@
     <script src="../js/jquery.mask.js"></script>
     <script src="../js/_Lancamentos/producao.js"></script>
     <script>##autoComplete_Produto##</script>
-    <style>
-      #linhasBusca:hover {color: #4169E1;font-weight: bold;}
-    </style>
   </head>
   <body>
 
     <div>
      ##Menu##
     </div>
+    <div class="row divMsg">
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+      <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+    </div>
     <div class="container conteudo">
-      <div class="row" style="margin: 1px;">
-        <div class="col-md-4 col-sm-1"></div>
-        <div class="col-md-4 col-sm-10">##Mensagem##</div>
-        <div class="col-md-4 col-sm-1"></div>
-      </div>
-
-      <div class="panel panel-default" style="border: solid 2px #828282; ">
+      <div class="panel panel-default" style="border: solid 2px #828282;">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
             <div style="float: right;">##pdc_situacao##</div>
@@ -65,8 +61,13 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-8">
                 <label for="Produto">Produto</label>
-                <input type="text" class="form-control" id="pdc_produtos" name="pdc_produtos" value="##pdc_produtos##">
-                <input type="hidden" id="pdc_idprodutos" name="pdc_idprodutos" value="##pdc_idprodutos##">
+                <div class="input-group">
+                  <input type="text" class="form-control" id="pdc_produtos" name="pdc_produtos" value="##pdc_produtos##">
+                  <span class="input-group-addon" style="padding: 0x 6px;">
+                    <input type="text" class="idAutoComplementar" size="2" readonly id="pdc_idprodutos" name="pdc_idprodutos" value="##pdc_idprodutos##">
+                  </span>
+                </div>
+                
               </div>
               <div class="col-md-2 col-sm-2 col-xs-4">
                 <label for="Qte">Qte</label>
@@ -79,9 +80,16 @@
               <div class="col-md-12 col-sm-12 col-xs-12" >
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
                 <center>
-                  <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
+                  ##btnGravar##
                   <button type="button" onclick="novaProducao()" class="btn btn-info">Novo</button>
                   ##btnExcluir##
+                </center>
+              </div>
+            </div>
+            <div class="row" style="margin-bottom: 5px;">
+              <div class="col-md-12 col-sm-12 col-xs-12" >
+                <center>
+                  ##btnFecharReabrir##
                 </center>
               </div>
             </div>
