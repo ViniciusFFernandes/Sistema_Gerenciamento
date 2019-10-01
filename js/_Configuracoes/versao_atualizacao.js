@@ -7,12 +7,19 @@
             {operacao: 'atualizarSistema'},
             function(data){
               //console.log(data);
-              $("#versaoAtualSistema").html(data.novaVersao);
+              if(data.executado){
+                $("#versaoAtualSistema").html(data.novaVersao);
+              }
               $("#relatorioAtualizacao").prepend('<div class="row"><div class="col-md-12 col-sm-12 col-xs-12"><b>Versão: ' + parseFloat(data.novaVersao) + '</b><br><p>' + data.msg + '</p></div></div>');
               if(data.executaNovamente){
                 atualizarSistema();
               }else{
-                $("#btnAtualizar").html("Sistema atualizado com sucesso!");
+                if(data.executado){
+                  $("#btnAtualizar").html("Sistema atualizado com sucesso!");
+                }else{
+                  $("#btnAtualizar").html("Erro ao executar a versão " + data.novaVersao + ", verifique o erro e tente novamente!");
+                }
+               
               }
             }, 'json')
     }

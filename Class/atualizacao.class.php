@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.11;
+		private $ultimaVersao = 0.13;
 		private $db;
 		private $parametros;
 		private $util;
@@ -55,6 +55,12 @@
 			if($versaoAtual >= $this->ultimaVersao) $dados['executaNovamente'] = false;
 			$dados['novaVersao'] = $versaoFormatada;
 			$dados['msg'] = $msg;
+			$dados['executado'] = true;
+			if($this->db->erro()){
+				$dados['executaNovamente'] = false;
+				$dados['executado'] = false;
+				$dados['msg'] = "Erro: " . $this->db->getErro();
+			}
 			return $dados;
 		}
 
@@ -62,6 +68,50 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 		
+		private function versao_00_13(){
+			//
+			// 01/10/2019 Vinicius
+			//
+			$sql = "CREATE TRIGGER produtos_movto_insert 
+						AFTER INSERT 
+						ON produtos_movto
+					   FOR EACH ROW
+							BEGIN
+								IF NEW.prmv_maismenos = '+' THEN
+									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque + NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;	 	 
+								END IF;
+								
+								IF NEW.prmv_maismenos = '-' THEN
+									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque - NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;
+								END IF;	 												
+					END";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da TRIGGER para movimento de produtos";
+		}
+
+		private function versao_00_12(){
+			//
+			// 01/10/2019 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS produtos_movto(
+						idprodutos_movto int(11) NOT NULL AUTO_INCREMENT,
+						prmv_idprodutos int(11) NOT NULL,
+						prmv_data datetime NOT NULL,
+						prmv_idoperador int(11) NOT NULL,
+						prmv_idorigem int(11) NOT NULL,
+						prmv_origem varchar(255) NOT NULL,
+						prmv_qte decimal(10,2) NULL,
+						prmv_maismenos varchar(2) NULL,
+						PRIMARY KEY (idprodutos_movto)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela produtos_movto";
+		}
+
 		private function versao_00_11(){
 			//
 			// 20/09/2019 Vinicius
@@ -174,7 +224,7 @@
 						prod_idsubgrupos int(11) NULL,
 						prod_idunidades int(11) NULL,
 						prod_tipo_produto VARCHAR(255) NULL,
-						prod_qte_estoque decimal(10,2) NULL,
+						prod_qte_estoque decimal(10,2) NOT NULL DEFAULT '0.00',
 						prod_preco_tabela decimal(10,2) NULL,
 						PRIMARY KEY (idprodutos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
