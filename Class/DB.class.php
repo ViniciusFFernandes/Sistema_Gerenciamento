@@ -8,6 +8,7 @@
 		private $conexao;
 		private $tabela;
 		private $idtabela;
+		private $msgErro;
 
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */
@@ -22,10 +23,14 @@
 
 		public function conectar(){
 			try{	
-				$dados = "mysql:host=" . $this->host;
-				$dados = $dados . ";port=" . $this->porta;
-				$dados = $dados . ";dbname=" . $this->nomedb;
-				$this->conexao = new PDO($dados, $this->usudb, $this->senhadb);   // pdo php data objectve, classe generica pra banco de dados
+				if(!isset($this->conexao)){
+					$dados = "mysql:host=" . $this->host;
+					$dados = $dados . ";port=" . $this->porta;
+					$dados = $dados . ";dbname=" . $this->nomedb;
+					$this->conexao = new PDO($dados, $this->usudb, $this->senhadb, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));   // pdo php data objectve, classe generica pra banco de dados
+					$this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					$this->conexao->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+				}
 			}catch(PDOException $e){
 				if(preg_match('/Unknown database/', $e->getMessage())){
 					//Cria o banco e suas tabelas
@@ -34,10 +39,26 @@
 					echo 'ERROR: ' . $e->getMessage();
 				}
 			}
-			$this->executaSQL("SET NAMES 'utf8'");
-			$this->executaSQL('SET character_set_connection=utf8');
-			$this->executaSQL('SET character_set_client=utf8');
-			$this->executaSQL('SET character_set_results=utf8');
+		}
+
+		public function beginTransaction(){
+			$this->conexao->beginTransaction();
+		}
+
+		public function commit(){
+			$this->conexao->commit();
+		}
+
+		public function rollBack(){
+			$this->conexao->rollBack();
+		}
+
+		public function erro(){
+			return $this->erro;
+		}
+
+		public function getErro(){
+			return $this->msgErro;
 		}
 
 		public function setTabela($tabela, $idtabela){
@@ -78,40 +99,41 @@
 		}
 
 		public function consultar($sql){
-			//echo $sql;
-			return $this->executaSQL($sql);
-		}
-
-		public function beginTransaction(){
-			$this->conexao->beginTransaction();
-		}
-
-		public function commit(){
-			$this->conexao->commit();
-		}
-
-		public function rollBack(){
-			$this->conexao->rollBack();
-		}
-
-		public function erro(){
-			return $this->erro;
+		  	$sql = trim($sql);
+		  	$this->erro = '';
+		  	$this->msgErro = '';
+			try{
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$dados = $query->fetchAll(PDO::FETCH_ASSOC);
+				$this->erro = false;
+			}catch(PDOException $e) {
+				$resultado = NULL;
+				$this->erro = true;
+				$this->msgErro = $e->getMessage();
+				$mensagem  = $e->getMessage();
+				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
+				
+			}
+			//
+			//print_r($dados);
+		  return $dados;
 		}
 
 		public function retornaUmReg($sql){
-			//echo $sql;
+			$this->erro = '';
+			$this->msgErro = '';
 			$sql = trim($sql);
-			//echo $sql;
 			try{
-				// $this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
-				// $this->conexao->commit();
+				$this->erro = false;
 			}
 			catch(PDOException $e) {
-				// $this->conexao->rollBack();
 				$resultado = NULL;
+				$this->erro = true;
+				$this->msgErro = $e->getMessage();
 				$mensagem  = $e->getMessage();
-				file_put_contents("erro.log", $mensagem);
+				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
 			 if ($resultado){
 			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
@@ -120,19 +142,19 @@
 		}
 
 		public function retornaUmCampoSql($sql, $campo){
-			//echo $sql;
+			$this->erro = '';
+			$this->msgErro = '';
 			$sql = trim($sql);
-			//echo $sql;
 			try{
-				// $this->conexao->beginTransaction();
 				$resultado=$this->conexao->query($sql);
-				// $this->conexao->commit();
+				$this->erro = false;
 			}
 			catch(PDOException $e) {
-				// $this->conexao->rollBack();
 				$resultado = NULL;
+				$this->erro = true;
+				$this->msgErro = $e->getMessage();
 				$mensagem  = $e->getMessage();
-				file_put_contents("erro.log", $mensagem);
+				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
 			 if ($resultado){
 			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
@@ -143,33 +165,21 @@
     public function executaSQL($sql, $tipoMsg = ''){
 		  $dados = array();
 		  $sql = trim($sql);
-		  //echo $sql;
 		  $this->erro = '';
+		  $this->msgErro = '';
 			try{
-				// $this->conexao->beginTransaction();
-				$resultado=$this->conexao->query($sql);
-				// $this->conexao->commit();
+				$qry = $this->conexao->prepare($sql);
+				$resultado = $qry->execute();
 				$this->erro = false;
 				if(!empty($tipoMsg)) $this->geraMensagem($tipoMsg);
-			}
-		  	catch(PDOException $e) {
-				// $this->conexao->rollBack();
+			}catch(PDOException $e) {
 				$resultado = NULL;
 				$this->erro = true;
-				//$dados['retorno'] = false;
+				$this->msgErro = $e->getMessage();
 				$mensagem  = $e->getMessage();
-				file_put_contents("erro.log", $mensagem);
+				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 				
 			}
-			//
-		  	if ($resultado){
-		  		//if($geraRetorno)$dados['retorno'] = true;
-		   		while($row=$resultado->fetch(PDO::FETCH_ASSOC)){
-			  		$dados[] = $row;
-				}
-			}
-		  return $dados;
-
 	  	}
 
 	  	public function gravarInserir($dados, $geraMensagem = false){
@@ -214,7 +224,7 @@
 		public function excluir($id = null, $tipoMsg = ""){
 				if(!is_null($id)){
 					$query = "DELETE FROM " . $this->tabela . " WHERE " . $this->idtabela . " = " . $id;
-					return $this->executaSQL($query, false, $tipoMsg);
+					return $this->executaSQL($query, $tipoMsg);
 				}
 				else{
 					return false;
