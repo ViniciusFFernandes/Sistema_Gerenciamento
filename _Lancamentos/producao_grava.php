@@ -74,6 +74,10 @@ include_once("../Class/producao.class.php");
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("producao", "idproducao");
     $db->excluir($_POST['idproducao'], "Excluir");
+    if($db->erro()){
+        $util->mostraErro("Erro ao excluir producao<br>Operação cancelada!");
+        exit;
+    }
     header('location:../_Lancamentos/producao_edita.php');
     exit;
   }

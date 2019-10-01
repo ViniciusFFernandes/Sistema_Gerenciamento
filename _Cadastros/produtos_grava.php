@@ -89,6 +89,10 @@ if ($_POST['operacao'] == "buscaProdutos") {
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("produtos", "idprodutos");
     $db->excluir($_POST['idprodutos'], "Excluir");
+    if($db->erro()){
+        $util->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
+        exit;
+    }
     header('location:../_Cadastros/produtos_edita.php');
     exit;
   }

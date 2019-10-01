@@ -97,6 +97,10 @@ include_once("../Class/Tabelas.class.php");
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
     $db->excluir($_POST['idpessoas'], "Excluir");
+    if($db->erro()){
+        $util->mostraErro("Erro ao excluir pessoa<br>Operação cancelada!");
+        exit;
+    }
     header('location:../_Cadastros/pessoas_edita.php');
     exit;
   }

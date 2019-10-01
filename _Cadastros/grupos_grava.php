@@ -47,6 +47,10 @@ include_once("../Class/Tabelas.class.php");
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos", "idgrupos");
     $db->excluir($_POST['idgrupos'], "Excluir");
+    if($db->erro()){
+        $util->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
+        exit;
+    }
     header('location:../_Cadastros/grupos_edita.php');
     exit;
   }

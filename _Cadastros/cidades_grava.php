@@ -51,6 +51,10 @@ include_once("../Class/Tabelas.class.php");
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("cidades", "idcidades");
     $db->excluir($_POST['idcidades'], "Excluir");
+    if($db->erro()){
+        $util->mostraErro("Erro ao excluir cidade<br>Operação cancelada!");
+        exit;
+    }
     header('location:../_Cadastros/cidades_edita.php');
     exit;
   }
