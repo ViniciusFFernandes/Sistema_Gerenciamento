@@ -2,6 +2,7 @@
 include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 include_once("../Class/producao.class.php");
+include_once("../Class/estoque.class.php");
 // print_r($_REQUEST);
 // exit;
   if ($_POST['operacao'] == "buscaProducao") {
@@ -83,6 +84,9 @@ if ($_POST['operacao'] == "excluiCad") {
   }
 
 if ($_POST['operacao'] == 'fechar'){
+  //
+  $estoque = new estoque($db, $util);
+  //
   $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['idproducao']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Fechada"){
         $util->mostraErro("Esta produção já está fechada!");
@@ -104,38 +108,15 @@ if ($_POST['operacao'] == 'fechar'){
       exit;
     }
     //
-    $db->setTabela("produtos", "idprodutos");
+    //Gera o movimento de estoque
+    $estoque->geraMovimento($reg['pdci_idprodutos'], "-", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
     //
-    unset($dados);
-    $dados['id']                = $reg['pdci_idprodutos'];
-  	$dados['prod_qte_estoque'] 	= $util->vgr($novoEstoque);
-    //
-    $db->gravarInserir($dados, true);
-    if($db->erro()){
-      $db->rollBack();
-      $util->mostraErro("Erro ao redefinir estoque!<br>Operação cancelada!");
-      exit;
-    }
   }
   $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['idproducao']}";
   $reg = $db->retornaUmReg($sql);
   //
-  $sql = "SELECT prod_qte_estoque FROM produtos WHERE idprodutos = {$reg['pdc_idprodutos']}";
-  $qteEstoque = $db->retornaUmCampoSql($sql, "prod_qte_estoque");
-  $novoEstoque = $reg['pdc_qte_produzida'] + $qteEstoque;
-  //
-  $db->setTabela("produtos", "idprodutos");
-  //
-  unset($dados);
-  $dados['id']                = $reg['pdc_idprodutos'];
-  $dados['prod_qte_estoque'] 	= $util->vgr($novoEstoque);
-  //
-  $db->gravarInserir($dados, true);
-   if($db->erro()){
-      $db->rollBack();
-      $util->mostraErro("Erro ao redefinir estoque!<br>Operação cancelada!");
-      exit;
-    }
+  //Gera o movimento de estoque
+  $estoque->geraMovimento($reg['pdc_idprodutos'], "+", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
   //
   $db->setTabela("producao", "idproducao");
   //
@@ -156,6 +137,9 @@ if ($_POST['operacao'] == 'fechar'){
 }
 
 if ($_POST['operacao'] == 'reabrir'){
+  //
+  $estoque = new estoque($db, $util);
+  //
   $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['idproducao']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Aberta"){
         $util->mostraErro("Esta produção já está aberta!");
@@ -168,22 +152,10 @@ if ($_POST['operacao'] == 'reabrir'){
   $sql = "SELECT * FROM producao_itens WHERE pdci_idproducao = {$_POST['idproducao']}";
   $res = $db->consultar($sql);
   foreach ($res as $reg) {
-    $sql = "SELECT prod_qte_estoque FROM produtos WHERE idprodutos = {$reg['pdci_idprodutos']}";
-    $qteEstoque = $db->retornaUmCampoSql($sql, "prod_qte_estoque");
-    $novoEstoque = $qteEstoque + $reg['pdci_qte'];
     //
-    $db->setTabela("produtos", "idprodutos");
+    //Gera o movimento de estoque
+    $estoque->geraMovimento($reg['pdci_idprodutos'], "+", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
     //
-    unset($dados);
-    $dados['id']                = $reg['pdci_idprodutos'];
-  	$dados['prod_qte_estoque'] 	= $util->vgr($novoEstoque);
-    //
-    $db->gravarInserir($dados, true);
-    if($db->erro()){
-      $db->rollBack();
-      $util->mostraErro("Erro ao redefinir estoque!<br>Operação cancelada!");
-      exit;
-    }
   }
   $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['idproducao']}";
   $reg = $db->retornaUmReg($sql);
@@ -197,18 +169,8 @@ if ($_POST['operacao'] == 'reabrir'){
     exit;
   }
   //
-  $db->setTabela("produtos", "idprodutos");
-  //
-  unset($dados);
-  $dados['id']                = $reg['pdc_idprodutos'];
-  $dados['prod_qte_estoque'] 	= $util->vgr($novoEstoque);
-  //
-  $db->gravarInserir($dados, true);
-   if($db->erro()){
-      $db->rollBack();
-      $util->mostraErro("Erro ao redefinir estoque!<br>Operação cancelada!");
-      exit;
-    }
+  //Gera o movimento de estoque
+  $estoque->geraMovimento($reg['pdc_idprodutos'], "-", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
   //
   $db->setTabela("producao", "idproducao");
   //
