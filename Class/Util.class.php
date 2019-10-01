@@ -77,7 +77,7 @@ class Util{
 	      			<div class="panel-heading">Ops! Tivemos algum probleminha.</div>
 	      			<div class="panel-body">
 	      	 			<span style="color: red;">Mas não se desespere!</span><br>
-	        			ERRO: <br>' . $mensagem . '
+	        			ERRO: ' . $mensagem . '
 	      			</div>
 	      			<div class="panel-footer">' ;
 	    if ($link != "") {
