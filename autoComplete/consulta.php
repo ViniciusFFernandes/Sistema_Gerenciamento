@@ -15,7 +15,7 @@
 	$sql .= " LIMIT {$_POST['qteLimit']}";
 	//echo $sql;
 	//
-	$dados = $db->executaSQL($sql);
+	$dados = $db->consultar($sql);
 	$json = json_encode($dados);
 	echo $json;
 	exit;
