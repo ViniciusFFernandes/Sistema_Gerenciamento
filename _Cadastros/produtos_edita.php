@@ -10,7 +10,7 @@
   //
   //Gera o autoComplete 
   $autoComplete = new autoComplete();
-  $codigo_js = $autoComplete->gerar("produtos", "pfor_idprodutos", "produtos JOIN unidades ON (prod_idunidades = idunidades)", "prod_nome", "idprodutos", "", "WHERE prod_tipo_produto = 'Materia Prima' AND UPPER(prod_nome) LIKE UPPER('##valor##%')");
+  $codigo_js = $autoComplete->gerar("produtos", "pfor_idprodutos", "produtos LEFT JOIN unidades ON (prod_idunidades = idunidades)", "prod_nome", "idprodutos", "", "WHERE prod_tipo_produto = 'Materia Prima' AND UPPER(prod_nome) LIKE UPPER('##valor##%')");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['idprodutos'])){

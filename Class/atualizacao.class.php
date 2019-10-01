@@ -174,7 +174,7 @@
 						prod_idsubgrupos int(11) NULL,
 						prod_idunidades int(11) NULL,
 						prod_tipo_produto VARCHAR(255) NULL,
-						prod_qte_estoque decimal(10,2) NOT NULL DEFAULT 0,
+						prod_qte_estoque decimal(10,2) NULL,
 						prod_preco_tabela decimal(10,2) NULL,
 						PRIMARY KEY (idprodutos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
