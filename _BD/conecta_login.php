@@ -46,7 +46,6 @@ if ($_POST['operacao'] == "logar") {
 		//
 		$_SESSION['logado'] 						= true;
 		$_SESSION['user'] 							= $_POST['usuario'];
-		$_SESSION['senha'] 							= $_POST['senha'];
 		$_SESSION['idusuario']				 	    = $resultado['idpessoas'];
 	    $_SESSION['ultima_atividade'] 				= time();
 	    $_SESSION['permanece_logado'] 				= $_POST['permanece_logado'];
