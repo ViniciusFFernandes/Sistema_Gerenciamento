@@ -86,6 +86,7 @@
 			$query = $this->conexao->query($sql);
 			$query->execute();
 			$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+			$query->closeCursor();
 			return $resultado;
 		}
 
@@ -95,6 +96,7 @@
 			$query = $this->conexao->query($sql);
 			$query->execute();
 			$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+			$query->closeCursor();
 			return $resultado[$nomeID];
 		}
 
@@ -106,6 +108,7 @@
 				$query = $this->conexao->query($sql);
 				$query->execute();
 				$dados = $query->fetchAll(PDO::FETCH_ASSOC);
+				$query->closeCursor();
 				$this->erro = false;
 			}catch(PDOException $e) {
 				$resultado = NULL;
@@ -125,8 +128,10 @@
 			$this->msgErro = '';
 			$sql = trim($sql);
 			try{
-				$resultado=$this->conexao->query($sql);
-				$this->erro = false;
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+				$query->closeCursor();
 			}
 			catch(PDOException $e) {
 				$resultado = NULL;
@@ -135,10 +140,7 @@
 				$mensagem  = $e->getMessage();
 				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
-			 if ($resultado){
-			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
-			  }
-			 return $dados;
+		 	return $resultado;
 		}
 
 		public function retornaUmCampoSql($sql, $campo){
@@ -146,8 +148,12 @@
 			$this->msgErro = '';
 			$sql = trim($sql);
 			try{
-				$resultado=$this->conexao->query($sql);
-				$this->erro = false;
+				// $resultado=$this->conexao->query($sql);
+				// $this->erro = false;
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+				$query->closeCursor();
 			}
 			catch(PDOException $e) {
 				$resultado = NULL;
@@ -156,10 +162,8 @@
 				$mensagem  = $e->getMessage();
 				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
-			 if ($resultado){
-			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
-			  }
-			 return $dados[$campo];
+
+			return $resultado[$campo];
 		}
 
     public function executaSQL($sql, $tipoMsg = ''){
@@ -168,12 +172,10 @@
 		  $this->erro = '';
 		  $this->msgErro = '';
 			try{
-				$qry = $this->conexao->prepare($sql);
-				$resultado = $qry->execute();
+				$this->conexao->exec($sql);
 				$this->erro = false;
 				if(!empty($tipoMsg)) $this->geraMensagem($tipoMsg);
 			}catch(PDOException $e) {
-				$resultado = NULL;
 				$this->erro = true;
 				$this->msgErro = $e->getMessage();
 				$mensagem  = $e->getMessage();
@@ -235,11 +237,11 @@
 			$sql = "SELECT * FROM pessoas_numeros WHERE pnum_idpessoas = " . $idpessoas . " LIMIT 1";
 			$res = $this->conexao->query($sql);
 			$res->execute();
-			$reg = $res->fetch(PDO::FETCH_ASSOC);
-			if ($reg['pnum_DDD'] != "") {
-				$telefone = "(" . $reg['pnum_DDD'] . ") " .  $reg['pnum_numero'];
+			$reg = $res->fetchAll(PDO::FETCH_ASSOC);
+			if ($reg[0]['pnum_DDD'] != "") {
+				$telefone = "(" . $reg[0]['pnum_DDD'] . ") " .  $reg[0]['pnum_numero'];
 			}else{
-				$telefone = $reg['pnum_numero'];
+				$telefone = $reg[0]['pnum_numero'];
 			}
 
 			return $telefone;

@@ -78,7 +78,7 @@
 					   FOR EACH ROW
 							BEGIN
 								IF NEW.prmv_maismenos = '+' THEN
-									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque + NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;	 	 
+									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque + NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos; 
 								END IF;
 								
 								IF NEW.prmv_maismenos = '-' THEN
