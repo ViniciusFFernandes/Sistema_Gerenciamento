@@ -4,6 +4,7 @@ class Util{
 
 	public function sgr($string){
 		if ($string != "") {
+			$string = str_replace("'", "''", $string);
           	return "'" . $string . "'";
         }else{
           	return "NULL";

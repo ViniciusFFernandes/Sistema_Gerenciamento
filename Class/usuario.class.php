@@ -22,9 +22,9 @@ class Usuario{
 
    public function testaLogin($db, $util, $novoUser, $idpessoas){
       $db->setTabela("pessoas");
-      $where = "pess_usuario = " . $util->sgr($novoUser) . " AND idpessoas <> " . $idpessoas;
-      $res = $db->consultar($where, "idpessoas");
-      foreach ( $res as $reg) {
+      $sql = "SELECT * FROM pessoas WHERE pess_usuario = " . $util->sgr($novoUser) . " AND idpessoas <> " . $idpessoas;
+      $res = $db->consultar($sql);
+      foreach ($res as $reg) {
         if($reg['idpessoas'] > 0){
           $existe = true;
         }
