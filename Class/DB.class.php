@@ -27,7 +27,7 @@
 					$dados = "mysql:host=" . $this->host;
 					$dados = $dados . ";port=" . $this->porta;
 					$dados = $dados . ";dbname=" . $this->nomedb;
-					$this->conexao = new PDO($dados, $this->usudb, $this->senhadb, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));   // pdo php data objectve, classe generica pra banco de dados
+					$this->conexao = new PDO($dados, $this->usudb, $this->senhadb, array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));   // pdo php data objectve, classe generica pra banco de dados
 					$this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$this->conexao->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 				}
@@ -85,8 +85,9 @@
 			// hibrido da linguagem php com sql
 			$query = $this->conexao->query($sql);
 			$query->execute();
-			$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
-			return $resultado;
+			$resultado = $query->fetchAll(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+			$query->closeCursor();
+			return $resultado[0];
 		}
 
 		public function getUltimoID(){
@@ -94,8 +95,9 @@
 			$sql = "SELECT " . $nomeID . " FROM " . $this->tabela . " ORDER BY " . $nomeID . " DESC LIMIT 1";
 			$query = $this->conexao->query($sql);
 			$query->execute();
-			$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
-			return $resultado[$nomeID];
+			$resultado = $query->fetchAll(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+			$query->closeCursor();
+			return $resultado[0][$nomeID];
 		}
 
 		public function consultar($sql){
@@ -106,6 +108,7 @@
 				$query = $this->conexao->query($sql);
 				$query->execute();
 				$dados = $query->fetchAll(PDO::FETCH_ASSOC);
+				$query->closeCursor();
 				$this->erro = false;
 			}catch(PDOException $e) {
 				$resultado = NULL;
@@ -125,7 +128,10 @@
 			$this->msgErro = '';
 			$sql = trim($sql);
 			try{
-				$resultado=$this->conexao->query($sql);
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$dados = $query->fetchAll(PDO::FETCH_ASSOC);
+				$query->closeCursor();
 				$this->erro = false;
 			}
 			catch(PDOException $e) {
@@ -135,10 +141,7 @@
 				$mensagem  = $e->getMessage();
 				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
-			 if ($resultado){
-			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
-			  }
-			 return $dados;
+			return $dados[0];
 		}
 
 		public function retornaUmCampoSql($sql, $campo){
@@ -146,7 +149,10 @@
 			$this->msgErro = '';
 			$sql = trim($sql);
 			try{
-				$resultado=$this->conexao->query($sql);
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$dados = $query->fetchAll(PDO::FETCH_ASSOC);
+				$query->closeCursor();
 				$this->erro = false;
 			}
 			catch(PDOException $e) {
@@ -156,20 +162,17 @@
 				$mensagem  = $e->getMessage();
 				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
 			}
-			 if ($resultado){
-			   	$dados = $resultado->fetch(PDO::FETCH_ASSOC);
-			  }
-			 return $dados[$campo];
+			 return $dados[0][$campo];
 		}
 
     public function executaSQL($sql, $tipoMsg = ''){
-		  $dados = array();
 		  $sql = trim($sql);
 		  $this->erro = '';
 		  $this->msgErro = '';
 			try{
-				$qry = $this->conexao->prepare($sql);
-				$resultado = $qry->execute();
+				$query = $this->conexao->prepare($sql);
+				$resultado = $query->execute();
+				$query->closeCursor();
 				$this->erro = false;
 				if(!empty($tipoMsg)) $this->geraMensagem($tipoMsg);
 			}catch(PDOException $e) {
@@ -235,11 +238,12 @@
 			$sql = "SELECT * FROM pessoas_numeros WHERE pnum_idpessoas = " . $idpessoas . " LIMIT 1";
 			$res = $this->conexao->query($sql);
 			$res->execute();
-			$reg = $res->fetch(PDO::FETCH_ASSOC);
-			if ($reg['pnum_DDD'] != "") {
-				$telefone = "(" . $reg['pnum_DDD'] . ") " .  $reg['pnum_numero'];
+			$reg = $res->fetchAll(PDO::FETCH_ASSOC);
+			$res->closeCursor();
+			if ($reg[0]['pnum_DDD'] != "") {
+				$telefone = "(" . $reg[0]['pnum_DDD'] . ") " .  $reg[0]['pnum_numero'];
 			}else{
-				$telefone = $reg['pnum_numero'];
+				$telefone = $reg[0]['pnum_numero'];
 			}
 
 			return $telefone;

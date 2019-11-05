@@ -13,6 +13,7 @@ if($_POST['operacao'] == 'gravarItem'){
     $dados['pfor_porc_perca']       = $util->vgr($_POST['pfor_porc_perca']);
     //
     $db->gravarInserir($dados, false, true);
+    $id = $db->getUltimoID();
     //print_r($ret);
     // exit;
     //
@@ -20,7 +21,7 @@ if($_POST['operacao'] == 'gravarItem'){
         $sql = "SELECT prod_nome FROM produtos WHERE idprodutos = {$_POST['pfor_idprodutos']}";
         $nomeProd = $db->retornaUmCampoSql($sql, "prod_nome");
         ob_clean();
-        $retorno = "<tr>";
+        $retorno = "<tr id='itemFormula_" . $id . "'>";
         $retorno .= "<td>{$_POST['pfor_idprodutos']}</td>";
         $retorno .= "<td>{$nomeProd}</td>";
         $retorno .= "<td>{$_POST['pfor_qte']}</td>";

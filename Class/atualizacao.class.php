@@ -72,19 +72,17 @@
 			//
 			// 01/10/2019 Vinicius
 			//
-			$sql = "CREATE TRIGGER produtos_movto_insert 
-						AFTER INSERT 
-						ON produtos_movto
-					   FOR EACH ROW
-							BEGIN
-								IF NEW.prmv_maismenos = '+' THEN
-									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque + NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;	 	 
-								END IF;
-								
-								IF NEW.prmv_maismenos = '-' THEN
-									 UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque - NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;
-								END IF;	 												
-					END";
+			$sql = "DELIMITER $$ 
+					CREATE TRIGGER produtos_movto_insert AFTER INSERT ON produtos_movto FOR EACH ROW
+						BEGIN
+							IF NEW.prmv_maismenos = '+' THEN
+								UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque + NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;	 	 
+							END IF;
+
+							IF NEW.prmv_maismenos = '-' THEN
+								UPDATE produtos SET prod_qte_estoque = (prod_qte_estoque - NEW.prmv_qte) WHERE idprodutos = NEW.prmv_idprodutos;
+							END IF;											
+					END$$";
 			$this->db->executaSQL($sql);
 			//
 			//Mensagem para o usuario

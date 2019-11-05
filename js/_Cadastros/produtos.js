@@ -128,6 +128,10 @@ function gravaItensFormula(){
         pfor_qte: $("#pfor_qte").val(),
         pfor_porc_perca: pfor_porc_perca},
         function(data){
+          $("#produtos").val(""),
+          $("#pfor_idprodutos").val(""),
+          $("#pfor_qte").val(""),
+          $("#pfor_porc_perca").val(""),
           $("#tableItensFormula").append(data);
         }, "html");
 }
