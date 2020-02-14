@@ -27,7 +27,7 @@
 					$dados = "mysql:host=" . $this->host;
 					$dados = $dados . ";port=" . $this->porta;
 					$dados = $dados . ";dbname=" . $this->nomedb;
-					$this->conexao = new PDO($dados, $this->usudb, $this->senhadb, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));   // pdo php data objectve, classe generica pra banco de dados
+					$this->conexao = new PDO($dados, $this->usudb, $this->senhadb, array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));   // pdo php data objectve, classe generica pra banco de dados
 					$this->conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 					$this->conexao->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 				}
@@ -167,7 +167,6 @@
 		}
 
     public function executaSQL($sql, $tipoMsg = ''){
-		  $dados = array();
 		  $sql = trim($sql);
 		  $this->erro = '';
 		  $this->msgErro = '';

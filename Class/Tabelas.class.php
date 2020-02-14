@@ -9,7 +9,7 @@ class Tabelas{
 	     $tabela .= '<tr ';
 			 if ($linhaColorida) $tabela .= "class='info'";
 			 $tabela .= '>';
-	     $tabela .= '<td width="80px">(' . $reg['pnum_DDD'] . ')</td>
+	     $tabela .= '<td width="80px">(' . trim($reg['pnum_DDD']) . ')</td>
 	        <td>' . $reg['pnum_numero'] . '</td>
 	        <td width="20px;" align="left"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
 	      </tr>';
