@@ -6,15 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>Trabalho de desenvolvimento web</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/padrao.css" rel="stylesheet">
-    <link href="../js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
-    <script src="../js/html5shiv.min.js"></script>
-    <script src="../js/respond.min.js"></script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.mask.js"></script>
+   ##includes##
     <script src="../js/_Lancamentos/producao.js"></script>
     <script>##autoComplete_Produto##</script>
   </head>
@@ -34,18 +26,18 @@
           <div class="panel-title">
             <div style="float: right;">##pdc_situacao##</div>
             Produção
-            <span align="right" data-toggle="modal" title="Buscar produção" data-target="#buscaProducao" style="cursor: pointer;">
+            <span align="right" data-toggle="modal" title="Buscar produção" data-target="#buscaCadastro" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
             </span>
             
           </div>
         </div>
         <div class="panel-body">
-          <form action="producao_grava.php" id="cadastro_producao" method="POST" enctype="multipart/form-data" autocomplete="off">
+          <form action="producao_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
             <div class="row">
               <div class="col-md-2 col-sm-2 col-xs-4">
                 <label for="Abertura">Codigo</label>
-                <input type="text" class="form-control" name="idproducao" id="idproducao" value="##idproducao##" readonly="readonly">
+                <input type="text" class="form-control" name="id_cadastro" id="id_cadastro" value="##id_cadastro##" readonly="readonly">
               </div>
               <div class="clearfix col-md-4 col-sm-4 col-xs-8"></div>
               <div class="clearfix visible-xs-block"></div>
@@ -81,7 +73,7 @@
                 <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
                 <center>
                   ##btnGravar##
-                  <button type="button" onclick="novaProducao()" class="btn btn-info">Novo</button>
+                  <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
                   ##btnExcluir##
                 </center>
               </div>
@@ -100,7 +92,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade" id="buscaProducao" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+    <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -112,7 +104,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaProducao()" class="btn btn-primary">Buscar</button>
+            <button type="button" onclick="buscaCadastro('producao_grava.php')" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>

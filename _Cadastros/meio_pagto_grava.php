@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaMeioPagto") {
+$paginaRetorno = 'meio_pagto_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * FROM meio_pagto";
     //
     if ($_POST['pesquisa'] != "") {
@@ -18,12 +20,12 @@ include_once("../Class/Tabelas.class.php");
     $dados['idmeio_pagto'] = "width='6%'";
     $dados['mpag_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreMeioPagto");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/meio_pagto_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
@@ -31,27 +33,27 @@ include_once("../Class/Tabelas.class.php");
   	$db->setTabela("meio_pagto", "idmeio_pagto");
 
     unset($dados);
-    $dados['id']            = $_POST['idmeio_pagto'];
+    $dados['id']            = $_POST['id_cadastro'];
   	$dados['mpag_nome'] 	  = $util->sgr($_POST['mpag_nome']);
     $db->gravarInserir($dados, true);
 
-  	if ($_POST['idmeio_pagto'] > 0) {
-  		$id = $_POST['idmeio_pagto'];
+  	if ($_POST['id_cadastro'] > 0) {
+  		$id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
   }
-  header('location:../_Cadastros/meio_pagto_edita.php?idmeio_pagto=' . $id);
+  header('location:../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
   exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("meio_pagto", "idmeio_pagto");
-    $db->excluir($_POST['idmeio_pagto'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir meio de pagamento<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/meio_pagto_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

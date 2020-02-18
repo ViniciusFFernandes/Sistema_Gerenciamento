@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaFormaPagto") {
+$paginaRetorno = 'forma_pagto_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * 
             FROM forma_pagto";    
     if ($_POST['pesquisa'] != "") {
@@ -19,40 +21,40 @@ include_once("../Class/Tabelas.class.php");
     $dados['forp_nome'] = "";
     $dados['forp_tipo'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreFormaPagto");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/forma_pagto_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
   if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("forma_pagto", "idforma_pagto");
     //
-    $dados['id']              = $_POST['idforma_pagto'];
+    $dados['id']              = $_POST['id_cadastro'];
   	$dados['forp_nome'] 			= $util->sgr($_POST['forp_nome']);
   	$dados['forp_tipo']       = $util->sgr($_POST['forp_tipo']);
     $db->gravarInserir($dados, true);
     //
-  	if ($_POST['idforma_pagto'] > 0) {
-  		$id = $_POST['idforma_pagto'];
+  	if ($_POST['id_cadastro'] > 0) {
+  		$id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
   }
-    header('location: ../_Cadastros/forma_pagto_edita.php?idforma_pagto=' . $id);
+    header('location: ../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("forma_pagto", "idforma_pagto");
-    $db->excluir($_POST['idforma_pagto'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir forma de pagamento<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/forma_pagto_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

@@ -13,13 +13,13 @@
   $codigo_js = $autoComplete->gerar("produtos", "pfor_idprodutos", "produtos LEFT JOIN unidades ON (prod_idunidades = idunidades)", "prod_nome", "idprodutos", "", "WHERE prod_tipo_produto = 'Materia Prima' AND UPPER(prod_nome) LIKE UPPER('##valor##%')");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idprodutos'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM produtos 
               LEFT JOIN unidades ON (prod_idunidades = idunidades) 
               LEFT JOIN grupos ON (prod_idgrupos = idgrupos) 
               LEFT JOIN subgrupos ON (prod_idsubgrupos = idsubgrupos) 
-            WHERE idprodutos = {$_REQUEST['idprodutos']}";
+            WHERE idprodutos = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -77,7 +77,7 @@
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
-  $html = str_replace("##idprodutos##", $reg['idprodutos'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idprodutos'], $html);
   $html = str_replace("##comboBoxTipo##", $comboBoxTipo, $html);
   $html = str_replace("##comboBoxTipoPR##", $comboBoxTipoPR, $html);
   $html = str_replace("##comboBoxTipoMP##", $comboBoxTipoMP, $html);

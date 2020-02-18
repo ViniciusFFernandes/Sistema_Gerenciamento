@@ -5,7 +5,9 @@ include_once("../Class/producao.class.php");
 include_once("../Class/estoque.class.php");
 // print_r($_REQUEST);
 // exit;
-  if ($_POST['operacao'] == "buscaProducao") {
+$paginaRetorno = 'producao_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(pdc_data_abertura, '%Y-%m-%d'), '%d/%m/%Y') as pdc_abertura
             FROM producao 
               LEFT JOIN produtos ON (idprodutos = pdc_idprodutos)";
@@ -25,12 +27,12 @@ include_once("../Class/estoque.class.php");
     $dados['pdc_abertura'] = "width='15%'";
     $dados['pdc_situacao'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreProducao");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location: ../_Lancamentos/producao_edita.php');
+    header('location: ../_Lancamentos/' . $paginaRetorno);
     exit;
     }
 
@@ -42,14 +44,15 @@ include_once("../Class/estoque.class.php");
     }else{
       $dataAbertura = $util->dgr($_POST['pdc_data_abertura']);
     }
+    //
     //verifica se devera redefinir os itens
-      $sql = "SELECT pdc_idprodutos FROM producao WHERE idproducao = {$id}";
-      if($db->retornaUmCampoSql($sql, "pdc_idprodutos") != $_POST['pdc_idprodutos']){
-        $redefineItens = true;
-      }
+    $sql = "SELECT pdc_idprodutos FROM producao WHERE idproducao = {$id}";
+    if($db->retornaUmCampoSql($sql, "pdc_idprodutos") != $_POST['pdc_idprodutos']){
+      $redefineItens = true;
+    }
     //
     unset($dados);
-    $dados['id']                      = $_POST['idproducao'];
+    $dados['id']                      = $_POST['id_cadastro'];
   	$dados['pdc_data_abertura']       = $dataAbertura;
     $dados['pdc_data_fechamento']     = $util->dgr($_POST['pdc_data_fechamento']);
     $dados['pdc_idprodutos']          = $util->igr($_POST['pdc_idprodutos']);
@@ -57,29 +60,27 @@ include_once("../Class/estoque.class.php");
     $db->gravarInserir($dados, true);
     //
     $producao = new producao($db, $util);
+    if($redefineItens || $_POST['id_cadastro'] <= 0){
+      $producao->insereItens($id);
+    }
     //
-  	if ($_POST['idproducao'] > 0) {
-      $id = $_POST['idproducao'];
-      //
-      if($redefineItens){
-        $producao->insereItens($id);
-      }
+  	if ($_POST['id_cadastro'] > 0) {
+      $id = $_POST['id_cadastro'];
     }else{
       $id = $db->getUltimoID();
-      $producao->insereItens($id);
-  }
-    header('location: ../_Lancamentos/producao_edita.php?idproducao=' . $id);
+    }
+    header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("producao", "idproducao");
-    $db->excluir($_POST['idproducao'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir producao<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Lancamentos/producao_edita.php');
+    header('location:../_Lancamentos/' . $paginaRetorno);
     exit;
   }
 
@@ -87,7 +88,7 @@ if ($_POST['operacao'] == 'fechar'){
   //
   $estoque = new estoque($db, $util);
   //
-  $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['idproducao']}";
+  $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Fechada"){
         $util->mostraErro("Esta produção já está fechada!");
         exit;
@@ -96,7 +97,8 @@ if ($_POST['operacao'] == 'fechar'){
   $db->beginTransaction();
   //
   $permiteEstoqueNegativo = $parametros->buscaValor("empresa: permite trabalhar com estoque negativo");
-  $sql = "SELECT * FROM producao_itens WHERE pdci_idproducao = {$_POST['idproducao']}";
+  //
+  $sql = "SELECT * FROM producao_itens WHERE pdci_idproducao = {$_POST['id_cadastro']}";
   $res = $db->consultar($sql);
   foreach ($res as $reg) {
     $sql = "SELECT prod_qte_estoque FROM produtos WHERE idprodutos = {$reg['pdci_idprodutos']}";
@@ -109,14 +111,14 @@ if ($_POST['operacao'] == 'fechar'){
     }
     //
     //Gera o movimento de estoque
-    $estoque->geraMovimento($reg['pdci_idprodutos'], "-", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
+    $estoque->geraMovimento($reg['pdci_idprodutos'], "-", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $reg['pdci_idproducao']);
     //
   }
-  $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['idproducao']}";
+  $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   $reg = $db->retornaUmReg($sql);
   //
   //Gera o movimento de estoque
-  $estoque->geraMovimento($reg['pdc_idprodutos'], "+", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
+  $estoque->geraMovimento($reg['pdc_idprodutos'], "+", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $reg['idproducao']);
   //
   $db->setTabela("producao", "idproducao");
   //
@@ -132,7 +134,7 @@ if ($_POST['operacao'] == 'fechar'){
       exit;
     }
   $db->commit();
-  header('location: ../_Lancamentos/producao_edita.php?idproducao=' . $reg['idproducao']);
+  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['idproducao']);
   exit;
 }
 
@@ -140,7 +142,7 @@ if ($_POST['operacao'] == 'reabrir'){
   //
   $estoque = new estoque($db, $util);
   //
-  $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['idproducao']}";
+  $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Aberta"){
         $util->mostraErro("Esta produção já está aberta!");
         exit;
@@ -149,15 +151,15 @@ if ($_POST['operacao'] == 'reabrir'){
   $db->beginTransaction();
   //
   $permiteEstoqueNegativo = $parametros->buscaValor("empresa: permite trabalhar com estoque negativo");
-  $sql = "SELECT * FROM producao_itens WHERE pdci_idproducao = {$_POST['idproducao']}";
+  $sql = "SELECT * FROM producao_itens WHERE pdci_idproducao = {$_POST['id_cadastro']}";
   $res = $db->consultar($sql);
   foreach ($res as $reg) {
     //
     //Gera o movimento de estoque
-    $estoque->geraMovimento($reg['pdci_idprodutos'], "+", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
+    $estoque->geraMovimento($reg['pdci_idprodutos'], "+", $reg['pdci_qte'], basename($_SERVER['PHP_SELF']), $reg['pdci_idproducao']);
     //
   }
-  $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['idproducao']}";
+  $sql = "SELECT * FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   $reg = $db->retornaUmReg($sql);
   //
   $sql = "SELECT prod_qte_estoque FROM produtos WHERE idprodutos = {$reg['pdc_idprodutos']}";
@@ -170,7 +172,7 @@ if ($_POST['operacao'] == 'reabrir'){
   }
   //
   //Gera o movimento de estoque
-  $estoque->geraMovimento($reg['pdc_idprodutos'], "-", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $_POST['idproducao']);
+  $estoque->geraMovimento($reg['pdc_idprodutos'], "-", $reg['pdc_qte_produzida'], basename($_SERVER['PHP_SELF']), $reg['idproducao']);
   //
   $db->setTabela("producao", "idproducao");
   //
@@ -186,7 +188,7 @@ if ($_POST['operacao'] == 'reabrir'){
       exit;
     }
   $db->commit();
-  header('location: ../_Lancamentos/producao_edita.php?idproducao=' . $reg['idproducao']);
+  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['idproducao']);
   exit;
 }
 

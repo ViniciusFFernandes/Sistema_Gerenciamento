@@ -3,10 +3,10 @@
   include_once("../Class/autoComplete.class.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idforma_pagto'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM forma_pagto 
-            WHERE idforma_pagto = {$_REQUEST['idforma_pagto']}";
+            WHERE idforma_pagto = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -40,7 +40,7 @@
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
-  $html = str_replace("##idforma_pagto##", $reg['idforma_pagto'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idforma_pagto'], $html);
   $html = str_replace("##forp_nome##", $reg['forp_nome'], $html);
   $html = str_replace("##comboBoxTipo##", $comboBoxTipo, $html);
   $html = str_replace("##comboBoxTipoAV##", $comboBoxTipoAV, $html);

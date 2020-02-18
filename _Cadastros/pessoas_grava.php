@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaPessoas") {
+$paginaRetorno = 'pessoas_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * 
             FROM pessoas 
               LEFT JOIN cidades ON (pess_idcidades = idcidades) 
@@ -45,14 +47,14 @@ include_once("../Class/Tabelas.class.php");
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/pessoas_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
   if ($_POST['operacao'] == 'validaUsuario'){
     $user = new Usuario($_SESSION['user'], $_SESSION['senha'], $db);
     $user->testaLogin($db, $util, $_POST['pess_usuario'], $_POST['idpessoas']);
-
+    exit;
     }
 
   if ($_POST['operacao'] == 'gravaLogin'){
@@ -63,12 +65,13 @@ include_once("../Class/Tabelas.class.php");
     $dados['pess_senha']         = $util->sgr($_POST['pess_senha']);
 
     $db->gravarInserir($dados);
+    exit;
     }
 
   if ($_POST['operacao'] == 'pess_gravar'){
   	$db->setTabela("pessoas", "idpessoas");
 
-    $dados['id']                     = $_POST['idpessoas'];
+    $dados['id']                     = $_POST['id_cadastro'];
   	$dados['pess_nome'] 			       = $util->sgr($_POST['pess_nome']);
   	$dados['pess_rg'] 				       = $util->sgr($_POST['pess_rg']);
   	$dados['pess_cpf'] 				       = $util->sgr($_POST['pess_cpf']);
@@ -85,23 +88,23 @@ include_once("../Class/Tabelas.class.php");
     $db->gravarInserir($dados, true);
 
 
-  	if ($_POST['idpessoas'] > 0) {
-      $id = $_POST['idpessoas'];
+  	if ($_POST['id_cadastro'] > 0) {
+      $id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
     }
-    header('location:../_Cadastros/pessoas_edita.php?idpessoas=' . $id);
+    header('location:../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
-    $db->excluir($_POST['idpessoas'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir pessoa<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/pessoas_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

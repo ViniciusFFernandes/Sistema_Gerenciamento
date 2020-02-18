@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaUnidades") {
+$paginaRetorno = 'unidades_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * FROM unidades";
     //
     if ($_POST['pesquisa'] != "") {
@@ -20,12 +22,12 @@ include_once("../Class/Tabelas.class.php");
     $dados['uni_nome'] = "";
     $dados['uni_sigla'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreUnidades");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/unidades_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
@@ -33,28 +35,28 @@ include_once("../Class/Tabelas.class.php");
   	$db->setTabela("unidades", "idunidades");
 
     unset($dados);
-    $dados['id']         = $_POST['idunidades'];
+    $dados['id']         = $_POST['id_cadastro'];
   	$dados['uni_nome'] 	 = $util->sgr($_POST['uni_nome']);
   	$dados['uni_sigla']  = $util->sgr($_POST['uni_sigla']);
     $db->gravarInserir($dados, true);
 
-  	if ($_POST['idunidades'] > 0) {
-  		$id = $_POST['idunidades'];
+  	if ($_POST['id_cadastro'] > 0) {
+  		$id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
   }
-  header('location:../_Cadastros/unidades_edita.php?idunidades=' . $id);
+  header('location:../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
   exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("unidades", "idunidades");
-    $db->excluir($_POST['idunidades'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir unidade<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/unidades_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

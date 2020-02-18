@@ -11,7 +11,7 @@ class Tabelas{
 			 $tabela .= '>';
 	     $tabela .= '<td width="80px">(' . trim($reg['pnum_DDD']) . ')</td>
 	        <td>' . $reg['pnum_numero'] . '</td>
-	        <td width="20px;" align="left"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
+	        <td width="20px;" align="left" id="btnExcluiTelefone_' . $reg['idpessoas_numeros'] . '"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
 	      </tr>';
 	 if ($linhaColorida) {
 		    $linhaColorida = false;
@@ -45,7 +45,7 @@ class Tabelas{
 	    	//
 	      $tabela .= '<tr';
 				if ($linhaColorida) {$tabela .= " class='info'";}
-				$tabela .= ' onclick="abrePessoa(' . $reg['idpessoas'] . ')" style="cursor:pointer" id="linhasBusca">
+				$tabela .= ' onclick="abreCadastro(' . $reg['idpessoas'] . ', \'pessoas_edita.php\')" style="cursor:pointer" id="linhasBusca">
 	        <td width="6%">' . $reg['idpessoas'] . '</td>
 	        <td>' . $reg['pess_nome'] . ' <br> <i class="visible-xs" style="font-size: 13px;">' . $db->retornaUmTel($reg['idpessoas']) . '</i> </td>
 	        <td width="25%" class="hidden-xs">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
@@ -65,7 +65,7 @@ class Tabelas{
 	  echo $tabela;
 	}
 	
-	public function geraTabelaBusca($res, $db, $colunas, $functionAbreReg){
+	public function geraTabelaBusca($res, $db, $colunas, $link){
 		$linhaColorida = false;
 	    $tabela = "<div style='max-height: 250px; overflow: auto;'>";
 	    if(empty($res)){
@@ -87,7 +87,7 @@ class Tabelas{
 			$primeiraLinha = true;
 			foreach ($colunas as $coluna => $tamanho) {
 				if($primeiraLinha){
-					$tabela .= "<tr {$class} onclick='{$functionAbreReg}({$reg[$coluna]})' style='cursor:pointer' id='linhasBusca'>";
+					$tabela .= "<tr {$class} onclick=\"abreCadastro({$reg[$coluna]}, '{$link}')\" style='cursor:pointer' id='linhasBusca'>";
 					$primeiraLinha = false;
 				}
 				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";

@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaCidades") {
+$paginaRetorno = 'cidades_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * 
             FROM cidades 
               LEFT JOIN estados ON (cid_idestados = idestados)";
@@ -22,40 +24,40 @@ include_once("../Class/Tabelas.class.php");
     $dados['cid_nome'] = "";
     $dados['est_uf'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreCidades");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/cidades_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
   if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("cidades", "idcidades");
     //
-    $dados['id']            = $_POST['idcidades'];
+    $dados['id']            = $_POST['id_cadastro'];
   	$dados['cid_nome'] 			= $util->sgr($_POST['cid_nome']);
   	$dados['cid_idestados'] = $util->igr($_POST['cid_idestados']);
     $db->gravarInserir($dados, true);
     //
-  	if ($_POST['idcidades'] > 0) {
-  		$id = $_POST['idcidades'];
+  	if ($_POST['id_cadastro'] > 0) {
+  		$id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
   }
-    header('location: ../_Cadastros/cidades_edita.php?idcidades=' . $id);
+    header('location: ../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
     exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("cidades", "idcidades");
-    $db->excluir($_POST['idcidades'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir cidade<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/cidades_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

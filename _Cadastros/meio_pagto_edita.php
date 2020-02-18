@@ -3,10 +3,10 @@
   include_once("../Class/autoComplete.class.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idmeio_pagto'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM meio_pagto 
-            WHERE idmeio_pagto = {$_REQUEST['idmeio_pagto']}";
+            WHERE idmeio_pagto = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -23,7 +23,7 @@
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
-  $html = str_replace("##idmeio_pagto##", $reg['idmeio_pagto'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idmeio_pagto'], $html);
   $html = str_replace("##mpag_nome##", $reg['mpag_nome'], $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;

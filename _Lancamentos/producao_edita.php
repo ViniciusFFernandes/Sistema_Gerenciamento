@@ -4,11 +4,11 @@
   include_once("../Class/producao.class.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idproducao'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT *
             FROM producao
               LEFT JOIN produtos ON (idprodutos = pdc_idprodutos)
-            WHERE idproducao = {$_REQUEST['idproducao']}";
+            WHERE idproducao = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -18,15 +18,10 @@
   //
   //Monta variaveis de exibição
   $btnGravar = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
-  $pdc_calcula_automatico = 'checked="checked"';
   if(!empty($reg['idproducao'])){ 
     //
     $producao = new producao($db, $util);
     $itensFormula = $producao->getItensProducao($reg['idproducao']);
-    //
-    if($reg['pdc_calcula_automatico'] == 'SIM'){
-      $pdc_calcula_automatico = 'checked="checked"';
-    }
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     $pdc_situacao = "Situação: " . $reg['pdc_situacao'];
@@ -48,7 +43,7 @@
   $html = $util->buscaHtml("lancamentos");
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
-  $html = str_replace("##idproducao##", $reg['idproducao'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idproducao'], $html);
   $html = str_replace("##pdc_situacao##", $pdc_situacao, $html);
   $html = str_replace("##pdc_data_abertura##", $util->convertData($reg['pdc_data_abertura']), $html);
   $html = str_replace("##pdc_data_fechamento##", $util->convertData($reg['pdc_data_fechamento']), $html);

@@ -3,12 +3,12 @@
   include_once("../Class/autoComplete.class.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idpessoas'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM pessoas 
               LEFT JOIN cidades ON (pess_idcidades = idcidades) 
               LEFT JOIN estados ON (cid_idestados = idestados) 
-            WHERE idpessoas = {$_REQUEST['idpessoas']}";
+            WHERE idpessoas = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -18,6 +18,8 @@
  //echo $codigo_js;exit;
   //
   //Monta variaveis de exibição
+  $escondeDivTelefone = "style='display: none;'";
+  //
   if(!empty($reg['idpessoas'])){ 
     $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;">';
     $editaLogin .=  '&nbsp;<img src="../icones/cadeado.png">';
@@ -32,6 +34,9 @@
     if(!empty($reg['cid_nome'])){
       $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
     }
+    //
+    $imgCarregandoTelefone = '<center><img src="../icones/carregando2.gif" width="15px"></center>';
+    $escondeDivTelefone = "";
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -43,11 +48,13 @@
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Cidades##", $codigo_js, $html);
+  $html = str_replace("##caregando_telefone##", $imgCarregandoTelefone, $html);
+  $html = str_replace("##esconde_div_telefone##", $escondeDivTelefone, $html);
   $html = str_replace("##EditaLogin##", $editaLogin, $html);
   $html = str_replace("##CheckCliente##", $checkCliente, $html);
   $html = str_replace("##CheckFornecedor##", $checkFornecedor, $html);
   $html = str_replace("##CheckFuncionario##", $checkFuncionario, $html);
-  $html = str_replace("##idpessoas##", $reg['idpessoas'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idpessoas'], $html);
   $html = str_replace("##pess_nome##", $reg['pess_nome'], $html);
   $html = str_replace("##pess_cpf##", $reg['pess_cpf'], $html);
   $html = str_replace("##pess_cnpj##", $reg['pess_cnpj'], $html);

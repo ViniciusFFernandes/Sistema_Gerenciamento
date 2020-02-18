@@ -1,8 +1,4 @@
 
-window.setTimeout(function(){
- document.getElementById("botao_alerta").click();
-}, 6000);
-
  $(document).ready(function(){
     $("#prod_preco_tabela").mask("9999999999.99", 
           {translation: {
@@ -38,6 +34,7 @@ function testaDados(){
   // return;
   if($("#prod_nome").val() == ""){
     $("#prod_nome").css("border-color", "red");
+    alertaPequeno("Por favor, informe um nome!");
     return;
   }else{
     $("#prod_nome").css("border-color", "green");
@@ -45,6 +42,7 @@ function testaDados(){
   //
   if($("#prod_idunidade").val() == ""){
     $("#prod_idunidade").css("border-color", "red");
+    alertaPequeno("Por favor, selecione uma unidade!");
     return;
   }else{
     $("#prod_idunidade").css("border-color", "green");
@@ -52,81 +50,55 @@ function testaDados(){
   //
   if($("#prod_idgrupos").val() == ""){
     $("#prod_idgrupos").css("border-color", "red");
+    alertaPequeno("Por favor, selecione um grupo!");
     return;
   }else{
     $("#prod_idgrupos").css("border-color", "green");
   }
   //
-  $("#operacao").val('gravar')
-  $("#cadastro_produtos").submit();
+  chamaGravar('gravar')
 }
 
-function novoProduto(){
-  $("#operacao").val('novoCadastro')
-  $("#cadastro_produtos").submit();
-}
-
-function excluiCadastro(){
-  var result = confirm("Não é indicado excluir um Produto!\n\nDeseja excluir este cadastro?");
-  if (result) {
-    $("#operacao").val('excluiCad')
-    $("#cadastro_produtos").submit();
-  }
-}
-
-function excluirItemFormula(idItemFormula){
-  var result = confirm("Deseja excluir este item?");
-  if (result) {
+function excluirItemFormula(idItemFormula, confirmado = false){
+  if(confirmado) {
     $.post("produtos_grava.php", {operacao: 'excluirItemFormula', idItemFormula: idItemFormula},
       function(data){
         $("#itemFormula_" + idItemFormula).remove();
-        alert("Item removido com sucesso!");
+        alertaPequeno("Item removido com sucesso!");
       }, "html");
+  }else{
+    confirmar("Deseja excluir este item?", '', "excluirItemFormula("+ idItemFormula +", true)", "tada");
   }
 }
 
-function buscaProdutos(){
-  var _pesquisa = $("#pesquisa").val();
-  $.post("produtos_grava.php",
-  {operacao: "buscaProdutos", pesquisa: _pesquisa},
-  function(result){
-    $("#pesquisa").val("");
-    $("#resultBusca").html(result);
-  }, 'HTML');
-}
-
-function zeraBusca(){
-  $("#resultBusca").html("");
-}
-
-function abreProdutos(id){
-  var siteRetorno = 'produtos_edita.php?idprodutos=' + id;
-  $(location).attr('href', siteRetorno);
-}
 
 function gravaItensFormula(){
-  var pfor_porc_perca = 0;
-  if($("#idprodutos").val() == ''){
-    alert("Nenhum produto base selecionado!");
+  var _pfor_porc_perca = 0;
+  var _idprodutos = $("#id_cadastro").val();
+  var _idproduto_item = $("#pfor_idprodutos").val();
+  var _qte = $("#pfor_qte").val();
+  
+  if(_idprodutos == ''){
+    alertaPequeno("Nenhum produto base selecionado!");
     return;
   }
-  if($("#pfor_idprodutos").val() == ''){
-    alert("Selecione um item antes de inserir!");
+  if(_idproduto_item == ''){
+    alertaPequeno("Selecione um item antes de inserir!");
     return;
   }
-  if($("#pfor_qte").val() == '' || $("#pfor_qte").val() <= 0){
-    alert("Informe a quantidade!");
+  if(_qte == '' || _qte <= 0){
+    alertaPequeno("Informe a quantidade!");
     return;
   }
   if($("#pfor_porc_perca").val() > 0){
-    pfor_porc_perca = $("#pfor_porc_perca").val();
+    _pfor_porc_perca = $("#pfor_porc_perca").val();
   }
   $.post("produtos_grava.php",
         {operacao: 'gravarItem',
-        pfor_idproduto_final: $("#idprodutos").val(),
-        pfor_idprodutos: $("#pfor_idprodutos").val(),
-        pfor_qte: $("#pfor_qte").val(),
-        pfor_porc_perca: pfor_porc_perca},
+        pfor_idproduto_final: _idprodutos,
+        pfor_idprodutos: _idproduto_item,
+        pfor_qte: _qte,
+        pfor_porc_perca: _pfor_porc_perca},
         function(data){
           $("#produtos").val(""),
           $("#pfor_idprodutos").val(""),

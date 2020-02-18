@@ -3,7 +3,9 @@ include_once("../_BD/conecta_login.php");
 include_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
-  if ($_POST['operacao'] == "buscaGrupos") {
+$paginaRetorno = 'grupos_edita.php';
+//
+  if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT * FROM grupos";
     //
     if ($_POST['pesquisa'] != "") {
@@ -18,12 +20,12 @@ include_once("../Class/Tabelas.class.php");
     $dados['idgrupos'] = "width='6%'";
     $dados['grup_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, "abreGrupos");
+    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
-    header('location:../_Cadastros/grupos_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
     }
 
@@ -31,27 +33,27 @@ include_once("../Class/Tabelas.class.php");
   	$db->setTabela("grupos", "idgrupos");
 
     unset($dados);
-    $dados['id']            = $_POST['idgrupos'];
+    $dados['id']            = $_POST['id_cadastro'];
   	$dados['grup_nome'] 	  = $util->sgr($_POST['grup_nome']);
     $db->gravarInserir($dados, true);
 
-  	if ($_POST['idgrupos'] > 0) {
-  		$id = $_POST['idgrupos'];
+  	if ($_POST['id_cadastro'] > 0) {
+  		$id = $_POST['id_cadastro'];
     }else{
   		$id = $db->getUltimoID();
   }
-  header('location:../_Cadastros/grupos_edita.php?idgrupos=' . $id);
+  header('location:../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
   exit;
 }
 
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos", "idgrupos");
-    $db->excluir($_POST['idgrupos'], "Excluir");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $util->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
         exit;
     }
-    header('location:../_Cadastros/grupos_edita.php');
+    header('location:../_Cadastros/' . $paginaRetorno);
     exit;
   }
 

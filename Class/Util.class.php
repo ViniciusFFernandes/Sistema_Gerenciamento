@@ -137,6 +137,7 @@ class Util{
 	public function buscaHtml($btnMenu = ''){
 		$menu = file_get_contents('../menu.html');
 		$opcoes_config = file_get_contents('../menu__opcoes_config.html');
+		$includes = file_get_contents('../includes.html');
 		//
 		if ($btnMenu == "inicio"){
 			$busca = '##inicio##';
@@ -157,6 +158,7 @@ class Util{
 		$nomeArquivo = $nome[0] . ".html";
 		$html = file_get_contents("_HTML/" . $nomeArquivo);
 		$html = str_replace("##Menu##", $menu, $html);
+		$html = str_replace("##includes##", $includes, $html);
 		//
 		return $html;
 	}

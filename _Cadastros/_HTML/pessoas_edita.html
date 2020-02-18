@@ -6,16 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>Trabalho de desenvolvimento web</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/padrao.css" rel="stylesheet">
-    <link href="../js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
-    <script src="../js/html5shiv.min.js"></script>
-    <script src="../js/respond.min.js"></script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.mask.min.js"></script>
-    <script src="../js/_Cadastros/pessoas.js"></script>
+     ##includes##
+     <script src="../js/_Cadastros/pessoas.js"></script>
     <script>##autoComplete_Cidades##</script>
   </head>
   <body>
@@ -33,15 +25,15 @@
               <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
                 <div class="panel-title">
                   Cadastro de Pessoas
-                  <span align="right" data-toggle="modal" title="Buscar pessoas" data-target="#buscaPessoas" style="cursor: pointer;">
+                  <span align="right" data-toggle="modal" title="Buscar Pessoas" data-target="#buscaCadastro" style="cursor: pointer;">
                     &nbsp;<img src="../icones/lupa.png">
                   </span>
                   ##EditaLogin##
                 </div>
               </div>
               <div class="panel-body">
-                <form action="pessoas_grava.php" id="cadastro_pessoas" method="POST" enctype="multipart/form-data" autocomplete="off">
-                  <input type="hidden" name="idpessoas" id="idpessoas" value="##idpessoas##">
+                <form action="pessoas_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+                  <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
                   <div class="row">
                       <div class="col-md-12 col-sm-12 col-xs-12">
                         <label for="Tipo">Tipo</label><br>
@@ -97,7 +89,7 @@
                       <input type="text" class="form-control" id="pess_cep" name="pess_cep" value="##pess_cep##" placeholder="CEP">
                   </div>
                   </div>
-                <div class="row">
+                <div class="row" ##esconde_div_telefone##>
                   <div class="col-md-1 col-sm-2 col-xs-3">
                       <label for="Telefones">Telefones</label>
                       <input type="text" id="pnum_DDD" class="form-control" name="pnum_DDD" placeholder="DDD">
@@ -108,7 +100,7 @@
                   </div>
                   <div class="col-md-8 col-sm-6 col-xs-3" style="padding: 0px;">
                       <label for="Telefones">&nbsp;</label>
-                      <div class="form-control" style="cursor:pointer;border:0px;">
+                      <div class="form-control" style="cursor:pointer;border:0px;" id='btnAddTelefone'>
                         <img src="../icones/adiciona.png" onclick="adicionaTelefone()">
                       </div>
                   </div>
@@ -117,6 +109,7 @@
                   </div>
                   <div class="row">
                     <div class="col-md-5 col-sm-6 col-xs-12" id="divTelefone">
+                      ##caregando_telefone##
                     </div>
                     <div class="col-md-5 col-sm-6">
                     </div>
@@ -125,10 +118,9 @@
                   <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                       <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-                    <!-- <center><button type="button" class="btn btn-success" onclick="testaDados()">Cadastrar-se</button></center> -->
                     <center>
                       <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
-                      <button type="button" onclick="novaPessoa()" class="btn btn-info">Novo</button>
+                      <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
                       ##btnExcluir##
                     </center>
                   </div>
@@ -141,7 +133,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="buscaPessoas" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+<div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -149,11 +141,11 @@
         <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
       </div>
       <div class="modal-body" id="resultBusca">
-
+        
       </div>
       <div class="modal-footer">
         <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-        <button type="button" onclick="buscaPessoas()" class="btn btn-primary">Buscar</button>
+        <button type="button" onclick="buscaCadastro('pessoas_grava.php')" class="btn btn-primary">Buscar</button>
       </div>
     </div>
   </div>

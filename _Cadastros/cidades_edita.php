@@ -3,11 +3,11 @@
   include_once("../Class/autoComplete.class.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idcidades'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM cidades 
               LEFT JOIN estados ON (cid_idestados = idestados) 
-            WHERE idcidades = {$_REQUEST['idcidades']}";
+            WHERE idcidades = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -30,7 +30,7 @@
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Estados##", $codigo_js, $html);
-  $html = str_replace("##idcidades##", $reg['idcidades'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idcidades'], $html);
   $html = str_replace("##cid_nome##", $reg['cid_nome'], $html);
   $html = str_replace("##cid_estados##", $reg['est_nome'], $html);
   $html = str_replace("##cid_idestados##", $reg['idestados'], $html);

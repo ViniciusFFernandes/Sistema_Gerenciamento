@@ -1,7 +1,4 @@
 
-window.setTimeout(function(){
- document.getElementById("botao_alerta").click();
-}, 6000);
 
 function testaDados(){
   // alert('sadnsa');
@@ -20,38 +17,5 @@ function testaDados(){
     $("#uni_sigla").css("border-color", "green");
   }
   //
-  $("#operacao").val('gravar')
-  $("#cadastro_unidades").submit();
-}
-
-function novaUnidade(){
-  $("#operacao").val('novoCadastro')
-  $("#cadastro_unidades").submit();
-}
-
-function excluiCadastro(){
-  var result = confirm("Não é indicado excluir uma Unidade!\n\nDeseja excluir este cadastro?");
-  if (result) {
-    $("#operacao").val('excluiCad')
-    $("#cadastro_unidades").submit();
-  }
-}
-
-function buscaUnidades(){
-  var _pesquisa = $("#pesquisa").val();
-  $.post("unidades_grava.php",
-  {operacao: "buscaUnidades", pesquisa: _pesquisa},
-  function(result){
-    $("#pesquisa").val("");
-    $("#resultBusca").html(result);
-  }, 'HTML');
-}
-
-function zeraBusca(){
-  $("#resultBusca").html("");
-}
-
-function abreUnidades(id){
-  var siteRetorno = 'unidades_edita.php?idunidades=' + id;
-  $(location).attr('href', siteRetorno);
+ chamaGravar('gravar');
 }

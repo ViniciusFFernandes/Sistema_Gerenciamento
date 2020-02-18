@@ -2,10 +2,10 @@
   include_once("../_BD/conecta_login.php");
   //
   //Operações do banco de dados
-  if(!empty($_REQUEST['idsubgrupos'])){
+  if(!empty($_REQUEST['id_cadastro'])){
     $sql = "SELECT * 
             FROM subgrupos 
-            WHERE idsubgrupos = {$_REQUEST['idsubgrupos']}";
+            WHERE idsubgrupos = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
   //
@@ -22,7 +22,7 @@
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $util->buscaHtml("cadastros");
   $html = str_replace("##Mensagem##", $msg, $html);
-  $html = str_replace("##idsubgrupos##", $reg['idsubgrupos'], $html);
+  $html = str_replace("##id_cadastro##", $reg['idsubgrupos'], $html);
   $html = str_replace("##subg_nome##", $reg['subg_nome'], $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;
