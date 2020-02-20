@@ -6,7 +6,7 @@ function novoCadastro(){
 function excluiCadastro(){
     var titulo = "<b>Deseja excluir este cadastro?</b>";
     var msg = "<b style='color: red;'>Atenção:</b> Não aconselhamos a exclusão de nenhuma cadastro do sistema!";
-    var resultado = confirmar(msg, titulo, "chamaGravar('excluiCad')");    
+    var resultado = confirmar(msg, titulo, "chamaGravar('excluiCad')", "tada");    
   }
 
 function buscaCadastro(link){

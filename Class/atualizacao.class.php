@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.13;
+		private $ultimaVersao = 0.15;
 		private $db;
 		private $parametros;
 		private $util;
@@ -67,7 +67,41 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_15(){
+			//
+			// 02/09/2019 Vinicius
+			//
+			global $SERVIDOR;
+			global $PORTA;
+			global $USUARIO;
+			global $SENHA;
+			global $DB_NAME;
+
+			$this->parametros->cadastraParametros("constante: endereco do banco de dados", $SERVIDOR, "Parametro usado para gerar o constante com os dados do banco de dados", "variavel", "SERVIDOR");
+			$this->parametros->cadastraParametros("constante: porta do banco de dados", $PORTA, "Parametro usado para gerar o constante com os dados do banco de dados", "variavel", "PORTA");
+			$this->parametros->cadastraParametros("constante: usuario do banco de dados", $USUARIO, "Parametro usado para gerar o constante com os dados do banco de dados", "variavel", "USUARIO");
+			$this->parametros->cadastraParametros("constante: senha do banco de dados", $SENHA, "Parametro usado para gerar o constante com os dados do banco de dados", "variavel", "SENHA");
+			$this->parametros->cadastraParametros("constante: nome da base do banco de dados", $DB_NAME, "Parametro usado para gerar o constante com os dados do banco de dados", "variavel", "DB_NAME");
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros com valores para conexão do banco";
+		}
 		
+		private function versao_00_14(){
+			//
+			// 19/02/2020 Vinicius
+			//
+			$sql = "ALTER TABLE parametros ADD para_tipo varchar(50) not null default 'parametro' ";
+			$this->db->executaSQL($sql);
+			//
+			$sql = "ALTER TABLE parametros ADD para_nome_constante varchar(100) null";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Atualização na tabela parametros";
+		}
+
 		private function versao_00_13(){
 			//
 			// 01/10/2019 Vinicius
@@ -272,6 +306,15 @@
 			//
 			//Mensagem para o usuario
 			return "Criação da tabela Grupos";
+		}
+
+		public baixaAtualizacao(){
+			//
+			$nomeArquivoAtz = 'infoweb_atz.zip';
+			$ftp_server="intisbkp.com.br"; 
+			$ftp_user_name = 'infoweb_atz@intisbkp.com.br';
+			$ftp_user_pass = 'Duckman21'; 
+			//
 		}
 
 	}

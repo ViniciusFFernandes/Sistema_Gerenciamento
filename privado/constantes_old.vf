@@ -1,0 +1,7 @@
+<?php $SERVIDOR = 'localhost';
+$PORTA = '3306';
+$USUARIO = 'root';
+$SENHA = NULL;
+$DB_NAME = 'arg';
+$PARAMETRO_TESTE_CONSTANTE = NULL;
+ ?>

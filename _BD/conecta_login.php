@@ -5,6 +5,7 @@ if(!realpath("../privado/constantes.vf")){
 	header("Location: ../privado/_Constante/criaConstante_login.html");
 	exit;
 }
+// print_r($_REQUEST);exit;
 require_once("../Class/DB.class.php");
 require_once("../Class/Util.class.php");
 require_once("../Class/usuario.class.php");

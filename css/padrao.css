@@ -4,6 +4,13 @@
   font-family: cursive;
 }
 
+.valorEmBranco{
+  color: #c8c8c8;
+  /* font-size: 12px; */
+  font-family: cursive;
+  font-style: italic;
+}
+
 .divMsg{
   margin: 10px; 
   position: absolute;

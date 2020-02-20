@@ -34,6 +34,13 @@
                 $("#para_valor").val(data.para_valor);
                 $("#para_obs").val(data.para_obs);
                 $("#idparametros").val(data.idparametros);
+                $("#para_tipo").val(data.para_tipo);
+                $("#para_nome_constante").val(data.para_nome_constante);
+                if(data.para_tipo == 'parametro'){
+                  $("#div_nome_constante").hide();
+                }else{
+                  $("#div_nome_constante").show();
+                }
               }, "json")
       }
 
@@ -43,10 +50,24 @@
               {operacao: 'gravar',
               idparametros: $("#idparametros").val(),
               para_valor: $("#para_valor").val(),
-              para_obs: $("#para_obs").val()},
+              para_obs: $("#para_obs").val(),
+              para_tipo:  $("#para_tipo").val(),
+              para_nome_constante:  $("#para_nome_constante").val()},
               function(data){
                 $("[name=btnGrava]").attr("disabled", false);
-                $("#para_valor_" + $("#idparametros").val()).html($("#para_valor").val());
+                var para_valor = $("#para_valor").val();
+                if(para_valor == ''){
+                  para_valor = '<span class="Obs_claro">*Em Branco*</span>';
+                }
+                $("#para_valor_" + $("#idparametros").val()).html(para_valor);
                 $("#btnFechaModal").click();
               }, 'html');
+      }
+
+      function testaTipo(){
+        if($("#para_tipo").val() == 'parametro'){
+          $("#div_nome_constante").hide();
+        }else{
+          $("#div_nome_constante").show();
+        }
       }

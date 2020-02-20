@@ -6,14 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>Trabalho de desenvolvimento web</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/padrao.css" rel="stylesheet">
-    <link href="../js/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
-    <script src="../js/html5shiv.min.js"></script>
-    <script src="../js/respond.min.js"></script>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/jquery-ui-1.12.1/jquery-ui.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    ##includes##
     <script src="../js/_Configuracoes/parametros.js"></script>
   </head>
   <body>
@@ -81,6 +74,20 @@
               <div class="col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 5px;">
                 <label for="para_valor">Valor:</label>
                 <input type="text" class="form-control" name="para_valor" id="para_valor">
+              </div> 
+            </div>
+            <div class="row" name="conteudo">
+              <div class="col-md-6 col-sm-6 col-xs-6" style="margin-bottom: 5px;">
+                <label for="para_tipo">Tipo:</label>
+                <select name="para_tipo" id="para_tipo" class="form-control" onchange="testaTipo()">
+                  <option value="parametro">Parametro</option>
+                  <option value="variavel">Variavel</option>
+                  <option value="constante">Constante</option>
+                </select>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-6" style="margin-bottom: 5px;" id="div_nome_constante">
+                <label for="para_nome_constante">Nome para o Constante:</label>
+                <input type="text" class="form-control" name="para_nome_constante" id="para_nome_constante">
               </div> 
             </div>
             <div class="row" name="conteudo">
