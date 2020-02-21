@@ -68,7 +68,7 @@ $paginaRetorno = 'pessoas_edita.php';
     exit;
     }
 
-  if ($_POST['operacao'] == 'pess_gravar'){
+  if ($_POST['operacao'] == 'gravar'){
   	$db->setTabela("pessoas", "idpessoas");
 
     $dados['id']                     = $_POST['id_cadastro'];
@@ -86,7 +86,6 @@ $paginaRetorno = 'pessoas_edita.php';
   	$dados['pess_funcionario'] 		   = $util->sgr($_POST['pess_funcionario']);
 
     $db->gravarInserir($dados, true);
-
 
   	if ($_POST['id_cadastro'] > 0) {
       $id = $_POST['id_cadastro'];

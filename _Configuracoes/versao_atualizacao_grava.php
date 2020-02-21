@@ -34,5 +34,11 @@ if($_POST['operacao'] == 'buscarHistorico'){
 	echo $atualizacao->geraHistorico();
 	exit;
 }
+
+if($_POST['operacao'] == 'baixarAtualizacoes'){
+	//
+  echo $atualizacao->baixaAtualizacao(true);
+  exit;
+}
  ?>
 

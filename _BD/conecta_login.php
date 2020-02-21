@@ -11,6 +11,7 @@ require_once("../Class/Util.class.php");
 require_once("../Class/usuario.class.php");
 require_once("../Class/logs.class.php");
 require_once("../Class/parametros.class.php");
+require_once("../Class/atualizacao.class.php");
 require_once("../Class/tarefas_diarias.class.php");
 require_once("../privado/constantes.vf");
 //
@@ -27,6 +28,7 @@ $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
 $parametros = new Parametros($db, $util);
+$atualizacao = new Atualizacao($db, $parametros, $util);
 //$chat = new Chat();
 //
 //Conecta com o banco de dados
@@ -42,7 +44,7 @@ if ($_POST['operacao'] == "logar") {
 	if ($resultado['retorno']){
 		//
 		//Executa tarefas diarias no primeiro login bem sucedido do dia
-		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util);
+		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util, $atualizacao);
 		$tarefasDiarias->executa_tarefas();
 		//
 		$_SESSION['logado'] 						= true;

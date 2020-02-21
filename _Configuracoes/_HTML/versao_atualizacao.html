@@ -23,7 +23,9 @@
       <div class="panel panel-default" style="border: solid 2px #828282; ">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
-            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer;" title="Histórico de atualizações" onclick="abrirHistoricoAtt()" data-toggle="modal" data-target="#historicoAtt">H</button>
+            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico de atualizações" onclick="abrirHistoricoAtt()" data-toggle="modal" data-target="#historicoAtt"><img src="../icones/historico_atualizacao.png"></button>
+            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Baixar atualizações" onclick="baixarAtualizacao()" data-toggle="modal" data-target="#baixarAtualizacao"><img src="../icones/baixar_atualizacao.png"></button>
+            ##btnEnviarAtt##
             Atualizações do sistema
           </div>
         </div>
@@ -70,6 +72,24 @@
             <h4 class="modal-title">Historico de atualizações</h4>
           </div>
           <div class="modal-body" id="conteudoHistoricoAtt"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="baixarAtualizacao" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Atualizando Sistema</h4>
+          </div>
+          <div class="modal-body" id="conteudoAtualizacao" align="center"></div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
           </div>

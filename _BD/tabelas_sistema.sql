@@ -55,6 +55,8 @@ CREATE TABLE IF NOT EXISTS `parametros` (
   `para_nome` varchar(255) NOT NULL,
   `para_valor` text DEFAULT NULL,
   `para_obs` text NULL,
+  `para_tipo` varchar(50) default 'parametro',
+  `para_nome_constante` varchar(100) null,
   PRIMARY KEY (idparametros)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.15;
+		private $ultimaVersao = 0.16;
 		private $db;
 		private $parametros;
 		private $util;
@@ -68,9 +68,22 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_00_16(){
+			//
+			// 20/02/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: data da ultima atualizacao", "", "Parametro usado para baixar novas versões do sistema", "parametro");
+			$this->parametros->cadastraParametros("sistema: endereco do servidor ftp", "files.000webhost.com", "Parametro usado para se conectar no servidor ftp", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: usuario do servidor ftp", "sistematccbackup", "Parametro usado para se conectar no servidor ftp", "parametro");
+			$this->parametros->cadastraParametros("sistema: senha do servidor ftp", "viniciusff1", "Parametro usado para se conectar no servidor ftp", "parametro"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametro de data da ultima atualização";
+		}
+
 		private function versao_00_15(){
 			//
-			// 02/09/2019 Vinicius
+			// 02/02/2020 Vinicius
 			//
 			global $SERVIDOR;
 			global $PORTA;
@@ -88,20 +101,6 @@
 			return "Criação de parametros com valores para conexão do banco";
 		}
 		
-		private function versao_00_14(){
-			//
-			// 19/02/2020 Vinicius
-			//
-			$sql = "ALTER TABLE parametros ADD para_tipo varchar(50) not null default 'parametro' ";
-			$this->db->executaSQL($sql);
-			//
-			$sql = "ALTER TABLE parametros ADD para_nome_constante varchar(100) null";
-			$this->db->executaSQL($sql);
-			//
-			//Mensagem para o usuario
-			return "Atualização na tabela parametros";
-		}
-
 		private function versao_00_13(){
 			//
 			// 01/10/2019 Vinicius
@@ -221,9 +220,9 @@
 			//
 			// 02/09/2019 Vinicius
 			//
-			$this->parametros->cadastraParametros("empresa: permite trabalhar com estoque negativo", "NAO", "Parametro usado para bloquear operações de estoque quando o mesmo estiver zerado ou negativo");
-			$this->parametros->cadastraParametros("empresa: libera estoque negativo com senha", "NAO", "Parametro usado para permitir operações de estoque (negativo ou zerado) com senha");
-			$this->parametros->cadastraParametros("empresa: senha para liberacao do estoque", "senha não informada", "Senha usada para liberação do estoque quando negativo ou zerado");
+			$this->parametros->cadastraParametros("empresa: permite trabalhar com estoque negativo", "NAO", "Parametro usado para bloquear operações de estoque quando o mesmo estiver zerado ou negativo", "parametro");
+			$this->parametros->cadastraParametros("empresa: libera estoque negativo com senha", "NAO", "Parametro usado para permitir operações de estoque (negativo ou zerado) com senha", "parametro");
+			$this->parametros->cadastraParametros("empresa: senha para liberacao do estoque", "senha não informada", "Senha usada para liberação do estoque quando negativo ou zerado", "parametro");
 			//
 			//Mensagem para o usuario
 			return "Criação de parametros para manipulações de estoque";
@@ -272,7 +271,7 @@
 			//
 			// 21/08/2019 Vinicius
 			//
-			$this->parametros->cadastraParametros("sistema: data da ultima execucao de tarefas diarias", date('Y-m-d'), "Parametro usado para o sistema definir se deve ou não executar as tarefas diarias");
+			$this->parametros->cadastraParametros("sistema: data da ultima execucao de tarefas diarias", date('Y-m-d'), "Parametro usado para o sistema definir se deve ou não executar as tarefas diarias", "parametro");
 			//
 			//Mensagem para o usuario
 			return "Cadastro do parametro para controle das tarefas diarias";
@@ -308,13 +307,81 @@
 			return "Criação da tabela Grupos";
 		}
 
-		public baixaAtualizacao(){
+		public function baixaAtualizacao($manual = false){
+			$nomeArquivoAtz = 'sistema_atz.zip';
+			$nomeArquivoAtz_local = '../sistema_atz.zip';
+			$nomeArquivoAtzInfo = 'atz_info.txt';
+			$nomeArquivoAtzInfo_local = '../atz_info.txt';
+			$ftp_server = $this->parametros->buscaValor("sistema: endereco do servidor ftp"); 
+			$ftp_user_name = $this->parametros->buscaValor("sistema: usuario do servidor ftp");
+			$ftp_user_pass = $this->parametros->buscaValor("sistema: senha do servidor ftp"); 
 			//
-			$nomeArquivoAtz = 'infoweb_atz.zip';
-			$ftp_server="intisbkp.com.br"; 
-			$ftp_user_name = 'infoweb_atz@intisbkp.com.br';
-			$ftp_user_pass = 'Duckman21'; 
 			//
+			$conexaoFTP = ftp_connect($ftp_server);
+			if($conexaoFTP === false && $manual){
+				echo "Erro ao se conectar com o servidor!";
+				return;
+			}
+			//
+			// login
+			$resultLogin = ftp_login($conexaoFTP, $ftp_user_name, $ftp_user_pass);
+			if($resultLogin === false && $manual){
+				echo "Erro ao efetuar login no servidor!";
+				return;
+			}
+			//
+			//			   
+			$modoPassivo = ftp_pasv($conexaoFTP, true);
+			if($modoPassivo === false && $manual){
+				echo "Erro ao ativar modo passivo no servidor!";
+				return;
+			}
+			//
+			//
+			if (ftp_get($conexaoFTP, $nomeArquivoAtzInfo_local, $nomeArquivoAtzInfo, FTP_ASCII)) {
+				$infoAtz = file_get_contents($nomeArquivoAtzInfo_local);
+				$dataUltimaAttSite = substr($infoAtz, 20, 20);
+				$dataUltimaAttSistema = $this->parametros->buscaValor("sistema: data da ultima atualizacao");
+				if (strtotime($dataUltimaAttSistema) >= strtotime($dataUltimaAttSite)) {
+					//
+					//Deleta os arquivos da atualização
+					unlink("../atz_info.txt");
+					if($manual) echo "O seu sistema já está na versão mais recente!";
+					return;
+				}
+			}else{
+				if($manual) echo "Erro ao baixar arquivo de informações da atualização!";
+				return;
+			}
+			//
+			//Testou a data e a do sistema esta menor, então tenta atualiza
+			if (ftp_get($conexaoFTP, $nomeArquivoAtz_local, $nomeArquivoAtz, FTP_BINARY)) {
+				//
+				//Descompacta o arquivo e atualiza o sistema
+				$zip = new ZipArchive();
+				if ($zip->open($nomeArquivoAtz_local) === true) {
+						$zip->extractTo('../');
+						$zip->close();
+						//
+						//Deleta os arquivos da atualização
+						unlink("../atz_info.txt");
+						unlink("../sistema_atz.zip");
+				}else{
+					if($manual) echo "Erro ao abrir arquivo de atualização!";
+					return;
+				}
+				//
+				//Atualiza a data de atualização.
+				unset($dados);
+				$dados['id'] 			= $this->util->sgr('sistema: data da ultima atualizacao');
+				$dados['para_valor'] 	= $this->util->sgr(date('Y-m-d H:i:s'));
+				$this->parametros->gravaValor($dados);
+				if($manual) echo "Atualização finalizada!.<br>Obrigado!";
+				return;
+			}else {
+				if($manual) echo "Erro ao baixar arquivos de atualização do sistema!";
+				return;
+			}
 		}
 
 	}

@@ -2,12 +2,15 @@
 
 class Util{
 
-	public function sgr($string){
+	public function sgr($string, $retornaNull = false){
 		if ($string != "") {
 			$string = str_replace("'", "''", $string);
           	return "'" . $string . "'";
         }else{
-          	return "NULL";
+			if($retornaNull){
+				return "NULL";
+			}
+          	return "''";
         }
 	}
 	

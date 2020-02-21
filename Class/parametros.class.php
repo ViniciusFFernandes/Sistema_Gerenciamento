@@ -18,7 +18,7 @@
 			$dados['para_nome_constante'] 	= $this->util->sgr($para_nome_constante);
 			$this->db->gravarInserir($dados);
 			//
-			if(!$this->db->erro() && $para_tipo != 'parametro'){
+			if(!$this->db->erro() && ($dados['para_tipo'] == 'constante' || $dados['para_tipo'] == 'variavel')){
 				$this->geraConstante();
 			}
 		}
@@ -39,7 +39,7 @@
 			$this->db->setTabela("parametros", $campoID);
 			$this->db->gravarInserir($dados);
 
-			if(!$this->db->erro() && $dados['para_tipo'] != 'parametro'){
+			if(!$this->db->erro() && ($dados['para_tipo'] == 'constante' || $dados['para_tipo'] == 'variavel') ){
 				$this->geraConstante();
 			}
 		}

@@ -62,6 +62,11 @@
             return;
         }
 
+        if(_pess_usuario == ""){
+          alertaPequeno('Não é permitido gravar o nome em branco!');
+          return;
+      }
+
         if ((_pess_senha.length) < 4) {
           alertaPequeno("Sua senha deve possuir mais de 4 digitos!")
           return;

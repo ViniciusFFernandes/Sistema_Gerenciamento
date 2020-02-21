@@ -5,12 +5,14 @@
 		private $ultima_execucao;
 		private $db;
 		private $util;
+		private $atualizacao;
 
-		function __construct($parametros, $db, $util){
+		function __construct($parametros, $db, $util, $atualizacao){
 			$this->data_atual = date('Y-m-d');
 			$this->db = $db;
 			$this->util = $util;
 			$this->parametros = $parametros;
+			$this->atualizacao = $atualizacao;
 			$this->ultima_execucao = $this->parametros->buscaValor("sistema: data da ultima execucao de tarefas diarias");
 		}
 
@@ -26,11 +28,16 @@
      		//
      		//Executa tarefas
      		$this->apagaHistoricoAtualizacao();
+     		$this->buscaAtualizacoes();
 		}
 
 		private function apagaHistoricoAtualizacao(){
 			$sql = "DELETE FROM versao_hist WHERE DATE_ADD(vhist_data, INTERVAL 60 DAY) <= NOW()";
 			$this->db->executaSQL($sql);
+		}
+
+		private function buscaAtualizacoes(){
+			$this->atualizacao->baixaAtualizacao();
 		}
 	}
 
