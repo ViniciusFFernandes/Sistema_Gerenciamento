@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.17;
+		private $ultimaVersao = 0.18;
 		private $db;
 		private $parametros;
 		private $util;

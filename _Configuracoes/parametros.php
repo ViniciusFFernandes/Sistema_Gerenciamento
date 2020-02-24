@@ -5,7 +5,7 @@
   unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("");
+  $html = $util->buscaHtml("", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   echo $html;
   exit;

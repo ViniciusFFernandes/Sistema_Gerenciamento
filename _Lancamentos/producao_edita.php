@@ -40,7 +40,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("lancamentos");
+  $html = $util->buscaHtml("lancamentos", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
   $html = str_replace("##id_cadastro##", $reg['idproducao'], $html);
