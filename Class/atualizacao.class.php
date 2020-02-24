@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.16;
+		private $ultimaVersao = 0.17;
 		private $db;
 		private $parametros;
 		private $util;
@@ -67,6 +67,26 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+		
+		private function versao_00_18(){
+			//
+			// 24/02/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: nome da imagem para logo", "padrao.png", "Parametro usado para definir a logo do sistema", "parametro"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametro para atualizar o sistema automaticamente";
+		}
+
+		private function versao_00_17(){
+			//
+			// 24/02/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: busca atualizcoes automaticamente", "SIM", "Parametro usado para que o sistema se atualize sozinho", "parametro"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametro para atualizar o sistema automaticamente";
+		}
 
 		private function versao_00_16(){
 			//
@@ -345,7 +365,7 @@
 				if (strtotime($dataUltimaAttSistema) >= strtotime($dataUltimaAttSite)) {
 					//
 					//Deleta os arquivos da atualização
-					unlink("../atz_info.txt");
+					unlink($nomeArquivoAtzInfo_local);
 					if($manual) echo "O seu sistema já está na versão mais recente!";
 					return;
 				}
@@ -364,8 +384,8 @@
 						$zip->close();
 						//
 						//Deleta os arquivos da atualização
-						unlink("../atz_info.txt");
-						unlink("../sistema_atz.zip");
+						unlink($nomeArquivoAtzInfo_local);
+						unlink($nomeArquivoAtz_local);
 				}else{
 					if($manual) echo "Erro ao abrir arquivo de atualização!";
 					return;
@@ -384,7 +404,138 @@
 			}
 		}
 
-	}
+		public function gerarAtualizacao(){
+			$nomeArquivoAtz = 'sistema_atz.zip';
+			$nomeArquivoAtz_local = '../sistema_atz.zip';
+			$nomeArquivoAtzInfo = 'atz_info.txt';
+			$nomeArquivoAtzInfo_local = '../atz_info.txt';
+			$ftp_server = $this->parametros->buscaValor("sistema: endereco do servidor ftp"); 
+			$ftp_user_name = $this->parametros->buscaValor("sistema: usuario do servidor ftp");
+			$ftp_user_pass = $this->parametros->buscaValor("sistema: senha do servidor ftp"); 
+			//
+			// Cria uma pasta compactada
+			$zip = new ZipArchive;
+			$zip->open($nomeArquivoAtz_local, ZipArchive::CREATE);
+			//
+			$dir = new DirectoryIterator('../');
+			foreach($dir as $file){
+				if(!$file->isDot()){
+					if($file->isDir()){
+						$caminho = $file->getPathname();
+						//
+						//abre o diretorio
+						$ArquivosSub = new DirectoryIterator($caminho);
+						//
+						//troca a barra invertida
+						$caminho = str_replace("\\", "/", $caminho);
+						//
+						//ignora as pastas do git
+						if(strpos($caminho, "git")) continue;
+						foreach($ArquivosSub as $file){
+							if(!$file->isDot()){
+								if( $file->isFile()){
+									//
+									$fileName = $file->getFilename();
+									//
+									//Salva o nome para pegar o arquivo
+									$arquivoLocal = $caminho . "/" . $fileName;
+									//
+									//Salva o nome que sera no zip e remove o ../
+									$arquivoZip = $caminho . "/" . $fileName;
+									$arquivoZip = str_replace("../", "", $arquivoZip);
+									//
+									//Inclui no zip
+									$zip->addFile($arquivoLocal, $arquivoZip);
+								}
+							}
+						}
+					}
+				}
+				//
+				// listando somente os arquivos do diretório
+				if($file->isFile()){
+					// atribui o nome do arquivo a variável
+					$fileName = $file->getFilename();
+					//
+					//ignora os arquivos do git e o arquivo de log de erros
+					if(strpos($fileName, "git")) continue;
+					if(strpos($fileName, "README")) continue;
+					if(strpos($fileName, "erro")) continue;
+					//
+					//Salva o nome para pegar o arquivo
+					$arquivoLocal = "../" . $fileName;
+					//
+					//Salva o nome que sera no zip e remove o ../
+					$arquivoZip = $fileName;
+					//
+					//Inclui no zip
+					$zip->addFile($arquivoLocal, $arquivoZip);
 
+				}
+			}
+			//
+			// Fecha o objeto. Necessário para gerar o arquivo zip final.
+			$zip->close();
+			//
+			//Gera o arquivo de informações
+			$arquivoAtzInfo = fopen($nomeArquivoAtzInfo_local, "a");
+			//
+			$textoArquivoAtzInfo = "Ultima Atualizacao: " . date("Y-m-d H:i:s") . "\n";
+			$textoArquivoAtzInfo .= "Ultima versao: " . $this->getUltimaVersao() . "\n";
+			$textoArquivoAtzInfo .= "-----------Dados do responsavel pela geracao desta versao-----------\n";
+			$textoArquivoAtzInfo .= "Usuario: " . $this->db->retornaUmCampoID("pess_nome", "pessoas", $_SESSION['idusuario']) . "\n";
+			$textoArquivoAtzInfo .= "Id do Usuario: " .$_SESSION['idusuario'] . "\n";
+			$textoArquivoAtzInfo .= "Ip da maquina: " . $_SERVER["REMOTE_ADDR"] . "\n";
+			//
+			fwrite($arquivoAtzInfo, $textoArquivoAtzInfo);
+			fclose($arquivoAtzInfo);
+			//
+			$conexaoFTP = ftp_connect($ftp_server);
+			if($conexaoFTP === false && $manual){
+				echo "Erro ao se conectar com o servidor!";
+				return;
+			}
+			//
+			// login
+			$resultLogin = ftp_login($conexaoFTP, $ftp_user_name, $ftp_user_pass);
+			if($resultLogin === false && $manual){
+				echo "Erro ao efetuar login no servidor!";
+				return;
+			}
+			//
+			//Envia o arquivo de atualização
+			$enviou = ftp_put($conexaoFTP, $nomeArquivoAtz, $nomeArquivoAtz_local, FTP_BINARY);
+			if(!$enviou){
+				//
+				//Deleta os arquivos da atualização
+				unlink($nomeArquivoAtzInfo_local);
+				unlink($nomeArquivoAtz_local);
+				//
+				echo "Erro ao enviar arquivo de atualização do sistema!";
+				return;
+			}
+			//
+			//Envia o arquivo de informações	
+			$enviou = ftp_put($conexaoFTP, $nomeArquivoAtzInfo, $nomeArquivoAtzInfo_local, FTP_ASCII);	
+			if($enviou){
+				//
+				//Deleta os arquivos da atualização
+				unlink($nomeArquivoAtzInfo_local);
+				unlink($nomeArquivoAtz_local);
+				//
+				echo "Nova versão gerada e enviada ao servido com sucesso!<br>Obrigado!";	
+				return;
+			}else{
+				//
+				//Deleta os arquivos da atualização
+				unlink($nomeArquivoAtzInfo_local);
+				unlink($nomeArquivoAtz_local);
+				//
+				echo "Erro ao enviar arquivo com informações sobre a atualização!";	
+				return;
+			}   
+		}
+
+	}
 
 ?>

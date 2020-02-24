@@ -47,9 +47,9 @@
         alertaPequeno("Você não tem permissão para executar esta ação!", '', 'tada');
         return;
       }
-      $("#conteudoAtualizacao").html("Porcurando por atualizações, aguarde... <img src='../icones/carregando2.gif' width='12px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
+      $("#conteudoAtualizacao").html("Gerando nova versão, aguarde... <img src='../icones/carregando2.gif' width='12px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
       $.post("versao_atualizacao_grava.php",
-              {operacao: 'baixarAtualizacoes'},
+              {operacao: 'gerarAtualizacoes'},
               function(data){
                 $("#conteudoAtualizacao").html(data);
               }, "html");

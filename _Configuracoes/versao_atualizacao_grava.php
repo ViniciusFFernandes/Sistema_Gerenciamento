@@ -40,5 +40,11 @@ if($_POST['operacao'] == 'baixarAtualizacoes'){
   echo $atualizacao->baixaAtualizacao(true);
   exit;
 }
+
+if($_POST['operacao'] == 'gerarAtualizacoes'){
+	//
+  echo $atualizacao->gerarAtualizacao();
+  exit;
+}
  ?>
 

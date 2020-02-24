@@ -24,7 +24,7 @@
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
             <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico de atualizações" onclick="abrirHistoricoAtt()" data-toggle="modal" data-target="#historicoAtt"><img src="../icones/historico_atualizacao.png"></button>
-            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Baixar atualizações" onclick="baixarAtualizacao()" data-toggle="modal" data-target="#baixarAtualizacao"><img src="../icones/baixar_atualizacao.png"></button>
+            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Baixar atualizações" onclick="baixarAtualizacao()" data-toggle="modal" data-target="#atualizacaoSistema"><img src="../icones/baixar_atualizacao.png"></button>
             ##btnEnviarAtt##
             Atualizações do sistema
           </div>
@@ -80,14 +80,14 @@
       </div>
     </div>
 
-    <div id="baixarAtualizacao" class="modal fade" role="dialog">
+    <div id="atualizacaoSistema" class="modal fade" role="dialog">
       <div class="modal-dialog">
 
         <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Atualizando Sistema</h4>
+            <h4 class="modal-title">Atualização do Sistema</h4>
           </div>
           <div class="modal-body" id="conteudoAtualizacao" align="center"></div>
           <div class="modal-footer">

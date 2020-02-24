@@ -11,7 +11,7 @@
     $btnAtualizar = "Seu sistema já está totalmente atualizado!";
   }
   if($_SESSION['idusuario'] == 1){
-    $btnEnviarAtt = '<button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer;" title="Enviar atualizações" onclick="enviarAtualizacao(' . $_SESSION['idusuario'] . ')" data-toggle="modal" data-target="#enviarAtualizacao"><img src="../icones/enviar_atualizacao.png"></button>';
+    $btnEnviarAtt = '<button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer;" title="Enviar atualizações" onclick="enviarAtualizacao(' . $_SESSION['idusuario'] . ')" data-toggle="modal" data-target="#atualizacaoSistema"><img src="../icones/enviar_atualizacao.png"></button>';
   }  
   unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   //

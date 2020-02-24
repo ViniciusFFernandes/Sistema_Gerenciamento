@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+date_default_timezone_set('America/Sao_Paulo');
 if(!realpath("../privado/constantes.vf")){
 	header("Location: ../privado/_Constante/criaConstante_login.html");
 	exit;

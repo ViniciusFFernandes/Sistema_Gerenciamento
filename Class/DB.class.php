@@ -166,6 +166,30 @@
 			return $resultado[$campo];
 		}
 
+		public function retornaUmCampoID($campo, $tabela, $id){
+			$this->erro = '';
+			$this->msgErro = '';
+			$sql = "SELECT {$campo} AS campo FROM {$tabela} WHERE id{$tabela} = {$id}";
+			$sql = trim($sql);
+			try{
+				// $resultado=$this->conexao->query($sql);
+				// $this->erro = false;
+				$query = $this->conexao->query($sql);
+				$query->execute();
+				$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
+				$query->closeCursor();
+			}
+			catch(PDOException $e) {
+				$resultado = NULL;
+				$this->erro = true;
+				$this->msgErro = $e->getMessage();
+				$mensagem  = $e->getMessage();
+				file_put_contents("../erro.log", "\n\nData: " . date("d/m/Y H:i") . "\nErro: " . $mensagem, FILE_APPEND);
+			}
+
+			return $resultado["campo"];
+		}
+
     public function executaSQL($sql, $tipoMsg = ''){
 		  $sql = trim($sql);
 		  $this->erro = '';
