@@ -72,17 +72,17 @@
 			//
 			// 24/02/2020 Vinicius
 			//
-			$this->parametros->cadastraParametros("sistema: nome da imagem para logo", "padrao.png", "Parametro usado para definir a logo do sistema", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: nome da imagem para logo", "padrao.png", "Parametro usado para definir a logo do sistema", "constante", "LOGO_EMPRESA"); 
 			//
 			//Mensagem para o usuario
-			return "Criação de parametro para atualizar o sistema automaticamente";
+			return "Criação de parametro para definir a logo da empresa";
 		}
 
 		private function versao_00_16(){
 			//
 			// 24/02/2020 Vinicius
 			//
-			$this->parametros->cadastraParametros("sistema: busca atualizcoes automaticamente", "SIM", "Parametro usado para que o sistema se atualize sozinho", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: busca atualizacoes automaticamente", "SIM", "Parametro usado para que o sistema se atualize sozinho", "parametro"); 
 			//
 			//Mensagem para o usuario
 			return "Criação de parametro para atualizar o sistema automaticamente";

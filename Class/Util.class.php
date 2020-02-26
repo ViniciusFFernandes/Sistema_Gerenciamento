@@ -140,8 +140,6 @@ class Util{
 	public function buscaHtml($btnMenu = '', $parametros){
 		$menu = file_get_contents('../menu.html');
 		//
-		$imgLogo = $parametros->buscaValor("sistema: nome da imagem para logo");
-		//
 		$opcoes_config = file_get_contents('../menu__opcoes_config.html');
 		$includes = file_get_contents('../includes.html');
 		//
@@ -159,7 +157,7 @@ class Util{
 		$menu = str_replace($busca, 'class="active"', $menu);
 		$menu = str_replace("##NomeUsuario##", $_SESSION['user'], $menu);
 		$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
-		$menu = str_replace("##imgLogo##", $imgLogo, $menu);
+		$menu = str_replace("##imgLogo##", LOGO_EMPRESA, $menu);
 		//
 		$nome = explode(".", basename($_SERVER['PHP_SELF']));
 		$nomeArquivo = $nome[0] . ".html";

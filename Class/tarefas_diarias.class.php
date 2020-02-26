@@ -37,7 +37,7 @@
 		}
 
 		private function buscaAtualizacoes(){
-			if($this->parametros->buscaValor("sistema: data da ultima execucao de tarefas diarias") == 'SIM'){
+			if($this->parametros->buscaValor("sistema: busca atualizacoes automaticamente") == 'SIM'){
 				$this->atualizacao->baixaAtualizacao();
 			}
 		}
