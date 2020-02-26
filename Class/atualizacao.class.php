@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.18;
+		private $ultimaVersao = 0.17;
 		private $db;
 		private $parametros;
 		private $util;
@@ -68,7 +68,7 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 		
-		private function versao_00_18(){
+		private function versao_00_17(){
 			//
 			// 24/02/2020 Vinicius
 			//
@@ -78,7 +78,7 @@
 			return "Criação de parametro para atualizar o sistema automaticamente";
 		}
 
-		private function versao_00_17(){
+		private function versao_00_16(){
 			//
 			// 24/02/2020 Vinicius
 			//
@@ -88,7 +88,7 @@
 			return "Criação de parametro para atualizar o sistema automaticamente";
 		}
 
-		private function versao_00_16(){
+		private function versao_00_15(){
 			//
 			// 20/02/2020 Vinicius
 			//
@@ -101,7 +101,7 @@
 			return "Criação de parametro de data da ultima atualização";
 		}
 
-		private function versao_00_15(){
+		private function versao_00_14(){
 			//
 			// 02/02/2020 Vinicius
 			//
