@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.17;
+		private $ultimaVersao = 0.20;
 		private $db;
 		private $parametros;
 		private $util;
@@ -67,7 +67,74 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
-		
+
+		private function versao_00_20(){
+			//
+			// 12/03/2020 Vinicius
+			//
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (1, 'consulta.php', 'consulta.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (2, 'index.php', 'index.php', 'programa', '', 'Indexs', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (3, 'conecta_login.php', 'conecta_login.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (4, 'cadastros_index.php', 'cadastros_index.php', 'programa', '', 'Indexs', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (5, 'cidades_edita.php', 'cidades_edita.php', 'menu', 'cidade.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (6, 'cidades_grava.php', 'cidades_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (7, 'forma_pagto_edita.php', 'forma_pagto_edita.php', 'menu', 'forma_pagto.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (8, 'forma_pagto_grava.php', 'forma_pagto_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (9, 'grupos_edita.php', 'grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (10, 'grupos_grava.php', 'grupos_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (11, 'meio_pagto_edita.php', 'meio_pagto_edita.php', 'menu', 'meio_pagto.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (12, 'meio_pagto_grava.php', 'meio_pagto_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (13, 'pessoas_edita.php', 'pessoas_edita.php', 'menu', 'cliente.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (14, 'pessoas_grava.php', 'pessoas_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (15, 'produtos_edita.php', 'produtos_edita.php', 'menu', 'produto.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (16, 'produtos_grava.php', 'produtos_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (17, 'sub_grupos_edita.php', 'sub_grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (18, 'sub_grupos_grava.php', 'sub_grupos_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (19, 'unidades_edita.php', 'unidades_edita.php', 'menu', 'unidade.png', 'Cadastros', 'cadastros')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (20, 'unidades_grava.php', 'unidades_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (21, 'parametros.php', 'parametros.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (22, 'parametros_grava.php', 'parametros_grava.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (23, 'versao_atualizacao.php', 'versao_atualizacao.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (24, 'versao_atualizacao_grava.php', 'versao_atualizacao_grava.php', 'programa', '', 'Sistema', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (25, 'inicio.php', 'inicio.php', 'programa', '', 'Indexs', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (26, 'lancamentos_index.php', 'lancamentos_index.php', 'programa', '', 'Indexs', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (27, 'producao_edita.php', 'producao_edita.php', 'menu', 'producao.png', 'Cadastros', 'lacamentos')");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (28, 'producao_grava.php', 'producao_grava.php', 'programa', '', 'Cadastros', NULL)");
+			$this->db->executaSQL("INSERT INTO `programas` (`idprogramas`, `prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES (30, 'relatorios_index.php', 'relatorios_index.php', 'programa', '', 'Indexs', NULL)");	
+			return "Incluindo programas padrões";
+		}
+
+		private function versao_00_19(){
+			//
+			// 12/03/2020 Vinicius
+			//
+			$sql = "ALTER TABLE programas ADD prog_tipo_origem varchar(100)";
+			$this->db->executaSQL($sql);
+
+			$sql = "ALTER TABLE programas ADD prog_tipo_menu varchar(100)";
+			$this->db->executaSQL($sql);
+
+			return "Atualização na tabela de programas";	
+		}
+
+		private function versao_00_18(){
+			//
+			// 12/03/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS programas(
+						idprogramas int(11) NOT NULL AUTO_INCREMENT,
+						prog_nome varchar(255) NULL,
+						prog_file varchar(255) NOT NULL,
+						prog_tipo varchar(255) NULL,
+						prog_imagem varchar(255) NULL,
+						CONSTRAINT NOME_PROGRAMA UNIQUE (prog_file),
+						PRIMARY KEY (idprogramas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);			//
+			//Mensagem para o usuario
+			return "Criação da tabela de programas";
+		}
+
 		private function versao_00_17(){
 			//
 			// 24/02/2020 Vinicius
@@ -82,7 +149,7 @@
 			//
 			// 24/02/2020 Vinicius
 			//
-			$this->parametros->cadastraParametros("sistema: busca atualizacoes automaticamente", "SIM", "Parametro usado para que o sistema se atualize sozinho", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: busca atualizacoes automaticamente", "NAO", "Parametro usado para que o sistema se atualize sozinho", "parametro"); 
 			//
 			//Mensagem para o usuario
 			return "Criação de parametro para atualizar o sistema automaticamente";
@@ -536,6 +603,19 @@
 			}   
 		}
 
+		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = ''){
+			//
+			if($nome == '') $nome = $file;
+			//
+			$this->db->setTabela("programas", "idprogramas");
+			$dados['prog_nome']        = $this->util->sgr($nome);
+			$dados['prog_file']        = $this->util->sgr($file);
+			$dados['prog_tipo']        = $this->util->sgr($tipo);
+			$dados['prog_imagem']      = $this->util->sgr($imagem);
+			$dados['prog_tipo_origem'] = $this->util->sgr($tipo_origem);
+			$dados['prog_tipo_menu']   = $this->util->sgr($tipo_menu);
+			$this->db->gravarInserir($dados);
+		}
 	}
 
 ?>
