@@ -158,6 +158,8 @@ class Util{
 		$menu = str_replace("##NomeUsuario##", $_SESSION['user'], $menu);
 		$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
 		$menu = str_replace("##imgLogo##", LOGO_EMPRESA, $menu);
+		// $menu = str_replace("##opcoes_menu##", LOGO_EMPRESA, $menu);
+		
 		//
 		$nome = explode(".", basename($_SERVER['PHP_SELF']));
 		$nomeArquivo = $nome[0] . ".html";
