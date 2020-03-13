@@ -9,7 +9,6 @@ if(!realpath("../privado/constantes.vf")){
 // print_r($_REQUEST);exit;
 require_once("../Class/DB.class.php");
 require_once("../Class/Util.class.php");
-require_once("../Class/usuario.class.php");
 require_once("../Class/logs.class.php");
 require_once("../Class/parametros.class.php");
 require_once("../Class/atualizacao.class.php");
@@ -39,10 +38,10 @@ $db->conectar();
 //
 //Efetua o login
 if ($_POST['operacao'] == "logar") {
- 	$db->setTabela("pessoas", "idpessoas");
- 	$user = new Usuario($_POST['usuario'], $_POST['senha']);
-	$resultado = $user->conferirSenha($db);
-	if ($resultado['retorno']){
+	$db->setTabela("pessoas", "idpessoas");
+	$resultado = false; 
+	$dados = $db->buscarUsuario($_POST['usuario']);
+	if($_POST['senha'] == $dados['pess_senha']){
 		//
 		//Executa tarefas diarias no primeiro login bem sucedido do dia
 		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util, $atualizacao);
@@ -50,7 +49,7 @@ if ($_POST['operacao'] == "logar") {
 		//
 		$_SESSION['logado'] 						= true;
 		$_SESSION['user'] 							= $_POST['usuario'];
-		$_SESSION['idusuario']				 	    = $resultado['idpessoas'];
+		$_SESSION['idusuario']				 	    = $dados['idpessoas'];
 	    $_SESSION['ultima_atividade'] 				= time();
 	    $_SESSION['permanece_logado'] 				= $_POST['permanece_logado'];
 		header('Location: ../_Inicio/inicio.php');
@@ -61,7 +60,7 @@ if ($_POST['operacao'] == "logar") {
     	$_SESSION['tipoMsg'] = "danger";
 		header('location:../index.php');
 		exit;
-		}
+	}
 }
 
 //

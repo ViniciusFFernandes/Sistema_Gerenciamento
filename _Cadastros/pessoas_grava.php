@@ -52,17 +52,42 @@ $paginaRetorno = 'pessoas_edita.php';
     }
 
   if ($_POST['operacao'] == 'validaUsuario'){
-    $user = new Usuario($_SESSION['user'], $_SESSION['senha'], $db);
-    $user->testaLogin($db, $util, $_POST['pess_usuario'], $_POST['idpessoas']);
-    exit;
+    $db->setTabela("pessoas");
+    $sql = "SELECT * FROM pessoas WHERE pess_usuario = " . $util->sgr($_POST['pess_usuario']) . " AND idpessoas <> " . $_POST['idpessoas'];
+    $reg = $db->retornaUmReg($sql);
+    if($reg['idpessoas'] > 0){
+      $dados['existe'] = "true";
+    }else{
+      $dados['existe'] = "false"; 
     }
+    //
+    echo json_encode($dados);
+    exit;
+  }
+
+  if ($_POST['operacao'] == 'validaSenha'){
+    $db->setTabela("pessoas");
+    $sql = "SELECT * FROM pessoas WHERE idpessoas = " . $_POST['idpessoas'];
+    $reg = $db->retornaUmReg($sql);
+    if($reg['pess_senha'] != ''){
+      $dados['existe'] = "true";
+    }else{
+      $dados['existe'] = "false"; 
+    }
+    //
+    echo json_encode($dados);
+    exit;
+  }
 
   if ($_POST['operacao'] == 'gravaLogin'){
     $db->setTabela("pessoas", "idpessoas");
 
-    $dados['id']                 = $_POST['idpessoas'];
-    $dados['pess_usuario']       = $util->sgr($_POST['pess_usuario']);
-    $dados['pess_senha']         = $util->sgr($_POST['pess_senha']);
+    $dados['id']                      = $_POST['idpessoas'];
+    $dados['pess_usuario']            = $util->sgr($_POST['pess_usuario']);
+    $dados['pess_idgrupos_acessos']   = $util->sgr($_POST['pess_idgrupos_acessos']);
+    if(!empty($_POST['pess_senha'])){
+      $dados['pess_senha']            = $util->sgr($_POST['pess_senha']);
+    }
 
     $db->gravarInserir($dados);
     exit;
