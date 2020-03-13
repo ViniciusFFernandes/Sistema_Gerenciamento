@@ -1,6 +1,10 @@
 ﻿<?php
   include_once("../_BD/conecta_login.php");
   include_once("../Class/autoComplete.class.php");
+  include_once("../Class/html.class.php");
+  //
+  //Inicia classes nescessarias
+  $html = new html($db, $util);
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){
@@ -37,6 +41,9 @@
     //
     $imgCarregandoTelefone = '<center><img src="../icones/carregando2.gif" width="15px"></center>';
     $escondeDivTelefone = "";
+    //
+    $sql = "SELECT * FROM grupos_acessos";
+    $comboGruposAcessos = $html->criaSelectSql("grac_nome", "idgrupos_acessos", "pess_idgrupos_acessos", $reg['pess_idgrupos_acessos'], $sql, "form-control");
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -48,6 +55,7 @@
   $html = $util->buscaHtml("cadastros", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Cidades##", $codigo_js, $html);
+  $html = str_replace("##grupos_acessos##", $comboGruposAcessos, $html);
   $html = str_replace("##caregando_telefone##", $imgCarregandoTelefone, $html);
   $html = str_replace("##esconde_div_telefone##", $escondeDivTelefone, $html);
   $html = str_replace("##EditaLogin##", $editaLogin, $html);

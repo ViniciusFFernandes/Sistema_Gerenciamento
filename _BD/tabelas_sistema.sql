@@ -1,41 +1,4 @@
 --
--- Criação da Tabela Pessoas e Insert de Valores Padrões
---
-CREATE TABLE IF NOT EXISTS `pessoas` (
-  `idpessoas` int(11) NOT NULL AUTO_INCREMENT,
-  `pess_nome` varchar(255) NOT NULL,
-  `pess_cpf` varchar(255) DEFAULT NULL,
-  `pess_cnpj` varchar(255) DEFAULT NULL,
-  `pess_cep` varchar(255) DEFAULT NULL,
-  `pess_rg` varchar(255) DEFAULT NULL,
-  `pess_endereco` varchar(255) DEFAULT NULL,
-  `pess_endereco_numero` varchar(255) DEFAULT NULL,
-  `pess_bairro` varchar(255) DEFAULT NULL,
-  `pess_idcidades` int(11) DEFAULT NULL,
-  `pess_usuario` varchar(255) DEFAULT NULL,
-  `pess_senha` varchar(255) DEFAULT NULL,
-  `pess_cliente` varchar(5) DEFAULT 'NAO',
-  `pess_fornecedor` varchar(5) DEFAULT 'NAO',
-  `pess_funcionario` varchar(5) DEFAULT 'NAO',
-  `pess_inativo` varchar(5) DEFAULT 'N',
-  PRIMARY KEY (idpessoas)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
-INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`) VALUES
-('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM');
-
---
--- Criação da Tabela Pessoas_numeros
---
-CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
-  `idpessoas_numeros` int(11) NOT NULL AUTO_INCREMENT,
-  `pnum_idpessoas` int(11) NOT NULL,
-  `pnum_DDD` varchar(5) DEFAULT NULL,
-  `pnum_numero` varchar(20) NOT NULL,
-  PRIMARY KEY (idpessoas_numeros)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
 -- Criação da Tabela Versao_hist
 --
 CREATE TABLE IF NOT EXISTS `versao_hist` (
@@ -61,6 +24,113 @@ CREATE TABLE IF NOT EXISTS `parametros` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `parametros` (`para_nome`, `para_valor`, `para_obs`) VALUES ('sistema: versao do sistema', '0.01', 'Numero usado para controle de atualizações do sistema');
+
+--
+-- Criação da Tabela Programas
+--
+CREATE TABLE IF NOT EXISTS programas(
+						idprogramas int(11) NOT NULL AUTO_INCREMENT,
+						prog_nome varchar(255) NULL,
+						prog_file varchar(255) NOT NULL,
+						prog_tipo varchar(255) NULL,
+						prog_imagem varchar(255) NULL,
+						prog_tipo_menu varchar(100) NULL,
+						prog_tipo_origem varchar(100) NULL,
+						CONSTRAINT NOME_PROGRAMA UNIQUE (prog_file),
+						PRIMARY KEY (idprogramas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('consulta.php', 'consulta.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('index.php', 'index.php', 'programa', '', 'Indexs', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('conecta_login.php', 'conecta_login.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('cadastros_index.php', 'cadastros_index.php', 'programa', '', 'Indexs', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('cidades_edita.php', 'cidades_edita.php', 'menu', 'cidade.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('cidades_grava.php', 'cidades_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('forma_pagto_edita.php', 'forma_pagto_edita.php', 'menu', 'forma_pagto.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('forma_pagto_grava.php', 'forma_pagto_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('grupos_edita.php', 'grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('grupos_grava.php', 'grupos_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('meio_pagto_edita.php', 'meio_pagto_edita.php', 'menu', 'meio_pagto.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('meio_pagto_grava.php', 'meio_pagto_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('pessoas_edita.php', 'pessoas_edita.php', 'menu', 'cliente.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('pessoas_grava.php', 'pessoas_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('produtos_edita.php', 'produtos_edita.php', 'menu', 'produto.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('produtos_grava.php', 'produtos_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('sub_grupos_edita.php', 'sub_grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('sub_grupos_grava.php', 'sub_grupos_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('unidades_edita.php', 'unidades_edita.php', 'menu', 'unidade.png', 'Cadastros', 'cadastros');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('unidades_grava.php', 'unidades_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('parametros.php', 'parametros.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('parametros_grava.php', 'parametros_grava.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('versao_atualizacao.php', 'versao_atualizacao.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('versao_atualizacao_grava.php', 'versao_atualizacao_grava.php', 'programa', '', 'Sistema', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('inicio.php', 'inicio.php', 'programa', '', 'Indexs', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('lancamentos_index.php', 'lancamentos_index.php', 'programa', '', 'Indexs', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('producao_edita.php', 'producao_edita.php', 'menu', 'producao.png', 'Cadastros', 'lacamentos');
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('producao_grava.php', 'producao_grava.php', 'programa', '', 'Cadastros', NULL);
+
+--
+-- Criação da Tabela Grupo de acessos
+--
+CREATE TABLE IF NOT EXISTS grupos_acessos(
+						idgrupos_acessos int(11) NOT NULL AUTO_INCREMENT,
+						grac_nome varchar(255) NOT NULL,
+						PRIMARY KEY (idgrupos_acessos)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `grupos_acessos` (`grac_nome`) VALUES ('Administradores');
+--
+-- Criação da Tabela Acessos de programas
+--
+CREATE TABLE IF NOT EXISTS grupos_acessos_programas(
+						idgrupos_acessos_programas int(11) NOT NULL AUTO_INCREMENT,
+						gap_idgrupos_acesso int(11) NOT NULL,
+						gap_idprograma int(11) NOT NULL,
+						gap_executa int(11) NOT NULL,
+						PRIMARY KEY (idgrupos_acessos_programas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+          
+INSERT INTO `grupos_acessos_programas` (`gap_idgrupos_acesso`, `gap_idprograma`, `gap_executa`)
+  SELECT 1, idprogramas, 1 FROM programas;
+
+--
+-- Criação da Tabela Pessoas e Insert de Valores Padrões
+--
+CREATE TABLE IF NOT EXISTS `pessoas` (
+  `idpessoas` int(11) NOT NULL AUTO_INCREMENT,
+  `pess_nome` varchar(255) NOT NULL,
+  `pess_cpf` varchar(255) DEFAULT NULL,
+  `pess_cnpj` varchar(255) DEFAULT NULL,
+  `pess_cep` varchar(255) DEFAULT NULL,
+  `pess_rg` varchar(255) DEFAULT NULL,
+  `pess_endereco` varchar(255) DEFAULT NULL,
+  `pess_endereco_numero` varchar(255) DEFAULT NULL,
+  `pess_bairro` varchar(255) DEFAULT NULL,
+  `pess_idcidades` int(11) DEFAULT NULL,
+  `pess_usuario` varchar(255) DEFAULT NULL,
+  `pess_senha` varchar(255) DEFAULT NULL,
+  `pess_cliente` varchar(5) DEFAULT 'NAO',
+  `pess_fornecedor` varchar(5) DEFAULT 'NAO',
+  `pess_funcionario` varchar(5) DEFAULT 'NAO',
+  `pess_inativo` varchar(5) DEFAULT 'N',
+  `pess_idgrupos_acessos` int(11) NULL,
+  PRIMARY KEY (idpessoas)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`, `pess_idgrupos_acessos`) VALUES
+('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM', 1);
+
+--
+-- Criação da Tabela Pessoas_numeros
+--
+CREATE TABLE IF NOT EXISTS `pessoas_numeros` (
+  `idpessoas_numeros` int(11) NOT NULL AUTO_INCREMENT,
+  `pnum_idpessoas` int(11) NOT NULL,
+  `pnum_DDD` varchar(5) DEFAULT NULL,
+  `pnum_numero` varchar(20) NOT NULL,
+  PRIMARY KEY (idpessoas_numeros)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
 --
 -- Criação da Tabela Folha de Ponto
 --

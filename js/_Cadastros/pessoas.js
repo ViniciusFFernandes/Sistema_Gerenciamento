@@ -50,42 +50,62 @@
           });
        });
 
-       function validarLogin(){
-         var _idpessoas = $("#id_cadastro").val();
-         var _pess_usuario = $("#pess_usuario").val();
-         var _pess_senha = $("#pess_senha").val();
-         var _verificacaoRetorno = $("#verificacaoRetorno").val();
+      function validaSenha(){
+        var _idpessoas = $("#id_cadastro").val();
+        var _pess_senha = $("#pess_senha").val();
+        $.post("pessoas_grava.php",
+         {operacao: "validaSenha", idpessoas: _idpessoas},
+         function(result){
+          //alert(result);
+          //return;
+           if(result.existe == 'true'){
+              if (_pess_senha.length < 4 && _pess_senha != '') {
+                $("#pess_senha").css({"border-color": "#FE2E2E"});
+              $("#verificacaoRetorno").val("Cancelar");
+              }else{
+                $("#pess_senha").css({"border-color": "#2EFE2E"});
+                $("#verificacaoRetorno").val("Aprovado");
+              }
+           }else{
+              if(_pess_senha.length >= 4 && _pess_senha != '') {
+                $("#pess_senha").css({"border-color": "#2EFE2E"});
+                $("#verificacaoRetorno").val("Aprovado");
+              }else{
+                $("#pess_senha").css({"border-color": "#FE2E2E"});
+                $("#verificacaoRetorno").val("Cancelar");
+              }
+            }
+          }, "json");
+      }
 
-
-        if(_pess_senha == ""){
-            alertaPequeno('Não é permitido gravar a senha em branco!');
-            return;
-        }
+      function validarLogin(){
+        var _idpessoas = $("#id_cadastro").val();
+        var _pess_usuario = $("#pess_usuario").val();
+        var _pess_senha = $("#pess_senha").val();
+        var _pess_idgrupos_acessos = $("#pess_idgrupos_acessos").val();
+        var _verificacaoRetorno = $("#verificacaoRetorno").val();
 
         if(_pess_usuario == ""){
           alertaPequeno('Não é permitido gravar o nome em branco!');
           return;
-      }
+        }
 
-        if ((_pess_senha.length) < 4) {
-          alertaPequeno("Sua senha deve possuir mais de 4 digitos!")
+        if(_pess_idgrupos_acessos == ""){
+          alertaPequeno('Não é permitido gravar sem um grupo de acesso!');
           return;
         }
 
         if (_verificacaoRetorno == "Aprovado") {
-          gravarUser(_idpessoas, _pess_usuario, _pess_senha);
+          gravarUser(_idpessoas, _pess_usuario, _pess_senha, _pess_idgrupos_acessos);
         }else{
           alertaPequeno("Corrija os campos indicados em vermelho!");
         }
-
-
-       }
+      }
 
        function verificaUser(){
          //alert("aosifnsdgoa");
          var _idpessoas = $("#id_cadastro").val();
          var _pess_usuario = $("#pess_usuario").val();
-         var _pess_senha = $("#pess_senha").val();
 
          $.post("pessoas_grava.php",
          {operacao: "validaUsuario", idpessoas: _idpessoas, pess_usuario: _pess_usuario},
@@ -93,20 +113,19 @@
           //alert(result);
           //return;
            if(result.existe == 'true'){
-             console.log("Nome de usuario ja cadastrado!");
-             $("#pess_usuario").css({"background-color":"#F78181", "border-color": "#FE2E2E"});
+             $("#pess_usuario").css({"border-color": "#FE2E2E"});
              $("#verificacaoRetorno").val("Cancelar");
              return;
            }else{
-             $("#pess_usuario").css({"background-color":"#81F781", "border-color": "#2EFE2E"});
+             $("#pess_usuario").css({"border-color": "#2EFE2E"});
              $("#verificacaoRetorno").val("Aprovado");
            }
          }, "json");
        }
 
-       function gravarUser(idpessoas, pess_usuario, pess_senha){
+       function gravarUser(idpessoas, pess_usuario, pess_senha, pess_idgrupos_acessos){
          $.post("pessoas_grava.php",
-          {operacao: "gravaLogin", idpessoas: idpessoas, pess_usuario: pess_usuario, pess_senha: pess_senha},
+          {operacao: "gravaLogin", idpessoas: idpessoas, pess_usuario: pess_usuario, pess_senha: pess_senha, pess_idgrupos_acessos: pess_idgrupos_acessos},
          function(result){
            $("#fechaAlteraLogin").click();
            $("#pess_senha").val("");

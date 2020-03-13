@@ -160,21 +160,23 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-md-7 col-sm-7 col-xs-10">
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <label for="Usuario">Usuario</label>
             <input type="text" onblur="verificaUser()" class="form-control" id="pess_usuario" name="pess_usuario" value="##pess_usuario##" placeholder="Usuario">
             <input type="hidden" name="verificacaoRetorno" id="verificacaoRetorno" value="Aprovado">
           </div>
-          <div class="col-md-2 col-sm-2 col-xs-2"></div>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <label for="Usuario">Grupo</label>
+            ##grupos_acessos##
+          </div>
         </div>
 
         <div class="row">
-          <div class="col-md-7 col-sm-7 col-xs-10">
+          <div class="col-md-6 col-sm-6 col-xs-12">
             <label for="Usuario">Senha</label>
-            <input type="password" class="form-control" id="pess_senha" name="pess_senha" value="" placeholder="Senha">
-            <span style="font-size: 10px; color:#A4A4A4;">*A senha deve possuir no minimo 4 digitos</span>
+            <input type="password" class="form-control" onblur="validaSenha()" id="pess_senha" name="pess_senha" value="" placeholder="Senha">
+            <span class="Obs_claro2">*A senha deve possuir no minimo 4 digitos <br>*Deixe em branco para não alterar</span>
           </div>
-          <div class="col-md-2 col-sm-2 col-xs-2"></div>
         </div>
       </div>
       <div class="modal-footer">

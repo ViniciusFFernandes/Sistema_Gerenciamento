@@ -4,6 +4,11 @@
   font-family: cursive;
 }
 
+.Obs_claro2{
+  font-size: 10px; 
+  color:#A4A4A4;
+}
+
 .valorEmBranco{
   color: #c8c8c8;
   /* font-size: 12px; */
