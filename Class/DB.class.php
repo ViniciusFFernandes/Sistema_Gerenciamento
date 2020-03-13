@@ -9,6 +9,7 @@
 		private $tabela;
 		private $idtabela;
 		private $msgErro;
+		private $erro;
 
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */
