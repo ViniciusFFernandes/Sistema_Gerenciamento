@@ -100,5 +100,42 @@ class Tabelas{
 	  	//escreve a tabela
 		echo $tabela;
 	}
+
+	public function geraTabelaPadrao($res, $db, $colunas, $titulo = ''){
+		$linhaColorida = false;
+	    if(empty($res)){
+	    	$tabela .= "Nenhum registro encontrado!";
+	    	$escondeTabela = "display: none;";
+	    }
+		$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}' >";
+		if(!empty($titulo)){
+			$tabela .= "<caption class='tituloTable'>{$titulo}</caption>";
+		}
+		foreach ($res as $reg) {
+			//
+			//Define se a linha vai ser de outra cor
+			$class = '';
+			if ($linhaColorida) {
+				$class = "class='info'";
+				$linhaColorida = false;
+			}else{
+				$linhaColorida = true;
+			}
+			//
+			$primeiraLinha = true;
+			foreach ($colunas as $coluna => $tamanho) {
+				if($primeiraLinha){
+					$tabela .= "<tr {$class}>";
+					$primeiraLinha = false;
+				}
+				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";
+			}
+			$tabela .- "</tr>";
+		}
+		$tabela .= "</table>";
+		//
+	  	//escreve a tabela
+		echo $tabela;
+	}
 }
 ?>

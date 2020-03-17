@@ -73,17 +73,26 @@ class Util{
 
 	public function mostraErro($mensagem, $link = null){
 		echo '
-	    <link rel="stylesheet" href="../css/bootstrap.min.css">
-		<div class="row">
-        	<div class="col-md-4 col-sm-1"></div>
-          	<div class="col-md-4 col-sm-10">
-	    		<div class="panel panel-default">
-	      			<div class="panel-heading">Ops! Tivemos algum probleminha.</div>
-	      			<div class="panel-body">
-	      	 			<span style="color: red;">Mas não se desespere!</span><br>
-	        			ERRO: ' . $mensagem . '
-	      			</div>
-	      			<div class="panel-footer">' ;
+		<!DOCTYPE html>
+		<html lang="pt">
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>' . NOME_SISTEMA . '</title>
+		</head>
+		<body>
+			<link rel="stylesheet" href="../css/bootstrap.min.css">
+			<div class="row">
+				<div class="col-md-4 col-sm-1 col-xs-1"></div>
+				<div class="col-md-4 col-sm-10 col-xs-10">
+					<div class="panel panel-default">
+						<div class="panel-heading">Ops! Tivemos algum probleminha.</div>
+						<div class="panel-body">
+							<span style="color: red;">Mas não se desespere!</span><br>
+							ERRO: ' . $mensagem . '
+						</div>
+						<div class="panel-footer">' ;
 	    if ($link != "") {
 	    	echo '<button class="btn btn-danger btn-lg" onclick="window.location.replace(\'' . $link . '\');">Voltar</button>';
 	    }else{
@@ -92,14 +101,16 @@ class Util{
 	    echo	'</div>
 		   		 	</div>
 		   		</div>
-		   		<div class="col-md-4 col-sm-1"></div>
-		   	</div>
+		   		<div class="col-md-4 col-sm-1 col-xs-1"></div>
+			   </div>
+			</body>
+		</html>
 		';
 	}
 
 	public function mostraMensagem($tipo, $mensagem, $id = ''){
 		$msg = '
-		<div class="alert alert-' . $tipo . ' alert-dismissible" role="alert">
+		<div class="alert alert-' . $tipo . ' alert-dismissible" role="alert" style="margin: 0 auto; box-shadow: 1px 1px 5px black;">
 			<button type="button" id="botao_alerta" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<center>' . $mensagem;
 		if (!empty($id)) {
@@ -166,6 +177,7 @@ class Util{
 		$html = file_get_contents("_HTML/" . $nomeArquivo);
 		$html = str_replace("##Menu##", $menu, $html);
 		$html = str_replace("##includes##", $includes, $html);
+		$html = str_replace("##nomeSistema##", NOME_SISTEMA, $html);
 		//
 		return $html;
 	}

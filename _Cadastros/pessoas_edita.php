@@ -39,10 +39,10 @@
       $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
     }
     //
-    $imgCarregandoTelefone = '<center><img src="../icones/carregando2.gif" width="15px"></center>';
+    $imgCarregandoTelefone = '<center><img src="../icones/carregando.gif" width="25px"></center>';
     $escondeDivTelefone = "";
     //
-    $sql = "SELECT * FROM grupos_acessos";
+    $sql = "SELECT * FROM grupos_acessos WHERE IFNULL(grac_inativo, 0) <> 1";
     $comboGruposAcessos = $html->criaSelectSql("grac_nome", "idgrupos_acessos", "pess_idgrupos_acessos", $reg['pess_idgrupos_acessos'], $sql, "form-control");
   }
   //

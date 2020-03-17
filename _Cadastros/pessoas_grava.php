@@ -80,16 +80,32 @@ $paginaRetorno = 'pessoas_edita.php';
   }
 
   if ($_POST['operacao'] == 'gravaLogin'){
+    if($_POST['pess_idgrupos_acessos'] == 1){
+      unset($dados);
+      $dados['retorno'] = "erro";
+      $dados['msg'] = "Não é permitido inserir usuarios no grupo Administradores!";
+      echo json_encode($dados);
+      exit;
+    }
+    //
     $db->setTabela("pessoas", "idpessoas");
-
+    //
     $dados['id']                      = $_POST['idpessoas'];
     $dados['pess_usuario']            = $util->sgr($_POST['pess_usuario']);
     $dados['pess_idgrupos_acessos']   = $util->sgr($_POST['pess_idgrupos_acessos']);
     if(!empty($_POST['pess_senha'])){
       $dados['pess_senha']            = $util->sgr($_POST['pess_senha']);
     }
-
     $db->gravarInserir($dados);
+    //
+    unset($dados);
+    if($db->erro()){
+      $dados['retorno'] = "erro";
+      $dados['msg'] = $db->getErro();
+    }else{
+      $dados['retorno'] = "ok";
+    }
+    echo json_encode($dados);
     exit;
     }
 

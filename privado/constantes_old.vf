@@ -1,7 +1,8 @@
 <?php $SERVIDOR = 'localhost';
 $PORTA = '3306';
 $USUARIO = 'root';
-$SENHA = NULL;
+$SENHA = '';
 $DB_NAME = 'arg';
-$PARAMETRO_TESTE_CONSTANTE = NULL;
+define(LOGO_EMPRESA, 'padrao.png');
+define(NOME_SISTEMA, 'JAOAO');
  ?>

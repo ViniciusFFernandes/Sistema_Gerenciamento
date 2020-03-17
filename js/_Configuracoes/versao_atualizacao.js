@@ -1,6 +1,6 @@
 
     function atualizarSistema(){
-      $("#btnAtualizar").html("Atualizando sistema, aguarde... <img src='../icones/carregando2.gif' width='12px;'>");
+      $("#btnAtualizar").html("Atualizando sistema, aguarde... <img src='../icones/carregando_engrenagens.gif' width='25px;'>");
       $("#relatorioAtualizacaoTitulo").show();
       $("#relatorioAtualizacao").show();
       $.post("versao_atualizacao_grava.php", 
@@ -25,7 +25,7 @@
     }
 
     function abrirHistoricoAtt(){
-      $("#conteudoHistoricoAtt").html("Buscando histórico, aguarde... <img src='../icones/carregando2.gif' width='12px;'>");
+      $("#conteudoHistoricoAtt").html("Buscando histórico, aguarde... <img src='../icones/carregando.gif' width='25px;'>");
       $.post("versao_atualizacao_grava.php",
               {operacao: 'buscarHistorico'},
               function(data){
@@ -34,7 +34,7 @@
     }
 
     function baixarAtualizacao(){
-      $("#conteudoAtualizacao").html("Porcurando por atualizações, aguarde... <img src='../icones/carregando2.gif' width='12px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
+      $("#conteudoAtualizacao").html("Porcurando por atualizações, aguarde... <img src='../icones/carregando_engrenagens.gif' width='25px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
       $.post("versao_atualizacao_grava.php",
               {operacao: 'baixarAtualizacoes'},
               function(data){
@@ -47,7 +47,7 @@
         alertaPequeno("Você não tem permissão para executar esta ação!", '', 'tada');
         return;
       }
-      $("#conteudoAtualizacao").html("Gerando nova versão, aguarde... <img src='../icones/carregando2.gif' width='12px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
+      $("#conteudoAtualizacao").html("Gerando nova versão, aguarde... <img src='../icones/carregando_engrenagens.gif' width='25px;'><br><span class='Obs_claro'>Está operação pode levar alguns minutos</span><br>");
       $.post("versao_atualizacao_grava.php",
               {operacao: 'gerarAtualizacoes'},
               function(data){

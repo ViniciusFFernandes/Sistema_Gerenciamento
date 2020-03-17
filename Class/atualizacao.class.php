@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.17;
+		private $ultimaVersao = 0.19;
 		private $db;
 		private $parametros;
 		private $util;
@@ -68,6 +68,26 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 		
+		private function versao_00_19(){
+			//
+			// 24/02/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: nome usado para o sistema", "vWeb", "Parametro usado para definir o nome usado para o sistema", "constante", "NOME_SISTEMA"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametro para definir a nome para o sistema";
+		}
+
+		private function versao_00_18(){
+			//
+			// 16/03/2020 Vinicius
+			//
+			$sql = "ALTER TABLE grupos_acessos ADD grac_inativo int(11) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para inativar grupo de acesso";
+		}
 		
 		private function versao_00_17(){
 			//

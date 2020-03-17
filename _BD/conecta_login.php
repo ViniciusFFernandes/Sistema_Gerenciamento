@@ -13,6 +13,7 @@ require_once("../Class/logs.class.php");
 require_once("../Class/parametros.class.php");
 require_once("../Class/atualizacao.class.php");
 require_once("../Class/tarefas_diarias.class.php");
+require_once("../Class/usuarios.class.php");
 require_once("../privado/constantes.vf");
 //
 //Se não existe define como null para evitar avisos de erro
@@ -50,6 +51,7 @@ if ($_POST['operacao'] == "logar") {
 		$_SESSION['logado'] 						= true;
 		$_SESSION['user'] 							= $_POST['usuario'];
 		$_SESSION['idusuario']				 	    = $dados['idpessoas'];
+		$_SESSION['idgrupos_acessos']				= $dados['pess_idgrupos_acessos'];
 	    $_SESSION['ultima_atividade'] 				= time();
 	    $_SESSION['permanece_logado'] 				= $_POST['permanece_logado'];
 		header('Location: ../_Inicio/inicio.php');
@@ -88,4 +90,11 @@ if (((time() - $_SESSION['ultima_atividade']) > 1800) && ($_SESSION['permanece_l
 }
 
 $_SESSION['ultima_atividade'] = time(); // update ultima ativ.
+//
+//Verifica se o ususario pode acessar a pagina atual
+$usuarios = new Usuarios($db, $util, $_SESSION['idusuario'], $_SESSION['idgrupos_acessos']);
+if(!$usuarios->usuario_pode_executar()){
+	$util->mostraErro("Você não tem permissão para executar este programa!<br>Consulte um administrador do sistema!");
+	exit;
+}
 ?>

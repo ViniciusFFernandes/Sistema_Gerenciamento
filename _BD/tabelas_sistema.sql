@@ -84,13 +84,13 @@ INSERT INTO `grupos_acessos` (`grac_nome`) VALUES ('Administradores');
 --
 CREATE TABLE IF NOT EXISTS grupos_acessos_programas(
 						idgrupos_acessos_programas int(11) NOT NULL AUTO_INCREMENT,
-						gap_idgrupos_acesso int(11) NOT NULL,
-						gap_idprograma int(11) NOT NULL,
+						gap_idgrupos_acessos int(11) NOT NULL,
+						gap_idprogramas int(11) NOT NULL,
 						gap_executa int(11) NOT NULL,
 						PRIMARY KEY (idgrupos_acessos_programas)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
           
-INSERT INTO `grupos_acessos_programas` (`gap_idgrupos_acesso`, `gap_idprograma`, `gap_executa`)
+INSERT INTO `grupos_acessos_programas` (`gap_idgrupos_acessos`, `gap_idprogramas`, `gap_executa`)
   SELECT 1, idprogramas, 1 FROM programas;
 
 --
