@@ -1,6 +1,6 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
-  include_once("../Class/autoComplete.class.php");
+  require_once("../_BD/conecta_login.php");
+  require_once("../Class/autoComplete.class.php");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){
@@ -22,12 +22,12 @@
   }
   //
   if (isset($_SESSION['mensagem'])) {
-    $msg = $util->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
+    $msg = $html->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
     unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml("cadastros", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Estados##", $codigo_js, $html);
   $html = str_replace("##id_cadastro##", $reg['idcidades'], $html);

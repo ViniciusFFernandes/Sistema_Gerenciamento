@@ -1,5 +1,5 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
+  require_once("../_BD/conecta_login.php");
 
   if($_POST['operacao'] == "consultaAjax"){
   	$parametros->tabelaParametros($_POST['filtro'], $util);

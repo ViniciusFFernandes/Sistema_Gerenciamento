@@ -1,6 +1,6 @@
 ﻿<?php
-include_once("../_BD/conecta_login.php");
-include_once("../Class/atualizacao.class.php");
+require_once("../_BD/conecta_login.php");
+require_once("../Class/atualizacao.class.php");
 //
 $atualizacao = new Atualizacao($db, $parametros, $util);
 // print_r($_POST);

@@ -25,7 +25,8 @@
         $sql = "SELECT gap_executa 
                 FROM grupos_acessos_programas 
                     JOIN programas ON (gap_idprogramas = idprogramas)
-                WHERE prog_nome = " . $this->util->sgr($prog_file);
+                WHERE gap_idgrupos_acessos = " . $this->idgrupos_acessos . " 
+                AND prog_file = " . $this->util->sgr($prog_file);
         $reg = $this->db->retornaUmReg($sql);
         if($reg['gap_executa'] == 1){
             return true;

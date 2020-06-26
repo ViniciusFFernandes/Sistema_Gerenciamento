@@ -1,6 +1,6 @@
 ﻿<?php
-include_once("../_BD/conecta_login.php");
-include_once("../Class/Tabelas.class.php");
+require_once("../_BD/conecta_login.php");
+require_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'produtos_edita.php';
@@ -49,7 +49,7 @@ if ($_POST['operacao'] == "buscaCadastro") {
 
     $db->gravarInserir($dados, true);
     if($db->erro()){
-      $util->mostraErro("Erro ao inserir produto<br>Erro:" . $db->getErro());
+      $html->mostraErro("Erro ao inserir produto<br>Erro:" . $db->getErro());
       exit;
     }
 
@@ -66,7 +66,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("produtos", "idprodutos");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $util->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
         exit;
     }
     header('location:../_Cadastros/' . $paginaRetorno);

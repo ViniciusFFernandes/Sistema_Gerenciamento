@@ -1,8 +1,8 @@
 ﻿<?php
-include_once("../_BD/conecta_login.php");
-include_once("../Class/Tabelas.class.php");
-include_once("../Class/producao.class.php");
-include_once("../Class/estoque.class.php");
+require_once("../_BD/conecta_login.php");
+require_once("../Class/Tabelas.class.php");
+require_once("../Class/producao.class.php");
+require_once("../Class/estoque.class.php");
 // print_r($_REQUEST);
 // exit;
 $paginaRetorno = 'producao_edita.php';
@@ -77,7 +77,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("producao", "idproducao");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $util->mostraErro("Erro ao excluir producao<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir producao<br>Operação cancelada!");
         exit;
     }
     header('location:../_Lancamentos/' . $paginaRetorno);
@@ -86,11 +86,11 @@ if ($_POST['operacao'] == "excluiCad") {
 
 if ($_POST['operacao'] == 'fechar'){
   //
-  $estoque = new estoque($db, $util);
+  $estoque = new estoque($db, $util, $html);
   //
   $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Fechada"){
-        $util->mostraErro("Esta produção já está fechada!");
+        $html->mostraErro("Esta produção já está fechada!");
         exit;
     }
   //
@@ -106,7 +106,7 @@ if ($_POST['operacao'] == 'fechar'){
     $novoEstoque = $qteEstoque - $reg['pdci_qte'];
     if($novoEstoque < 0 AND $permiteEstoqueNegativo == "NAO"){
       $db->rollBack();
-      $util->mostraErro("Operação atual reduzira seu estoque para um valor negativo!<br>Operação cancelada!");
+      $html->mostraErro("Operação atual reduzira seu estoque para um valor negativo!<br>Operação cancelada!");
       exit;
     }
     //
@@ -130,7 +130,7 @@ if ($_POST['operacao'] == 'fechar'){
   $db->gravarInserir($dados, true);
    if($db->erro()){
       $db->rollBack();
-      $util->mostraErro("Erro ao fechar produção!<br>Operação cancelada!");
+      $html->mostraErro("Erro ao fechar produção!<br>Operação cancelada!");
       exit;
     }
   $db->commit();
@@ -140,11 +140,11 @@ if ($_POST['operacao'] == 'fechar'){
 
 if ($_POST['operacao'] == 'reabrir'){
   //
-  $estoque = new estoque($db, $util);
+  $estoque = new estoque($db, $util, $html);
   //
   $sql = "SELECT pdc_situacao FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
   if($db->retornaUmCampoSql($sql, "pdc_idprodutos") == "Aberta"){
-        $util->mostraErro("Esta produção já está aberta!");
+        $html->mostraErro("Esta produção já está aberta!");
         exit;
     }
   //
@@ -167,7 +167,7 @@ if ($_POST['operacao'] == 'reabrir'){
   $novoEstoque = $qteEstoque - $reg['pdc_qte_produzida'];
   if($novoEstoque < 0 AND $permiteEstoqueNegativo == "NAO"){
     $db->rollBack();
-    $util->mostraErro("Operação atual reduzira seu estoque para um valor negativo!<br>Operação cancelada!");
+    $html->mostraErro("Operação atual reduzira seu estoque para um valor negativo!<br>Operação cancelada!");
     exit;
   }
   //
@@ -184,7 +184,7 @@ if ($_POST['operacao'] == 'reabrir'){
   $db->gravarInserir($dados, true);
    if($db->erro()){
       $db->rollBack();
-      $util->mostraErro("Erro ao reabrir produção!<br>Operação cancelada!");
+      $html->mostraErro("Erro ao reabrir produção!<br>Operação cancelada!");
       exit;
     }
   $db->commit();

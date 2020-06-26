@@ -1,10 +1,10 @@
 <?
- include_once("conecta.php");
+ require_once("conecta.php");
  
  ob_end_clean();	
  set_time_limit(4500);
  //
- include_once("./m_funcoes/funcoes.php");
+ require_once("./m_funcoes/funcoes.php");
  
 ?>
    <script language="javascript">

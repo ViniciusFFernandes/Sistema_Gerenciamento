@@ -1,5 +1,5 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
+  require_once("../_BD/conecta_login.php");
   
   //Gera as mensagens porem nao exibe nenhuma
   unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
@@ -29,6 +29,12 @@
                       <div class="row" align="center">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                           ##tabelaProgramas##
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 col-sm-12 col-xs-12" align=\'center\'>
+                          <button type="button" onclick="ativarDesativarProgramas(\'Ativar\')" class="btn btn-success">Ativar Todos</button>
+                          <button type="button" onclick="ativarDesativarProgramas(\'Desativar\')" class="btn btn-danger">Desativar Todos</button>
                         </div>
                       </div>';
     //
@@ -84,7 +90,7 @@
         }else{
           $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Ativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-success">Ativar</button>';
         }
-        $tabelaProgramas .= "<td align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}'>{$btnAtivaDesativa}</td>";
+        $tabelaProgramas .= "<td align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}' name='tdBtnAtivarDesativar'>{$btnAtivaDesativa}</td>";
         $tabelaProgramas .= "</tr>";
       }
       $tabelaProgramas .= "</table>";
@@ -99,7 +105,7 @@
   }  
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("", $parametros);
+  $html = $html->buscaHtml("", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idgrupos_acessos'], $html);
   $html = str_replace("##grac_nome##", $reg['grac_nome'], $html); 

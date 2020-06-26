@@ -1,5 +1,5 @@
 <?php 
-	include_once '../_BD/conecta_login.php';
+	require_once '../_BD/conecta_login.php';
 	//
 	$_POST['campoMostra'] = base64_decode($_POST['campoMostra']);
 	$_POST['campoValor'] = base64_decode($_POST['campoValor']);

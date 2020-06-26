@@ -1,6 +1,10 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
-  include_once("../Class/Tabelas.class.php");
+  require_once("../_BD/conecta_login.php");
+  require_once("../Class/Tabelas.class.php");
+  require_once("../Class/html.class.php");
+  //
+  //Inicia classes nescessarias
+  $html = new html($db, $util);
   //
   $paginaRetorno = 'grupos_acessos.php';
   //
@@ -25,6 +29,9 @@
   }
 
   if ($_POST['operacao'] == "ativarDesativarProgram") {
+    //
+    // $db->beginTransaction();
+    //
     $db->setTabela("grupos_acessos_programas", "idgrupos_acessos_programas");
     //
     unset($dados);
@@ -34,13 +41,25 @@
     //
     unset($dados);
     if($db->erro()){
+      // $db->rollBack();
       $dados['retorno'] = 'erro';
       $dados['msg'] = $db->getErro();
     }else{
       $dados['retorno'] = 'ok';
+      $sql = "SELECT * FROM grupos_acessos_programas JOIN programas ON (gap_idprogramas = idprogramas) WHERE idgrupos_acessos_programas = " . $_POST['idgrupos_acessos_programas'];
+      $reg = $db->retornaUmReg($sql);
+      if($reg['prog_tipo'] == 'menu'){
+        $ret = $html->criaMenu($reg['gap_idgrupos_acessos'], $reg['prog_tipo_menu']);
+        if(!$ret){
+          // $db->rollBack();
+          $dados['retorno'] = 'erro';
+          $dados['msg'] = 'Erro ao recriar menu!<br>Operação cancelada!';
+        }
+      }
     }
+    // $db->commit();
     echo json_encode($dados);
-     exit;
+    exit;
   }
 
   if ($_POST['operacao'] == 'novoCadastro'){
@@ -72,13 +91,21 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos_acessos", "idgrupos_acessos");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $util->mostraErro("Erro ao excluir grupo<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir grupo<br>Operação cancelada!");
         exit;
     }
     header('location:../_Configuracoes/' . $paginaRetorno);
     exit;
   }
 
+if($_POST['operacao'] == 'ativarDesativarTodos'){
+  $sql = "UPDATE grupos_acessos_programas SET gap_executa = {$_POST['gap_executa']} WHERE gap_idgrupos_acessos = " . $_POST['gap_idgrupos_acessos'];
+  $db->executaSQL($sql);
+  //
+  $sql = "SELECT * FROM grupos_acessos_programas WHERE gap_idgrupos_acessos = " . $_POST['gap_idgrupos_acessos'];
+  $res = $db->consultar($sql);
+  echo json_encode($res);
+}
 
   function inserePermissoes($idGruposAcessos){
     global $db;

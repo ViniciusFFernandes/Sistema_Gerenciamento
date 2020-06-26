@@ -10,6 +10,7 @@
 		private $idtabela;
 		private $msgErro;
 		private $erro;
+		private $transactionAtivo;
 
 
 /* não é seguro fazer desse jeito, sempre mudar  a senha e o usuario nos seus projetos empresariais */

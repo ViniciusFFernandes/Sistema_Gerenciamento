@@ -1,5 +1,5 @@
 <?php
-   include_once '../_BD/conecta_login.php';
+   require_once '../_BD/conecta_login.php';
    $pagina = "relatorios.php";
 ?>
 
@@ -42,7 +42,7 @@
                       <div class="col-md-4 col-sm-4 col-xs-12">
                         <label for="fopo_idpessoas">Funcionaio</label>
                         <?php
-                          $util->comboboxSql("pess_nome", "idpessoas", "pess_funcionario = 'SIM'", $db, "pessoas");
+                          $html->comboBoxSql("pess_nome", "idpessoas", "pess_funcionario = 'SIM'", $db, "pessoas");
                         ?>
                       </div>
                       <div class="col-md-4 col-sm-4 col-xs-12">

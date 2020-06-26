@@ -1,11 +1,11 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
-  include_once("../Class/html.class.php");
-  include_once("../Class/produtos.class.php");
-  include_once("../Class/autoComplete.class.php");
+  require_once("../_BD/conecta_login.php");
+  // require_once("../Class/html.class.php");
+  require_once("../Class/produtos.class.php");
+  require_once("../Class/autoComplete.class.php");
   //
   //Inicia classes nescessarias
-  $html = new html($db, $util);
+  // $html = new html($db, $util);
   $produtos = new produtos($db, $util);
   //
   //Gera o autoComplete 
@@ -38,19 +38,19 @@
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     //
-    $comboBoxTipo     = $util->defineSelected("", $reg['prod_tipo_produto']);
-    $comboBoxTipoPR   = $util->defineSelected("Produto Revenda", $reg['prod_tipo_produto']);
-    $comboBoxTipoMP   = $util->defineSelected("Materia Prima", $reg['prod_tipo_produto']);
-    $comboBoxTipoPC   = $util->defineSelected("Produto para Consumo", $reg['prod_tipo_produto']);
-    $comboBoxTipoPP   = $util->defineSelected("Producao Propria", $reg['prod_tipo_produto']);
-    $comboBoxTipoPV   = $util->defineSelected("Producao para Venda", $reg['prod_tipo_produto']);
-    $comboBoxTipoV    = $util->defineSelected("Veiculo", $reg['prod_tipo_produto']);
-    $comboBoxTipoBT   = $util->defineSelected("Brindes de Terceiros", $reg['prod_tipo_produto']);
-    $comboBoxTipoBP   = $util->defineSelected("Brindes Próprios", $reg['prod_tipo_produto']);
-    $comboBoxTipoE    = $util->defineSelected("Embalagem", $reg['prod_tipo_produto']);
-    $comboBoxTipoIP   = $util->defineSelected("Imobilizado Proprio", $reg['prod_tipo_produto']);
-    $comboBoxTipoPAT  = $util->defineSelected("Terceiros", $reg['prod_tipo_produto']);
-    $comboBoxTipoO    = $util->defineSelected("Outros", $reg['prod_tipo_produto']);
+    $comboBoxTipo     = $html->defineSelected("", $reg['prod_tipo_produto']);
+    $comboBoxTipoPR   = $html->defineSelected("Produto Revenda", $reg['prod_tipo_produto']);
+    $comboBoxTipoMP   = $html->defineSelected("Materia Prima", $reg['prod_tipo_produto']);
+    $comboBoxTipoPC   = $html->defineSelected("Produto para Consumo", $reg['prod_tipo_produto']);
+    $comboBoxTipoPP   = $html->defineSelected("Producao Propria", $reg['prod_tipo_produto']);
+    $comboBoxTipoPV   = $html->defineSelected("Producao para Venda", $reg['prod_tipo_produto']);
+    $comboBoxTipoV    = $html->defineSelected("Veiculo", $reg['prod_tipo_produto']);
+    $comboBoxTipoBT   = $html->defineSelected("Brindes de Terceiros", $reg['prod_tipo_produto']);
+    $comboBoxTipoBP   = $html->defineSelected("Brindes Próprios", $reg['prod_tipo_produto']);
+    $comboBoxTipoE    = $html->defineSelected("Embalagem", $reg['prod_tipo_produto']);
+    $comboBoxTipoIP   = $html->defineSelected("Imobilizado Proprio", $reg['prod_tipo_produto']);
+    $comboBoxTipoPAT  = $html->defineSelected("Terceiros", $reg['prod_tipo_produto']);
+    $comboBoxTipoO    = $html->defineSelected("Outros", $reg['prod_tipo_produto']);
     //
     //Carrega Tabs
     $tabs = '<ul class="nav nav-tabs">
@@ -70,12 +70,12 @@
   }
   //
   if (isset($_SESSION['mensagem'])) {
-    $msg = $util->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
+    $msg = $html->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
     unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml("cadastros", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idprodutos'], $html);
   $html = str_replace("##comboBoxTipo##", $comboBoxTipo, $html);

@@ -1,6 +1,6 @@
 ﻿<?php
-include_once("../_BD/conecta_login.php");
-include_once("../Class/Tabelas.class.php");
+require_once("../_BD/conecta_login.php");
+require_once("../Class/Tabelas.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'grupos_edita.php';
@@ -50,7 +50,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos", "idgrupos");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $util->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir produto<br>Operação cancelada!");
         exit;
     }
     header('location:../_Cadastros/' . $paginaRetorno);

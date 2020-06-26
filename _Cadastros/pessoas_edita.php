@@ -1,10 +1,10 @@
 ﻿<?php
-  include_once("../_BD/conecta_login.php");
-  include_once("../Class/autoComplete.class.php");
-  include_once("../Class/html.class.php");
+  require_once("../_BD/conecta_login.php");
+  require_once("../Class/autoComplete.class.php");
+  // require_once("../Class/html.class.php");
   //
   //Inicia classes nescessarias
-  $html = new html($db, $util);
+  // $html = new html($db, $util);
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){
@@ -31,9 +31,9 @@
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     //
-    $checkCliente = $util->defineChecked($reg['pess_cliente']);
-    $checkFornecedor = $util->defineChecked($reg['pess_fornecedor']);
-    $checkFuncionario = $util->defineChecked($reg['pess_funcionario']);
+    $checkCliente = $html->defineChecked($reg['pess_cliente']);
+    $checkFornecedor = $html->defineChecked($reg['pess_fornecedor']);
+    $checkFuncionario = $html->defineChecked($reg['pess_funcionario']);
     //
     if(!empty($reg['cid_nome'])){
       $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
@@ -47,12 +47,12 @@
   }
   //
   if (isset($_SESSION['mensagem'])) {
-    $msg = $util->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
+    $msg = $html->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
     unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $util->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml("cadastros", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Cidades##", $codigo_js, $html);
   $html = str_replace("##grupos_acessos##", $comboGruposAcessos, $html);

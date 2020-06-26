@@ -35,3 +35,43 @@ function testaDados(){
   //
  chamaGravar('gravar');
 }
+
+function ativarDesativarProgramas(operacao){
+  //
+  bootbox.confirm({
+    title: "<b>Atenção</b>",
+    message: "Deseja " + operacao + " Todos os Programas?",
+    className: 'bounceInUp animated',
+    buttons: {
+        cancel: {
+            label: '<img src="../icones/excluir2.png"> Não'
+        },
+        confirm: {
+            label: '<img src="../icones/certo.png"> Sim'
+        }
+    },
+    callback: function(result){
+        if(result){
+          var executa;
+          var novoBtn;
+          if(operacao == 'Ativar'){
+            executa = 1;
+            novoBtn = '<button type="button" onclick="ativarDesativar(\'Desativar\', ##idgrupos_acessos_programas##)" class="btn btn-danger">Desativar</button>';
+          }
+          if(operacao == 'Desativar'){
+            executa = 0;
+            novoBtn = '<button type="button" onclick="ativarDesativar(\'Ativar\', ##idgrupos_acessos_programas##)" class="btn btn-success">Ativar</button>';
+          }
+          $("td[name='tdBtnAtivarDesativar']" ).html('<img src="../icones/carregando_engrenagens.gif" width="34px">')
+          $.post("grupos_acessos_grava.php", 
+            {operacao: "ativarDesativarTodos", gap_idgrupos_acessos: $("#id_cadastro").val(), gap_executa: executa},
+            function(data){
+              $.each(data, function(index, reg) {
+                novoBtn = novoBtn.replace('##idgrupos_acessos_programas##', reg.idgrupos_acessos_programas);
+                $("#btn_" + reg.idgrupos_acessos_programas).html(novoBtn);
+              });
+            }, "json")
+        }
+    }
+});
+}

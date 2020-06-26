@@ -1,6 +1,6 @@
 <?php
 	class Atualizacao {
-		private $ultimaVersao = 0.19;
+		private $ultimaVersao = 0.20;
 		private $db;
 		private $parametros;
 		private $util;
@@ -67,10 +67,21 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_20(){
+			//
+			// 17/03/2020 Vinicius
+			//
+			$this->cadastraPrograma("grupos_acessos.php",  'Sistema', 'Grupos de Acessos',  'menu', '', 'configuracoes');
+			$this->cadastraPrograma("grupos_acessos_grava.php", 'Sistema');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa grupos de acessos e e suas dependencias";
+		}
 		
 		private function versao_00_19(){
 			//
-			// 24/02/2020 Vinicius
+			// 16/03/2020 Vinicius
 			//
 			$this->parametros->cadastraParametros("sistema: nome usado para o sistema", "vWeb", "Parametro usado para definir o nome usado para o sistema", "constante", "NOME_SISTEMA"); 
 			//
@@ -557,19 +568,27 @@
 			}   
 		}
 
-		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = ''){
+		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = '', $pode_executar = 0){
 			//
 			if($nome == '') $nome = $file;
 			//
 			$this->db->setTabela("programas", "idprogramas");
+			//
 			$dados['prog_nome']        = $this->util->sgr($nome);
 			$dados['prog_file']        = $this->util->sgr($file);
 			$dados['prog_tipo']        = $this->util->sgr($tipo);
 			$dados['prog_imagem']      = $this->util->sgr($imagem);
 			$dados['prog_tipo_origem'] = $this->util->sgr($tipo_origem);
 			$dados['prog_tipo_menu']   = $this->util->sgr($tipo_menu);
+			//
 			$this->db->gravarInserir($dados);
+			//
+			$idprogramas = $this->db->getUltimoID();
+			$sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
+						SELECT idgrupos_acessos, {$idprogramas}, {$pode_executar} FROM grupos_acessos";
+			$this->db->executaSQL($sql);
 		}
+
 	}
 
 ?>

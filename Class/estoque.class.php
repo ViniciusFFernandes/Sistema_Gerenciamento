@@ -3,10 +3,12 @@
 class estoque{
 	private $db;
 	private $util;
+	private $html;
 
-	function __construct($db, $util){
+	function __construct($db, $util, $html){
 		$this->db = $db;
 		$this->util = $util;
+		$this->html = $html;
 	}
 
 	public function geraMovimento($idprodutos, $maismMenos, $qte, $origem, $idorigem){
@@ -24,7 +26,7 @@ class estoque{
 	    $this->db->gravarInserir($dados);
 	    if($this->db->erro()){
 	      $this->db->rollBack();
-	      $this->util->mostraErro($this->db->getErro() . " <br><br>Operação cancelada!");
+	      $this->html->mostraErro($this->db->getErro() . " <br><br>Operação cancelada!");
 	      exit;
 	    }
     }

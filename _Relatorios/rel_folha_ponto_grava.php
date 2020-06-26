@@ -1,6 +1,6 @@
 <?php
-include_once '../_BD/conecta_login.php';
-include_once '../Class/Relatorios.class.php';
+require_once '../_BD/conecta_login.php';
+require_once '../Class/Relatorios.class.php';
 // print_r($_POST);
 // exit;
 $rel = new Relatorios();

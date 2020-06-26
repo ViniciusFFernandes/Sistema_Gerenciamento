@@ -14,6 +14,7 @@ require_once("../Class/parametros.class.php");
 require_once("../Class/atualizacao.class.php");
 require_once("../Class/tarefas_diarias.class.php");
 require_once("../Class/usuarios.class.php");
+require_once("../Class/html.class.php");
 require_once("../privado/constantes.vf");
 //
 //Se não existe define como null para evitar avisos de erro
@@ -30,6 +31,7 @@ $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
 $parametros = new Parametros($db, $util);
 $atualizacao = new Atualizacao($db, $parametros, $util);
+$html = new html($db, $util);
 //$chat = new Chat();
 //
 //Conecta com o banco de dados
@@ -42,7 +44,7 @@ if ($_POST['operacao'] == "logar") {
 	$db->setTabela("pessoas", "idpessoas");
 	$resultado = false; 
 	$dados = $db->buscarUsuario($_POST['usuario']);
-	if($_POST['senha'] == $dados['pess_senha']){
+	if($dados['idpessoas'] > 0 && $_POST['senha'] == $dados['pess_senha']){
 		//
 		//Executa tarefas diarias no primeiro login bem sucedido do dia
 		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util, $atualizacao);
@@ -76,7 +78,7 @@ if ($_POST['operacao'] == "Sair") {
 //
 //Caso tente acessar as paginas pela url e nao esteja logado
 if (!$_SESSION['logado']) {
-	$util->mostraErro("Você não esta logado.<br>Para continuar é necessário que faça o login!", "../index.php");
+	$html->mostraErro("Você não esta logado.<br>Para continuar é necessário que faça o login!", "../index.php");
 	exit;
 }
 
@@ -94,7 +96,7 @@ $_SESSION['ultima_atividade'] = time(); // update ultima ativ.
 //Verifica se o ususario pode acessar a pagina atual
 $usuarios = new Usuarios($db, $util, $_SESSION['idusuario'], $_SESSION['idgrupos_acessos']);
 if(!$usuarios->usuario_pode_executar()){
-	$util->mostraErro("Você não tem permissão para executar este programa!<br>Consulte um administrador do sistema!");
+	$html->mostraErro("Você não tem permissão para executar este programa!<br>Consulte um administrador do sistema!<br> Programa: " . basename($_SERVER['PHP_SELF']));
 	exit;
 }
 ?>
