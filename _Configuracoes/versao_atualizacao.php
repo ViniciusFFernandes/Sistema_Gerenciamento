@@ -1,6 +1,6 @@
 ﻿<?php
   require_once("../_BD/conecta_login.php");
-  require_once("../Class/atualizacao.class.php");
+  require_once("tabelas.class.php");
   
   $atualizacao = new Atualizacao($db, $parametros, $util);
   $ultimaVersao = $atualizacao->getUltimaVersao();

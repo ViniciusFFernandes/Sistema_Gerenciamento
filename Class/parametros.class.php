@@ -1,11 +1,13 @@
 <?php
+	require_once("Util.class.php");
+
 	class Parametros {
 		private $db;
 		private $util;
 
-		function __construct($db, $util){
+		function __construct($db){
 			$this->db = $db;
-			$this->util = $util;
+			$this->util = new Util();
 		}
 
 		public function cadastraParametros($para_nome, $para_valor, $para_obs, $para_tipo = '', $para_nome_constante = ''){

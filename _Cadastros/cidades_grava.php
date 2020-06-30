@@ -1,6 +1,6 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("../Class/Tabelas.class.php");
+require_once("tabelas.classs.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'cidades_edita.php';
@@ -54,7 +54,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("cidades", "idcidades");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $html->mostraErro("Erro ao excluir cidade<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
         exit;
     }
     header('location:../_Cadastros/' . $paginaRetorno);

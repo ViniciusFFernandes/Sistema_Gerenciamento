@@ -1,13 +1,20 @@
 <?php
+	require_once("parametros.class.php");
+	require_once("html.class.php");
+	require_once("Util.class.php");
+
 	class Atualizacao {
-		private $ultimaVersao = 0.20;
+		private $ultimaVersao = 0.27;
 		private $db;
 		private $parametros;
 		private $util;
-		function __construct($db, $parametros, $util){
+		private $html;
+
+		function __construct($db){
 			$this->db = $db;
-			$this->parametros = $parametros;
-			$this->util = $util;
+			$this->parametros = new Parametros($db);
+			$this->util = new Util();
+			$this->html = new html($db);
 		}
 
 		public function getUltimaVersao(){
@@ -63,20 +70,119 @@
 			}
 			return $dados;
 		}
-
+		//////////////////////////////////////
+		//Exemplos de uso das funções       //
+		//////////////////////////////////////
+		//
+		//$this->cadastraPrograma("arquivo_do_programa.php", 'Tipo no Grupo Acesso', 'Nome para o Menu',  'tipo: Programa ou Menu', 'Nome_da_imagem_menu.png', 'Qual Menu Aparece', Sepode ou Não Executar por Padrão: 0 ou 1);
+		//
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+		
+		private function versao_00_27(){
+			//
+			// 29/06/2020 Vinicius
+			//
+			$this->cadastraPrograma("pessoas_ficha_associado.php", 'Impressões');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa para imprimir ficha de associado";
+		}
+
+		private function versao_00_26(){
+			//
+			// 29/06/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("empresa: nome da empresa", "", "Parametro usado para definir o nome da empresa"); 
+			$this->parametros->cadastraParametros("empresa: cnpj da empresa", "", "Parametro usado para definir o cnpj da empresa"); 
+			$this->parametros->cadastraParametros("empresa: endereco da empresa", "", "Parametro usado para definir o encereço da empresa"); 
+			$this->parametros->cadastraParametros("empresa: cidade da empresa", "", "Parametro usado para definir o cidade da empresa"); 
+			$this->parametros->cadastraParametros("empresa: uf da empresa", "", "Parametro usado para definir o uf da empresa"); 
+			$this->parametros->cadastraParametros("empresa: CEP da empresa", "", "Parametro usado para definir o CEP da empresa"); 
+			$this->parametros->cadastraParametros("empresa: telefone de contato da empresa", "", "Parametro usado para definir o telefone de contato da empresa"); 
+			$this->parametros->cadastraParametros("sistema: nome da logo usada para relatorios", "", "Parametro usado para definir a logo que será usada nos relatórios"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametro para definir dados da empresa";
+		}
+
+		private function versao_00_25(){
+			//
+			// 27/06/2020 Vinicius
+			//
+			$sql = "ALTER TABLE pessoas ADD pess_idfuncoes int(11) NULL";
+			$this->db->executaSQL($sql); 
+			$sql = "ALTER TABLE pessoas ADD pess_idsetores int(11) NULL";
+			$this->db->executaSQL($sql); 
+			$sql = "ALTER TABLE pessoas ADD pess_associado varchar(5) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação dos campos para associado, setor e função das pessoas";
+		}
+
+		private function versao_00_24(){
+			//
+			// 27/06/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS setores(
+				idsetores int(11) NOT NULL AUTO_INCREMENT,
+				set_nome VARCHAR(255) NOT NULL,
+				PRIMARY KEY (idsetores)
+			)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela idsetores";
+		}
+
+		private function versao_00_23(){
+			//
+			// 27/06/2020 Vinicius
+			//
+			$this->cadastraPrograma("setores_edita.php", 'Cadastros', 'Setores',  'menu', 'setores.png', 'cadastros');
+			$this->cadastraPrograma("setores_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa cadastro de setores e suas dependencias";
+		}
+
+		private function versao_00_22(){
+			//
+			// 27/06/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS funcoes(
+				idfuncoes int(11) NOT NULL AUTO_INCREMENT,
+				func_nome VARCHAR(255) NOT NULL,
+				PRIMARY KEY (idfuncoes)
+			)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela funções";
+		}
+
+		private function versao_00_21(){
+			//
+			// 26/06/2020 Vinicius
+			//
+			$this->cadastraPrograma("funcoes_edita.php", 'Cadastros', 'Funções',  'menu', 'funcoes.png', 'cadastros');
+			$this->cadastraPrograma("funcoes_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa cadastro de funcoes e suas dependencias";
+		}
 
 		private function versao_00_20(){
 			//
 			// 17/03/2020 Vinicius
 			//
-			$this->cadastraPrograma("grupos_acessos.php",  'Sistema', 'Grupos de Acessos',  'menu', '', 'configuracoes');
+			$this->cadastraPrograma("grupos_acessos.php", 'Sistema', 'Grupos de Acessos',  'menu', '', 'configuracoes');
 			$this->cadastraPrograma("grupos_acessos_grava.php", 'Sistema');
 			//
 			//Mensagem para o usuario
-			return "Cadastro do programa grupos de acessos e e suas dependencias";
+			return "Cadastro do programa grupos de acessos e suas dependencias";
 		}
 		
 		private function versao_00_19(){
@@ -472,6 +578,9 @@
 									//Salva o nome para pegar o arquivo
 									$arquivoLocal = $caminho . "/" . $fileName;
 									//
+									//ignora os constantes
+									if(pathinfo($arquivoLocal, PATHINFO_EXTENSION) == 'vf') continue;
+									//
 									//Salva o nome que sera no zip e remove o ../
 									$arquivoZip = $caminho . "/" . $fileName;
 									$arquivoZip = str_replace("../", "", $arquivoZip);
@@ -489,10 +598,11 @@
 					// atribui o nome do arquivo a variável
 					$fileName = $file->getFilename();
 					//
-					//ignora os arquivos do git e o arquivo de log de erros
+					//ignora os arquivos do git e o arquivo de log de erros e constantes
 					if(strpos($fileName, "git")) continue;
 					if(strpos($fileName, "README")) continue;
 					if(strpos($fileName, "erro")) continue;
+					if(strpos($fileName, "constantes")) continue;
 					//
 					//Salva o nome para pegar o arquivo
 					$arquivoLocal = "../" . $fileName;
@@ -584,9 +694,14 @@
 			$this->db->gravarInserir($dados);
 			//
 			$idprogramas = $this->db->getUltimoID();
+			//
 			$sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
 						SELECT idgrupos_acessos, {$idprogramas}, {$pode_executar} FROM grupos_acessos";
 			$this->db->executaSQL($sql);
+			//
+			if($tipo == 'menu'){
+				$this->html->criaMenu('', $tipo_menu);
+			}
 		}
 
 	}

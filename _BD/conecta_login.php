@@ -7,15 +7,16 @@ if(!realpath("../privado/constantes.vf")){
 	exit;
 }
 // print_r($_REQUEST);exit;
-require_once("../Class/DB.class.php");
-require_once("../Class/Util.class.php");
-require_once("../Class/logs.class.php");
-require_once("../Class/parametros.class.php");
-require_once("../Class/atualizacao.class.php");
-require_once("../Class/tarefas_diarias.class.php");
-require_once("../Class/usuarios.class.php");
-require_once("../Class/html.class.php");
-require_once("../privado/constantes.vf");
+require_once("../set_path.php");
+require_once("DB.class.php");
+require_once("Util.class.php");
+require_once("logs.class.php");
+require_once("parametros.class.php");
+require_once("atualizacao.class.php");
+require_once("tarefas_diarias.class.php");
+require_once("usuarios.class.php");
+require_once("html.class.php");
+require_once("constantes.vf");
 //
 //Se não existe define como null para evitar avisos de erro
 if (!isset($_POST['operacao'])) {
@@ -29,9 +30,9 @@ if (!isset($_SESSION['logado'])) {
 $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
 $log = new log();
-$parametros = new Parametros($db, $util);
-$atualizacao = new Atualizacao($db, $parametros, $util);
-$html = new html($db, $util);
+$parametros = new Parametros($db);
+$html = new html($db);
+$atualizacao = new Atualizacao($db);
 //$chat = new Chat();
 //
 //Conecta com o banco de dados

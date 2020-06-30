@@ -1,6 +1,6 @@
 ﻿<?php
   require_once("../_BD/conecta_login.php");
-  require_once("../Class/autoComplete.class.php");
+  require_once("tabelas.class.php");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){

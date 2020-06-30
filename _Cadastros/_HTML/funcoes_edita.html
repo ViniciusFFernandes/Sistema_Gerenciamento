@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>##nomeSistema##</title>
 
-    ##includes##
-    <script src="../js/_Configuracoes/grupos_acessos.js"></script>
+     ##includes##
+     <script src="../js/_Cadastros/funcoes.js"></script>
   </head>
   <body>
+
     <div>
      ##Menu##
     </div>
@@ -22,18 +23,19 @@
       <div class="panel panel-default" style="border: solid 2px #828282; ">
         <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
           <div class="panel-title">
-            Grupos de Acessos
-            <span align="right" data-toggle="modal" title="Buscar grupos" data-target="#buscaCadastro" style="cursor: pointer;">
+            Cadastro de Funções
+            <span align="right" data-toggle="modal" title="Buscar Funções" data-target="#buscaCadastro" style="cursor: pointer;">
               &nbsp;<img src="../icones/lupa.png">
+            </span>
           </div>
         </div>
         <div class="panel-body">
-          <form action="grupos_acessos_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+          <form action="funcoes_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
             <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="Nome">Nome</label>
-                <input type="text" class="form-control" id="grac_nome" name="grac_nome" value="##grac_nome##" placeholder="Nome" autofocus >
+                <input type="text" class="form-control" id="func_nome" name="func_nome" value="##func_nome##" placeholder="Nome" autofocus >
               </div>
             </div>
             <br>
@@ -43,16 +45,15 @@
                 <center>
                   <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
                   <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
-                  ##btnInativar##
-                  ##btnGerarMenu##
+                  ##btnExcluir##
                 </center>
               </div>
             </div>
           </form>
-            ##listaProgramas##
         </div>
       </div>
     </div>
+
 
     <!-- Modal -->
     <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
@@ -67,7 +68,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaCadastro('grupos_acessos_grava.php')" class="btn btn-primary">Buscar</button>
+            <button type="button" onclick="buscaCadastro('funcoes_grava.php')" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>

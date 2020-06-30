@@ -1,6 +1,6 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("../Class/Tabelas.class.php");
+require_once("tabelas.classs.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'meio_pagto_edita.php';
@@ -50,7 +50,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("meio_pagto", "idmeio_pagto");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $html->mostraErro("Erro ao excluir meio de pagamento<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
         exit;
     }
     header('location:../_Cadastros/' . $paginaRetorno);

@@ -1,8 +1,8 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("../Class/Tabelas.class.php");
-require_once("../Class/producao.class.php");
-require_once("../Class/estoque.class.php");
+require_once("tabelas.class.php");
+require_once("producao.class.php");
+require_once("tabelas.class.php");
 // print_r($_REQUEST);
 // exit;
 $paginaRetorno = 'producao_edita.php';

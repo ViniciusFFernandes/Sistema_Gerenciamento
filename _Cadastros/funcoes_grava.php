@@ -1,26 +1,24 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("tabelas.class.php");
+require_once("tabelas.classs.php");
 // print_r($_POST);
 // exit;
-$paginaRetorno = 'unidades_edita.php';
+$paginaRetorno = 'funcoes_edita.php';
 //
   if ($_POST['operacao'] == "buscaCadastro") {
-    $sql = "SELECT * FROM unidades";
+    $sql = "SELECT * FROM funcoes";
     //
     if ($_POST['pesquisa'] != "") {
-      $sql .= " WHERE idunidades LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
-                  OR uni_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
-                  OR uni_sigla LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
+      $sql .= " WHERE idfuncoes LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%") . "
+                  OR func_nome LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
     }
     //
     $res = $db->consultar($sql);
     $tabelas = new Tabelas();
     //
     unset($dados);
-    $dados['idunidades'] = "width='6%'";
-    $dados['uni_nome'] = "";
-    $dados['uni_sigla'] = "width='10%'";
+    $dados['idfuncoes'] = "width='6%'";
+    $dados['func_nome'] = "";
     //
     $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
     exit;
@@ -32,12 +30,11 @@ $paginaRetorno = 'unidades_edita.php';
     }
 
   if ($_POST['operacao'] == 'gravar'){
-  	$db->setTabela("unidades", "idunidades");
+  	$db->setTabela("funcoes", "idfuncoes");
 
     unset($dados);
-    $dados['id']         = $_POST['id_cadastro'];
-  	$dados['uni_nome'] 	 = $util->sgr($_POST['uni_nome']);
-  	$dados['uni_sigla']  = $util->sgr($_POST['uni_sigla']);
+    $dados['id']            = $_POST['id_cadastro'];
+  	$dados['func_nome'] 	= $util->sgr($_POST['func_nome']);
     $db->gravarInserir($dados, true);
 
   	if ($_POST['id_cadastro'] > 0) {
@@ -50,7 +47,7 @@ $paginaRetorno = 'unidades_edita.php';
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("unidades", "idunidades");
+    $db->setTabela("funcoes", "idfuncoes");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");

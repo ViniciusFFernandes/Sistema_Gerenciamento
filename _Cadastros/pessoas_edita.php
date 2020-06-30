@@ -1,7 +1,7 @@
 ﻿<?php
   require_once("../_BD/conecta_login.php");
-  require_once("../Class/autoComplete.class.php");
-  // require_once("../Class/html.class.php");
+  require_once("autoComplete.class.php");
+  // require_once("html.class.php");
   //
   //Inicia classes nescessarias
   // $html = new html($db, $util);
@@ -24,16 +24,24 @@
   //Monta variaveis de exibição
   $escondeDivTelefone = "style='display: none;'";
   //
+  $sql = "SELECT * FROM setores";
+  $comboBoxSetores = $html->criaSelectSql("set_nome", "idsetores", "pess_idsetores", $reg['pess_idsetores'], $sql, "form-control");
+  //
+  $sql = "SELECT * FROM funcoes";
+  $comboBoxFuncoes = $html->criaSelectSql("func_nome", "idfuncoes", "pess_idfuncoes", $reg['pess_idfuncoes'], $sql, "form-control");
+  //
   if(!empty($reg['idpessoas'])){ 
     $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;">';
     $editaLogin .=  '&nbsp;<img src="../icones/cadeado.png">';
     $editaLogin .= '</span>';
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
+    $btnImprimir = '<button type="button" class="btn btn-warning" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
     //
     $checkCliente = $html->defineChecked($reg['pess_cliente']);
     $checkFornecedor = $html->defineChecked($reg['pess_fornecedor']);
     $checkFuncionario = $html->defineChecked($reg['pess_funcionario']);
+    $checkAssociado = $html->defineChecked($reg['pess_associado']);
     //
     if(!empty($reg['cid_nome'])){
       $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
@@ -44,6 +52,7 @@
     //
     $sql = "SELECT * FROM grupos_acessos WHERE IFNULL(grac_inativo, 0) <> 1";
     $comboGruposAcessos = $html->criaSelectSql("grac_nome", "idgrupos_acessos", "pess_idgrupos_acessos", $reg['pess_idgrupos_acessos'], $sql, "form-control");
+    //
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -62,11 +71,14 @@
   $html = str_replace("##CheckCliente##", $checkCliente, $html);
   $html = str_replace("##CheckFornecedor##", $checkFornecedor, $html);
   $html = str_replace("##CheckFuncionario##", $checkFuncionario, $html);
+  $html = str_replace("##CheckAssociado##", $checkAssociado, $html);
   $html = str_replace("##id_cadastro##", $reg['idpessoas'], $html);
   $html = str_replace("##pess_nome##", $reg['pess_nome'], $html);
   $html = str_replace("##pess_cpf##", $reg['pess_cpf'], $html);
   $html = str_replace("##pess_cnpj##", $reg['pess_cnpj'], $html);
   $html = str_replace("##pess_rg##", $reg['pess_rg'], $html);
+  $html = str_replace("##comboBoxSetores##", "$comboBoxSetores", $html);
+  $html = str_replace("##comboBoxFuncoes##", $comboBoxFuncoes, $html);
   $html = str_replace("##pess_endereco##", $reg['pess_endereco'], $html);
   $html = str_replace("##pess_endereco_numero##", $reg['pess_endereco_numero'], $html);
   $html = str_replace("##pess_cidades##", $cidade, $html);
@@ -75,6 +87,7 @@
   $html = str_replace("##pess_cep##", $reg['pess_cep'], $html);
   $html = str_replace("##pess_usuario##", $reg['pess_usuario'], $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
+  $html = str_replace("##btnImprimir##", $btnImprimir, $html);
   echo $html;
   exit;
 ?>

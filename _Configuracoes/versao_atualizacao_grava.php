@@ -1,6 +1,8 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("../Class/atualizacao.class.php");
+require_once("tabelas.class.php");
+//
+set_time_limit(0);
 //
 $atualizacao = new Atualizacao($db, $parametros, $util);
 // print_r($_POST);

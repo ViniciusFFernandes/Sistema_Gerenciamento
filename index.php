@@ -11,13 +11,15 @@
     exit;
   }
   //
+  require_once("set_path.php");
+  //
   require_once("privado/constantes.vf");
   //
   //Inclui classes
-  require_once("Class/Util.class.php");
-  require_once("Class/html.class.php");
+  require_once("Util.class.php");
+  require_once("html.class.php");
   $util = new Util();
-  $html = new html('', $util);
+  $html = new html('');
   //
   //Monta variaveis de exibição
   if (isset($_SESSION['mensagem'])) {

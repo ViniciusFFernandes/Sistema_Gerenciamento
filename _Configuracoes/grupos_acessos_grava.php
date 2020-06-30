@@ -1,10 +1,6 @@
 ﻿<?php
   require_once("../_BD/conecta_login.php");
-  require_once("../Class/Tabelas.class.php");
-  require_once("../Class/html.class.php");
-  //
-  //Inicia classes nescessarias
-  $html = new html($db, $util);
+  require_once("tabelas.class.php");
   //
   $paginaRetorno = 'grupos_acessos.php';
   //
@@ -87,6 +83,70 @@
     exit;
 }
 
+if($_POST['operacao'] == 'listarProgramas'){
+  //
+  $sql = "SELECT * 
+            FROM grupos_acessos_programas 
+              JOIN programas ON (gap_idprogramas = idprogramas)
+            WHERE gap_idgrupos_acessos = " . $_POST['id_cadastro'];
+    
+    if ($_POST['pesquisa'] != "") {
+        $sql .= " AND prog_file LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
+    }
+
+    $sql .= " ORDER BY prog_tipo, prog_tipo_origem, prog_nome";
+    //
+    $res = $db->consultar($sql);
+    //
+    if(empty($res)){
+      $tabelaProgramas = "Nenhum registro encontrado!";
+    }else{
+      //Pega o primeiro tipo
+      $tipoOrigem = $res[0]["prog_tipo_origem"];
+      $tipoPrograma = $res[0]["prog_tipo"];
+      $tabelaProgramas = "<table class='table' style='margin-top: 3px;' >";
+      $tabelaProgramas .= "<caption class='captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($tipoPrograma) . "</caption>";
+      $tabelaProgramas .= "<tr class='cabecalhoTable'>";
+      $tabelaProgramas .= "<td colspan='2'><b>{$tipoOrigem}</b></td>";
+      $tabelaProgramas .= "</tr>";
+      foreach($res as $regProg){
+        $class = '';
+        if ($linhaColorida) {
+          $class = "class='info'";
+          $linhaColorida = false;
+        }else{
+          $linhaColorida = true;
+        }
+        if($tipoPrograma != $regProg["prog_tipo"]){
+          $tabelaProgramas .= "</table>";
+          $tabelaProgramas .= "<table class='table' style='margin-top: 3px;' cellpadding='3px' cellspacing='0' border='0'>";
+          $tabelaProgramas .= "<caption class='captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($regProg["prog_tipo"]) . "</caption>";
+          $tipoPrograma = $regProg["prog_tipo"];
+          $tipoOrigem = "####";
+        }
+        if($tipoOrigem != $regProg["prog_tipo_origem"]){
+          $tabelaProgramas .= "<tr class='cabecalhoTable'>";
+          $tabelaProgramas .= "<td colspan='2'><b>{$regProg["prog_tipo_origem"]}</b></td>";
+          $tabelaProgramas .= "</tr>";
+          $tipoOrigem = $regProg["prog_tipo_origem"];
+        }
+        $tabelaProgramas .= "<tr {$class}>";
+        $tabelaProgramas .= "<td>{$regProg['prog_nome']}</td>";
+        if($regProg['gap_executa'] == 1){
+          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Desativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-danger">Desativar</button>';
+        }else{
+          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Ativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-success">Ativar</button>';
+        }
+        $tabelaProgramas .= "<td align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}' name='tdBtnAtivarDesativar'>{$btnAtivaDesativa}</td>";
+        $tabelaProgramas .= "</tr>";
+      }
+      $tabelaProgramas .= "</table>";
+    }
+  //
+  echo $tabelaProgramas;
+  exit;
+}
+
 if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("grupos_acessos", "idgrupos_acessos");
     $db->excluir($_POST['id_cadastro'], "Excluir");
@@ -105,14 +165,27 @@ if($_POST['operacao'] == 'ativarDesativarTodos'){
   $sql = "SELECT * FROM grupos_acessos_programas WHERE gap_idgrupos_acessos = " . $_POST['gap_idgrupos_acessos'];
   $res = $db->consultar($sql);
   echo json_encode($res);
+  exit;
 }
 
-  function inserePermissoes($idGruposAcessos){
-    global $db;
-    
-    $sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
-              SELECT {$idGruposAcessos}, idprogramas, 0 FROM programas";
-              echo $sql;
-    $db->executaSQL($sql);
+if($_POST['operacao'] == "gerarMenu"){
+  $resultMenu = $html->criaMenu($_POST['id_cadastro']);
+  //
+  if($resultMenu){
+    echo "Ok";
+  }else{
+    echo "Erro";
   }
+  //
+  exit;
+}
+
+function inserePermissoes($idGruposAcessos){
+  global $db;
+  
+  $sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
+            SELECT {$idGruposAcessos}, idprogramas, 0 FROM programas";
+            echo $sql;
+  $db->executaSQL($sql);
+}
 ?>

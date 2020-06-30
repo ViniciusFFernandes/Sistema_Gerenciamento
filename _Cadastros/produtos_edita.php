@@ -1,8 +1,8 @@
 ﻿<?php
   require_once("../_BD/conecta_login.php");
-  // require_once("../Class/html.class.php");
-  require_once("../Class/produtos.class.php");
-  require_once("../Class/autoComplete.class.php");
+  // require_once("tabelas.class.php");
+  produtos.class.php");
+  require_once("tabelas.class.php");
   //
   //Inicia classes nescessarias
   // $html = new html($db, $util);

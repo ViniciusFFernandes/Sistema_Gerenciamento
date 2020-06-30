@@ -1,6 +1,6 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("../Class/Tabelas.class.php");
+require_once("tabelas.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'pessoas_edita.php';
@@ -121,10 +121,13 @@ $paginaRetorno = 'pessoas_edita.php';
   	$dados['pess_endereco'] 		     = $util->sgr($_POST['pess_endereco']);
   	$dados['pess_endereco_numero'] 	 = $util->sgr($_POST['pess_endereco_numero']);
     $dados['pess_idcidades']         = $util->igr($_POST['pess_idcidades']);
+    $dados['pess_idsetores']         = $util->igr($_POST['pess_idsetores']);
+    $dados['pess_idfuncoes']         = $util->igr($_POST['pess_idfuncoes']);
   	$dados['pess_bairro'] 			     = $util->sgr($_POST['pess_bairro']);
   	$dados['pess_cliente'] 			     = $util->sgr($_POST['pess_cliente']);
   	$dados['pess_fornecedor'] 		   = $util->sgr($_POST['pess_fornecedor']);
   	$dados['pess_funcionario'] 		   = $util->sgr($_POST['pess_funcionario']);
+  	$dados['pess_associado'] 		     = $util->sgr($_POST['pess_associado']);
 
     $db->gravarInserir($dados, true);
 
@@ -141,7 +144,7 @@ if ($_POST['operacao'] == "excluiCad") {
     $db->setTabela("pessoas", "idpessoas");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $html->mostraErro("Erro ao excluir pessoa<br>Operação cancelada!");
+        $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
         exit;
     }
     header('location:../_Cadastros/' . $paginaRetorno);

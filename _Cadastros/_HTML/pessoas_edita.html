@@ -11,7 +11,6 @@
     <script>##autoComplete_Cidades##</script>
   </head>
   <body>
-
     <div>
      ##Menu##
     </div>
@@ -22,172 +21,203 @@
     </div>
     <div class="container conteudo">
       <div class="panel panel-default" style="border: solid 2px #828282; ">
-              <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
-                <div class="panel-title">
-                  Cadastro de Pessoas
-                  <span align="right" data-toggle="modal" title="Buscar Pessoas" data-target="#buscaCadastro" style="cursor: pointer;">
-                    &nbsp;<img src="../icones/lupa.png">
-                  </span>
-                  ##EditaLogin##
-                </div>
-              </div>
-              <div class="panel-body">
-                <form action="pessoas_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
-                  <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
-                  <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12">
-                        <label for="Tipo">Tipo</label><br>
-                        <input type="checkbox" id="pess_cliente" name="pess_cliente" ##CheckCliente## value="SIM"> Cliente &nbsp;&nbsp;
-                        <input type="checkbox" id="pess_fornecedor" name="pess_fornecedor" ##CheckFornecedor## value="SIM"> Fornecedor &nbsp;&nbsp;
-                        <input type="checkbox" id="pess_funcionario" name="pess_funcionario" ##CheckFuncionario## value="SIM"> Funcionario
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 col-sm-12">
-                        <label for="Nome">Nome</label>
-                        <input type="text" class="form-control" id="pess_nome" name="pess_nome" value="##pess_nome##" placeholder="Nome" autofocus >
-                      </div>
-                      <div class="col-md-3 col-sm-12">
-                        <label for="CPF">CPF</label>
-                        <input type="text" class="form-control" id="pess_cpf" name="pess_cpf" value="##pess_cpf##" placeholder="CPF">
-                      </div>
-                      <div class="col-md-3 col-sm-12">
-                        <label for="CPF">CNPJ</label>
-                        <input type="text" class="form-control" id="pess_cnpj" name="pess_cnpj" value="##pess_cnpj##" placeholder="CNPJ">
-                      </div>
-                      <div class="col-md-3 col-sm-12">
-                        <label for="RG">RG</label>
-                        <input type="text" class="form-control" id="pess_rg" name="pess_rg" value="##pess_rg##" placeholder="RG">
-                      </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-7 col-sm-12 col-xs-12">
-                        <label for="Endereço">Endereço</label>
-                        <input type="text" class="form-control" id="pess_endereco" name="pess_endereco" value="##pess_endereco##" placeholder="Endereço">
-                    </div>
-                    <div class="col-md-2 col-sm-5 col-xs-4">
-                        <label for="Numero">Número</label>
-                        <input type="text" class="form-control" id="pess_endereco_numero" name="pess_endereco_numero" value="##pess_endereco_numero##" placeholder="Número">
-                    </div>
-                    <div class="col-md-3 col-sm-7 col-xs-8">
-                        <label for="Bairro">Bairro</label>
-                        <input type="text" class="form-control" id="pess_bairro" name="pess_bairro" value="##pess_bairro##" placeholder="Bairro">
-                    </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                      <label for="Cidade">Cidade</label>
-                      <div class="input-group">
-                        <input type="text" class="form-control" id="pess_cidades" name="pess_cidades" value="##pess_cidades##" placeholder="Cidade">
-                        <span class="input-group-addon" style="padding: 0x 6px;">
-                          <input type="text" class="idAutoComplementar" size="2" readonly id="pess_idcidades" name="pess_idcidades" value="##pess_idcidades##">
-                        </span>
-                      </div>
-                  </div>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                      <label for="CEP">CEP</label>
-                      <input type="text" class="form-control" id="pess_cep" name="pess_cep" value="##pess_cep##" placeholder="CEP">
-                  </div>
-                  </div>
-                <div class="row" ##esconde_div_telefone##>
-                  <div class="col-md-1 col-sm-2 col-xs-3">
-                      <label for="Telefones">Telefones</label>
-                      <input type="text" id="pnum_DDD" class="form-control" name="pnum_DDD" placeholder="DDD">
-                  </div>
-                  <div class="col-md-3 col-sm-4 col-xs-6" style="padding: 0px;">
-                      <label for="Telefones">&nbsp;</label>
-                      <input type="text" class="form-control" id="pnum_numero" name="pnum_numero" placeholder="Telefone">
-                  </div>
-                  <div class="col-md-8 col-sm-6 col-xs-3" style="padding: 0px;">
-                      <label for="Telefones">&nbsp;</label>
-                      <div class="form-control" style="cursor:pointer;border:0px;" id='btnAddTelefone'>
-                        <img src="../icones/adiciona.png" onclick="adicionaTelefone()">
-                      </div>
-                  </div>
-                  <div class="col-md-7 col-sm-7 col-xs-2">
-                  </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-5 col-sm-6 col-xs-12" id="divTelefone">
-                      ##caregando_telefone##
-                    </div>
-                    <div class="col-md-5 col-sm-6">
-                    </div>
-                  </div>
-                  <br>
-                  <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-                    <center>
-                      <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
-                      <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
-                      ##btnExcluir##
-                    </center>
-                  </div>
-                </div>
-                </form>
-              </div>
-          </div>
-  	</div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
-      </div>
-      <div class="modal-body" id="resultBusca">
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-        <button type="button" onclick="buscaCadastro('pessoas_grava.php')" class="btn btn-primary">Buscar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="criaEditaLogin" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="buscaLabel"> Criação e Edição de login </h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <label for="Usuario">Usuario</label>
-            <input type="text" onblur="verificaUser()" class="form-control" id="pess_usuario" name="pess_usuario" value="##pess_usuario##" placeholder="Usuario">
-            <input type="hidden" name="verificacaoRetorno" id="verificacaoRetorno" value="Aprovado">
-          </div>
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <label for="Usuario">Grupo</label>
-            ##grupos_acessos##
+        <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
+          <div class="panel-title">
+            Cadastro de Pessoas
+            <span align="right" data-toggle="modal" title="Buscar Pessoas" data-target="#buscaCadastro" style="cursor: pointer;">
+              &nbsp;<img src="../icones/lupa.png">
+            </span>
+            ##EditaLogin##
           </div>
         </div>
+        <div class="panel-body">
+          <form action="pessoas_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label for="Tipo">Tipo</label><br>
+                  <input type="checkbox" id="pess_cliente" name="pess_cliente" ##CheckCliente## value="SIM"> Cliente &nbsp;&nbsp;
+                  <input type="checkbox" id="pess_fornecedor" name="pess_fornecedor" ##CheckFornecedor## value="SIM"> Fornecedor &nbsp;&nbsp;
+                  <input type="checkbox" id="pess_funcionario" name="pess_funcionario" ##CheckFuncionario## value="SIM"> Funcionario &nbsp;&nbsp;
+                  <input type="checkbox" id="pess_associado" name="pess_associado" ##CheckAssociado## value="SIM"> Associado
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-sm-12">
+                  <label for="Nome">Nome</label>
+                  <input type="text" class="form-control" id="pess_nome" name="pess_nome" value="##pess_nome##" placeholder="Nome" autofocus >
+                </div>
+                <div class="col-md-3 col-sm-3 col-sm-12">
+                  <label for="CPF">CPF</label>
+                  <input type="text" class="form-control" id="pess_cpf" name="pess_cpf" value="##pess_cpf##" placeholder="CPF">
+                </div>
+                <div class="col-md-3 col-sm-3 col-sm-12">
+                  <label for="CPF">CNPJ</label>
+                  <input type="text" class="form-control" id="pess_cnpj" name="pess_cnpj" value="##pess_cnpj##" placeholder="CNPJ">
+                </div>
+                <div class="col-md-3 col-sm-3 col-sm-12">
+                  <label for="RG">RG</label>
+                  <input type="text" class="form-control" id="pess_rg" name="pess_rg" value="##pess_rg##" placeholder="RG">
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Setores">Setores</label>
+                ##comboBoxSetores##
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Funcoes">Funções</label>
+                ##comboBoxFuncoes##
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-7 col-sm-12 col-xs-12">
+                  <label for="Endereço">Endereço</label>
+                  <input type="text" class="form-control" id="pess_endereco" name="pess_endereco" value="##pess_endereco##" placeholder="Endereço">
+              </div>
+              <div class="col-md-2 col-sm-5 col-xs-4">
+                  <label for="Numero">Número</label>
+                  <input type="text" class="form-control" id="pess_endereco_numero" name="pess_endereco_numero" value="##pess_endereco_numero##" placeholder="Número">
+              </div>
+              <div class="col-md-3 col-sm-7 col-xs-8">
+                  <label for="Bairro">Bairro</label>
+                  <input type="text" class="form-control" id="pess_bairro" name="pess_bairro" value="##pess_bairro##" placeholder="Bairro">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="Cidade">Cidade</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="pess_cidades" name="pess_cidades" value="##pess_cidades##" placeholder="Cidade">
+                    <span class="input-group-addon" style="padding: 0x 6px;">
+                      <input type="text" class="idAutoComplementar" size="2" readonly id="pess_idcidades" name="pess_idcidades" value="##pess_idcidades##">
+                    </span>
+                  </div>
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="CEP">CEP</label>
+                  <input type="text" class="form-control" id="pess_cep" name="pess_cep" value="##pess_cep##" placeholder="CEP">
+              </div>
+            </div>
+            <div class="row" ##esconde_div_telefone##>
+              <div class="col-md-1 col-sm-2 col-xs-3">
+                  <label for="Telefones">Telefones</label>
+                  <input type="text" id="pnum_DDD" class="form-control" name="pnum_DDD" placeholder="DDD">
+              </div>
+              <div class="col-md-3 col-sm-4 col-xs-6" style="padding: 0px;">
+                  <label for="Telefones">&nbsp;</label>
+                  <input type="text" class="form-control" id="pnum_numero" name="pnum_numero" placeholder="Telefone">
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-3" style="padding: 0px;">
+                  <label for="Telefones">&nbsp;</label>
+                  <div class="form-control" style="cursor:pointer;border:0px;" id='btnAddTelefone'>
+                    <img src="../icones/adiciona.png" onclick="adicionaTelefone()">
+                  </div>
+              </div>
+              <div class="col-md-7 col-sm-7 col-xs-2">
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-md-5 col-sm-6 col-xs-12" id="divTelefone">
+                  ##caregando_telefone##
+                </div>
+                <div class="col-md-5 col-sm-6">
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
+                <center>
+                  <button type="button" onclick="testaDados()" class="btn btn-success">Gravar</button>
+                  <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
+                  ##btnExcluir##
+                  ##btnImprimir##
+                </center>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-12">
-            <label for="Usuario">Senha</label>
-            <input type="password" class="form-control" onblur="validaSenha()" id="pess_senha" name="pess_senha" value="" placeholder="Senha">
-            <span class="Obs_claro2">*A senha deve possuir no minimo 4 digitos <br>*Deixe em branco para não alterar</span>
+    <!-- Modal -->
+    <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
+          </div>
+          <div class="modal-body" id="resultBusca">
+          </div>
+          <div class="modal-footer">
+            <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            <button type="button" onclick="buscaCadastro('pessoas_grava.php')" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <span style="display: none;" id="imgCarregandoLogin"></span>
-        <button type="button" class="btn btn-default" id="fechaAlteraLogin" data-dismiss="modal">Voltar</button>
-        <button type="button" onclick="validarLogin()" id="btnGravaLogin" class="btn btn-primary">Gravar</button>
+    </div>
+
+    <div class="modal fade" id="modelosImprimir" tabindex="-1" role="dialog" aria-labelledby="imprimirLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="tituloLabel"> Modelos de Impreção
+              
+            </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <button type="button" class="btn btn-primary" onclick="imprimir('pessoas_ficha_associado.php')">Ficha de Associado</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
       </div>
     </div>
-    
-  </div>
-</div>
+
+    <div class="modal fade" id="criaEditaLogin" tabindex="-1" role="dialog" aria-labelledby="tituloLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="tituloLabel"> Criação e Edição de login </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Usuario">Usuario</label>
+                <input type="text" onblur="verificaUser()" class="form-control" id="pess_usuario" name="pess_usuario" value="##pess_usuario##" placeholder="Usuario">
+                <input type="hidden" name="verificacaoRetorno" id="verificacaoRetorno" value="Aprovado">
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Usuario">Grupo</label>
+                ##grupos_acessos##
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Usuario">Senha</label>
+                <input type="password" class="form-control" onblur="validaSenha()" id="pess_senha" name="pess_senha" value="" placeholder="Senha">
+                <span class="Obs_claro2">*A senha deve possuir no minimo 4 digitos <br>*Deixe em branco para não alterar</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <span style="display: none;" id="imgCarregandoLogin"></span>
+            <button type="button" class="btn btn-default" id="fechaAlteraLogin" data-dismiss="modal">Voltar</button>
+            <button type="button" onclick="validarLogin()" id="btnGravaLogin" class="btn btn-primary">Gravar</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 

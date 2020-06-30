@@ -1,3 +1,10 @@
+
+$( document ).ready(function() {
+  if($("#id_cadastro").val() > 0){
+    consultarProgramas();
+  }
+});
+
 function ativarDesativar(operacao, idgrupos_acessos_programas){
   var novoBtn;
   var executa;
@@ -72,6 +79,37 @@ function ativarDesativarProgramas(operacao){
               });
             }, "json")
         }
-    }
-});
+      }
+  });
+}
+
+function gerarMenu(){
+  //
+  $("#btnGerarMenu").attr("disabled", true);
+  $("#btnGerarMenu").html('<img src="../icones/carregando_engrenagens.gif" width="34px">');
+  //
+  $.post("grupos_acessos_grava.php", 
+    {operacao: "gerarMenu", id_cadastro: $("#id_cadastro").val()},
+    function(data){
+      if(data == 'Ok'){
+        alertaPequeno("Menu gerado com sucesso!");
+      }else{
+        alertaPequeno("Erro ao gerar menu!");
+      }
+      $("#btnGerarMenu").attr("disabled", false);
+      $("#btnGerarMenu").html('Gerar Menu');
+    }, 'html');
+}
+
+function consultarProgramas(){
+  //
+  $("#listaProgramas").html('<img src="../icones/carregando.gif" width="25px">Buscando programas...');
+  //
+  $.post("grupos_acessos_grava.php",
+        {operacao: "listarProgramas", 
+        id_cadastro: $("#id_cadastro").val(),
+        pesquisa: $("#consulta").val()},
+        function(data){
+          $("#listaProgramas").html(data);
+        }, "html")
 }
