@@ -1,6 +1,6 @@
 ﻿<?php
 require_once("../_BD/conecta_login.php");
-require_once("tabelas.classs.php");
+require_once("tabelas.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'cidades_edita.php';
