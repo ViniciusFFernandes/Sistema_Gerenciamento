@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>##nomeSistema##</title>
 
-     ##includes##
-     <script src="../js/_Cadastros/pessoas.js"></script>
+    ##includes##
+    <script src="../js/_Cadastros/pessoas.js"></script>
     <script>##autoComplete_Cidades##</script>
   </head>
   <body>
@@ -36,9 +36,9 @@
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
                   <label for="Tipo">Tipo</label><br>
-                  <input type="checkbox" id="pess_cliente" name="pess_cliente" ##CheckCliente## value="SIM"> Cliente &nbsp;&nbsp;
-                  <input type="checkbox" id="pess_fornecedor" name="pess_fornecedor" ##CheckFornecedor## value="SIM"> Fornecedor &nbsp;&nbsp;
-                  <input type="checkbox" id="pess_funcionario" name="pess_funcionario" ##CheckFuncionario## value="SIM"> Funcionario &nbsp;&nbsp;
+                  <input type="checkbox" id="pess_cliente" name="pess_cliente" ##CheckCliente## value="SIM"> Cliente &nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" id="pess_fornecedor" name="pess_fornecedor" ##CheckFornecedor## value="SIM"> Fornecedor &nbsp;&nbsp;&nbsp;
+                  <input type="checkbox" id="pess_funcionario" name="pess_funcionario" ##CheckFuncionario## value="SIM"> Funcionario &nbsp;&nbsp;&nbsp;
                   <input type="checkbox" id="pess_associado" name="pess_associado" ##CheckAssociado## value="SIM"> Associado
                 </div>
             </div>
@@ -87,12 +87,7 @@
             <div class="row">
               <div class="col-md-6 col-sm-6 col-xs-12">
                   <label for="Cidade">Cidade</label>
-                  <div class="input-group">
-                    <input type="text" class="form-control" id="pess_cidades" name="pess_cidades" value="##pess_cidades##" placeholder="Cidade">
-                    <span class="input-group-addon" style="padding: 0x 6px;">
-                      <input type="text" class="idAutoComplementar" size="2" readonly id="pess_idcidades" name="pess_idcidades" value="##pess_idcidades##">
-                    </span>
-                  </div>
+                  ##autoComplete_CampoCidades##
               </div>
               <div class="col-md-6 col-sm-6 col-xs-12">
                   <label for="CEP">CEP</label>
@@ -143,7 +138,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -1,10 +1,10 @@
 <?php
 	require_once("parametros.class.php");
 	require_once("html.class.php");
-	require_once("Util.class.php");
+	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.27;
+		private $ultimaVersao = 0.45;
 		private $db;
 		private $parametros;
 		private $util;
@@ -80,6 +80,264 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 		
+		private function versao_00_45(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec_hist ADD crhi_idcc INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo contas bancárias na tabela contas a receber historico";
+		}
+
+		private function versao_00_44(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idbancos INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idcc INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação dos campos banco e conta bancárias na tabela contas a receber historico";
+		}
+
+		private function versao_00_43(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec_hist ADD crhi_idmeio_pagto INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo meio de pagamento na tabela contas a receber historico";
+		}
+
+		private function versao_00_42(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS cc_lanctos(
+						idcc_lanctos int(11) NOT NULL AUTO_INCREMENT,
+						ccla_idcc INT NOT NULL,
+						ccla_data DATE NULL,
+						ccla_tipo VARCHAR(10) NULL,
+						ccla_valor DECIMAL(10,2) NULL,
+						ccla_idcontapag INT NULL,
+						ccla_idcontarec INT NULL,
+						PRIMARY KEY (idcc_lanctos)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela lançamentos bancárias";
+		}
+
+		private function versao_00_41(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS cc(
+						idcc int(11) NOT NULL AUTO_INCREMENT,
+						cc_nome VARCHAR(255) NOT NULL,
+						cc_idbancos INT NULL,
+						cc_agencia VARCHAR(100) NULL,
+						cc_agencia_dg VARCHAR(20) NULL,
+						cc_conta VARCHAR(100) NULL,
+						cc_conta_dg VARCHAR(20) NULL,
+						PRIMARY KEY (idcc)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela contas bancárias";
+		}
+
+		private function versao_00_40(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS bancos(
+						idbancos int(11) NOT NULL AUTO_INCREMENT,
+						banc_nome VARCHAR(255) NOT NULL,
+						PRIMARY KEY (idbancos)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela bancos";
+		}
+
+		private function versao_00_39(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$this->cadastraPrograma("bancos_edita.php", 'Cadastros', 'Bancos',  'menu', 'bancos.png', 'cadastros');
+			$this->cadastraPrograma("bancos_grava.php", 'Cadastros');
+			//
+			$this->cadastraPrograma("cc_edita.php", 'Cadastros', 'Contas Bancárias',  'menu', 'cc.png', 'cadastros');
+			$this->cadastraPrograma("cc_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Cadastro dos programas de bancos, contas bancárias e suas dependencias";
+		}
+
+		private function versao_00_38(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_inclusao DATE NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo situação na tabela contas a receber";
+		}
+
+		private function versao_00_37(){
+			//
+			// 23/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec_hist ADD crhi_data_pagto DATE NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo data de pagamento na tabela contas a receber historico";
+		}
+
+		private function versao_00_36(){
+			//
+			// 23/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_situacao VARCHAR(255) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo situacao na tabela contas a receber";
+		}
+
+		private function versao_00_35(){
+			//
+			// 23/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE tipo_contas ADD tico_tipo_extra VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campo tipo extra na tabela de tipo de contas";
+		}
+
+		private function versao_00_34(){
+			//
+			// 23/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE tipo_contas ADD tico_tipo_vale VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campos tipo vale na tabela de tipo de contas";
+		}
+
+		private function versao_00_33(){
+			//
+			// 23/09/2020 Vinicius
+			//
+			$this->cadastraPrograma("tipo_contas_edita.php", 'Cadastros', 'Tipo de Contas',  'menu', 'tipo_contas.png', 'cadastros');
+			$this->cadastraPrograma("tipo_contas_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Cadastro dos programas tipo de contas e suas dependencias";
+		}
+
+		private function versao_00_32(){
+			//
+			// 20/09/2020 Vinicius
+			//
+			$this->cadastraPrograma("contarec_edita.php", 'Lançamentos', 'Contas a Receber',  'menu', 'contarec.png', 'lancamentos');
+			$this->cadastraPrograma("contarec_grava.php", 'Lançamentos');
+			//
+			$this->cadastraPrograma("contapag_edita.php", 'Lançamentos', 'Contas a Pagar',  'menu', 'contapag.png', 'lancamentos');
+			$this->cadastraPrograma("contapag_grava.php", 'Lançamentos');
+			//
+			$this->cadastraPrograma("pedidos_edita.php", 'Lançamentos', 'Pedidos',  'menu', 'pedidos.png', 'lancamentos');
+			$this->cadastraPrograma("pedidos_grava.php", 'Lançamentos');
+			//
+			$this->cadastraPrograma("pedcompras_edita.php", 'Lançamentos', 'Pedidos de Compra',  'menu', 'pedcompras.png', 'lancamentos');
+			$this->cadastraPrograma("pedcompras_grava.php", 'Lançamentos');
+			//
+			//Mensagem para o usuario
+			return "Cadastro dos programas de lançamentos de contarec, contapag, pedidos e pedcompras e suas dependencias";
+		}
+
+		private function versao_00_31(){
+			//
+			// 15/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS tipo_contas(
+						idtipo_contas int(11) NOT NULL AUTO_INCREMENT,
+						tico_nome VARCHAR(255) NOT NULL,
+						PRIMARY KEY (idtipo_contas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela tipo_contas";
+		}
+
+		private function versao_00_30(){
+			//
+			// 20/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idtipo_contas int(11) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuariopess_associado
+			return "Criação do campos tipo da conta na tabela de contas a receber";
+		}
+
+		private function versao_00_29(){
+			//
+			// 15/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS contarec_hist(
+						idcontarec_hist int(11) NOT NULL AUTO_INCREMENT,
+						crhi_idcontarec int(11) NOT NULL,
+						crhi_operacao VARCHAR(255) NOT NULL,
+						crhi_data DATETIME NOT NULL,
+						crhi_valor DECIMAL(10,2) NULL,
+						crhi_idoperador int(11) NOT NULL,
+						PRIMARY KEY (idcontarec_hist)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela contarec_hist";
+		}
+
+		private function versao_00_28(){
+			//
+			// 15/09/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS contarec(
+						idcontarec int(11) NOT NULL AUTO_INCREMENT,
+						ctrc_idcliente int(11) NOT NULL,
+						ctrc_vencimento DATE NOT NULL,
+						ctrc_vlr_bruto decimal(10,2) NOT NULL,
+						ctrc_vlr_desconto decimal(10,2) NULL,
+						ctrc_vlr_juros decimal(10,2) NULL,
+						ctrc_vlr_liquido DECIMAL(10,2) AS (ctrc_vlr_bruto + ctrc_vlr_juros - ctrc_vlr_desconto) STORED,
+						ctrc_vlr_pago decimal(10,2) NULL,
+						ctrc_vlr_devedor DECIMAL(10,2) AS (ctrc_vlr_liquido - ctrc_vlr_pago) STORED,
+						PRIMARY KEY (idcontarec)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela contarec";
+		}
+
 		private function versao_00_27(){
 			//
 			// 29/06/2020 Vinicius
@@ -134,7 +392,7 @@
 			$this->db->executaSQL($sql);
 			//
 			//Mensagem para o usuario
-			return "Criação da tabela idsetores";
+			return "Criação da tabela setores";
 		}
 
 		private function versao_00_23(){
@@ -571,6 +829,33 @@
 						if(strpos($caminho, "git")) continue;
 						foreach($ArquivosSub as $file){
 							if(!$file->isDot()){
+								if($file->isDir()){
+									$caminho = $file->getPathname();
+									//
+									//abre o diretorio
+									$ArquivosSub_Sub = new DirectoryIterator($caminho);
+									//
+									//troca a barra invertida
+									$caminho = str_replace("\\", "/", $caminho);
+									foreach($ArquivosSub_Sub as $file_Sub){
+										if(!$file_Sub->isDot()){
+											if( $file_Sub->isFile()){
+												//
+												$fileName = $file_Sub->getFilename();
+												//
+												//Salva o nome para pegar o arquivo
+												$arquivoLocal = $caminho . "/" . $fileName;
+												//
+												//Salva o nome que sera no zip e remove o ../
+												$arquivoZip = $caminho . "/" . $fileName;
+												$arquivoZip = str_replace("../", "", $arquivoZip);
+												//
+												//Inclui no zip
+												$zip->addFile($arquivoLocal, $arquivoZip);
+											}
+										}
+									}
+								}
 								if( $file->isFile()){
 									//
 									$fileName = $file->getFilename();

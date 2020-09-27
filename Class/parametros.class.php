@@ -1,5 +1,5 @@
 <?php
-	require_once("Util.class.php");
+	require_once("util.class.php");
 
 	class Parametros {
 		private $db;
@@ -10,7 +10,7 @@
 			$this->util = new Util();
 		}
 
-		public function cadastraParametros($para_nome, $para_valor, $para_obs, $para_tipo = '', $para_nome_constante = ''){
+		public function cadastraParametros($para_nome, $para_valor, $para_obs, $para_tipo = 'parametro', $para_nome_constante = ''){
 			$this->db->setTabela("parametros", "idparametros");
 			unset($dados);
 			$dados['para_nome'] 			= $this->util->sgr($para_nome);
@@ -20,7 +20,7 @@
 			$dados['para_nome_constante'] 	= $this->util->sgr($para_nome_constante);
 			$this->db->gravarInserir($dados);
 			//
-			if(!$this->db->erro() && ($dados['para_tipo'] == "'constante'" || $dados['para_tipo'] == "'variavel'")){
+			if(!$this->db->erro() && ($para_tipo == "constante" || $para_tipo == "variavel")){
 				$this->geraConstante();
 			}
 		}

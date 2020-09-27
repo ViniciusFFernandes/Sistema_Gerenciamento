@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   require_once("../_BD/conecta_login.php");
   
   //Gera as mensagens porem nao exibe nenhuma

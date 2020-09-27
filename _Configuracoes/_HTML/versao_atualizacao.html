@@ -85,13 +85,14 @@
 
         <!-- Modal content-->
         <div class="modal-content">
+          <input type="hidden" id="sistemaAtualizou" value="">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal" onclick="finalizaAtualizacao()">&times;</button>
             <h4 class="modal-title">Atualização do Sistema</h4>
           </div>
           <div class="modal-body" id="conteudoAtualizacao" align="center"></div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="finalizaAtualizacao()">Fechar</button>
           </div>
         </div>
 

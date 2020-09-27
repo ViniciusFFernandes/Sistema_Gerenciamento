@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 require_once("../_BD/conecta_login.php");
-require_once("Tabelas.class.php");
+require_once("tabelas.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'forma_pagto_edita.php';

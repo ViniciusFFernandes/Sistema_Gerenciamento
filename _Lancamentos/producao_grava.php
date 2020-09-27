@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 require_once("../_BD/conecta_login.php");
 require_once("tabelas.class.php");
 require_once("producao.class.php");

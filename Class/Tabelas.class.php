@@ -27,7 +27,7 @@ class Tabelas{
 
 	public function geraTabelaPes($res, $db){
 		$linhaColorida = false;
-	    $tabela = "<div style='max-height: 350px; overflow: auto;'>";
+	    $tabela = "<div class='tableBusca' style='max-height: 350px; overflow: auto;'>";
 	    //
 	    if(empty($res)){
 	    	$tabela .= "Nenhum registro encontrado!";
@@ -67,7 +67,7 @@ class Tabelas{
 	
 	public function geraTabelaBusca($res, $db, $colunas, $link){
 		$linhaColorida = false;
-	    $tabela = "<div style='max-height: 250px; overflow: auto;'>";
+	    $tabela = "<div class='tableBusca' style='max-height: 250px; overflow: auto;'>";
 	    if(empty($res)){
 	    	$tabela .= "Nenhum registro encontrado!";
 	    	$escondeTabela = "display: none;";

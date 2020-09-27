@@ -1,5 +1,5 @@
 <?php
-	require_once("Util.class.php");
+	require_once("util.class.php");
 	class html{
 		private $db;
 		private $util;
@@ -90,18 +90,6 @@
 			}
 		}
 
-		public function comboBoxSql($nomeInput, $campoMostra, $campoValue, $sql, $db, $valueReg = ''){
-			$res = $db->consultar($sql);
-			$comboBox = '<select class="form-control" name="' . $nomeInput . '" id="' . $nomeInput . '" >';
-			$comboBox .= '<option value="" ' . $this->defineSelected('', $valueReg) . '>-----------</option>';
-			foreach ($res as $reg) {
-				$comboBox .= '<option value="' . $reg[$campoValue] . '" ' . $this->defineSelected($reg[$campoValue], $valueReg) . '>' . $reg[$campoMostra] . '</option>';
-			}
-			$comboBox .= '</select>';
-			//
-			return $comboBox;
-		}
-
 		public function buscaHtml($btnMenu = ''){
 			$menu = file_get_contents('../menu.html');
 			//
@@ -171,6 +159,7 @@
 					$menu = '';
 					$ultimoTipo = $reg['prog_tipo_menu'];
 					$idgrupos_acessos = $reg['gap_idgrupos_acessos'];
+					$qteColunas = 0;
 				}
 
 				if($reg['gap_executa'] == 1 || $reg['gap_idgrupos_acessos'] == 1){

@@ -1,4 +1,4 @@
-﻿<?php
+<?php
   require_once("../_BD/conecta_login.php");
 
   if($_POST['operacao'] == "consultaAjax"){

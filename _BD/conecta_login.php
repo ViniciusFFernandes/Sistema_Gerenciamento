@@ -9,7 +9,7 @@ if(!realpath("../privado/constantes.vf")){
 // print_r($_REQUEST);exit;
 require_once("../set_path.php");
 require_once("DB.class.php");
-require_once("Util.class.php");
+require_once("util.class.php");
 require_once("logs.class.php");
 require_once("parametros.class.php");
 require_once("atualizacao.class.php");

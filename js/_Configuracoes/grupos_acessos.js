@@ -86,7 +86,7 @@ function ativarDesativarProgramas(operacao){
 function gerarMenu(){
   //
   $("#btnGerarMenu").attr("disabled", true);
-  $("#btnGerarMenu").html('<img src="../icones/carregando_engrenagens.gif" width="34px">');
+  $("#btnGerarMenu").html('<img src="../icones/carregando_engrenagens.gif" width="20px"> Gerando...');
   //
   $.post("grupos_acessos_grava.php", 
     {operacao: "gerarMenu", id_cadastro: $("#id_cadastro").val()},

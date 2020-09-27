@@ -85,10 +85,7 @@
 				$sql .= "idpessoas = '" . $id . "' ";
 			}
 			// hibrido da linguagem php com sql
-			$query = $this->conexao->query($sql);
-			$query->execute();
-			$resultado = $query->fetch(PDO::FETCH_ASSOC);  // fetch = recuperação do resultado
-			$query->closeCursor();
+			$resultado = $this->retornaUmReg($sql);
 			return $resultado;
 		}
 
@@ -264,7 +261,7 @@
 			$res->execute();
 			$reg = $res->fetchAll(PDO::FETCH_ASSOC);
 			if ($reg[0]['pnum_DDD'] != "") {
-				$telefone = "(" . $reg[0]['pnum_DDD'] . ") " .  $reg[0]['pnum_numero'];
+				$telefone = "(" . trim($reg[0]['pnum_DDD']) . ") " .  $reg[0]['pnum_numero'];
 			}else{
 				$telefone = $reg[0]['pnum_numero'];
 			}

@@ -6,7 +6,7 @@
       $.post("versao_atualizacao_grava.php", 
             {operacao: 'atualizarSistema'},
             function(data){
-              //console.log(data);
+              // console.log(data);
               if(data.executado){
                 $("#versaoAtualSistema").html(data.novaVersao);
               }
@@ -16,6 +16,7 @@
               }else{
                 if(data.executado){
                   $("#btnAtualizar").html("Sistema atualizado com sucesso!");
+                  
                 }else{
                   $("#btnAtualizar").html("Erro ao executar a versão " + data.novaVersao + ", verifique o erro e tente novamente!");
                 }
@@ -39,6 +40,10 @@
               {operacao: 'baixarAtualizacoes'},
               function(data){
                 $("#conteudoAtualizacao").html(data);
+                if(data.substring(0, 22) == 'Atualização finalizada'){
+                  $("#sistemaAtualizou").val('SIM');
+                }
+                
               }, "html");
     }
 
@@ -53,4 +58,10 @@
               function(data){
                 $("#conteudoAtualizacao").html(data);
               }, "html");
+    }
+
+    function finalizaAtualizacao(){
+      if($("#sistemaAtualizou").val() == 'SIM'){
+        location.reload();
+      }
     }

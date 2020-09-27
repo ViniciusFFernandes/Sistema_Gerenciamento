@@ -1,10 +1,6 @@
-﻿<?php
+<?php
   require_once("../_BD/conecta_login.php");
   require_once("autoComplete.class.php");
-  // require_once("html.class.php");
-  //
-  //Inicia classes nescessarias
-  // $html = new html($db, $util);
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){
@@ -19,7 +15,7 @@
   //Gera o autoComplete 
   $autoComplete = new autoComplete();
   $codigo_js = $autoComplete->gerar("pess_cidades", "pess_idcidades", "cidades JOIN estados ON (cid_idestados = idestados)", "CONCAT(cid_nome, ' - ', est_uf)", "idcidades", "", "WHERE UPPER(cid_nome) LIKE UPPER('##valor##%')");
- //echo $codigo_js;exit;
+  $codigo_campo = $autoComplete->criaCampos("pess_cidades", "pess_idcidades", "Cidade");
   //
   //Monta variaveis de exibição
   $escondeDivTelefone = "style='display: none;'";
@@ -64,6 +60,7 @@
   $html = $html->buscaHtml("cadastros", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Cidades##", $codigo_js, $html);
+  $html = str_replace("##autoComplete_CampoCidades##", $codigo_campo, $html);
   $html = str_replace("##grupos_acessos##", $comboGruposAcessos, $html);
   $html = str_replace("##caregando_telefone##", $imgCarregandoTelefone, $html);
   $html = str_replace("##esconde_div_telefone##", $escondeDivTelefone, $html);

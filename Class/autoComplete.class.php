@@ -63,6 +63,16 @@
 
 		}
 
+		public function criaCampos($campoTexto, $campoId, $placeholder){
+			$campos = '<div class="input-group">
+						<input type="text" class="form-control" id="' . $campoTexto . '" name="' . $campoTexto . '" value="##' . $campoTexto . '##" placeholder="' . $placeholder . '">
+						<span class="input-group-addon" style="padding: 0x 6px;">
+							<input type="text" class="idAutoComplementar" size="2" readonly id="' . $campoId . '" name="' . $campoId . '" value="##' . $campoId . '##">
+						</span>
+					</div>';
+			return $campos;
+		}
+
 	}
 
 

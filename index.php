@@ -16,7 +16,7 @@
   require_once("privado/constantes.vf");
   //
   //Inclui classes
-  require_once("Util.class.php");
+  require_once("util.class.php");
   require_once("html.class.php");
   $util = new Util();
   $html = new html('');
