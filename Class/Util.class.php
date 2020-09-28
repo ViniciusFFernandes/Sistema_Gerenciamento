@@ -26,7 +26,7 @@ class Util{
 		if ($num != "") {
          	return intval($num);
         }else{
-          	return "NULL";
+          	return "0";
         }
 	}
 
@@ -34,7 +34,7 @@ class Util{
 		if ($num != "") {
          	return floatval($num);
         }else{
-          	return "NULL";
+          	return "0";
         }
 	}
 
@@ -53,7 +53,7 @@ class Util{
 
 				return "'" . $dataFormatada . "'";
 		}else{
-			return "NULL";
+			return "0";
 		}
 	}
 
@@ -69,6 +69,14 @@ class Util{
 					return "";
 				}
 				return $dataFormatada;
+	}
+
+	public function formataMoeda($valor, $casas = 2) {
+		return number_format($valor, $casas, ',', '.');
+	}
+	
+	public function formataNumero($valor, $casas = 2) {
+		return (number_format($valor, $casas, ',', ''));
 	}
 }
 ?>

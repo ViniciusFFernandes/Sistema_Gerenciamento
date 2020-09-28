@@ -141,7 +141,7 @@
 			if(!empty($idgrupos_acessos)){
 				$sql .= " AND gap_idgrupos_acessos = " . $this->util->igr($idgrupos_acessos);
 			} 
-			$sql .= " ORDER BY gap_idgrupos_acessos, prog_tipo_menu, idprogramas";
+			$sql .= " ORDER BY gap_idgrupos_acessos, prog_tipo_menu, prog_nome";
 			$res = $this->db->consultar($sql);
 			//
 			$ultimoTipo = '###';

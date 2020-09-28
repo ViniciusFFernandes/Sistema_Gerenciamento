@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.45;
+		private $ultimaVersao = 0.54;
 		private $db;
 		private $parametros;
 		private $util;
@@ -79,7 +79,112 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_54(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_a_vista VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo à vista na tabela contas a receber";
+		}
+
+		private function versao_00_53(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: incluir contas a vista já quitadas", "NAO", "Parametro usado para definir se o sistema deverá incluir contas à vista já baixadas"); 
+			//
+			//Mensagem para o usuario
+			return "Criação do parametro para criar contas à vista já quitadas";
+		}
+
+		private function versao_00_52(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE cc_lanctos ADD ccla_obs TEXT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo observações na tabela lançamentos bancários";
+		}
+
+		private function versao_00_51(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: incluir contas do tipo salario já quitadas", "NAO", "Parametro usado para definir se o sistema deverá incluir contas que sejam do tipo salario já baixadas"); 
+			//
+			//Mensagem para o usuario
+			return "Criação do parametro para criar contas salarios já quitadas";
+		}
+
+		private function versao_00_50(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE tipo_contas ADD tico_tipo_salario VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo tipo salario na tabela tipode de contas";
+		}
+
+		private function versao_00_49(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE cc_lanctos ADD ccla_inclusao DATETIME NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE cc_lanctos ADD ccla_idmeio_pagto INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE cc_lanctos ADD ccla_idoperador INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação dos campos inclusão, meio de pagamento e operador na tabela lançamentos bancários";
+		}
 		
+		private function versao_00_48(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: gerar lancamentos bancarios pelas contas", "NAO", "Parametro usado para definir se o sistema deverá gerar lançamentos bancários ao baixar contas"); 
+			//
+			//Mensagem para o usuario
+			return "Criação do parametro para gerar lançamentos bancarios";
+		}
+
+		private function versao_00_47(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idmeio_pagto INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo meio de pagamento na tabela contas a receber";
+		}
+
+		private function versao_00_46(){
+			//
+			// 27/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_porc_desconto DECIMAL(10,2) DEFAULT 0.00";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_porc_juros DECIMAL(10,2) DEFAULT 0.00";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação dos campos porcentagem de juros e desconto na tabela contas a receber";
+		}
+
 		private function versao_00_45(){
 			//
 			// 27/09/2020 Vinicius
@@ -87,7 +192,7 @@
 			$sql = "ALTER TABLE contarec_hist ADD crhi_idcc INT NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campo contas bancárias na tabela contas a receber historico";
 		}
 
@@ -101,8 +206,8 @@
 			$sql = "ALTER TABLE contarec ADD ctrc_idcc INT NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
-			return "Criação dos campos banco e conta bancárias na tabela contas a receber historico";
+			//Mensagem para o usuario
+			return "Criação dos campos banco e conta bancárias na tabela contas a receber";
 		}
 
 		private function versao_00_43(){
@@ -112,7 +217,7 @@
 			$sql = "ALTER TABLE contarec_hist ADD crhi_idmeio_pagto INT NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campo meio de pagamento na tabela contas a receber historico";
 		}
 
@@ -192,8 +297,8 @@
 			$sql = "ALTER TABLE contarec ADD ctrc_inclusao DATE NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
-			return "Criação do campo situação na tabela contas a receber";
+			//Mensagem para o usuario
+			return "Criação do campo inclusão na tabela contas a receber";
 		}
 
 		private function versao_00_37(){
@@ -203,7 +308,7 @@
 			$sql = "ALTER TABLE contarec_hist ADD crhi_data_pagto DATE NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campo data de pagamento na tabela contas a receber historico";
 		}
 
@@ -214,7 +319,7 @@
 			$sql = "ALTER TABLE contarec ADD ctrc_situacao VARCHAR(255) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campo situacao na tabela contas a receber";
 		}
 
@@ -225,7 +330,7 @@
 			$sql = "ALTER TABLE tipo_contas ADD tico_tipo_extra VARCHAR(6) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campo tipo extra na tabela de tipo de contas";
 		}
 
@@ -236,7 +341,7 @@
 			$sql = "ALTER TABLE tipo_contas ADD tico_tipo_vale VARCHAR(6) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campos tipo vale na tabela de tipo de contas";
 		}
 
@@ -293,7 +398,7 @@
 			$sql = "ALTER TABLE contarec ADD ctrc_idtipo_contas int(11) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação do campos tipo da conta na tabela de contas a receber";
 		}
 
@@ -325,10 +430,10 @@
 						ctrc_idcliente int(11) NOT NULL,
 						ctrc_vencimento DATE NOT NULL,
 						ctrc_vlr_bruto decimal(10,2) NOT NULL,
-						ctrc_vlr_desconto decimal(10,2) NULL,
-						ctrc_vlr_juros decimal(10,2) NULL,
+						ctrc_vlr_desconto decimal(10,2) DEFAULT 0.00,
+						ctrc_vlr_juros decimal(10,2) DEFAULT 0.00,
 						ctrc_vlr_liquido DECIMAL(10,2) AS (ctrc_vlr_bruto + ctrc_vlr_juros - ctrc_vlr_desconto) STORED,
-						ctrc_vlr_pago decimal(10,2) NULL,
+						ctrc_vlr_pago decimal(10,2) DEFAULT 0.00,
 						ctrc_vlr_devedor DECIMAL(10,2) AS (ctrc_vlr_liquido - ctrc_vlr_pago) STORED,
 						PRIMARY KEY (idcontarec)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
@@ -376,7 +481,7 @@
 			$sql = "ALTER TABLE pessoas ADD pess_associado varchar(5) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			//Mensagem para o usuariopess_associado
+			//Mensagem para o usuario
 			return "Criação dos campos para associado, setor e função das pessoas";
 		}
 

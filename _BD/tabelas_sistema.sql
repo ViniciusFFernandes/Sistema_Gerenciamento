@@ -121,8 +121,8 @@ CREATE TABLE IF NOT EXISTS `pessoas` (
   PRIMARY KEY (idpessoas)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`, `pess_idgrupos_acessos`) VALUES
-('Vinicius fernandes', '486.656.698-17', NULL, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM', 1);
+INSERT INTO `pessoas` (`pess_nome`, `pess_cpf`, `pess_cnpj`, `pess_idcidades`,`pess_cep`, `pess_rg`, `pess_endereco`, `pess_endereco_numero`, `pess_bairro`, `pess_usuario`, `pess_senha`, `pess_cliente`, `pess_fornecedor`, `pess_funcionario`, `pess_idgrupos_acessos`) VALUES
+('Vinicius fernandes', '486.656.698-17', NULL, 4914, NULL, '46.546.546-5', 'tiradentes', '80', 'industrial', 'vnferna', 'vini1528', 'SIM', NULL, 'SIM', 1);
 
 --
 -- Criação da Tabela Pessoas_numeros

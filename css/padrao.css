@@ -5,13 +5,19 @@ body::-webkit-scrollbar {
 .tableBusca::-webkit-scrollbar-track {
   background-color: #F4F4F4;
 }
+
 .tableBusca::-webkit-scrollbar {
   width: 6px;
   background: #F4F4F4;
 }
+
 .tableBusca::-webkit-scrollbar-thumb {
   background: #dad7d7;
   border-radius: 10px;
+}
+
+.bg-success{
+  background-color: #28a745;
 }
 
 .Obs_claro{

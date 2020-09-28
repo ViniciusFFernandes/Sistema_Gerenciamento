@@ -163,6 +163,15 @@ function testaDados(){
   }else{
     $("#pess_nome").css("border-color", "green");
   }
+
+  if($("#pess_idcidades").val() <= 0){
+    alertaPequeno("Por favor, informe um nome!")
+    $("#pess_cidades").css("border-color", "red");
+    return;
+  }else{
+    $("#pess_cidades").css("border-color", "green");
+  }
+
   chamaGravar('gravar');
 }
 

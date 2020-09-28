@@ -53,9 +53,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="col-md-6 col-sm-6 col-xs-12">
                 <label for="Cliente">Cliente</label>
                 ##autoComplete_CampoPessoas##
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="MeioPagto">Meio de Pagamento</label>
+                ##comboBoxMeioPagto##
               </div>
             </div>
             <div class="row">
@@ -72,6 +76,76 @@
                 <span id="comboBoxCC">##comboBoxCC##</span>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Bruto">Valor</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_bruto" name="ctrc_vlr_bruto" value="##ctrc_vlr_bruto##" >
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="AVista">&nbsp;</label> <br>
+                <input type="checkbox" id="ctrc_a_vista" name="ctrc_a_vista" ##checkAVista## value="SIM"> À Vista
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Juros">Juros</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_juros" name="ctrc_vlr_juros" value="##ctrc_vlr_juros##" onkeyup="calculoJuros('vlr')">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Juros_porc">&nbsp;</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="ctrc_porc_juros" name="ctrc_porc_juros" value="##ctrc_porc_juros##" onkeyup="calculoJuros('porc')">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div> 
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Desconto">Desconto</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_desconto" name="ctrc_vlr_desconto" value="##ctrc_vlr_desconto##" onkeyup="calculoDesconto('vlr')">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Desconto_porc">&nbsp;</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="ctrc_porc_desconto" name="ctrc_porc_desconto" value="##ctrc_porc_desconto##" onkeyup="calculoDesconto('porc')">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Total">Total</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_liquido" name="ctrc_vlr_liquido" value="##ctrc_vlr_liquido##" readonly>
+                </div>
+              </div>
+              <div class="col-xs-6 visible-xs clearfix">&nbsp;</div>
+              <div class="visible-xs clearfix">&nbsp;</div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Total">Total Pago</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_pago" name="ctrc_vlr_pago" value="##ctrc_vlr_pago##" readonly>
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Total">Total Devedor</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctrc_vlr_devedor" name="ctrc_vlr_devedor" value="##ctrc_vlr_devedor##" readonly>
+                </div>
+              </div>
+            </div> 
             <br>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">

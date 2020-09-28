@@ -13,6 +13,7 @@
   if(!empty($reg['idtipo_contas'])){ 
     $checkTipoVale = $html->defineChecked($reg['tico_tipo_vale']);
     $checkTipoExtra = $html->defineChecked($reg['tico_tipo_extra']);
+    $checkTipoSalario = $html->defineChecked($reg['tico_tipo_salario']);
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
   }
@@ -29,6 +30,7 @@
   $html = str_replace("##tico_nome##", $reg['tico_nome'], $html);
   $html = str_replace("##CheckTipoVale##", $checkTipoVale, $html);
   $html = str_replace("##CheckTipoExtra##", $checkTipoExtra, $html);
+  $html = str_replace("##CheckTipoSalario##", $checkTipoSalario, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   echo $html;
   exit;

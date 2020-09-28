@@ -223,8 +223,8 @@
 			$valores  = implode(",",array_values($dados));
 			$query = "INSERT INTO " . $this->tabela . " (" .
 					  $campos." ) VALUES ( " . $valores . " ) ";
-			//echo "$query<br>";
-			//exit;
+			// echo "$query<br>";
+			// exit;
 		    //
 			return $this->executaSQL($query, $tipoMsg);
 		 }
@@ -237,8 +237,8 @@
 				}
 				$valores = implode(',',$valores);
 				$query = "UPDATE " . $this->tabela . " SET " . $valores . " WHERE " . $this->idtabela . " = " . $dados['id'];
-			    //echo "$query<br>";
-			    
+			    // echo "$query<br>";
+			    // exit;
 			return $this->executaSQL($query, $tipoMsg);
 		  }else{
 			return false;

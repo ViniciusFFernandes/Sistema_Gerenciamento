@@ -33,10 +33,11 @@ $paginaRetorno = 'tipo_contas_edita.php';
   	$db->setTabela("tipo_contas", "idtipo_contas");
 
     unset($dados);
-    $dados['id']              = $_POST['id_cadastro'];
-  	$dados['tico_nome'] 	    = $util->sgr($_POST['tico_nome']);
-  	$dados['tico_tipo_vale'] 	= $util->sgr($_POST['tico_tipo_vale']);
-  	$dados['tico_tipo_extra'] 	= $util->sgr($_POST['tico_tipo_extra']);
+    $dados['id']                  = $_POST['id_cadastro'];
+  	$dados['tico_nome'] 	        = $util->sgr($_POST['tico_nome']);
+  	$dados['tico_tipo_vale'] 	    = $util->sgr($_POST['tico_tipo_vale']);
+  	$dados['tico_tipo_extra'] 	  = $util->sgr($_POST['tico_tipo_extra']);
+  	$dados['tico_tipo_salario'] 	= $util->sgr($_POST['tico_tipo_salario']);
     $db->gravarInserir($dados, true);
 
   	if ($_POST['id_cadastro'] > 0) {

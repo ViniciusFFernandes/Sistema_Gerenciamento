@@ -85,12 +85,12 @@ class Tabelas{
 			}
 			//
 			$primeiraLinha = true;
-			foreach ($colunas as $coluna => $tamanho) {
+			foreach ($colunas as $coluna => $configuracoes) {
 				if($primeiraLinha){
 					$tabela .= "<tr {$class} onclick=\"abreCadastro({$reg[$coluna]}, '{$link}')\" style='cursor:pointer' id='linhasBusca'>";
 					$primeiraLinha = false;
 				}
-				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";
+				$tabela .= "<td {$configuracoes}>{$reg[$coluna]}</td>";
 			}
 			$tabela .- "</tr>";
 		}

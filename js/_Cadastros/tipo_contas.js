@@ -16,8 +16,14 @@ function testaDados(){
 function selecionaTipo(tipo){
   if(tipo == 'vale'){
     $("#tico_tipo_extra").attr("checked", false);
+    $("#tico_tipo_salario").attr("checked", false);
   }
   if(tipo == 'extra'){
     $("#tico_tipo_vale").attr("checked", false);
+    $("#tico_tipo_salario").attr("checked", false);
+  }
+  if(tipo == 'salario'){
+    $("#tico_tipo_vale").attr("checked", false);
+    $("#tico_tipo_extra").attr("checked", false);
   }
 }
