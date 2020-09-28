@@ -44,6 +44,12 @@ $(document).ready(function(){
         }, 
         reverse: true
     });
+
+    $('#idcontarec').on('keydown', function (e) {
+        if (e.keyCode === 13) {
+            abreConta();
+        }
+    });
  });
 
 function testaDados(operacao){
@@ -108,5 +114,11 @@ function calculoDesconto(tipo){
         valor = $("#ctrc_porc_desconto").val();
         desconto = (valor * valor_total) / 100;
         $("#ctrc_vlr_desconto").val(desconto);
+    }
+}
+
+function abreConta(){
+    if($("#idcontarec").val() > 0){
+        window.location.replace("contarec_edita.php?id_cadastro=" + $("#idcontarec").val());
     }
 }
