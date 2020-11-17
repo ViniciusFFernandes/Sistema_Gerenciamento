@@ -30,11 +30,11 @@
             $dados['crhi_data_pagto'] 	    = $this->util->dgr($data);
             $dados['crhi_idmeio_pagto'] 	= $this->util->igr($idmeio_pagto);
             $dados['crhi_idcc']             = $this->util->igr($idcc);
-            $dados['crhi_valor']            = $this->util->sgr($valor);
+            $dados['crhi_valor']            = $this->util->vgr($valor);
             $dados['crhi_idoperador'] 	    = $this->util->igr($idoperador);
             $dados['crhi_data']             = $this->util->dgr(date('d/m/Y H:i'));
             //
-            $this->db->gravarInserir($dados, true);
+            $this->db->gravarInserir($dados);
         }
 
         public function baixaConta($idconta, $valor, $multa, $desconto, $idcc, $idmeio_pagto, $data, $idoperador){
@@ -55,7 +55,7 @@
             $novoValorDevedor = ($reg['ctrc_vlr_devedor'] + $multa - $desconto);
             //
             if($novoValorDevedor < $valor){
-                $this->html->mostraErro("Você está tentando pagar mais do que deve!");
+                $this->html->mostraErro("Você está tentando receber um valor maior!");
                 $this->db->rollBack();
                 exit;
             }
@@ -80,14 +80,14 @@
                 $dados['ctrc_porc_juros']   = $this->util->vgr($novoPorcJuros);
             }
             if($desconto > 0){
-                $novoDescontos = $reg['ctrc_vlr_desconto'] + $multa;
+                $novoDescontos = $reg['ctrc_vlr_desconto'] + $desconto;
                 $novoPorcDescontos = ($novoDescontos * 100) / $reg['ctrc_vlr_bruto'];
                 //
                 $dados['ctrc_vlr_desconto']    = $this->util->vgr($novoDescontos);
                 $dados['ctrc_porc_desconto']   = $this->util->vgr($novoPorcDescontos);
             }
             //
-            $this->db->gravarInserir($dados, true);
+            $this->db->gravarInserir($dados, true, "Pagamento");
             //
             //
             $this->gerarHistorio($idconta, "Baixa", $valor, $idoperador, $data, $idmeio_pagto, $idcc);
@@ -115,7 +115,7 @@
             $dados['ctrc_situacao']         = $this->util->sgr("Pendente");
             $dados['ctrc_vlr_pago']         = $this->util->vgr(0);
             //
-            $this->db->gravarInserir($dados, true);
+            $this->db->gravarInserir($dados, true, "Reabertura");
             //
             //
             $this->gerarHistorio($idconta, "Reabertura", $reg['ctrc_vlr_pago'], $idoperador, date('d/m/Y'), $reg['ctrc_idmeio_pagto'], $reg['ctrc_idcc']);
@@ -125,5 +125,36 @@
             }
             //
         }
+
+        public function geraHistorico($idconta){
+			$sql = "SELECT * FROM contarec_hist WHERE crhi_idcontarec = " . $idconta;
+			$res = $this->db->consultar($sql);
+			foreach ($res as $reg) {
+				$hist .= '<div class="row">';
+					$hist .= '<div class="col-sm-12 col-xs-12">';
+						$hist .= '<div class="panel-group">';
+							$hist .= '<div class="panel panel-default">';
+                                $hist .= '<div class="panel-heading"><b>Operação: </b>' . $reg['crhi_operacao'] . '<span style="float: right;">' . $this->util->convertData($reg['crhi_data']) . '</span></div>';
+                                $hist .= '<div class="panel-body">';
+							        $hist .= '<div class="row">';
+							            $hist .= '<div style="padding: 10px;" class="col-sm-2 col-md-2 col-xs-6">Valor: ' . $this->util->formataMoeda($reg['crhi_valor']) . '</div>';
+							            $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Operador: ' . $this->db->retornaUmCampoID("pess_nome", "pessoas", $reg['crhi_idoperador']) . '</div>';
+                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Conta Bancária: ' . $this->db->retornaUmCampoID("cc_nome", "cc", $reg['crhi_idcc']) . '</div>';
+                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Meio de pagamento: ' . $this->db->retornaUmCampoID("mpag_nome", "meio_pagto", $reg['crhi_idmeio_pagto']) . '</div>';
+                                        if(strtotime($reg['crhi_data_pagto']) > 0){
+                                            $hist .= '<div style="padding: 10px;" class="col-sm-4 col-md-4 col-xs-6">Pagamento: ' . $this->util->convertData($reg['crhi_data_pagto']) . '</div>';
+                                        }
+                                    $hist .= '</div>';
+							    $hist .= '</div>';
+							$hist .= '</div>';
+						$hist .='</div>';
+					$hist .= '</div>';
+				$hist .= '</div>';
+			}
+			//
+			if(empty($hist)) $hist = "Nenhum histórico encontrado!<br>";
+			//
+			return $hist;
+		}
     }
 ?>

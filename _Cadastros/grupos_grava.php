@@ -20,7 +20,10 @@ $paginaRetorno = 'grupos_edita.php';
     $dados['idgrupos'] = "width='6%'";
     $dados['grup_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

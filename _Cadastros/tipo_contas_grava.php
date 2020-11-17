@@ -20,7 +20,10 @@ $paginaRetorno = 'tipo_contas_edita.php';
     $dados['idtipo_contas'] = "width='6%'";
     $dados['tico_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

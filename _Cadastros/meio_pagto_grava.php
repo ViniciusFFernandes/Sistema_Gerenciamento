@@ -20,7 +20,10 @@ $paginaRetorno = 'meio_pagto_edita.php';
     $dados['idmeio_pagto'] = "width='6%'";
     $dados['mpag_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

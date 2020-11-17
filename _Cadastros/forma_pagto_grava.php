@@ -21,7 +21,11 @@ $paginaRetorno = 'forma_pagto_edita.php';
     $dados['forp_nome'] = "";
     $dados['forp_tipo'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    $cabecalho['Tipo'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

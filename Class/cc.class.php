@@ -33,7 +33,7 @@
             $dados['ccla_tipo'] 	        = $this->util->sgr($operacao);
             $dados['ccla_id' . $tipoConta] 	= $this->util->igr($idconta);
             //
-            $this->db->gravarInserir($dados, true);
+            $this->db->gravarInserir($dados);
         }
 
     }

@@ -206,13 +206,19 @@
 			}
 	  	}
 
-	  	public function gravarInserir($dados, $geraMensagem = false){
+	  	public function gravarInserir($dados, $geraMensagem = false, $tipoMsgPadrao = ''){
 			$tipoMsg = '';
 	  		if(!empty($dados['id'])){
-				if($geraMensagem) $tipoMsg = "Alterar";
+				if($geraMensagem){
+					$tipoMsg = "Alterar";
+					if($tipoMsgPadrao != '')$tipoMsg = $tipoMsgPadrao;
+				}
 	  			return $this->alterar($dados, $tipoMsg);
 	  		}else{
-				if($geraMensagem) $tipoMsg = "Inserir";
+				if($geraMensagem){
+					$tipoMsg = "Inserir";
+					if($tipoMsgPadrao != '')$tipoMsg = $tipoMsgPadrao;
+				}
 	  			unset($dados['id']);
 	  			return $this->gravar($dados, $tipoMsg);
 	  		}
@@ -282,6 +288,14 @@
 				case 'Excluir':
 					$_SESSION['mensagem'] = "Cadastro excluido com sucesso!";
 	    			$_SESSION['tipoMsg'] = "danger";
+					break;
+				case 'Pagamento':
+					$_SESSION['mensagem'] = "Pagamento efetuado com sucesso!";
+					$_SESSION['tipoMsg'] = "success";
+					break;
+				case 'Reabertura':
+					$_SESSION['mensagem'] = "Reabertura efetuado com sucesso!";
+					$_SESSION['tipoMsg'] = "warning";
 					break;	
 				default:
 					break;

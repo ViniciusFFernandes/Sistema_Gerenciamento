@@ -20,7 +20,10 @@ $paginaRetorno = 'funcoes_edita.php';
     $dados['idfuncoes'] = "width='6%'";
     $dados['func_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho["Código"] = "";
+    $cabecalho["Nome"] = "";
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

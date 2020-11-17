@@ -24,7 +24,11 @@ $paginaRetorno = 'cidades_edita.php';
     $dados['cid_nome'] = "";
     $dados['est_uf'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho["Código"] = "";
+    $cabecalho["Nome"] = "";
+    $cabecalho["Estado"] = "";
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

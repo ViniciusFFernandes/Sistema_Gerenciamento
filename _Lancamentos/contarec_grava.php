@@ -26,7 +26,13 @@ $paginaRetorno = 'contarec_edita.php';
     $dados['ctrc_bruto'] = "align='right'";
     $dados['ctrc_situacao'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho["Código"] = "";
+    $cabecalho["Cliente"] = "";
+    $cabecalho["Vencimento"] = "align='right'";
+    $cabecalho["Valor"] = "align='right'";
+    $cabecalho["Situação"] = "";
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 
@@ -36,6 +42,16 @@ $paginaRetorno = 'contarec_edita.php';
     }
 
   if ($_POST['operacao'] == 'gravar'){
+    if($_POST['id_cadastro'] > 0){
+      $sql = "SELECT * FROM contarec WHERE idcontarec = " . $_POST['id_cadastro'];
+      $reg = $db->retornaUmReg($sql);
+      //
+      if($reg['ctrc_situacao'] != "Pendente"){
+        $util->mostraErro("Está conta não está pendente e não pode ser alterada!");
+        exit;
+      }
+    }
+    //
     $db->beginTransaction();
     //
     $db->setTabela("contarec", "idcontarec");
@@ -89,7 +105,7 @@ $paginaRetorno = 'contarec_edita.php';
       //
       $db->gravarInserir($dados, true);
       //
-      $contarec->baixaConta($id, $_POST['ctrc_vlr_bruto'], 0, 0, $_POST['ctrc_idcc'], $_POST['ctrc_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
+      $contarec->baixaConta($id, ($_POST['ctrc_vlr_bruto'] + $_POST['ctrc_vlr_juros'] - $_POST['ctrc_vlr_desconto']), 0, 0, $_POST['ctrc_idcc'], $_POST['ctrc_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
     }
     //
     $db->commit();
@@ -107,6 +123,14 @@ $paginaRetorno = 'contarec_edita.php';
   }
 
   if ($_POST['operacao'] == "excluiCad") {
+    //
+    $db->setTabela("contarec_hist", "crhi_idcontarec");
+    $db->excluir($_POST['id_cadastro'], "Excluir");
+    if($db->erro()){
+      $html->mostraErro("Erro ao excluir o historico da conta<br>Operação cancelada!");
+      exit;
+    }
+    //
     $db->setTabela("contarec", "idcontarec");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
@@ -118,9 +142,39 @@ $paginaRetorno = 'contarec_edita.php';
   }
 
   if($_POST['operacao'] == 'geraComboBoxCC'){
+    $nomeCampo = "ctrc_idcc";
+    if($_POST['tipo'] != ""){
+      $nomeCampo = "idcc_pagamento";
+    }
     $sql = "SELECT * FROM cc WHERE cc_idbancos = " . $_POST['idbancos'];
-    $comboBoxTipoConta = $html->criaSelectSql("cc_nome", "idcc", "ctrc_idcc", '', $sql, "form-control");
+    $comboBoxTipoConta = $html->criaSelectSql("cc_nome", "idcc", $nomeCampo, '', $sql, "form-control");
     echo $comboBoxTipoConta;
+  }
+
+  if($_POST['operacao'] == 'buscarHistorico'){
+    //
+    $contarec = New Contarec($db);
+    echo $contarec->geraHistorico($_POST['id_cadastro']);
+    exit;
+  }
+
+  if($_POST['operacao'] == 'efetuarPagamento'){
+    //
+    $db->beginTransaction();
+    //
+    $sql = "SELECT * FROM contarec WHERE idcontarec = " . $_POST['id_cadastro'];
+    $reg = $db->retornaUmReg($sql);
+    //
+    if(empty($_POST['idcc_pagamento'])) $_POST['idcc_pagamento'] = $reg['ctrc_idcc'];
+    if(empty($_POST['ctrc_idmeio_pagtoModal'])) $_POST['ctrc_idmeio_pagtoModal'] = $reg['ctrc_idmeio_pagto'];
+    //
+    $contarec = New Contarec($db);
+    $contarec->baixaConta($_POST['id_cadastro'], $_POST['vlr_pagamento'] , $_POST['vlr_multa'], $_POST['vlr_desconto'], $_POST['idcc_pagamento'], $_POST['ctrc_idmeio_pagtoModal'], $util->convertData($_POST['data_pagto']), $_SESSION['idusuario']);
+    //
+    $db->commit();
+    //
+    header('location:../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $_POST['id_cadastro']);
+    exit;
   }
 
  ?>

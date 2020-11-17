@@ -20,7 +20,10 @@ $paginaRetorno = 'bancos_edita.php';
     $dados['idbancos'] = "width='6%'";
     $dados['banc_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

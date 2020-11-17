@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.54;
+		private $ultimaVersao = 0.60;
 		private $db;
 		private $parametros;
 		private $util;
@@ -80,6 +80,120 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_00_60(){
+			//
+			// 04/10/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS salarios_funcionarios(
+						idsalarios_funcionarios int(11) NOT NULL AUTO_INCREMENT,
+						safu_idsalarios INT NULL,
+						safu_idpessoas INT NULL,
+						safu_dias INT NULL,
+						safu_total DECIMAL(10,2) NULL,
+						safu_idcontapag INT NULL,
+						PRIMARY KEY (idsalarios_funcionarios)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela salarios de funcionarios";
+		}
+
+		private function versao_00_59(){
+			//
+			// 04/10/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS salarios(
+						idsalarios int(11) NOT NULL AUTO_INCREMENT,
+						sala_data DATETIME NOT NULL,
+						sala_vlr_total DECIMAL(10,2) NULL,
+						sala_situacao VARCHAR(100) NULL,
+						PRIMARY KEY (idsalarios)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela salarios";
+		}
+
+		private function versao_00_58(){
+			//
+			// 07/10/2020 Vinicius
+			//
+			$this->cadastraPrograma("salarios_edita.php", 'Lancamentos', 'Salários',  'menu', 'salarios.png', 'lancamentos');
+			$this->cadastraPrograma("salarios_grava.php", 'Lancamentos');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa para incluir salarios";
+		}
+
+		private function versao_00_57(){
+			//
+			// 24/09/2020 Vinicius
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_recalculou VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_processou VARCHAR(6) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo recalculou a conta e processor o vale/extra na tabela contas a pagar";
+		}
+
+		private function versao_00_56(){
+			//
+			// 04/10/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS contapag_hist(
+						idcontapag_hist int(11) NOT NULL AUTO_INCREMENT,
+						cphi_idcontapag int(11) NOT NULL,
+						cphi_operacao VARCHAR(255) NOT NULL,
+						cphi_data DATETIME NOT NULL,
+						cphi_valor DECIMAL(10,2) NULL,
+						cphi_idoperador int(11) NOT NULL,
+						cphi_data_pagto DATE NULL,
+						cphi_idmeio_pagto INT NULL,
+						cphi_idcc INT NULL,
+						PRIMARY KEY (idcontapag_hist)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela contapag_hist";
+		}
+
+		private function versao_00_55(){
+			//
+			// 04/10/2020 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS contapag(
+						idcontapag int(11) NOT NULL AUTO_INCREMENT,
+						ctpg_idcliente int(11) NOT NULL,
+						ctpg_vencimento DATE NOT NULL,
+						ctpg_vlr_bruto decimal(10,2) NOT NULL,
+						ctpg_vlr_desconto decimal(10,2) DEFAULT 0.00,
+						ctpg_vlr_juros decimal(10,2) DEFAULT 0.00,
+						ctpg_vlr_liquido DECIMAL(10,2) AS (ctpg_vlr_bruto + ctpg_vlr_juros - ctpg_vlr_desconto) STORED,
+						ctpg_vlr_pago decimal(10,2) DEFAULT 0.00,
+						ctpg_vlr_devedor DECIMAL(10,2) AS (ctpg_vlr_liquido - ctpg_vlr_pago) STORED,
+						ctpg_a_vista VARCHAR(6) NULL,
+						ctpg_porc_juros DECIMAL(10,2) DEFAULT 0.00,
+						ctpg_porc_desconto DECIMAL(10,2) DEFAULT 0.00,
+						ctpg_idmeio_pagto INT NULL,
+						ctpg_idcc INT NULL,
+						ctpg_idbancos INT NULL,
+						ctpg_situacao VARCHAR(255) NULL,
+						ctpg_inclusao DATE NULL,
+						ctpg_idtipo_contas int(11) NULL,
+						PRIMARY KEY (idcontapag)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela contapag";
+		}
+
 		private function versao_00_54(){
 			//
 			// 24/09/2020 Vinicius
@@ -116,10 +230,10 @@
 			//
 			// 27/09/2020 Vinicius
 			//
-			$this->parametros->cadastraParametros("sistema: incluir contas do tipo salario já quitadas", "NAO", "Parametro usado para definir se o sistema deverá incluir contas que sejam do tipo salario já baixadas"); 
+			//$this->parametros->cadastraParametros("sistema: incluir contas do tipo salario já quitadas", "NAO", "Parametro usado para definir se o sistema deverá incluir contas que sejam do tipo salario já baixadas"); 
 			//
 			//Mensagem para o usuario
-			return "Criação do parametro para criar contas salarios já quitadas";
+			return "Criação do parametro para criar contas salarios já quitadas (Versão removida)";
 		}
 
 		private function versao_00_50(){
@@ -935,13 +1049,13 @@
 						foreach($ArquivosSub as $file){
 							if(!$file->isDot()){
 								if($file->isDir()){
-									$caminho = $file->getPathname();
+									$caminhoSub = $file->getPathname();
 									//
 									//abre o diretorio
-									$ArquivosSub_Sub = new DirectoryIterator($caminho);
+									$ArquivosSub_Sub = new DirectoryIterator($caminhoSub);
 									//
 									//troca a barra invertida
-									$caminho = str_replace("\\", "/", $caminho);
+									$caminhoSub = str_replace("\\", "/", $caminhoSub);
 									foreach($ArquivosSub_Sub as $file_Sub){
 										if(!$file_Sub->isDot()){
 											if( $file_Sub->isFile()){
@@ -949,10 +1063,10 @@
 												$fileName = $file_Sub->getFilename();
 												//
 												//Salva o nome para pegar o arquivo
-												$arquivoLocal = $caminho . "/" . $fileName;
+												$arquivoLocal = $caminhoSub . "/" . $fileName;
 												//
 												//Salva o nome que sera no zip e remove o ../
-												$arquivoZip = $caminho . "/" . $fileName;
+												$arquivoZip = $caminhoSub . "/" . $fileName;
 												$arquivoZip = str_replace("../", "", $arquivoZip);
 												//
 												//Inclui no zip

@@ -18,7 +18,7 @@ $paginaRetorno = 'pessoas_edita.php';
     }
     $res = $db->consultar($sql);
     $tabelas = new Tabelas();
-    $tabelas->geraTabelaPes($res, $db);
+    echo $tabelas->geraTabelaPes($res, $db);
     exit;
   }
 

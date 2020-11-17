@@ -34,7 +34,16 @@ class Tabelas{
 	    	$escondeTabela = "display: none;";
 	    }
 	    //
-	   	$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}'>";
+		$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}'>";
+		$tabela .= "<thead>";
+			$tabela .= "<tr>";
+				$tabela .= "<td class='bg-primary' style='position: sticky; top: 0;'><b>Código<b></td>";
+				$tabela .= "<td class='bg-primary' style='position: sticky; top: 0;'><b>Nome<b></td>";
+				$tabela .= "<td class='bg-primary hidden-xs' style='position: sticky; top: 0;'><b>Telefone<b></td>";
+				$tabela .= "<td class='bg-primary hidden-xs' style='position: sticky; top: 0;'><b>Endereço<b></td>";
+				$tabela .= "<td class='bg-primary' style='position: sticky; top: 0;'><b>Cidade<b></td>";
+			$tabela .= "</tr>";
+		$tabela .= "</thead>";
 	    foreach ($res as $reg) {
 	    	//
 	    	//Monta o nome da cidade com a sigla do estado
@@ -50,8 +59,7 @@ class Tabelas{
 	        <td>' . $reg['pess_nome'] . ' <br> <i class="visible-xs" style="font-size: 13px;">' . $db->retornaUmTel($reg['idpessoas']) . '</i> </td>
 	        <td width="25%" class="hidden-xs">' . $db->retornaUmTel($reg['idpessoas']) . '</td>
 	        <td class="hidden-xs">' . $reg['pess_endereco'] . '</td>
-	        <td width="40%" class="visible-xs">' . $cidadeEstado . '</td>
-	        <td class="hidden-xs">' . $cidadeEstado . '</td>
+	        <td>' . $cidadeEstado . '</td>
 	      </tr>';
 			if ($linhaColorida) {
 		    $linhaColorida = false;
@@ -62,18 +70,30 @@ class Tabelas{
 	  $tabela .= "</table></div>";
 	  //
 	  //escreve a tabela
-	  echo $tabela;
+	  return $tabela;
 	}
 	
-	public function geraTabelaBusca($res, $db, $colunas, $link){
+	public function geraTabelaBusca($res, $db, $colunas, $link, $cabecalho = ''){
 		$linhaColorida = false;
 	    $tabela = "<div class='tableBusca' style='max-height: 250px; overflow: auto;'>";
 	    if(empty($res)){
-	    	$tabela .= "Nenhum registro encontrado!";
-	    	$escondeTabela = "display: none;";
+			$tabela .= "Nenhum registro encontrado!";
+			$tabela .= "</div>";
+			//
+			//escreve a tabela
+			return $tabela;
 	    }
-	    $tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}' >";
-		foreach ($res as $reg) {
+		$tabela .= "<table class='table' {$escondeTabela}' >";
+		if(!empty($cabecalho)){
+			$tabela .= "<thead>";
+				$tabela .= "<tr>";
+				foreach($cabecalho as $titulo => $config){
+					$tabela .= "<td class='bg-primary' {$config} style='position: sticky; top: 0;'><b>{$titulo}<b></td>";
+				}
+				$tabela .= "</tr>";
+			$tabela .= "</thead>";
+		}
+		foreach($res as $reg){
 			//
 			//Define se a linha vai ser de outra cor
 			$class = '';
@@ -98,7 +118,7 @@ class Tabelas{
 		$tabela .= "</div>";
 		//
 	  	//escreve a tabela
-		echo $tabela;
+		return $tabela;
 	}
 
 	public function geraTabelaPadrao($res, $db, $colunas, $titulo = ''){

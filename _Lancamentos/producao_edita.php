@@ -32,6 +32,7 @@
     }elseif($reg['pdc_situacao'] == 'Fechada'){
       $btnFecharReabrir = '<button type="button" onclick="testaDados(\'reabrir\')" class="btn btn-warning">Reabrir</button>';
       $btnGravar = '';
+      $btnExcluir = '';
     }
   }
 

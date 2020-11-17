@@ -222,8 +222,3 @@ function excluirTelefone(idtelefone){
     buscaTelefones();
   });
 }
-
-function imprimir(link){
-  var linkCompleto = link + '?id_cadastro=' + $("#id_cadastro").val();
-  window.open(linkCompleto, '_blank');
-}

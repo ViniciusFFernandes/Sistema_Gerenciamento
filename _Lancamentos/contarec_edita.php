@@ -23,9 +23,11 @@
   //
   $sql = "SELECT * FROM meio_pagto";
   $comboBoxMeioPagto = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagto", $reg['ctrc_idmeio_pagto'], $sql, "form-control");
+  $comboBoxMeioPagtoModal = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagtoModal", '', $sql, "form-control");
   //
   $sql = "SELECT * FROM bancos";
   $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancos", $reg['ctrc_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"');
+  $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"');
   //
   $comboBoxCC = "<br><font color='red'>*</font> Selecione o banco";
   //
@@ -46,6 +48,9 @@
       $ctrc_situacao = "<kbd><b>{$reg['ctrc_situacao']}</b></kbd>";
       $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     }
+    if($reg['ctrc_situacao'] == 'Pendente' || $reg['ctrc_situacao'] == "QParcial"){
+      $btnPagar = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pagarConta">Pagar</button>';
+    }
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -65,21 +70,26 @@
   $html = str_replace("##ctrc_situacao##", $ctrc_situacao, $html);
   $html = str_replace("##ctrc_inclusao##", $reg['ctrc_inclusao'], $html);
   $html = str_replace("##ctrc_vencimento##", $reg['ctrc_vencimento'], $html);
-  $html = str_replace("##ctrc_vlr_bruto##", $reg['ctrc_vlr_bruto'], $html);
-  $html = str_replace("##ctrc_vlr_juros##", $reg['ctrc_vlr_juros'], $html);
-  $html = str_replace("##ctrc_porc_juros##", $reg['ctrc_porc_juros'], $html);
-  $html = str_replace("##ctrc_vlr_desconto##", $reg['ctrc_vlr_desconto'], $html);
-  $html = str_replace("##ctrc_porc_desconto##", $reg['ctrc_porc_desconto'], $html);
-  $html = str_replace("##ctrc_vlr_liquido##", $reg['ctrc_vlr_liquido'], $html);
-  $html = str_replace("##ctrc_vlr_pago##", $reg['ctrc_vlr_pago'], $html);
-  $html = str_replace("##ctrc_vlr_devedor##", $reg['ctrc_vlr_devedor'], $html);
+  $html = str_replace("##ctrc_vlr_bruto##", $util->formataMoeda($reg['ctrc_vlr_bruto']), $html);
+  $html = str_replace("##ctrc_vlr_juros##", $util->formataMoeda($reg['ctrc_vlr_juros']), $html);
+  $html = str_replace("##ctrc_porc_juros##", $util->formataMoeda($reg['ctrc_porc_juros']), $html);
+  $html = str_replace("##ctrc_vlr_desconto##", $util->formataMoeda($reg['ctrc_vlr_desconto']), $html);
+  $html = str_replace("##ctrc_porc_desconto##", $util->formataMoeda($reg['ctrc_porc_desconto']), $html);
+  $html = str_replace("##ctrc_vlr_liquido##", $util->formataMoeda($reg['ctrc_vlr_liquido']), $html);
+  $html = str_replace("##ctrc_vlr_pago##", $util->formataMoeda($reg['ctrc_vlr_pago']), $html);
+  $html = str_replace("##ctrc_vlr_devedor##", $util->formataMoeda($reg['ctrc_vlr_devedor']), $html);
+  $html = str_replace("##vlr_pagamento##", $util->formataMoeda($reg['ctrc_vlr_devedor']), $html);
+  $html = str_replace("##data_pagto##", date("Y-m-d"), $html);
   $html = str_replace("##comboBoxTipoConta##", $comboBoxTipoConta, $html);
   $html = str_replace("##comboBoxMeioPagto##", $comboBoxMeioPagto, $html);
+  $html = str_replace("##comboBoxMeioPagtoModal##", $comboBoxMeioPagtoModal, $html);
   $html = str_replace("##comboBoxBancos##", $comboBoxBancos, $html);
+  $html = str_replace("##comboBoxBancosModal##", $comboBoxBancosModal, $html);
   $html = str_replace("##checkAVista##", $checkAVista, $html);
   $html = str_replace("##comboBoxCC##", $comboBoxCC, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
+  $html = str_replace("##btnPagar##", $btnPagar, $html);
   $html = str_replace("##btnGravarReabrir##", $btnGravarReabrir, $html);
-  echo $html;
+  echo $html; 
   exit;
 ?>

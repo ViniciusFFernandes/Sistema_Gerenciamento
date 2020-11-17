@@ -20,7 +20,10 @@ $paginaRetorno = 'cc_edita.php';
     $dados['idcc'] = "width='6%'";
     $dados['cc_nome'] = "";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 

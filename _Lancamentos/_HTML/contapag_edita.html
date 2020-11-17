@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   	<title>##nomeSistema##</title>
+
+     ##includes##
+     <script src="../js/_Lancamentos/contapag.js"></script>
+     <script>##autoComplete_Pessoas##</script>
+  </head>
+  <body>
+
+    <div>
+     ##Menu##
+    </div>
+    <div class="row divMsg">
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+      <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
+      <div class="col-md-4 col-sm-1 col-xs-1"></div>
+    </div>
+    <div class="container conteudo">
+      <div class="panel panel-default" style="border: solid 2px #828282; ">
+        <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
+          <div class="panel-title">
+            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico da conta" onclick="abrirHistoricoConta()" data-toggle="modal" data-target="#historicoConta"><img src="../icones/historico.png"></button>
+            Contas a Pagar
+            <span align="right" data-toggle="modal" title="Buscar Setores" data-target="#buscaCadastro" style="cursor: pointer;">
+              &nbsp;<img src="../icones/lupa.png">
+            </span>
+            
+          </div>
+        </div>
+        <div class="panel-body">
+          <form action="contapag_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+            <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="codigo">Código</label>
+                <div class="input-group">
+                  <input type="text" class="form-control col-2" id="idcontapag" name="idcontapag" value="##idcontapag##" placeholder="Código" autofocus >
+                  <span class="input-group-addon" style="cursor: pointer;" onclick="abreConta()"><img src="../icones/raio.png"></span>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-6" style="padding-top: 30px;">
+                ##ctpg_situacao##
+              </div>
+              <div class="visible-xs clearfix">&nbsp;</div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="vencimento">Inclusão</label>
+                <input type="date" class="form-control" id="ctpg_inclusao" name="ctpg_inclusao" value="##ctpg_inclusao##" readonly >
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="vencimento">Vencimento</label>
+                <input type="date" class="form-control" id="ctpg_vencimento" name="ctpg_vencimento" value="##ctpg_vencimento##" >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="Cliente">Cliente</label>
+                ##autoComplete_CampoPessoas##
+              </div>
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <label for="MeioPagto">Meio de Pagamento</label>
+                ##comboBoxMeioPagto##
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-sm-4 col-xs-12">
+                <label for="tipoConta">Tipo da Conta</label>
+                ##comboBoxTipoConta##
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="Bancos">Banco</label>
+                ##comboBoxBancos##
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="CC">Conta Corrente</label>
+                <span id="comboBoxCC">##comboBoxCC##</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Bruto">Valor</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_bruto" name="ctpg_vlr_bruto" value="##ctpg_vlr_bruto##" onkeyup="calculoJuros('porc'); calculoDesconto('porc')">
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-4 col-xs-6">
+                <label for="AVista">&nbsp;</label> <br>
+                <input type="checkbox" id="ctpg_a_vista" name="ctpg_a_vista" ##checkAVista## value="SIM"> À Vista
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Juros">Juros</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_juros" name="ctpg_vlr_juros" value="##ctpg_vlr_juros##" onkeyup="calculoJuros('vlr')">
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Juros_porc">&nbsp;</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="ctpg_porc_juros" name="ctpg_porc_juros" value="##ctpg_porc_juros##" onkeyup="calculoJuros('porc')">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div>
+            <div class="row"> 
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Desconto">Desconto</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_desconto" name="ctpg_vlr_desconto" value="##ctpg_vlr_desconto##" onkeyup="calculoDesconto('vlr')">
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Desconto_porc">&nbsp;</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="ctpg_porc_desconto" name="ctpg_porc_desconto" value="##ctpg_porc_desconto##" onkeyup="calculoDesconto('porc')">
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div>  
+            <div class="row">
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Total">Total</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_liquido" name="ctpg_vlr_liquido" value="##ctpg_vlr_liquido##" readonly>
+                </div>
+              </div>
+              <div class="col-xs-6 visible-xs">&nbsp;</div>
+              <div class="visible-xs clearfix">&nbsp;</div>
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Total">Total Pago</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_pago" name="ctpg_vlr_pago" value="##ctpg_vlr_pago##" readonly>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-6">
+                <label for="Total">Total Devedor</label>
+                <div class="input-group">
+                  <span class="input-group-addon">R$</span>
+                  <input type="text" class="form-control" id="ctpg_vlr_devedor" name="ctpg_vlr_devedor" value="##ctpg_vlr_devedor##" readonly>
+                </div>
+              </div>
+            </div> 
+            <br>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
+                <center>
+                  ##btnGravarReabrir##
+                  <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
+                  ##btnExcluir##
+                  ##btnPagar##
+                  ##btnImprimir##
+                </center>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
+          </div>
+          <div class="modal-body" id="resultBusca">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
+            <button type="button" onclick="buscaCadastro('contapag_grava.php')" class="btn btn-primary">Buscar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="pagarConta" tabindex="-1" role="dialog" aria-labelledby="pagarLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="buscaLabel">Pagar Conta</h4>
+          </div>
+          <div class="modal-body">
+            <form action="contapag_grava.php" id="formPagamento" method="POST">
+              <input type="hidden" name="operacao" id="operacao" value="efetuarPagamento">
+              <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
+              <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="dataPagto">Pagamento</label>
+                  <input type="date" class="form-control" id="data_pagto" name="data_pagto" value="##data_pagto##" >
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="MeioPagto">Meio de Pagamento</label>
+                  ##comboBoxMeioPagtoModal##
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="Bancos">Banco</label>
+                  ##comboBoxBancosModal##
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <label for="CC">Conta Corrente</label>
+                  <span id="comboBoxCCModal">
+                    <br><font color='red'>*</font> Selecione o banco
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <label for="Bruto">Valor</label>
+                  <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" class="form-control" id="vlr_pagamento" name="vlr_pagamento" value="##vlr_pagamento##">
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="button" onclick="calculaMultaDesconto()">C</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <label for="Bruto">Multa</label>
+                  <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" class="form-control" id="vlr_multa" name="vlr_multa" value="0">
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <label for="Bruto">Desconto</label>
+                  <div class="input-group">
+                    <span class="input-group-addon">R$</span>
+                    <input type="text" class="form-control" id="vlr_desconto" name="vlr_desconto" value="0">
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" onclick="efetuarPagamento()" class="btn btn-primary">Confirmar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="historicoConta" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Historico da conta</h4>
+          </div>
+          <div class="modal-body" id="conteudoHistoricoConta"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="modal fade" id="modelosImprimir" tabindex="-1" role="dialog" aria-labelledby="imprimirLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="tituloLabel"> Imprimir
+              
+            </h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <button type="button" class="btn btn-primary" onclick="imprimir('contapag_recibo_associado.php')">Recibo de Associado</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+

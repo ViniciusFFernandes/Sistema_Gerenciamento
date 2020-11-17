@@ -58,3 +58,24 @@ function confirmar(msg, titulo = '', functionCallback = '', animate = ''){
         }
     });
 }
+
+function toFloat(string){
+    var valor = '';
+    //
+    string = string.replace(".", "");
+    string = string.replace(".", "");
+    string = string.replace(".", "");
+    string = string.replace(",", ".");
+    //
+    if(string != 0 && $.isNumeric(string)){
+        valor = parseFloat(string);
+        return valor;
+    }else{
+        return 0;
+    }
+}
+
+function imprimir(link){
+    var linkCompleto = link + '?id_cadastro=' + $("#id_cadastro").val();
+    window.open(linkCompleto, '_blank');
+}

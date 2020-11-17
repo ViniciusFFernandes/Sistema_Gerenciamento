@@ -2,7 +2,6 @@
 require_once("../_BD/conecta_login.php");
 require_once("tabelas.class.php");
 require_once("producao.class.php");
-require_once("tabelas.class.php");
 // print_r($_REQUEST);
 // exit;
 $paginaRetorno = 'producao_edita.php';
@@ -27,7 +26,12 @@ $paginaRetorno = 'producao_edita.php';
     $dados['pdc_abertura'] = "width='15%'";
     $dados['pdc_situacao'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Produto'] = '';
+    $cabecalho['Abertura'] = '';
+    $cabecalho['Situação'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 
@@ -46,7 +50,7 @@ $paginaRetorno = 'producao_edita.php';
     }
     //
     //verifica se devera redefinir os itens
-    $sql = "SELECT pdc_idprodutos FROM producao WHERE idproducao = {$id}";
+    $sql = "SELECT pdc_idprodutos FROM producao WHERE idproducao = {$_POST['id_cadastro']}";
     if($db->retornaUmCampoSql($sql, "pdc_idprodutos") != $_POST['pdc_idprodutos']){
       $redefineItens = true;
     }
@@ -61,7 +65,7 @@ $paginaRetorno = 'producao_edita.php';
     //
     $producao = new producao($db, $util);
     if($redefineItens || $_POST['id_cadastro'] <= 0){
-      $producao->insereItens($id);
+      $producao->insereItens($_POST['id_cadastro']);
     }
     //
   	if ($_POST['id_cadastro'] > 0) {

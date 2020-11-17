@@ -13,6 +13,7 @@
         $reg = $db->retornaUmReg($sql);
     }else{
         $html->mostraErro("Pessoa não encontrada!<br>Código não infomado!");
+        exit;
     }
     if($reg['idpessoas'] > 0){
         //

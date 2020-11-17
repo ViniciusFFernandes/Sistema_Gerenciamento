@@ -22,7 +22,11 @@ $paginaRetorno = 'unidades_edita.php';
     $dados['uni_nome'] = "";
     $dados['uni_sigla'] = "width='10%'";
     //
-    $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno);
+    $cabecalho['Código'] = '';
+    $cabecalho['Nome'] = '';
+    $cabecalho['Sigla'] = '';
+    //
+    echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
     exit;
   }
 
