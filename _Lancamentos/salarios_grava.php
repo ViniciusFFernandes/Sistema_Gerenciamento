@@ -68,30 +68,42 @@ $paginaRetorno = 'salarios_edita.php';
 }
 
 if ($_POST['operacao'] == "excluiCad") {
-    $db->setTabela("salarios_funcionarios", "safu_idsalarios");
-    $db->excluir($_POST['id_cadastro'], "Excluir");
-    if($db->erro()){
-        $html->mostraErro("Erro ao excluir salarios de funcionarios<br>Operação cancelada!");
-        exit;
-    }
-    //
-    $db->setTabela("salarios", "idsalarios");
-    $db->excluir($_POST['id_cadastro'], "Excluir");
-    if($db->erro()){
-        $html->mostraErro("Erro ao excluir salarios<br>Operação cancelada!");
-        exit;
-    }
-    header('location:../_Lancamentos/' . $paginaRetorno);
-    exit;
+  $db->setTabela("salarios_funcionarios", "safu_idsalarios");
+  $db->excluir($_POST['id_cadastro'], "Excluir");
+  if($db->erro()){
+      $html->mostraErro("Erro ao excluir salarios de funcionarios<br>Operação cancelada!");
+      exit;
   }
+  //
+  $db->setTabela("salarios", "idsalarios");
+  $db->excluir($_POST['id_cadastro'], "Excluir");
+  if($db->erro()){
+      $html->mostraErro("Erro ao excluir salarios<br>Operação cancelada!");
+      exit;
+  }
+  header('location:../_Lancamentos/' . $paginaRetorno);
+  exit;
+}
+
+if($_POST['operacao'] == "excluiFunc"){
+  $db->setTabela("salarios_funcionarios", "idsalarios_funcionarios");
+  $db->excluir($_POST['idsalarios_funcionarios']);
+  //
+  if($db->erro()){
+      echo "Erro ao excluir funcionarios\nOperação cancelada!";
+      exit;
+  }
+  echo "Ok";
+  exit;
+}
 
 if ($_POST['operacao'] == 'fechar'){
-  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['idsalarios']);
+  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['id_cadastros']);
   exit;
 }
 
 if ($_POST['operacao'] == 'reabrir'){
-  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['idsalarios']);
+  header('location: ../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $reg['id_cadastros']);
   exit;
 }
 
