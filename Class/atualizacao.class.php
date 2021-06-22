@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.60;
+		private $ultimaVersao = 0.79;
 		private $db;
 		private $parametros;
 		private $util;
@@ -26,12 +26,10 @@
 			$res = $this->db->consultar($sql);
 			foreach ($res as $reg) {
 				$hist .= '<div class="row">';
-					$hist .= '<div class="col-sm-12 col-xs-12">';
-						$hist .= '<div class="panel-group">';
-							$hist .= '<div class="panel panel-default">';
-							    $hist .= '<div class="panel-heading">' . $reg['vhist_versao'] . '<span style="float: right;">' . $this->util->convertData($reg['vhist_data']) . '</span></div>';
-							    $hist .= '<div class="panel-body">' . $reg['vhist_mensagem'] . '</div>';
-							$hist .= '</div>';
+					$hist .= '<div class="col-sm-12 col-12">';
+						$hist .= '<div class="card shadow mb-4 border-left-primary">';
+							$hist .= '<div class="card-header py-3">' . $reg['vhist_versao'] . '<span style="float: right;">' . $this->util->convertData($reg['vhist_data']) . '</span></div>';
+							$hist .= '<div class="card-body">' . $reg['vhist_mensagem'] . '</div>';
 						$hist .='</div>';
 					$hist .= '</div>';
 				$hist .= '</div>';
@@ -74,11 +72,246 @@
 		//Exemplos de uso das funções       //
 		//////////////////////////////////////
 		//
-		//$this->cadastraPrograma("arquivo_do_programa.php", 'Tipo no Grupo Acesso', 'Nome para o Menu',  'tipo: Programa ou Menu', 'Nome_da_imagem_menu.png', 'Qual Menu Aparece', Sepode ou Não Executar por Padrão: 0 ou 1);
+		//$this->cadastraPrograma("arquivo_do_programa.php", 'Tipo no Grupo Acesso', 'Nome para o Menu',  'tipo: Programa ou Menu', 'Nome_da_imagem_menu.png', 'Qual Menu Aparece', Sepode ou Não Executar por Padrão: 0 ou 1, 'Pasta raiz do programa se for menu');
 		//
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+		
+		private function versao_00_79(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$this->cadastraPrograma("empresas_edita.php", 'Cadastros', 'Empresas',  'menu', '', 'cadastros', 0, '_Cadastros');
+			$this->cadastraPrograma("empresas_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa para incluir dados das empresas";
+		}
+
+		private function versao_00_78(){
+			//
+			// 09/06/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS empresas(
+						idempresas int(11) NOT NULL AUTO_INCREMENT,
+						emp_nome VARCHAR(255) NOT NULL,
+						emp_cnpj varchar(255) NULL,
+						emp_endereco varchar(255) NULL,
+						emp_cep varchar(255) NULL,
+						emp_telefone varchar(255) NULL,
+						emp_logo varchar(255) NULL,
+						emp_idcidades int NULL,
+						PRIMARY KEY (idempresas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela empresas";
+		}
+
+		private function versao_00_77(){
+			//
+			// 31/05/2021 Vinicius
+			//
+			$this->cadastraPrograma("coleta_sel.php", 'Relatório', 'Coletas',  'menu', '', 'relatorios', 0, '_Relatorios');
+			$this->cadastraPrograma("coleta.php", 'Relatório');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa de relatórios de coletas";
+		}
+
+		private function versao_00_76(){
+			//
+			// 31/05/2021 Vinicius
+			//
+			$sql = "ALTER TABLE grupos_acessos ADD grac_menu_relatorios TEXT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo para o menu relatórios";
+		}
+
+		private function versao_00_75(){
+			//
+			// 11/05/2021 Vinicius
+			//
+			$sql = "ALTER TABLE coleta ADD cole_placa_veiculo VARCHAR(255) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Adicionado o campo placa do veiculo para as coletas";
+		}
+
+		private function versao_00_74(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$sql = "ALTER TABLE produtos_movto ADD prmv_idtipo_movto_estoque int NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Adicionado o campo tipo de movimentação de estoque para movimentações manuais";
+		}
+
+		private function versao_00_73(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$this->cadastraPrograma("coleta_edita.php", 'Lançamentos', 'Coletas',  'menu', '', 'lancamentos', 0, '_Lancamentos');
+			$this->cadastraPrograma("coleta_grava.php", 'Lançamentos');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa para incluir coletas";
+		}
+
+		private function versao_00_72(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS coleta(
+						idcoleta int(11) NOT NULL AUTO_INCREMENT,
+						cole_data_entrada date NULL,
+						cole_situacao varchar(255) NOT NULL DEFAULT 'Aberta',
+						cole_idprodutos int NOT NULL,
+						cole_qte decimal(10,2) NULL,
+						PRIMARY KEY (idcoleta)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela coletas";
+		}
+
+		private function versao_00_71(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$this->cadastraPrograma("tipo_movto_estoque_edita.php", 'Cadastros', 'Tipo Estoque',  'menu', '', 'cadastros', 0, '_Cadastros');
+			$this->cadastraPrograma("tipo_movto_estoque_grava.php", 'Cadastros');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa para incluir tipo de movimentação no estoque";
+		}
+
+		private function versao_00_70(){
+			//
+			// 10/05/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS tipo_movto_estoque(
+						idtipo_movto_estoque int(11) NOT NULL AUTO_INCREMENT,
+						time_nome VARCHAR(255) NULL,
+						time_entrada VARCHAR(6) NULL,
+						time_saida VARCHAR(6) NULL,
+						PRIMARY KEY (idtipo_movto_estoque)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+					$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela tipo de movimento de estoque";
+		}
+
+		private function versao_00_69(){
+			//
+			// 29/06/2020 Vinicius
+			//
+			$this->cadastraPrograma("contapag_recibo.php", 'Impressões');
+			$this->cadastraPrograma("contarec_recibo.php", 'Impressões');
+			//
+			//Mensagem para o usuario
+			return "Cadastro dos programas para imprimir recibos de contas";
+		}
+
+		private function versao_00_68(){
+			//
+			// 29/06/2020 Vinicius
+			//
+			$sql = "ALTER TABLE salarios_funcionarios CHANGE COLUMN safu_dias safu_dias DECIMAL(10,2) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Alterando o campo faltas para receber meia falta no salario";
+		}
+
+		private function versao_00_67(){
+			//
+			// 29/06/2020 Vinicius
+			//
+			$this->cadastraPrograma("contapag_recibo_associado.php", 'Impressões');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa para imprimir recibo de associado";
+		}
+
+		private function versao_00_66(){
+			//
+			// 22/04/2021 Vinicius
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_idconta_salario int NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo conta salario na tabela contas a pagar";
+		}
+
+		private function versao_00_65(){
+			//
+			// 18/04/2021 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: recalcula contas tipo salario", "NAO", "Parametro usado para definir se o sistema deverá recalcular contas que sejam do tipo salario já baixadas"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para recalcular conta salario";
+		}
+
+		private function versao_00_64(){
+			//
+			// 16/04/2021 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: incluir contas do tipo salario já quitadas", "NAO", "Parametro usado para definir se o sistema deverá incluir contas que sejam do tipo salario já baixadas"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para incluir conta salario ja quitada";
+		}
+
+		private function versao_00_63(){
+			//
+			// 15/04/2021 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: codigo do tipo da conta padrao para salarios", "", "Parametro usado para definir id padrão do tipo da conta a ser usado em contas de salario geradas pelo sistema"); 
+			$this->parametros->cadastraParametros("sistema: codigo do banco padrao para contas", "", "Parametro usado para definir id padrão do banco a ser usado em contas geradas pelo sistema"); 
+			$this->parametros->cadastraParametros("sistema: codigo da conta bancaria padrao para contas", "", "Parametro usado para definir id padrão da conta bancaria a ser usado em contas geradas pelo sistema"); 
+			$this->parametros->cadastraParametros("sistema: codigo do meio de pagamento padrao para contas", "", "Parametro usado para definir id padrão do meio de pagamento a ser usado em contas geradas pelo sistema"); 
+			$this->parametros->cadastraParametros("sistema: feriados a ser considerados", "2021-01-01,2021-02-15,2021-02-16,2021-04-02,2021-04-21,2021-05-01,2021-06-03,2021-09-07,2021-10-12,2021-11-02,2021-11-15,2021-15-25", "Parametro usado para definir os feriados que o sistema deve considerar na hora de efetuar calculos", "variavel", "FERIADOS"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para criação de contas e parametro para registrar feriados";
+		}
+
+		private function versao_00_62(){
+			//
+			// 15/04/2021 Vinicius
+			//
+			$sql = "ALTER TABLE salarios ADD sala_data_fechamento DATETIME NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo data de fechamento na tabela salarios";
+		}
+
+		private function versao_00_61(){
+			//
+			// 15/04/2021 Vinicius
+			//
+			$sql = "ALTER TABLE salarios ADD sala_mes INT NOT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE salarios ADD sala_ano INT NOT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo mes e ano na tabela salarios";
+		}
 
 		private function versao_00_60(){
 			//
@@ -89,6 +322,7 @@
 						safu_idsalarios INT NULL,
 						safu_idpessoas INT NULL,
 						safu_dias INT NULL,
+						safu_vlr_desconto_faltas DECIMAL(10,2) NULL,
 						safu_total DECIMAL(10,2) NULL,
 						safu_idcontapag INT NULL,
 						PRIMARY KEY (idsalarios_funcionarios)
@@ -120,8 +354,8 @@
 			//
 			// 07/10/2020 Vinicius
 			//
-			$this->cadastraPrograma("salarios_edita.php", 'Lancamentos', 'Salários',  'menu', 'salarios.png', 'lancamentos');
-			$this->cadastraPrograma("salarios_grava.php", 'Lancamentos');
+			$this->cadastraPrograma("salarios_edita.php", 'Lançamentos', 'Salários',  'menu', '', 'lancamentos', 0, '_Lancamentos');
+			$this->cadastraPrograma("salarios_grava.php", 'Lançamentos');
 			//
 			//Mensagem para o usuario
 			return "Criação do programa para incluir salarios";
@@ -394,10 +628,10 @@
 			//
 			// 27/09/2020 Vinicius
 			//
-			$this->cadastraPrograma("bancos_edita.php", 'Cadastros', 'Bancos',  'menu', 'bancos.png', 'cadastros');
+			$this->cadastraPrograma("bancos_edita.php", 'Cadastros', 'Bancos',  'menu', '', 'cadastros', 0, '_Cadastros');
 			$this->cadastraPrograma("bancos_grava.php", 'Cadastros');
 			//
-			$this->cadastraPrograma("cc_edita.php", 'Cadastros', 'Contas Bancárias',  'menu', 'cc.png', 'cadastros');
+			$this->cadastraPrograma("cc_edita.php", 'Cadastros', 'Contas Bancárias',  'menu', '', 'cadastros', 0, '_Cadastros');
 			$this->cadastraPrograma("cc_grava.php", 'Cadastros');
 			//
 			//Mensagem para o usuario
@@ -463,7 +697,7 @@
 			//
 			// 23/09/2020 Vinicius
 			//
-			$this->cadastraPrograma("tipo_contas_edita.php", 'Cadastros', 'Tipo de Contas',  'menu', 'tipo_contas.png', 'cadastros');
+			$this->cadastraPrograma("tipo_contas_edita.php", 'Cadastros', 'Tipo de Contas',  'menu', '', 'cadastros', 0, '_Cadastros');
 			$this->cadastraPrograma("tipo_contas_grava.php", 'Cadastros');
 			//
 			//Mensagem para o usuario
@@ -474,16 +708,16 @@
 			//
 			// 20/09/2020 Vinicius
 			//
-			$this->cadastraPrograma("contarec_edita.php", 'Lançamentos', 'Contas a Receber',  'menu', 'contarec.png', 'lancamentos');
+			$this->cadastraPrograma("contarec_edita.php", 'Lançamentos', 'Contas a Receber',  'menu', '', 'lancamentos', 0, '_Lancamentos');
 			$this->cadastraPrograma("contarec_grava.php", 'Lançamentos');
 			//
-			$this->cadastraPrograma("contapag_edita.php", 'Lançamentos', 'Contas a Pagar',  'menu', 'contapag.png', 'lancamentos');
+			$this->cadastraPrograma("contapag_edita.php", 'Lançamentos', 'Contas a Pagar',  'menu', '', 'lancamentos', 0, '_Lancamentos');
 			$this->cadastraPrograma("contapag_grava.php", 'Lançamentos');
 			//
-			$this->cadastraPrograma("pedidos_edita.php", 'Lançamentos', 'Pedidos',  'menu', 'pedidos.png', 'lancamentos');
+			$this->cadastraPrograma("pedidos_edita.php", 'Lançamentos', 'Pedidos',  'menu', '', 'lancamentos', 0, '_Lancamentos');
 			$this->cadastraPrograma("pedidos_grava.php", 'Lançamentos');
 			//
-			$this->cadastraPrograma("pedcompras_edita.php", 'Lançamentos', 'Pedidos de Compra',  'menu', 'pedcompras.png', 'lancamentos');
+			$this->cadastraPrograma("pedcompras_edita.php", 'Lançamentos', 'Pedidos de Compra',  'menu', '', 'lancamentos', 0, '_Lancamentos');
 			$this->cadastraPrograma("pedcompras_grava.php", 'Lançamentos');
 			//
 			//Mensagem para o usuario
@@ -618,7 +852,7 @@
 			//
 			// 27/06/2020 Vinicius
 			//
-			$this->cadastraPrograma("setores_edita.php", 'Cadastros', 'Setores',  'menu', 'setores.png', 'cadastros');
+			$this->cadastraPrograma("setores_edita.php", 'Cadastros', 'Setores',  'menu', '', 'cadastros', 0, '_Cadastros');
 			$this->cadastraPrograma("setores_grava.php", 'Cadastros');
 			//
 			//Mensagem para o usuario
@@ -644,7 +878,7 @@
 			//
 			// 26/06/2020 Vinicius
 			//
-			$this->cadastraPrograma("funcoes_edita.php", 'Cadastros', 'Funções',  'menu', 'funcoes.png', 'cadastros');
+			$this->cadastraPrograma("funcoes_edita.php", 'Cadastros', 'Funções',  'menu', '', 'cadastros', 0, '_Cadastros');
 			$this->cadastraPrograma("funcoes_grava.php", 'Cadastros');
 			//
 			//Mensagem para o usuario
@@ -655,7 +889,7 @@
 			//
 			// 17/03/2020 Vinicius
 			//
-			$this->cadastraPrograma("grupos_acessos.php", 'Sistema', 'Grupos de Acessos',  'menu', '', 'configuracoes');
+			$this->cadastraPrograma("grupos_acessos.php", 'Sistema', 'Grupos de Acessos',  'menu', '', 'configuracoes', 0, '_Configuracoes');
 			$this->cadastraPrograma("grupos_acessos_grava.php", 'Sistema');
 			//
 			//Mensagem para o usuario
@@ -1044,8 +1278,9 @@
 						//troca a barra invertida
 						$caminho = str_replace("\\", "/", $caminho);
 						//
-						//ignora as pastas do git
+						//ignora as pastas do git e a uploads
 						if(strpos($caminho, "git")) continue;
+						if(strpos($caminho, "uploads")) continue;
 						foreach($ArquivosSub as $file){
 							if(!$file->isDot()){
 								if($file->isDir()){
@@ -1182,7 +1417,7 @@
 			}   
 		}
 
-		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = '', $pode_executar = 0){
+		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = '', $pode_executar = 0, $diretorioRaiz = ''){
 			//
 			if($nome == '') $nome = $file;
 			//
@@ -1194,6 +1429,7 @@
 			$dados['prog_imagem']      = $this->util->sgr($imagem);
 			$dados['prog_tipo_origem'] = $this->util->sgr($tipo_origem);
 			$dados['prog_tipo_menu']   = $this->util->sgr($tipo_menu);
+			$dados['prog_raiz']   		= $this->util->sgr($diretorioRaiz);
 			//
 			$this->db->gravarInserir($dados);
 			//
@@ -1204,7 +1440,7 @@
 			$this->db->executaSQL($sql);
 			//
 			if($tipo == 'menu'){
-				$this->html->criaMenu('', $tipo_menu);
+				$this->html->criaMenu('');
 			}
 		}
 

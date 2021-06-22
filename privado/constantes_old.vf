@@ -4,4 +4,5 @@ $USUARIO = 'root';
 $SENHA = 'root';
 $DB_NAME = 'arg';
 define(LOGO_EMPRESA, 'padrao.png');
+define(NOME_SISTEMA, 'vWeb');
  ?>

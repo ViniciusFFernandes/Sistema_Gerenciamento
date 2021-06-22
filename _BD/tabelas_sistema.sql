@@ -36,38 +36,42 @@ CREATE TABLE IF NOT EXISTS programas(
 						prog_imagem varchar(255) NULL,
 						prog_tipo_menu varchar(255) NULL,
 						prog_tipo_origem varchar(255) NULL,
+						prog_raiz varchar(255) NULL,
+						prog_posicao varchar(255) NULL,
 						CONSTRAINT NOME_PROGRAMA UNIQUE (prog_file),
 						PRIMARY KEY (idprogramas)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('consulta.php', 'consulta.php', 'programa', '', 'Sistema', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('index.php', 'index.php', 'programa', '', 'Indexs', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('conecta_login.php', 'conecta_login.php', 'programa', '', 'Sistema', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('cadastros_index.php', 'cadastros_index.php', 'programa', '', 'Indexs', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Pessoas', 'pessoas_edita.php', 'menu', 'cliente.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('pessoas_grava.php', 'pessoas_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Produtos', 'produtos_edita.php', 'menu', 'produto.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('produtos_grava.php', 'produtos_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Cidades', 'cidades_edita.php', 'menu', 'cidade.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('cidades_grava.php', 'cidades_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Grupos', 'grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('grupos_grava.php', 'grupos_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Sub Grupos', 'sub_grupos_edita.php', 'menu', 'caixas.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('sub_grupos_grava.php', 'sub_grupos_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Unidades', 'unidades_edita.php', 'menu', 'unidade.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('unidades_grava.php', 'unidades_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Meio de Pagamento', 'meio_pagto_edita.php', 'menu', 'meio_pagto.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('meio_pagto_grava.php', 'meio_pagto_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Forma de Pagamento', 'forma_pagto_edita.php', 'menu', 'forma_pagto.png', 'Cadastros', 'cadastros');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('forma_pagto_grava.php', 'forma_pagto_grava.php', 'programa', '', 'Cadastros', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Parametros', 'parametros.php', 'menu', '', 'Sistema', 'configuracoes');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('parametros_grava.php', 'parametros_grava.php', 'programa', '', 'Sistema', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Versão Atualização', 'versao_atualizacao.php', 'menu', '', 'Sistema', 'configuracoes');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('versao_atualizacao_grava.php', 'versao_atualizacao_grava.php', 'programa', '', 'Sistema', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('inicio.php', 'inicio.php', 'programa', '', 'Indexs', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('lancamentos_index.php', 'lancamentos_index.php', 'programa', '', 'Indexs', NULL);
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('Produção', 'producao_edita.php', 'menu', 'producao.png', 'Lançamentos', 'lancamentos');
-INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`) VALUES ('producao_grava.php', 'producao_grava.php', 'programa', '', 'Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('consulta.php', 'consulta.php', 'programa', '', 'Sistema', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('index.php', 'index.php', 'programa', '', 'Index', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('conecta_login.php', 'conecta_login.php', 'programa', '', 'Sistema', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Dashboard', 'inicio.php', 'menuRaiz', '<i class="fas fa-chart-bar d-none d-sm-inline"></i>', 'Menu', NULL, '_Inicio', "1");
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Cadastros', 'menuCadastro', 'menuRaiz', '<i class="fas fa-edit d-none d-sm-inline"></i>', 'Menu', 'cadastros', '_Cadastros', "2");
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Lançamentos', 'menuLancamentos', 'menuRaiz', '<i class="fas fa-shopping-cart d-none d-sm-inline"></i>', 'Menu', 'lancamentos', '_Lancamentos', "3");
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Relatórios', 'menuRelatorio', 'menuRaiz', '<i class="fas fa-file-invoice d-none d-sm-inline"></i>', 'Menu', 'relatorios', '_Relatorios', "4");
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Configurações', 'menuConfiguracoes', 'menuRaiz', '<i class="fas fa-cog d-none d-sm-inline"></i>', 'Menu', 'configuracoes', '_Configuracoes', "9999");
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Pessoas', 'pessoas_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('pessoas_grava.php', 'pessoas_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Produtos', 'produtos_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('produtos_grava.php', 'produtos_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Cidades', 'cidades_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('cidades_grava.php', 'cidades_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Grupos', 'grupos_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('grupos_grava.php', 'grupos_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Sub Grupos', 'sub_grupos_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('sub_grupos_grava.php', 'sub_grupos_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Unidades', 'unidades_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('unidades_grava.php', 'unidades_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Meio de Pagamento', 'meio_pagto_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('meio_pagto_grava.php', 'meio_pagto_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Forma de Pagamento', 'forma_pagto_edita.php', 'menu', '', 'Cadastros', 'cadastros', '_Cadastros', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('forma_pagto_grava.php', 'forma_pagto_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Parametros', 'parametros.php', 'menu', '', 'Sistema', 'configuracoes', '_Configuracoes', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('parametros_grava.php', 'parametros_grava.php', 'programa', '', 'Sistema', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Versão Atualização', 'versao_atualizacao.php', 'menu', '', 'Sistema', 'configuracoes', '_Configuracoes', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('versao_atualizacao_grava.php', 'versao_atualizacao_grava.php', 'programa', '', 'Sistema', NULL, '', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('Produção', 'producao_edita.php', 'menu', '', 'Lançamentos', 'lancamentos', '_Lancamentos', NULL);
+INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `prog_tipo_origem`, `prog_tipo_menu`, `prog_raiz`, `prog_posicao`) VALUES ('producao_grava.php', 'producao_grava.php', 'programa', '', 'Cadastros', NULL, '', NULL);
 
 --
 -- Criação da Tabela Grupo de acessos
@@ -75,10 +79,7 @@ INSERT INTO `programas` (`prog_nome`, `prog_file`, `prog_tipo`, `prog_imagem`, `
 CREATE TABLE IF NOT EXISTS grupos_acessos(
 						idgrupos_acessos int(11) NOT NULL AUTO_INCREMENT,
 						grac_nome varchar(255) NOT NULL,
-            grac_menu_cadastros text NULL,
-            grac_menu_configuracoes text NULL,
-            grac_menu_lancamentos text NULL,
-            grac_menu_inicio text NULL,
+            grac_menu text NULL,
 						PRIMARY KEY (idgrupos_acessos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

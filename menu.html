@@ -1,36 +1,20 @@
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu" aria-expanded="false">
-            <span class="sr-only"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a href="../_Inicio/inicio.php"><img src="../imagens/##imgLogo##" class="img-rounded" width='60px' height='50px' style="padding-right: 5px;"></a>
-        </div>
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-        <div class="collapse navbar-collapse" id="menu">
-          <ul class="nav navbar-nav">
-            <li ##inicio##><a href="../_Inicio/inicio.php">Inicio</a></li>
-            <li ##cadastros##><a href="../_Cadastros/cadastros_index.php">Cadastros</a></li>
-            <li ##lancamentos##><a href="../_Lancamentos/lancamentos_index.php">Lançamentos</a></li>
-            <li ##relatorios## title="Em desenvolvimento..."><a style="cursor: no-drop;" href="#">Relatorios</a></li> 
-          </ul>
-          <form class="navbar-form navbar-right" action="../_BD/conecta_login.php" method="post">
-            <div align="Right">
-              <span class="dropdown hidden-xs" style="margin-right: 5px;">
-                <span class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer;"><img src='../icones/configuracoes.png' width='20px' height='20px'></span>
-                ##opcoesConfig##
-              </span>
-              <span class="dropup visible-xs" style="margin-right: 5px;">
-                <span class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer; margin-top: 7px; float: left;"><img src='../icones/configuracoes.png' width='20px' height='20px'></span>
-                ##opcoesConfig##
-              </span>
-              <span style='cursor: default;'><img src='../icones/pessoas.png' width='20px' height='20px'> ##NomeUsuario## &nbsp;&nbsp;</span>  
-              <input type="submit" name="operacao" class="btn btn-default" value="Sair">
-            </div>
-          </form>
-        </div>
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../_Inicio/inicio.php">
+          <div class="sidebar-brand-icon rotate-n-15">
+            <img src="../imagens/##imgLogo##" class="img-rounded" width='60px' height='50px' style="padding-right: 5px;">
+          </div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+      ##opcoesMenuGrupo##
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+          <button class="rounded-circle border-0" id="sidebarToggle" onclick="escondeExibeMenu()"></button>
       </div>
-    </div>
+  </ul>

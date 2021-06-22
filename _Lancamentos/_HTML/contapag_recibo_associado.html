@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>##nomeSistema##</title>
 
-     ##includes##
+     ##includesRelatorios##
   </head>
   <body onload="Javascript:window.print();">
     <div class="container">
-        <div class="row border" style="margin-bottom: 5px;">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 10px;">
+        <div class="row border border-dark text-dark mb-5">
+            <div class="col-md-12 col-sm-12 col-12 text-center p-3">
                 <img src="../imagens/##logoRelatorios##" class="pull-left" width="85px;">
                     ##nomeEmpresa## <br>
                     CNPJ: ##cnpjEmpresa## <br>
@@ -20,55 +20,150 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 5px;">
-                <p style="padding-top: 10rem; padding-bottom: 10rem;"> 
+            <div class="col-md-12 col-sm-12 col-12 text-center text-dark p-2" >
+                <p style="padding-top: 2rem;"> 
+                    <b>Recibo de Despesas de Prestação de Serviços</b>
+                </p>  
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-center text-dark p-2" >
+                <p> 
                     <b>##mesExtenso## de ##ano##</b>
                 </p>  
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 border" style="padding: 5px;">
-                Nome: ##pess_nome##
+            <div class="col-md-12 col-sm-12 col-12 text-center text-dark p-2" >
+                <p> 
+                    <b>##pess_nome##</b>
+                </p>  
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 border" style="padding: 5px;">
-                Endereço: ##pess_endereco##, ##pess_cidade## - ##pess_uf##, ##pess_cep##
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                MATERIAIS COMERCIALIZADO
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 border border-dark text-dark p-2" >
+                R$ ##vlr_bruto##
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                Setor: ##pess_setor##
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Complementação salarial
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                Função: ##pess_funcao##
+            <div class="col-md-6 col-sm-6 col-6 border border-bottom-0 border-top-0 border-dark text-dark p-2" >
+                R$ ##vlr_juros##
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                CPF: ##pess_cpf##
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                TOTAL DA RECEITA
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                RG: ##pess_rg##
-            </div>
-        </div>
-        <div class="row" style="margin-top: 5rem;">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">
-                <p>
-                    Por meio da presente, venho requerer minha inscrição como associado(a), na categoria acima descrita, da ##nomeEmpresa##, CNPJ ##cnpjEmpresa##.
-                </p>
-                <p>
-                    Ao assinar este instrumento, declaro esta ciente do inteiro teor do estatuto social da associação, bem como dos diretos e deveres impostos aos membros desta instituição.
-                </p>
+            <div class="col-md-6 col-sm-6 col-6 border border-dark text-dark p-2" >
+                R$ ##receita_total##
             </div>
         </div>
-        <div class="row" style="margin-top: 5rem;">
-            <div class="col-md-4 col-sm-4 col-xs-4 text-center" style="padding: 5px;">
-                _____________________________ <br>
-                    Assinatura do Associado
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-dark p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Falta
             </div>
-            <div class="col-md-8 col-sm-8 col-xs-8 text-right" style="padding: 5px;">
-                ___ de ___________ de ______, ##cidadeEmpresa## - ##ufEmpresa##
+            <div class="col-md-6 col-sm-6 col-6 border border-dark text-dark p-2" >
+                ##falta_dias## (R$ ##desconto_faltas##)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Adiantamento
+            </div>
+            <div class="col-md-6 col.-sm-6 col-6 text-dark border border-bottom-0 border-top-0 border-dark p-2" >
+                R$ ##vlr_adiantamento##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Desconto de Rateio - prensa/coleta/lider/estação
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-dark p-2" >
+                R$ -----
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                OUTROS
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-bottom-0 border-top-0 border-dark p-2" >
+                R$ -----
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Total de Despesas
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-dark p-2" >
+                R$ ##vlr_desconto##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Total de Receita
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-dark p-2" >
+                R$ ##receita_total##
+            </div>
+        </div><div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Total de Despesas
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-bottom-0 border-top-0 border-dark p-2" >
+                R$ ##vlr_desconto##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >
+                Total Liquido a Receber
+            </div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark border border-dark p-2" >
+                R$ ##vlr_liquido##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-dark p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-dark p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-dark p-2" >
+            Recebi da ##nomeEmpresa## a importância de R$ ##vlr_liquido## (##vlr_liquito_extenso##) ##msg_cesta_basica##referente a serviços prestados no mes de ##mesExtenso## de ##ano##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 text-dark p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2" >&nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2"  align="center">
+             ______________________________________________ <br> 
+             ##pess_nome##
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12 p-2" >&nbsp;</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-6 p-2" >&nbsp;</div>
+            <div class="col-md-6 col-sm-6 col-6 text-dark p-2"  align="center">
+                ##cidadeEmpresa##, ##diaAtual## de ##mesAtual## de ##anoAtual##
             </div>
         </div>
     </div>

@@ -21,18 +21,18 @@
   $escondeDivTelefone = "style='display: none;'";
   //
   $sql = "SELECT * FROM setores";
-  $comboBoxSetores = $html->criaSelectSql("set_nome", "idsetores", "pess_idsetores", $reg['pess_idsetores'], $sql, "form-control");
+  $comboBoxSetores = $html->criaSelectSql("set_nome", "idsetores", "pess_idsetores", $reg['pess_idsetores'], $sql, "form-control", "", true, "Selecione um Setor");
   //
   $sql = "SELECT * FROM funcoes";
-  $comboBoxFuncoes = $html->criaSelectSql("func_nome", "idfuncoes", "pess_idfuncoes", $reg['pess_idfuncoes'], $sql, "form-control");
+  $comboBoxFuncoes = $html->criaSelectSql("func_nome", "idfuncoes", "pess_idfuncoes", $reg['pess_idfuncoes'], $sql, "form-control", "", true, "Selecione uma Função");
   //
   if(!empty($reg['idpessoas'])){ 
-    $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;">';
-    $editaLogin .=  '&nbsp;<img src="../icones/cadeado.png">';
+    $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;color: #54565d;">';
+    $editaLogin .=  '&nbsp;<i class="fas fa-user-lock"></i>';
     $editaLogin .= '</span>';
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
-    $btnImprimir = '<button type="button" class="btn btn-warning" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
+    $btnImprimir = '<button type="button" class="btn btn-info" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
     //
     $checkCliente = $html->defineChecked($reg['pess_cliente']);
     $checkFornecedor = $html->defineChecked($reg['pess_fornecedor']);
@@ -49,6 +49,11 @@
     $sql = "SELECT * FROM grupos_acessos WHERE IFNULL(grac_inativo, 0) <> 1";
     $comboGruposAcessos = $html->criaSelectSql("grac_nome", "idgrupos_acessos", "pess_idgrupos_acessos", $reg['pess_idgrupos_acessos'], $sql, "form-control");
     //
+    if($reg['pess_inativo'] <> 'S'){
+      $btnAtivarInativar = "<button type='button' class='btn btn-warning' onclick=\"ativoInativo('S')\">Inativar</button>";
+    }else{
+      $btnAtivarInativar = "<button type='button' class='btn btn-default' onclick=\"ativoInativo('N')\">Ativar</button>";
+    }
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -85,6 +90,7 @@
   $html = str_replace("##pess_usuario##", $reg['pess_usuario'], $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnImprimir##", $btnImprimir, $html);
+  $html = str_replace("##btnAtivarInativar##", $btnAtivarInativar, $html);
   echo $html;
   exit;
 ?>

@@ -16,6 +16,7 @@
   //Gera o autoComplete 
   $autoComplete = new autoComplete();
   $codigo_js = $autoComplete->gerar("pdc_produtos", "pdc_idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%') AND prod_tipo_produto = 'Producao Propria'");
+  $codigo_campo = $autoComplete->criaCampos("pdc_produtos", "pdc_idprodutos", "Filtrar Produto");
   //
   //Monta variaveis de exibição
   $btnGravar = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
@@ -45,6 +46,7 @@
   $html = $html->buscaHtml("lancamentos", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
+  $html = str_replace("##autoComplete_CampoProduto##", $codigo_campo, $html);
   $html = str_replace("##id_cadastro##", $reg['idproducao'], $html);
   $html = str_replace("##pdc_situacao##", $pdc_situacao, $html);
   $html = str_replace("##pdc_data_abertura##", $util->convertData($reg['pdc_data_abertura']), $html);

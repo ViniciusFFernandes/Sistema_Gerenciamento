@@ -8,96 +8,101 @@
 
     ##includes##
     <script src="../js/_Configuracoes/versao_atualizacao.js"></script>
+    <script type="text/javascript">
+       window.setTimeout(function(){
+          document.getElementById("botao_alerta").click();
+       }, 3000);
+    </script>
   </head>
-  <body>
 
-    <div>
-     ##Menu##
-    </div>
-    <div class="row divMsg">
-      <div class="col-md-4 col-sm-1 col-xs-1"></div>
-      <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
-      <div class="col-md-4 col-sm-1 col-xs-1"></div>
-    </div>
-    <div class="container conteudo">
-      <div class="panel panel-default" style="border: solid 2px #828282; ">
-        <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
-          <div class="panel-title">
-            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico de atualizações" onclick="abrirHistoricoAtt()" data-toggle="modal" data-target="#historicoAtt"><img src="../icones/historico.png"></button>
-            <button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Baixar atualizações" onclick="baixarAtualizacao()" data-toggle="modal" data-target="#atualizacaoSistema"><img src="../icones/baixar_atualizacao.png"></button>
-            ##btnEnviarAtt##
-            Atualizações do sistema
+  <body id="page-top">
+    <div id="wrapper">
+      ##Menu##
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          ##topBar##
+          <div class="container-fluid">
+            <div class="card shadow mb-4 border-left-success">
+              <div class="card-header py-3">
+                  <button class="btn btn-light" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico de atualizações" onclick="abrirHistoricoAtt()" data-toggle="modal" data-target="#historicoAtt"><i class="fas fa-history"></i></button>
+                  <button class="btn btn-light" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Baixar atualizações" onclick="baixarAtualizacao()" data-toggle="modal" data-target="#atualizacaoSistema"><i class="fas fa-cloud-download-alt text-success"></i></button>
+                  ##btnEnviarAtt##
+                  <h6 class="m-0 font-weight-bold text-primary">Atualizações do sistema</h6>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-12">
+                    <label for="Sigla">Ultima Versão do Sistema</label>
+                    ##ultimaVersaoSistema##
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-12">
+                    <label for="Nome">Versão do Sistema</label>
+                    <span id="versaoAtualSistema">##versaoSistema##</span>
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-md-12 col-sm-12 col-12">
+                    <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
+                    <center id="btnAtualizar">
+                      ##btnAtualizar##
+                    </center>
+                  </div>
+                </div>
+                <div class="row" style="display: none;" id="relatorioAtualizacaoTitulo">
+                  <div class="col-md-12 col-sm-12 col-12"><b>Relatório da Atualização</b></div>
+                </div>
+                <div id="relatorioAtualizacao" style="display: none;"></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12" >
-                <label for="Sigla">Ultima Versão do Sistema</label>
-                ##ultimaVersaoSistema##
+
+
+          <!-- Modal -->
+          <div id="historicoAtt" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <!-- Modal content-->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h5 class="modal-title font-weight-bold text-primary">Historico de atualizações</h5>
+                </div>
+                <div class="card-body" >
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12" id="conteudoHistoricoAtt"></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <label for="Nome">Versão do Sistema</label>
-                <span id="versaoAtualSistema">##versaoSistema##</span>
+          </div>
+
+          <div id="atualizacaoSistema" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+              <!-- Modal content-->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <input type="hidden" id="sistemaAtualizou" value="">
+                  <button type="button" class="close" data-dismiss="modal" onclick="finalizaAtualizacao()">&times;</button>
+                  <h5 class="modal-title font-weight-bold text-primary">Atualização do Sistema</h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12" id="conteudoAtualizacao" align="center"></div>
+                  </div>
+                </div>
               </div>
             </div>
-            <br>
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-                <center id="btnAtualizar">
-                  ##btnAtualizar##
-                </center>
-              </div>
-            </div>
-            <div class="row" style="display: none;" id="relatorioAtualizacaoTitulo">
-              <div class="col-md-12 col-sm-12 col-xs-12"><b>Relatório da Atualização</b></div>
-            </div>
-            <div id="relatorioAtualizacao" style="display: none;"></div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
-
-
-    <!-- Modal -->
-    <div id="historicoAtt" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Historico de atualizações</h4>
-          </div>
-          <div class="modal-body" id="conteudoHistoricoAtt"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div id="atualizacaoSistema" class="modal fade" role="dialog">
-      <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-          <input type="hidden" id="sistemaAtualizou" value="">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" onclick="finalizaAtualizacao()">&times;</button>
-            <h4 class="modal-title">Atualização do Sistema</h4>
-          </div>
-          <div class="modal-body" id="conteudoAtualizacao" align="center"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="finalizaAtualizacao()">Fechar</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+  </a>
   </body>
 </html>
 

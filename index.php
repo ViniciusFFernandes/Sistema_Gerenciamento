@@ -11,6 +11,11 @@
     exit;
   }
   //
+  if(!realpath("privado/constantes.vf")){
+    header("Location: privado/_Constante/criaConstante_login.html");
+    exit;
+  }
+  //
   require_once("set_path.php");
   //
   require_once("privado/constantes.vf");

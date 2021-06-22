@@ -12,7 +12,7 @@
   //Monta variaveis de exibição
   //
   $sql = "SELECT * FROM bancos";
-  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "cc_idbancos", $reg['cc_idbancos'], $sql, "form-control");
+  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "cc_idbancos", $reg['cc_idbancos'], $sql, "form-control", "", true, "Selecione um Banco");
   //
   if(!empty($reg['idcc'])){ 
     //

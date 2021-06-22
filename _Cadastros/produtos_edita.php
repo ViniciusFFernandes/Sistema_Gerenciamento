@@ -26,19 +26,20 @@
   //
   //Monta variaveis de exibição
   $sql = "SELECT * FROM unidades";
-  $comboBoxUnidades = $html->criaSelectSql("uni_sigla", "idunidades", "prod_idunidades", $reg['prod_idunidades'], $sql, "form-control");
+  $comboBoxUnidades = $html->criaSelectSql("uni_sigla", "idunidades", "prod_idunidades", $reg['prod_idunidades'], $sql, "form-control", "", true, "Selecione a Unidade");
   //
   $sql = "SELECT * FROM grupos";
-  $comboBoxGrupos = $html->criaSelectSql("grup_nome", "idgrupos", "prod_idgrupos", $reg['prod_idgrupos'], $sql, "form-control");
+  $comboBoxGrupos = $html->criaSelectSql("grup_nome", "idgrupos", "prod_idgrupos", $reg['prod_idgrupos'], $sql, "form-control", "", true, "Selecione o Grupo");
   //
   $sql = "SELECT * FROM subgrupos";
-  $comboBoxSubGrupos = $html->criaSelectSql("subg_nome", "idsubgrupos", "prod_idsubgrupos", $reg['prod_idsubgrupos'], $sql, "form-control");
+  $comboBoxSubGrupos = $html->criaSelectSql("subg_nome", "idsubgrupos", "prod_idsubgrupos", $reg['prod_idsubgrupos'], $sql, "form-control", "", true, "Selecione o Sub Grupo");
+  //
+  $comboBoxTipo     = $html->defineSelected("", $reg['prod_tipo_produto']);
   //
   if(!empty($reg['idprodutos'])){ 
     //
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     //
-    $comboBoxTipo     = $html->defineSelected("", $reg['prod_tipo_produto']);
     $comboBoxTipoPR   = $html->defineSelected("Produto Revenda", $reg['prod_tipo_produto']);
     $comboBoxTipoMP   = $html->defineSelected("Materia Prima", $reg['prod_tipo_produto']);
     $comboBoxTipoPC   = $html->defineSelected("Produto para Consumo", $reg['prod_tipo_produto']);
@@ -54,13 +55,13 @@
     //
     //Carrega Tabs
     $tabs = '<ul class="nav nav-tabs">
-              <li class="active" ><a data-toggle="tab" href="#divVazia">-</a></li>';
+              <li class="nav-item" ><a class="nav-link active" data-toggle="tab" href="#divVazia">-</a></li>';
     if($reg['prod_tipo_produto'] == "Producao Propria"){          
-        $tabs .= '<li><a data-toggle="tab" href="#formula">Formula</a></li>';
+        $tabs .= '<li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#formula">Formula</a></li>';
             }
     $tabs .=  '</ul>';
     $tabs .= '<div class="tab-content">
-                <div id="divVazia" class="tab-pane fade "></div>';
+                <div id="divVazia" class="tab-pane fade"></div>';
     if($reg['prod_tipo_produto'] == "Producao Propria"){
        $tabs .= $produtos->getItensFormulaEdita($reg['idprodutos']);
     }

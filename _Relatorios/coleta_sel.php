@@ -1,0 +1,26 @@
+<?php
+  require_once("../_BD/conecta_login.php");
+  require_once("tabelas.class.php");
+  require_once("autoComplete.class.php");
+  //
+  //Gera o autoComplete 
+  $autoComplete = new autoComplete();
+  $codigo_js = $autoComplete->gerar("produtos", "idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%')");
+  $codigo_campo = $autoComplete->criaCampos("produtos", "idprodutos", "Filtrar Produto");
+  //
+  //
+  if (isset($_SESSION['mensagem'])) {
+    $msg = $html->mostraMensagem($_SESSION['tipoMsg'], $_SESSION['mensagem']);
+    unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
+  }
+  //
+  //Abre o arquivo html e Inclui mensagens e trechos php
+  $html = $html->buscaHtml("relatorios", $parametros);
+  $html = str_replace("##Mensagem##", $msg, $html);
+  $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
+  $html = str_replace("##autoComplete_CampoProduto##", $codigo_campo, $html);
+  $html = str_replace("##produtos##", "", $html);
+  $html = str_replace("##idprodutos##", "", $html);
+  echo $html;
+  exit;
+?>

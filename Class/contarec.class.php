@@ -131,23 +131,21 @@
 			$res = $this->db->consultar($sql);
 			foreach ($res as $reg) {
 				$hist .= '<div class="row">';
-					$hist .= '<div class="col-sm-12 col-xs-12">';
-						$hist .= '<div class="panel-group">';
-							$hist .= '<div class="panel panel-default">';
-                                $hist .= '<div class="panel-heading"><b>Operação: </b>' . $reg['crhi_operacao'] . '<span style="float: right;">' . $this->util->convertData($reg['crhi_data']) . '</span></div>';
-                                $hist .= '<div class="panel-body">';
-							        $hist .= '<div class="row">';
-							            $hist .= '<div style="padding: 10px;" class="col-sm-2 col-md-2 col-xs-6">Valor: ' . $this->util->formataMoeda($reg['crhi_valor']) . '</div>';
-							            $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Operador: ' . $this->db->retornaUmCampoID("pess_nome", "pessoas", $reg['crhi_idoperador']) . '</div>';
-                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Conta Bancária: ' . $this->db->retornaUmCampoID("cc_nome", "cc", $reg['crhi_idcc']) . '</div>';
-                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Meio de pagamento: ' . $this->db->retornaUmCampoID("mpag_nome", "meio_pagto", $reg['crhi_idmeio_pagto']) . '</div>';
-                                        if(strtotime($reg['crhi_data_pagto']) > 0){
-                                            $hist .= '<div style="padding: 10px;" class="col-sm-4 col-md-4 col-xs-6">Pagamento: ' . $this->util->convertData($reg['crhi_data_pagto']) . '</div>';
-                                        }
-                                    $hist .= '</div>';
-							    $hist .= '</div>';
-							$hist .= '</div>';
-						$hist .='</div>';
+					$hist .= '<div class="col-sm-12 col-12">';
+                        $hist .= '<div class="card shadow mb-4 border-left-primary">';
+                            $hist .= '<div class="card-header py-3"><b>Operação: </b>' . $reg['crhi_operacao'] . '<span style="float: right;">' . $this->util->convertData($reg['crhi_data']) . '</span></div>';
+                            $hist .= '<div class="card-body">';
+                                $hist .= '<div class="row">';
+                                    $hist .= '<div class="col-sm-2 col-md-2 col-6">Valor: ' . $this->util->formataMoeda($reg['crhi_valor']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6">Operador: ' . $this->db->retornaUmCampoID("pess_nome", "pessoas", $reg['crhi_idoperador']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6">Conta Bancária: ' . $this->db->retornaUmCampoID("cc_nome", "cc", $reg['crhi_idcc']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6">Meio de pagamento: ' . $this->db->retornaUmCampoID("mpag_nome", "meio_pagto", $reg['crhi_idmeio_pagto']) . '</div>';
+                                    if(strtotime($reg['crhi_data_pagto']) > 0){
+                                        $hist .= '<div class="col-sm-4 col-md-4 col-6">Pagamento: ' . $this->util->convertData($reg['crhi_data_pagto']) . '</div>';
+                                    }
+                                $hist .= '</div>';
+                            $hist .= '</div>';
+                        $hist .= '</div>';
 					$hist .= '</div>';
 				$hist .= '</div>';
 			}

@@ -9,12 +9,13 @@
 			$this->util = new Util();
 		}
 
-		public function criaSelectSql($campoMostra, $campoValue, $nameInput, $valueReg, $sql, $class = "", $js = "", $geraZero = true){
+		public function criaSelectSql($campoMostra, $campoValue, $nameInput, $valueReg, $sql, $class = "", $js = "", $geraZero = true, $valorPadraoZero = '---'){
 			//
 			$res = $this->db->consultar($sql);
 			//
 			$comboBox = "<select name='{$nameInput}' id='{$nameInput}' class='{$class}' {$js}>";
-				if($geraZero) $comboBox .= "<option value=''>---</option>";
+				if($valueReg == '' || $valueReg == 0) $selected  = "selected='selected'";
+				if($geraZero) $comboBox .= "<option value='' disabled hidden {$selected}>{$valorPadraoZero}</option>";
 				foreach ($res as $reg) {
 					$selected = "";
 					if($reg[$campoValue] == $valueReg) $selected  = "selected='selected'";
@@ -36,17 +37,19 @@
 				<title>' . NOME_SISTEMA . '</title>
 			</head>
 			<body>
-				<link rel="stylesheet" href="../css/bootstrap.min.css">
+				<link rel="stylesheet" href="../css/padrao.css">
 				<div class="row">
-					<div class="col-md-4 col-sm-1 col-xs-1"></div>
-					<div class="col-md-4 col-sm-10 col-xs-10">
-						<div class="panel panel-default">
-							<div class="panel-heading">Ops! Tivemos algum probleminha.</div>
-							<div class="panel-body">
-								<span style="color: red;">Mas não se desespere!</span><br>
+					<div class="col-md-4 col-sm-1 col-1"></div>
+					<div class="col-md-4 col-sm-10 col-10 mt-3">
+						<div class="card shadow mb-4 border-left-danger">
+							<div class="card-header py-3"> 
+								<h6 class="m-0 font-weight-bold text-primary">Ops! Parece que algo deu errado.</h6>
+							</div>	  
+							<div class="card-body">
+								<span class="font-weight-bold text-danger">Mas não se desespere!</span><br>
 								ERRO: ' . $mensagem . '
 							</div>
-							<div class="panel-footer">' ;
+							<div class="card-footer">' ;
 			if ($link != "") {
 				echo '<button class="btn btn-danger btn-lg" onclick="window.location.replace(\'' . $link . '\');">Voltar</button>';
 			}else{
@@ -55,7 +58,7 @@
 			echo	'</div>
 						</div>
 					</div>
-					<div class="col-md-4 col-sm-1 col-xs-1"></div>
+					<div class="col-md-4 col-sm-1 col-1"></div>
 				</div>
 				</body>
 			</html>
@@ -92,29 +95,17 @@
 
 		public function buscaHtml($btnMenu = ''){
 			$menu = file_get_contents('../menu.html');
+			$topBar = file_get_contents('../topBar.html');
 			//
-			$opcoes_config = file_get_contents('../menu__opcoes_config.html');
+			$topBar = str_replace("##NomeUsuario##", $_SESSION['user'], $topBar);
+			//
 			$includes = file_get_contents('../includes.html');
-			//
-			if ($btnMenu == "inicio"){
-				$busca = '##inicio##';
-			}elseif($btnMenu == "cadastros"){
-				$busca = '##cadastros##';
-			}elseif($btnMenu == "lancamentos"){
-				$busca = '##lancamentos##';
-			}elseif($btnMenu == "relatorios"){
-				$busca = '##relatorios##';
-			}elseif($btnMenu == "quemsomos"){
-				$busca = '##QuemSomos##';
-			}
-			//
-			$opcoesMenuConfig = $this->geraMenu($_SESSION['idgrupos_acessos'], 'configuracoes');
+			$includesRelatorios = file_get_contents('../includesRelatorios.html');
 			//
 			//Até o momento a pagina inicio não possui menu para gerar por tanto ignora
-			if(!empty($btnMenu) && $btnMenu != 'inicio') $opcoesMenu = $this->geraMenu($_SESSION['idgrupos_acessos'], $btnMenu);
+			if(!empty($btnMenu)) $opcoesMenu = $this->geraMenu($_SESSION['idgrupos_acessos']);
 			//
 			$menu = str_replace($busca, 'class="active"', $menu);
-			$menu = str_replace("##NomeUsuario##", $_SESSION['user'], $menu);
 			$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
 			$menu = str_replace("##imgLogo##", LOGO_EMPRESA, $menu);
 			$menu = str_replace("##opcoesConfigGrupo##", $opcoesMenuConfig, $menu);
@@ -123,81 +114,106 @@
 			$nomeArquivo = $nome[0] . ".html";
 			$html = file_get_contents("_HTML/" . $nomeArquivo);
 			$html = str_replace("##Menu##", $menu, $html);
+			$html = str_replace("##topBar##", $topBar, $html);
 			$html = str_replace("##opcoesMenuGrupo##", $opcoesMenu, $html);
 			$html = str_replace("##includes##", $includes, $html);
+			$html = str_replace("##includesRelatorios##", $includesRelatorios, $html);
 			$html = str_replace("##nomeSistema##", NOME_SISTEMA, $html);
 			//
 			return $html;
 		}
 
 		public function criaMenu($idgrupos_acessos = '', $tipo_menu = ''){
+
 			$sql = "SELECT * 
 					FROM grupos_acessos_programas 
 						JOIN programas ON (gap_idprogramas = idprogramas)
-					WHERE prog_tipo = 'menu'";
+					WHERE prog_tipo = 'menuRaiz'";
 			if(!empty($tipo_menu)){
 				$sql .= " AND prog_tipo_menu = " . $this->util->sgr($tipo_menu);
 			} 
 			if(!empty($idgrupos_acessos)){
 				$sql .= " AND gap_idgrupos_acessos = " . $this->util->igr($idgrupos_acessos);
 			} 
-			$sql .= " ORDER BY gap_idgrupos_acessos, prog_tipo_menu, prog_nome";
-			$res = $this->db->consultar($sql);
+			$sql .= " ORDER BY prog_posicao";
+			$resMenu = $this->db->consultar($sql);
 			//
-			$ultimoTipo = '###';
-			$primeiro = true;
-			$qteColunas = 0;
-			foreach($res as $reg){
-				if($ultimoTipo != $reg['prog_tipo_menu']){
-					if(!$primeiro && $ultimoTipo != '###'){
-						$sql = "UPDATE grupos_acessos SET grac_menu_{$ultimoTipo} = " . $this->util->sgr($menu) . " WHERE idgrupos_acessos = " . $idgrupos_acessos;
-						$this->db->executaSQL($sql);
-						if($this->db->erro()){
-							return false;
-						}
-					}
-					$menu = '';
-					$ultimoTipo = $reg['prog_tipo_menu'];
-					$idgrupos_acessos = $reg['gap_idgrupos_acessos'];
+			$menu = '';
+			//
+			foreach($resMenu as $regMenu){
+				if($regMenu['prog_tipo_menu'] == ''){
+					$menu .= '<li class="nav-item">
+										<a class="nav-link" href="#" onclick="direciona(\'../' . $regMenu['prog_raiz'] . '/' . $regMenu['prog_file'] . '\')">
+											' . $regMenu['prog_imagem'] . '
+											<span>' . $regMenu['prog_nome'] . '</span>
+										</a>
+									</li>';
+				}else{
+					$sql = "SELECT * 
+							FROM grupos_acessos_programas 
+								JOIN programas ON (gap_idprogramas = idprogramas)
+							WHERE prog_tipo = 'menu'
+								AND prog_tipo_menu = " . $this->util->sgr($regMenu['prog_tipo_menu']);
+					if(!empty($idgrupos_acessos)){
+						$sql .= " AND gap_idgrupos_acessos = " . $this->util->igr($idgrupos_acessos);
+					} 
+					$sql .= " ORDER BY gap_idgrupos_acessos, prog_tipo_menu, prog_nome";
+					$res = $this->db->consultar($sql);
+					//
+					$ultimoTipo = '###';
+					$primeiro = true;
 					$qteColunas = 0;
-				}
-
-				if($reg['gap_executa'] == 1 || $reg['gap_idgrupos_acessos'] == 1){
-					if($reg['prog_tipo_menu'] != "configuracoes"){
-						if($qteColunas == 4){
-							$menu .= '<div class="clearfix"></div>';
+					foreach($res as $reg){
+						if($ultimoTipo != $reg['prog_tipo_menu']){
+							if(!$primeiro && $ultimoTipo != '###'){
+								$menu .= '		</div>
+											</div>
+										</li>';
+							}
+							$ultimoTipo = $reg['prog_tipo_menu'];
+							$idgrupos_acessos = $reg['gap_idgrupos_acessos'];
 							$qteColunas = 0;
+							$menu .= ' <li class="nav-item">
+										<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_' . $regMenu['prog_tipo_menu'] . '"
+											aria-expanded="true" aria-controls="collapse_' . $regMenu['prog_tipo_menu'] . '">
+											' . $regMenu['prog_imagem'] . '
+											<span>' . $regMenu['prog_nome'] . '</span>
+										</a>
+										<div id="collapse_' . $regMenu['prog_tipo_menu'] . '" class="collapse" aria-labelledby="headingUtilities"
+											data-parent="#accordionSidebar">
+											<div class="bg-white py-2 collapse-inner rounded">';
 						}
-						$menu .= '<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 " id="divLink"  onclick="direciona(\''. $reg['prog_file'] . '\')">
-									<img src="../icones/' . $reg['prog_imagem'] . '"> &nbsp; ' . $reg['prog_nome'] . '
-								</div>';
-						$qteColunas ++;
-					}else{
-						$menu .= '<li><a href="../_Configuracoes/' . $reg['prog_file'] . '">' . $reg['prog_nome'] . '</a></li>';
-					}			
+
+						if($reg['gap_executa'] == 1 || $reg['gap_idgrupos_acessos'] == 1){
+								$menu .= '<a class="collapse-item" href="#" onclick="direciona(\'../' . $reg['prog_raiz'] . '/' . $reg['prog_file'] . '\')">' . $reg['prog_nome'] . '</a>';
+						}
+						$primeiro = false;
+					}
+					if($ultimoTipo != '###'){
+						$menu .= '		</div>
+									</div>
+								</li>';
+					}
 				}
-				$primeiro = false;
 			}
-			if($ultimoTipo != '###'){
-				$sql = "UPDATE grupos_acessos SET grac_menu_{$ultimoTipo} = " . $this->util->sgr($menu) . " WHERE idgrupos_acessos = " . $idgrupos_acessos;
-				$this->db->executaSQL($sql);
-				if($this->db->erro()){
-					return false;
-				}
+			$sql = "UPDATE grupos_acessos SET grac_menu = " . $this->util->sgr($menu) . " WHERE idgrupos_acessos = " . $idgrupos_acessos;
+			$this->db->executaSQL($sql);
+			if($this->db->erro()){
+				return false;
 			}
 			return true;
 		}
 
-		public function geraMenu($idgrupos_acessos, $tipo_menu = ''){
-			$sql = "SELECT grac_menu_{$tipo_menu} AS menu FROM grupos_acessos WHERE idgrupos_acessos = " . $idgrupos_acessos;
+		public function geraMenu($idgrupos_acessos){
+			$sql = "SELECT grac_menu AS menu FROM grupos_acessos WHERE idgrupos_acessos = " . $idgrupos_acessos;
 			$menu = $this->db->retornaUmCampoSql($sql, "menu");
 			if(is_null($menu)){
-				if($this->criaMenu($idgrupos_acessos, $tipo_menu)){
-					$this->geraMenu($idgrupos_acessos, $tipo_menu);
+				if($this->criaMenu($idgrupos_acessos)){
+					$this->geraMenu($idgrupos_acessos);
 				}
 			}else{
 				if(empty($menu)){
-					return "<center><b style='color: #ac2925;'>Permissão negada!</b></center>";
+					return "<center><b style='color: #ac2925;'>Permissão negada!</b><br>Contate um administrador do sistema.</center>";
 				}else{
 					return $menu;
 				}

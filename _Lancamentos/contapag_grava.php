@@ -86,6 +86,12 @@ $paginaRetorno = 'contapag_edita.php';
     $contapag = New Contapag($db);
     $contapag->gerarHistorio($id, $operacaoHistorioco, $_POST['ctpg_vlr_bruto'], $_SESSION['idusuario'], '', $_POST['ctpg_idmeio_pagto'], $_POST['ctpg_idcc']);
     //
+    //
+    $contaQuitada = false;
+    if($db->retornaUmCampoID("tico_tipo_salario", "tipo_contas", $_POST['ctpg_idtipo_contas']) == 'SIM'  && $parametros->buscaValor("sistema: recalcula contas tipo salario") == 'SIM' && $db->retornaUmCampoID("ctpg_recalculou", "contapag", $id) != 'SIM'){
+      $contapag->attContaSalario($id, $_POST['ctpg_idcliente'], $_POST['ctpg_idmeio_pagto'], $_POST['ctpg_idcc']);
+    }
+    //
     if($_POST['ctpg_a_vista'] == 'SIM' && $parametros->buscaValor("sistema: incluir contas a vista já quitadas") == 'SIM'){
       if($_POST['ctpg_idcc'] <= 0){
         $html->mostraErro("Selecione a conta bancária!");
@@ -103,53 +109,22 @@ $paginaRetorno = 'contapag_edita.php';
       $dados['id']                  = $id;
       $dados['ctpg_vencimento'] 	= $util->dgr(date("d/m/Y"));
       //
-      $db->gravarInserir($dados, true);
+      $db->gravarInserir($dados, false);
       //
-      // $multa = 0;
-      // $desconto = 0;
-      // if($contaSalario && $db->retornaUmCampoID("ctpg_recalculou", "contapag", $id) != 'SIM'){
-      //   $sql = "SELECT * 
-      //           FROM contapag 
-      //             JOIN tipo_contas ON (ctpg_idtipo_contas = idtipo_contas)
-      //           WHERE IFNULL(ctpg_processou, '') <> 'SIM'
-      //           AND (IFNULL(tico_tipo_extra, '') = 'SIM'
-      //           OR IFNULL(tico_tipo_vale, '') = 'SIM')
-      //           AND ctpg_idcliente = " . $_POST['ctpg_idcliente'];
-      //   $res = $db->consultar($sql);
-      //   foreach($res as $reg){
-      //     //
-      //     if($reg['ctpg_situacao'] == 'Pendente' || $reg['ctpg_situacao'] == 'QParcial'){
-      //       if($reg['tico_tipo_extra'] == 'SIM'){
-      //         $multa += $reg['ctpg_vlr_liquido'];
-      //       }
-      //       $desconto += $reg['ctpg_vlr_pago'];
-      //       $ctpg_situacao = 'QSistema';
-      //       $contapag->gerarHistorio($id, "BaixaSistema", $reg['ctpg_vlr_devedor'], $_SESSION['idusuario'], date('d/m/Y'), $_POST['ctpg_idmeio_pagto'], $_POST['ctpg_idcc']);
-      //     }elseif($reg['ctpg_situacao'] == 'Quitada'){
-      //       if($reg['tico_tipo_extra'] == 'SIM'){
-      //         $multa += $reg['ctpg_vlr_liquido'];
-      //       }
-      //       $desconto += $reg['ctpg_vlr_pago'];
-      //       $ctpg_situacao = $reg['ctpg_situacao'];
-      //     }else{
-      //       continue;
-      //     }
-      //     //
-      //     $db->setTabela("contapag", "idcontapag");
-      //     //
-      //     unset($dados);
-      //     $dados['id']                = $reg['idcontapag'];
-      //     $dados['ctpg_processou']  	= $util->sgr("SIM");
-      //     $dados['ctpg_situacao']  	  = $util->sgr($ctpg_situacao);
-      //     $dados['ctpg_vlr_pago']  	  = "ctpg_vlr_pago + " . $util->vgr();
-      //     //
-      //     $db->gravarInserir($dados, true);
-      //   }
-      // }
-      //
-      $valorPago = $_POST['ctpg_vlr_bruto'] + $_POST['ctpg_vlr_juros'] - $_POST['ctpg_vlr_desconto'];
+      $valorPago = $db->retornaUmCampoID("(ctpg_vlr_bruto + ctpg_vlr_juros) - ctpg_vlr_desconto", "contapag", $id);
       //
       $contapag->baixaConta($id, $valorPago, 0, 0, $_POST['ctpg_idcc'], $_POST['ctpg_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
+      //
+      $contaQuitada = true;
+    }
+
+    if($parametros->buscaValor("sistema: incluir contas do tipo salario já quitadas") == 'SIM' && !$contaQuitada && $db->retornaUmCampoID("tico_tipo_salario", "tipo_contas", $_POST['ctpg_idtipo_contas']) == 'SIM'){
+      //
+      $valorPago = $db->retornaUmCampoID("(ctpg_vlr_bruto + ctpg_vlr_juros) - ctpg_vlr_desconto", "contapag", $id);
+      //
+      $contapag->baixaConta($id, $valorPago, 0, 0, $_POST['ctpg_idcc'], $_POST['ctpg_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
+      //
+      $contaQuitada = true;
     }
     //
     $db->commit();
@@ -159,6 +134,12 @@ $paginaRetorno = 'contapag_edita.php';
   }
 
   if ($_POST['operacao'] == 'reabrir'){
+    //
+    if($db->retornaUmCampoID("ctpg_processou", "contapag", $_POST['id_cadastro']) == 'SIM'){
+      $html->mostraErro("Está conta não pode ser reaberta, está ligada a uma conta salario<br>Operação cancelada!");
+      exit;
+    }
+    //
     $contapag = New Contapag($db);
     $contapag->reabrirConta($_POST['id_cadastro'], $_SESSION['idusuario']);
     //
@@ -168,10 +149,18 @@ $paginaRetorno = 'contapag_edita.php';
 
   if ($_POST['operacao'] == "excluiCad") {
     //
+    $situacao = $db->retornaUmCampoID('ctpg_stituacao', 'contapag', $_POST['id_cadastro']);
+    if($situacao == 'Quitada' || $situacao == 'QParcial'){
+      $html->mostraErro("Está conta já esta paga e não pode ser excluida!<br>Operação cancelada!");
+      $db->rollBack();
+      exit;
+    }
+    //
     $db->setTabela("contapag_hist", "cphi_idcontapag");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
       $html->mostraErro("Erro ao excluir o historico da conta<br>Operação cancelada!");
+      $db->rollBack();
       exit;
     }
     //
@@ -179,6 +168,7 @@ $paginaRetorno = 'contapag_edita.php';
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
         $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
+        $db->rollBack();
         exit;
     }
     header('location:../_Lancamentos/' . $paginaRetorno);

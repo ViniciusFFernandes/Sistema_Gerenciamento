@@ -11,7 +11,14 @@ $(document).ready(function(){
 });
 
 function testaDados(operacao){
-    chamaGravar(operacao);
+    if(operacao == 'reabrir'){
+        var titulo = "<b>Deseja reabrir os salários?</b>";
+        var msg = "<b style='color: red;'>Atenção:</b> Não aconselhamos está ação, todas as contas referentes aos salários serão excluidas!";
+        confirmar(msg, titulo, "chamaGravar('" + operacao + "');", "tada");    
+    }else{
+        chamaGravar(operacao);
+    }
+    
 }
 
 function excluirFuncionario(idsalarios_funcionarios){
@@ -27,4 +34,23 @@ function excluirFuncionario(idsalarios_funcionarios){
                 $("#btnExcluir_" + idsalarios_funcionarios).html('<img src="../icones/excluir2.png" width="15px;">');
             }
         }, "html");
+}
+
+function gravaDadosSalarios(idsalarios_funcionarios){
+    $("#spanAtt_" + idsalarios_funcionarios).html('<img src="../icones/carregando.gif" width="15px;">');
+    //
+    var faltas = $("#safu_dias_" + idsalarios_funcionarios).val();
+    var valor = $("#safu_total_" + idsalarios_funcionarios).val();;
+    //
+    $.post("salarios_grava.php",
+        {operacao: "gravaDadosSalario", idsalarios_funcionarios: idsalarios_funcionarios, safu_dias: faltas, safu_total: valor},
+        function(data){
+            if(data == 'Ok'){
+                $("#spanAtt_" + idsalarios_funcionarios).html('<font color="#32CD32"><b>Ok</b></font>');
+            }else{
+                //alertaPequeno(data);
+                $("#spanAtt_" + idsalarios_funcionarios).html('<font color="red"><b>Erro</b></font>');
+            }
+        }, "html");
+    //
 }

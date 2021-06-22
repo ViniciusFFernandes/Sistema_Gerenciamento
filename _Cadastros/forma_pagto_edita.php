@@ -11,8 +11,8 @@
   }
   //
   //Monta variaveis de exibição
+  $comboBoxTipo     = $html->defineSelected("", $reg['forp_tipo']);
   if(!empty($reg['idforma_pagto'])){ 
-    $comboBoxTipo     = $html->defineSelected("", $reg['forp_tipo']);
     $comboBoxTipoAV   = $html->defineSelected("A Vista", $reg['forp_tipo']);
     $comboBoxTipoMCE  = $html->defineSelected("Mensal com Entrada", $reg['forp_tipo']);
     $comboBoxTipoMSE  = $html->defineSelected("Mensal sem Entrada", $reg['forp_tipo']);

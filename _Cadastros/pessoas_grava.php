@@ -29,6 +29,13 @@ $paginaRetorno = 'pessoas_edita.php';
   }
 
   if ($_POST['operacao'] == "gravaTelefones") {
+    if($db->retornaUmCampoID("pess_inativo", "pessoas", $_POST['id_cadastro']) == 'S'){
+      $dados['retorno'] = "erro";
+      $dados['msg'] = "Você não pode alterar os dados de uma pessoa invativa\nOperação cancelada!";
+      echo json_encode($dados);
+      exit;
+    }
+    //
     $db->setTabela("pessoas_numeros", "idpessoas_numeros");
     $dados['pnum_idpessoas']        = $util->sgr($_POST['idpessoas']);
     $dados['pnum_DDD']              = $util->sgr($_POST['pnum_DDD']);
@@ -80,6 +87,12 @@ $paginaRetorno = 'pessoas_edita.php';
   }
 
   if ($_POST['operacao'] == 'gravaLogin'){
+    if($db->retornaUmCampoID("pess_inativo", "pessoas", $_POST['id_cadastro']) == 'S'){
+      $dados['retorno'] = "erro";
+      $dados['msg'] = "Você não pode alterar os dados de uma pessoa invativa\nOperação cancelada!";
+      echo json_encode($dados);
+      exit;
+    }
     if($_POST['pess_idgrupos_acessos'] == 1){
       unset($dados);
       $dados['retorno'] = "erro";
@@ -110,6 +123,12 @@ $paginaRetorno = 'pessoas_edita.php';
     }
 
   if ($_POST['operacao'] == 'gravar'){
+    //
+    if($db->retornaUmCampoID("pess_inativo", "pessoas", $_POST['id_cadastro']) == 'S'){
+      mostraErro("Você não pode alterar os dados de uma pessoa invativa<br>Operação cancelada!");
+      exit;
+    }
+    //
   	$db->setTabela("pessoas", "idpessoas");
 
     $dados['id']                     = $_POST['id_cadastro'];
@@ -138,6 +157,15 @@ $paginaRetorno = 'pessoas_edita.php';
     }
     header('location:../_Cadastros/' . $paginaRetorno . '?id_cadastro=' . $id);
     exit;
+}
+
+if($_POST['operacao'] == "inativaAtivaPessoa"){
+  $db->setTabela("pessoas", "idpessoas");
+
+  $dados['id']                     = $_POST['idpessoas'];
+  $dados['pess_inativo'] 		     = $util->sgr($_POST['pess_inativo']);
+
+  $db->gravarInserir($dados, false);
 }
 
 if ($_POST['operacao'] == "excluiCad") {

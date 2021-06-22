@@ -20,6 +20,72 @@
 			$this->cc = new cc($db);
 		}
 
+        public function attContaSalario($idcontapag, $idcliente, $idmeiopagto, $idcc, $mes = '', $ano = ''){
+            if(empty($mes) || empty($ano)){
+                $sql = "SELECT MONTH(ctpg_vencimento) AS mes, 
+                            YEAR(ctpg_vencimento) AS ano 
+                        FROM contapag
+                        WHERE idcontapag = " . $idcontapag;
+                $datasConta = $this->db->retornaUmReg($sql);
+                //
+                $mes = $datasConta['mes'];
+                $ano = $datasConta['ano'];
+                //
+            }
+            $multa = 0;
+            $desconto = 0;
+            $sql = "SELECT * 
+                    FROM contapag 
+                        JOIN tipo_contas ON (ctpg_idtipo_contas = idtipo_contas)
+                    WHERE IFNULL(ctpg_processou, '') <> 'SIM'
+                    AND (IFNULL(tico_tipo_extra, '') = 'SIM'
+                    OR IFNULL(tico_tipo_vale, '') = 'SIM')
+                    AND MONTH(ctpg_vencimento) = {$mes}
+                    AND YEAR(ctpg_vencimento) = {$ano}
+                    AND ctpg_idcliente = " . $idcliente;
+            $res = $this->db->consultar($sql);
+            foreach($res as $reg){
+                //
+                if($reg['ctpg_situacao'] == 'Pendente' || $reg['ctpg_situacao'] == 'QParcial'){
+                if($reg['tico_tipo_extra'] == 'SIM'){
+                    $multa += $reg['ctpg_vlr_liquido'];
+                }
+                $desconto += $reg['ctpg_vlr_pago'];
+                $ctpg_situacao = 'QSistema';
+                $this->gerarHistorio($reg['idcontapag'], "BaixaSistema", $reg['ctpg_vlr_devedor'], $_SESSION['idusuario'], date('d/m/Y'), $idmeiopagto, $idcc);
+                }elseif($reg['ctpg_situacao'] == 'Quitada'){
+                if($reg['tico_tipo_extra'] == 'SIM'){
+                    $multa += $reg['ctpg_vlr_liquido'];
+                }
+                $desconto += $reg['ctpg_vlr_pago'];
+                $ctpg_situacao = $reg['ctpg_situacao'];
+                }else{
+                continue;
+                }
+                //
+                $this->db->setTabela("contapag", "idcontapag");
+                //
+                unset($dados);
+                $dados['id']                        = $reg['idcontapag'];
+                $dados['ctpg_processou']  	        = $this->util->sgr("SIM");
+                $dados['ctpg_situacao']  	        = $this->util->sgr($ctpg_situacao);
+                $dados['ctpg_vlr_pago']  	        = "ctpg_vlr_pago + " . $reg['ctpg_vlr_devedor'];
+                $dados['ctpg_idconta_salario']  	= $idcontapag;
+                //
+                $this->db->gravarInserir($dados, false);
+            }
+            //
+            $this->db->setTabela("contapag", "idcontapag");
+            //
+            unset($dados);
+            $dados['id']                = $idcontapag;
+            $dados['ctpg_recalculou']  	= $this->util->sgr("SIM");
+            $dados['ctpg_vlr_juros']  	= "ctpg_vlr_juros + " . $multa;
+            $dados['ctpg_vlr_desconto']  	= "ctpg_vlr_desconto + " . $desconto;
+            //
+            $this->db->gravarInserir($dados, false);
+        }
+
         public function gerarHistorio($idconta, $operacao, $valor, $idoperador, $data = '', $idmeio_pagto = '', $idcc = ''){
             $this->db->setTabela("contapag_hist", "idcontapag_hist");
             //
@@ -38,6 +104,9 @@
         }
 
         public function baixaConta($idconta, $valor, $multa, $desconto, $idcc, $idmeio_pagto, $data, $idoperador){
+            //
+            $valor = $this->util->vgr($valor);
+            //
             $sql = "SELECT * FROM contapag WHERE idcontapag = " . $idconta;
             $reg = $this->db->retornaUmReg($sql);
             //
@@ -131,23 +200,21 @@
 			$res = $this->db->consultar($sql);
 			foreach ($res as $reg) {
 				$hist .= '<div class="row">';
-					$hist .= '<div class="col-sm-12 col-xs-12">';
-						$hist .= '<div class="panel-group">';
-							$hist .= '<div class="panel panel-default">';
-                                $hist .= '<div class="panel-heading"><b>Operação: </b>' . $reg['cphi_operacao'] . '<span style="float: right;">' . $this->util->convertData($reg['cphi_data']) . '</span></div>';
-                                $hist .= '<div class="panel-body">';
-							        $hist .= '<div class="row">';
-							            $hist .= '<div style="padding: 10px;" class="col-sm-2 col-md-2 col-xs-6">Valor: ' . $this->util->formataMoeda($reg['cphi_valor']) . '</div>';
-							            $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Operador: ' . $this->db->retornaUmCampoID("pess_nome", "pessoas", $reg['cphi_idoperador']) . '</div>';
-                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Conta Bancária: ' . $this->db->retornaUmCampoID("cc_nome", "cc", $reg['cphi_idcc']) . '</div>';
-                                        $hist .= '<div style="padding: 10px;" class="col-sm-3 col-md-3 col-xs-6">Meio de pagamento: ' . $this->db->retornaUmCampoID("mpag_nome", "meio_pagto", $reg['cphi_idmeio_pagto']) . '</div>';
-                                        if(strtotime($reg['cphi_data_pagto']) > 0){
-                                            $hist .= '<div style="padding: 10px;" class="col-sm-4 col-md-4 col-xs-6">Pagamento: ' . $this->util->convertData($reg['cphi_data_pagto']) . '</div>';
-                                        }
-                                    $hist .= '</div>';
-							    $hist .= '</div>';
-							$hist .= '</div>';
-						$hist .='</div>';
+					$hist .= '<div class="col-sm-12 col-12 pb-3">';
+                        $hist .= '<div class="card shadow mb-4 border-left-primary">';
+                            $hist .= '<div class="card-header py-3"><b>Operação: </b>' . $reg['cphi_operacao'] . '<span style="float: right;">' . $this->util->convertData($reg['cphi_data']) . '</span></div>';
+                            $hist .= '<div class="card-body">';
+                                $hist .= '<div class="row">';
+                                    $hist .= '<div class="col-sm-2 col-md-2 col-6 pb-3">Valor: ' . $this->util->formataMoeda($reg['cphi_valor']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6 pb-3">Operador: ' . $this->db->retornaUmCampoID("pess_nome", "pessoas", $reg['cphi_idoperador']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6 pb-3">Conta Bancária: ' . $this->db->retornaUmCampoID("cc_nome", "cc", $reg['cphi_idcc']) . '</div>';
+                                    $hist .= '<div class="col-sm-3 col-md-3 col-6 pb-3">Meio de pagamento: ' . $this->db->retornaUmCampoID("mpag_nome", "meio_pagto", $reg['cphi_idmeio_pagto']) . '</div>';
+                                    if(strtotime($reg['cphi_data_pagto']) > 0){
+                                        $hist .= '<div class="col-sm-4 col-md-4 col-6 pb-3">Pagamento: ' . $this->util->convertData($reg['cphi_data_pagto']) . '</div>';
+                                    }
+                                $hist .= '</div>';
+                            $hist .= '</div>';
+                        $hist .= '</div>';
 					$hist .= '</div>';
 				$hist .= '</div>';
 			}

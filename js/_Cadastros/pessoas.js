@@ -189,6 +189,23 @@ function buscaTelefones(){
   }, 'HTML');
 }
 
+function ativoInativo(status){
+  // $("#divTelefone").html('<center><img src="../icones/carregando.gif" width="15px"><center>')
+  var _idpessoas = $("#id_cadastro").val();
+  if (_idpessoas == "") {
+    return;
+  }
+  $.post("pessoas_grava.php",
+  {operacao: "inativaAtivaPessoa", idpessoas: _idpessoas, pess_inativo: status},
+  function(result){
+      if(status != 'S'){
+        $("#btnAtivarInativar").html("<button type='button' class='btn btn-warning' onclick=\"ativoInativo('S')\">Inativar</button>");
+      }else{
+        $("#btnAtivarInativar").html("<button type='button' class='btn btn-default' onclick=\"ativoInativo('N')\">Ativar</button>");
+      }
+  }, 'HTML');
+}
+
 function adicionaTelefone(){
   $("#pnum_DDD").prop("disabled", true);
   $("#pnum_numero").prop("disabled", true);
@@ -203,15 +220,20 @@ function adicionaTelefone(){
   var _pnum_numero = $("#pnum_numero").val();
   $.post("pessoas_grava.php",
   {operacao: "gravaTelefones", idpessoas: _idpessoas, pnum_DDD: _pnum_DDD, pnum_numero: _pnum_numero},
-  function(result){
+  function(data){
     $("#pnum_DDD").val("");
     $("#pnum_numero").val("");
     $("#pnum_DDD").prop("disabled", false);
     $("#pnum_numero").prop("disabled", false);
     $("#btnAddTelefone").html('<img src="../icones/adiciona.png" onclick="adicionaTelefone()">')
-    buscaTelefones();
+    if(data.retorno == 'erro'){
+      alertaPequeno(data.msg);
+      return;
+    }else{
+      buscaTelefones();
+    }
     //alert(result);
-  });
+  }, "json");
 }
       
 function excluirTelefone(idtelefone){

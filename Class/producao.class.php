@@ -11,8 +11,8 @@ class producao{
 
 	public function getItensProducao($idproducao){
 		$itensProducao = '<div class="row" id="formulaItens">
-						<label style="margin-left: 15px;">Itens a serem consumidos</label>
-				          <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12" id="tableitensProducao">';
+							<label style="margin-left: 15px;">Itens a serem consumidos</label>
+				          <div class="col-12 col-md-12 col-sm-12 col-lg-12" id="tableitensProducao">';
 	    $itensProducao .= $this->tabelaItens($idproducao);
 	    $itensProducao .= '</div>';
 	    $itensProducao .= '</div>';

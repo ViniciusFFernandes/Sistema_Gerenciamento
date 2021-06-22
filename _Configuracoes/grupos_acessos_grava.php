@@ -48,7 +48,7 @@
       $sql = "SELECT * FROM grupos_acessos_programas JOIN programas ON (gap_idprogramas = idprogramas) WHERE idgrupos_acessos_programas = " . $_POST['idgrupos_acessos_programas'];
       $reg = $db->retornaUmReg($sql);
       if($reg['prog_tipo'] == 'menu'){
-        $ret = $html->criaMenu($reg['gap_idgrupos_acessos'], $reg['prog_tipo_menu']);
+        $ret = $html->criaMenu($reg['gap_idgrupos_acessos']);
         if(!$ret){
           // $db->rollBack();
           $dados['retorno'] = 'erro';
@@ -107,43 +107,40 @@ if($_POST['operacao'] == 'listarProgramas'){
       //Pega o primeiro tipo
       $tipoOrigem = $res[0]["prog_tipo_origem"];
       $tipoPrograma = $res[0]["prog_tipo"];
-      $tabelaProgramas = "<table class='table' style='margin-top: 3px;' >";
-      $tabelaProgramas .= "<caption class='captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($tipoPrograma) . "</caption>";
-      $tabelaProgramas .= "<tr class='cabecalhoTable'>";
-      $tabelaProgramas .= "<td colspan='2'><b>{$tipoOrigem}</b></td>";
-      $tabelaProgramas .= "</tr>";
+      $tabelaProgramas = "<div class='row'>";
+        $tabelaProgramas .= "<div class='col-12 p-2 captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($tipoPrograma) . "</div>";
+        $tabelaProgramas .= "<div class='col-12 p-2 cabecalhoTable'> <b>{$tipoOrigem}</b></div>";
+      $tabelaProgramas .= "</div>";
       foreach($res as $regProg){
-        $class = '';
-        if ($linhaColorida) {
-          $class = "class='info'";
-          $linhaColorida = false;
-        }else{
-          $linhaColorida = true;
+        $nomeTipo = $regProg["prog_tipo"];
+        if($regProg["prog_tipo"] == 'menuRaiz'){
+          $nomeTipo = 'Pastas Menu';
         }
         if($tipoPrograma != $regProg["prog_tipo"]){
-          $tabelaProgramas .= "</table>";
-          $tabelaProgramas .= "<table class='table' style='margin-top: 3px;' cellpadding='3px' cellspacing='0' border='0'>";
-          $tabelaProgramas .= "<caption class='captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($regProg["prog_tipo"]) . "</caption>";
+          $tabelaProgramas .= "<div class='row'>";
+            $tabelaProgramas .= "<div class='col-12 p-2 captionTable' style='border-top-left-radius: 8px;border-top-right-radius: 8px;'>" . ucfirst($nomeTipo) . "</div>";
+          $tabelaProgramas .= "</div>";
           $tipoPrograma = $regProg["prog_tipo"];
           $tipoOrigem = "####";
         }
-        if($tipoOrigem != $regProg["prog_tipo_origem"]){
-          $tabelaProgramas .= "<tr class='cabecalhoTable'>";
-          $tabelaProgramas .= "<td colspan='2'><b>{$regProg["prog_tipo_origem"]}</b></td>";
-          $tabelaProgramas .= "</tr>";
+        if($tipoOrigem != $regProg["prog_tipo_origem"] && $regProg["prog_tipo"] != 'menuRaiz'){
+          $tabelaProgramas .= "<div class='row'>";
+            $tabelaProgramas .= "<div class='col-12 p-2 cabecalhoTable'><b>{$regProg["prog_tipo_origem"]}</b></div>";
+          $tabelaProgramas .= "</div>";
           $tipoOrigem = $regProg["prog_tipo_origem"];
         }
-        $tabelaProgramas .= "<tr {$class}>";
-        $tabelaProgramas .= "<td>{$regProg['prog_nome']}</td>";
+        //
         if($regProg['gap_executa'] == 1){
-          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Desativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-danger">Desativar</button>';
+          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Desativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-light"><i class="fas fa-check text-success"></i></button>';
         }else{
-          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Ativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-success">Ativar</button>';
+          $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Ativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-light"><i class="fas fa-times text-danger"></i></button>';
         }
-        $tabelaProgramas .= "<td align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}' name='tdBtnAtivarDesativar'>{$btnAtivaDesativa}</td>";
-        $tabelaProgramas .= "</tr>";
+        //
+        $tabelaProgramas .= "<div class='row'>";
+        $tabelaProgramas .= "<div class='col-sm-8 col-10 p-2' align='left'>{$regProg['prog_nome']}</div>"; 
+        $tabelaProgramas .= "<div class='col-sm-4 col-2 p-2' align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}' name='tdBtnAtivarDesativar'>{$btnAtivaDesativa}</div>";
+        $tabelaProgramas .= "</div>";
       }
-      $tabelaProgramas .= "</table>";
     }
   //
   echo $tabelaProgramas;

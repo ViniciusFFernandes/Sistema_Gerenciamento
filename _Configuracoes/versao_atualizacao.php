@@ -11,12 +11,12 @@
     $btnAtualizar = "Seu sistema já está totalmente atualizado!";
   }
   if($usuarios->usuario_pode_executar("versao_atualizacao.php-Permite gerar versoes de atualizacao")){
-    $btnEnviarAtt = '<button class="btn btn-default" style="float: right; padding: 0px 3px; cursor: pointer;" title="Enviar atualizações" onclick="enviarAtualizacao(' . $_SESSION['idusuario'] . ')" data-toggle="modal" data-target="#atualizacaoSistema"><img src="../icones/enviar_atualizacao.png"></button>';
+    $btnEnviarAtt = '<button class="btn btn-light" style="float: right; padding: 0px 3px; cursor: pointer;" title="Enviar atualizações" onclick="enviarAtualizacao(' . $_SESSION['idusuario'] . ')" data-toggle="modal" data-target="#atualizacaoSistema"><i class="fas fa-cloud-upload-alt text-warning"></i></button>';
   }  
   unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("", $parametros);
+  $html = $html->buscaHtml("configuracoes");
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##versaoSistema##", $versaoAtual, $html);
   $html = str_replace("##ultimaVersaoSistema##", $ultimaVersao, $html);

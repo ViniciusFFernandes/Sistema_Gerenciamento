@@ -60,30 +60,26 @@
 			$sql .= " ORDER BY para_nome ASC";
 			$res = $this->db->consultar($sql);
 			$linhaColorida = false;
-		    $tabela .= "<table class='table' style='margin-top: 3px'>";
 			foreach ($res as $reg) {
 				//
-				//Define se a linha vai ser de outra cor
-				$class = '';
-				if ($linhaColorida) {
-					$class = "class='info'";
-					$linhaColorida = false;
-				}else{
-					$linhaColorida = true;
-				}
+				$ignoraTamanho = false;
 				//
 				$para_valor = $reg["para_valor"];
 				if($para_valor == ''){
 					$para_valor = '<span class="Obs_claro">*Em Branco*</span>';
+					$ignoraTamanho = true;
 				}
 				//
-				$tabela .= "<tr {$class} data-toggle='modal' data-target='#editaParametros' onclick='editaParametros({$reg["idparametros"]})' style='cursor:pointer'>";
-					$tabela .= "<td width='6%'>{$reg["idparametros"]}</td>";
-					$tabela .= "<td><img src='../icones/duvida.png' width='12px' id='help_{$reg["idparametros"]}' data-toggle='tooltip' data-placement='top' title='{$reg["para_obs"]}' style='cursor: help; float: left;'>{$reg["para_nome"]}</td>";
-					$tabela .= "<td align='right' width='20%' id='para_valor_{$reg["idparametros"]}'>{$para_valor}</td>";
-				$tabela .- "</tr>";
+				if(strlen($para_valor) > 25 && !$ignoraTamanho){
+					$para_valor = substr($para_valor, 0, 25) . '<span class="Obs_claro">...</span>';
+				}
+				//
+				$tabela .= "<div class='row border-top' data-toggle='modal' data-target='#editaParametros' onclick='editaParametros({$reg["idparametros"]})' style='cursor:pointer'>";
+					$tabela .= "<div class='col-md-1 col-sm-1 d-none d-sm-block pb-2 pt-2'>{$reg["idparametros"]}</div>";
+					$tabela .= "<div class='col-md-7 col-sm-7 col-12 pb-2 pt-2'><i class='fas fa-question d-none d-sm-block' id='help_{$reg["idparametros"]}' data-toggle='tooltip' data-placement='top' title='{$reg["para_obs"]}' style='cursor: help; float: left; font-size: 10px;'></i>&nbsp;{$reg["para_nome"]}</div>";
+					$tabela .= "<div class='col-md-4 col-sm-4 col-12 pb-2 pt-2' align='right' id='para_valor_{$reg["idparametros"]}'>{$para_valor}</div>";
+				$tabela .= "</div>";
 			}
-			$tabela .= "</table>";
 			//
 		  	//escreve a tabela
 		  	echo $tabela;

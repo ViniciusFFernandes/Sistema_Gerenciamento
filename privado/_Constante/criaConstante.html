@@ -1,59 +1,94 @@
+<!DOCTYPE html>
 <html lang="pt">
-  <head>
+
+<head>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ARG</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <title>##nomeSistema##</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="../../fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- CSS-->
     <link href="../../css/padrao.css" rel="stylesheet">
-    <script src="../../js/html5shiv.min.js"></script>
-    <script src="../../js/respond.min.js"></script>
-  </head>
 
-  <body style="margin-top: 20px;">
+</head>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4 col-sm-1"></div>
-          <div class="col-md-4 col-sm-10">
-            <div class="panel panel-default" style="border: solid 2px #828282; ">
-              <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
-                <h2 class="panel-title">Criar Constante</h2>
-              </div>
-              <div class="panel-body">
-                <form action="criaConstante_grava.php" method="POST">
-                  <div class="form-group">
-                    <label for="servidor">Servidor</label>
-                    <input type="text" class="form-control" id="servidor" name="servidor" placeholder="localhost" autofocus>
-                  </div>
-                  <div class="form-group">
-                    <label for="porta">Porta</label>
-                    <input type="text" class="form-control" id="porta" name="porta" placeholder="3306">
-                  </div>
-                  <div class="form-group">
-                    <label for="usuario">Usuario</label>
-                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="root">
-                  </div>
-                  <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input type="password" class="form-control" id="senha" name="senha" placeholder="Sem senha">
-                  </div>
-                  <div class="form-group">
-                    <label for="nomeBase">Banco de dados</label>
-                    <input type="text" class="form-control" id="nomeBase" name="nomeBase" placeholder="DB_Base">
-                  </div>
-                  <center><button type="submit" class="btn btn-success" >Logar</button></center>
-                  <span class="Obs_claro" >*Dados usados para criar o banco de dados <br> *Campos em branco assumirão um valor padrão</span>
-                </form>
-              </div>
-          </div>
-        <div class="col-md-4 col-sm-1"></div>
-      </div>
-  </div>
+<body class="bg-gradient-primary">
+    <div class="container">
+        <!-- Outer Row -->
+        <div class="row divMsg">
+            <div class="col-md-4 col-sm-1"></div>
+            <div class="col-md-4 col-sm-10">##Mensagem##</div>   
+            <div class="col-md-4 col-sm-1"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-10 col-lg-12 col-md-9">
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Insira as configurações iniciais!</h1>
+                                    </div>
+                                    <form class="user" action="criaConstante_grava.php" method="POST">
+                                      <input type="hidden" class="form-control" id="operacao" name="operacao" value="logar">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="servidor" name="servidor" placeholder="localhost" autofocus>                                        
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="porta" name="porta" placeholder="3306">
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="usuario" name="usuario" placeholder="root">
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="password" class="form-control" id="senha" name="senha" placeholder="Sem senha">
+                                        </div>
+                                        <div class="form-group">
+                                          <input type="text" class="form-control" id="nomeBase" name="nomeBase" placeholder="DB_Base">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Criar o Contantes
+                                        </button>
+                                        <span class="Obs_claro" >*Dados usados para criar o banco de dados <br> *Campos em branco assumirão o valor padrão presente no campo</span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-     <script src="../../js/jquery.min.js"></script>
-     <script src="../../js/bootstrap.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="../../js/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="../../js/sb-admin-2.min.js"></script>
+
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+
+    <script>
+        window.setTimeout(function(){
+            document.getElementById("botao_alerta").click();
+        }, 3000);
+    </script>
   </body>
 </html>

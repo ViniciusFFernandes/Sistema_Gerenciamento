@@ -5,7 +5,7 @@
        });
 
       function buscaParametros(){
-        $("#retParametros").html('<img src="../icones/carregando.gif" width="35px;">');
+        $("#retParametros").html('<center><img src="../icones/carregando.gif" width="35px;"></center>');
         $.post("parametros_grava.php",
               {operacao: "consultaAjax",
                 filtro: $("#consulta").val()},

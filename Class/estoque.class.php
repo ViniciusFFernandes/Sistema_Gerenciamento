@@ -11,17 +11,18 @@ class estoque{
 		$this->html = $html;
 	}
 
-	public function geraMovimento($idprodutos, $maismMenos, $qte, $origem, $idorigem){
+	public function geraMovimento($idprodutos, $maismMenos, $qte, $origem, $idorigem, $idtipo_movto = ''){
 		$this->db->setTabela("produtos_movto", "idprodutos_movto");
 	    //
 	    unset($dados);
-	  	$dados['prmv_idprodutos'] 	= $this->util->igr($idprodutos);
-	  	$dados['prmv_data'] 		= " NOW() ";
-	  	$dados['prmv_idoperador'] 	= $this->util->igr($_SESSION['idusuario']);
-	  	$dados['prmv_idorigem'] 	= $this->util->igr($idorigem);
-	  	$dados['prmv_origem'] 		= $this->util->sgr($origem);
-	  	$dados['prmv_qte'] 			= $this->util->vgr($qte);
-	  	$dados['prmv_maismenos'] 	= $this->util->sgr($maismMenos);
+	  	$dados['prmv_idprodutos'] 				= $this->util->igr($idprodutos);
+	  	$dados['prmv_data'] 					= " NOW() ";
+	  	$dados['prmv_idoperador'] 				= $this->util->igr($_SESSION['idusuario']);
+	  	$dados['prmv_idorigem'] 				= $this->util->igr($idorigem);
+	  	$dados['prmv_origem'] 					= $this->util->sgr($origem);
+	  	$dados['prmv_qte'] 						= $this->util->vgr($qte);
+	  	$dados['prmv_maismenos'] 				= $this->util->sgr($maismMenos);
+	  	$dados['prmv_idtipo_movto_estoque'] 	= $this->util->sgr($idtipo_movto, true);
 	    //
 	    $this->db->gravarInserir($dados);
 	    if($this->db->erro()){

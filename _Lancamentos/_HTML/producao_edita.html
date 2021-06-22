@@ -1,114 +1,108 @@
-<!DOCTYPE html>
 <html lang="pt">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   	<title>##nomeSistema##</title>
-
-   ##includes##
+    <title>##nomeSistema##</title>
+    
+    ##includes##
     <script src="../js/_Lancamentos/producao.js"></script>
     <script>##autoComplete_Produto##</script>
+    <!DOCTYPE html>
   </head>
-  <body>
 
-    <div>
-     ##Menu##
-    </div>
-    <div class="row divMsg">
-      <div class="col-md-4 col-sm-1 col-xs-1"></div>
-      <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
-      <div class="col-md-4 col-sm-1 col-xs-1"></div>
-    </div>
-    <div class="container conteudo">
-      <div class="panel panel-default" style="border: solid 2px #828282;">
-        <div class="panel-heading" style="border-bottom: solid 1px #828282; " >
-          <div class="panel-title">
-            <div style="float: right;">##pdc_situacao##</div>
-            Produção
-            <span align="right" data-toggle="modal" title="Buscar produção" data-target="#buscaCadastro" style="cursor: pointer;">
-              &nbsp;<img src="../icones/lupa.png">
-            </span>
-            
-          </div>
-        </div>
-        <div class="panel-body">
-          <form action="producao_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
-            <div class="row">
-              <div class="col-md-2 col-sm-2 col-xs-4">
-                <label for="Abertura">Codigo</label>
-                <input type="text" class="form-control" name="id_cadastro" id="id_cadastro" value="##id_cadastro##" readonly="readonly">
-              </div>
-              <div class="clearfix col-md-4 col-sm-4 col-xs-8"></div>
-              <div class="clearfix visible-xs-block"></div>
-              <div class="col-md-3 col-sm-3 col-xs-6">
-                <label for="Abertura">Abertura</label>
-                <input type="text" class="form-control" id="pdc_data_abertura" name="pdc_data_abertura" value="##pdc_data_abertura##" readonly="readonly">
-              </div> 
-              <div class="col-md-3 col-sm-3 col-xs-6">
-                <label for="Fechamento">Fechamento</label>
-                <input type="text" class="form-control" id="pdc_data_fechamento" name="pdc_data_fechamento" value="##pdc_data_fechamento##" readonly="readonly">
-              </div> 
+  <body id="page-top">
+    <div id="wrapper">
+      ##Menu##
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          ##topBar##
+          <div class="container-fluid">
+            <div class="row divMsg">
+              <div class="col-md-4 col-sm-1 col-1"></div>
+              <div class="col-md-4 col-sm-10 col-10">##Mensagem##</div>
+              <div class="col-md-4 col-sm-1 col-1"></div>
             </div>
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-8">
-                <label for="Produto">Produto</label>
-                <div class="input-group">
-                  <input type="text" class="form-control" id="pdc_produtos" name="pdc_produtos" value="##pdc_produtos##">
-                  <span class="input-group-addon" style="padding: 0x 6px;">
-                    <input type="text" class="idAutoComplementar" size="2" readonly id="pdc_idprodutos" name="pdc_idprodutos" value="##pdc_idprodutos##">
-                  </span>
+            <div class="card shadow mb-4 border-left-primary">
+              <div class="card-header py-3"> 
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Produção
+                  <i class="fas fa-search text-dark" align="right" data-toggle="modal" title="Buscar Bancos" data-target="#buscaCadastro" style="cursor: pointer;"></i> 
+                </h6>                       
+              </div>
+              <div class="card-body">
+                <form action="producao_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-2 col-4 pb-3">
+                      <input type="text" class="form-control" name="id_cadastro" id="id_cadastro" value="##id_cadastro##" readonly="readonly" placeholder="Código">
+                    </div>
+                    <div class="clearfix col-md-4 col-sm-4 col-8 pb-3"></div>
+                    <div class="clearfix d-block d-sm-none-block"></div>
+                    <div class="col-md-3 col-sm-3 col-6 pb-3">
+                      <input type="text" class="form-control" id="pdc_data_abertura" name="pdc_data_abertura" value="##pdc_data_abertura##" readonly="readonly" placeholder="Abertura">
+                    </div> 
+                    <div class="col-md-3 col-sm-3 col-6 pb-3">
+                      <input type="text" class="form-control" id="pdc_data_fechamento" name="pdc_data_fechamento" value="##pdc_data_fechamento##" readonly="readonly" placeholder="Fechamento">
+                    </div> 
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-8 pb-3">
+                      ##autoComplete_CampoProduto##
+                    </div>
+                    <div class="col-md-2 col-sm-2 col-4 pb-3">
+                      <input type="text" class="form-control" id="pdc_qte_produzida" name="pdc_qte_produzida" value="##pdc_qte_produzida##" placeholder="Qte Produzida">
+                    </div>
+                  </div>
+                  ##ItensProducao##
+                  <br>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12 pb-3">
+                      <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
+                      <center>
+                        ##btnGravar##
+                        <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
+                        ##btnExcluir##
+                      </center>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-12" >
+                      <center>
+                        ##btnFecharReabrir##
+                      </center>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Modal -->
+          <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
                 </div>
-                
-              </div>
-              <div class="col-md-2 col-sm-2 col-xs-4">
-                <label for="Qte">Qte</label>
-                <input type="text" class="form-control" id="pdc_qte_produzida" name="pdc_qte_produzida" value="##pdc_qte_produzida##">
+                <div class="card-body" id="resultBusca">
+
+                </div>
+                <div class="card-footer">
+                  <button type="button" onclick="zeraBusca()" class="btn btn-light" data-dismiss="modal">Voltar</button>
+                  <button type="button" onclick="buscaCadastro('producao_grava.php')" class="btn btn-primary">Buscar</button>
+                </div>
               </div>
             </div>
-            ##FuncionariosSalarios##
-            <br>
-            <div class="row" style="margin-bottom: 5px;">
-              <div class="col-md-12 col-sm-12 col-xs-12" >
-                <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
-                <center>
-                  ##btnGravar##
-                  <button type="button" onclick="novoCadastro()" class="btn btn-info">Novo</button>
-                  ##btnExcluir##
-                </center>
-              </div>
-            </div>
-            <div class="row" style="margin-bottom: 5px;">
-              <div class="col-md-12 col-sm-12 col-xs-12" >
-                <center>
-                  ##btnFecharReabrir##
-                </center>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="buscaCadastro" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="buscaLabel"><input type="text" class="form-control" id="pesquisa" name="pesquisa" placeholder="Pesquisar" autofocus ></h4>
-          </div>
-          <div class="modal-body" id="resultBusca">
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" onclick="zeraBusca()" class="btn btn-default" data-dismiss="modal">Voltar</button>
-            <button type="button" onclick="buscaCadastro('producao_grava.php')" class="btn btn-primary">Buscar</button>
           </div>
         </div>
       </div>
     </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+  </a>
   </body>
 </html>
 

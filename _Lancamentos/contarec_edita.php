@@ -19,17 +19,17 @@
   //Monta variaveis de exibição
   //
   $sql = "SELECT * FROM tipo_contas";
-  $comboBoxTipoConta = $html->criaSelectSql("tico_nome", "idtipo_contas", "ctrc_idtipo_contas", $reg['ctrc_idtipo_contas'], $sql, "form-control");
+  $comboBoxTipoConta = $html->criaSelectSql("tico_nome", "idtipo_contas", "ctrc_idtipo_contas", $reg['ctrc_idtipo_contas'], $sql, "form-control", "", true, "Selecione o Tipo");
   //
   $sql = "SELECT * FROM meio_pagto";
-  $comboBoxMeioPagto = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagto", $reg['ctrc_idmeio_pagto'], $sql, "form-control");
-  $comboBoxMeioPagtoModal = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagtoModal", '', $sql, "form-control");
+  $comboBoxMeioPagto = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagto", $reg['ctrc_idmeio_pagto'], $sql, "form-control", "", true, "Selecione o Meio de Pagamento");
+  $comboBoxMeioPagtoModal = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctrc_idmeio_pagtoModal", '', $sql, "form-control", "", true, "Selecione o Meio de Pagamento");
   //
   $sql = "SELECT * FROM bancos";
-  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancos", $reg['ctrc_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"');
-  $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"');
+  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancos", $reg['ctrc_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"', true, "Selecione o Banco");
+  $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctrc_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"', true, "Selecione o Banco");
   //
-  $comboBoxCC = "<br><font color='red'>*</font> Selecione o banco";
+  $comboBoxCC = "<font color='red'>*</font> Selecione o banco";
   //
   $btnGravarReabrir = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
   //
@@ -44,6 +44,7 @@
     if($reg['ctrc_situacao'] == 'Quitada' || $reg['ctrc_situacao'] == "QParcial"){
       $ctrc_situacao = "<kbd class='bg-success'><b>{$reg['ctrc_situacao']}</b></kbd>";
       $btnGravarReabrir = '<button type="button" onclick="chamaGravar(\'reabrir\')" class="btn btn-warning">Reabrir</button>';
+      $btnImprimir = '<button type="button" class="btn btn-info" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
     }else{
       $ctrc_situacao = "<kbd><b>{$reg['ctrc_situacao']}</b></kbd>";
       $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
@@ -90,6 +91,7 @@
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnPagar##", $btnPagar, $html);
   $html = str_replace("##btnGravarReabrir##", $btnGravarReabrir, $html);
+  $html = str_replace("##btnImprimir##", $btnImprimir, $html);
   echo $html; 
   exit;
 ?>
