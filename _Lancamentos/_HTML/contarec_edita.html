@@ -29,7 +29,7 @@
               <div class="card-header py-3"> 
                 <button class="btn btn-light" style="float: right; padding: 0px 3px; cursor: pointer; margin-left: 6px;" title="Histórico da conta" onclick="abrirHistoricoConta()" data-toggle="modal" data-target="#historicoConta"><i class="fas fa-history"></i></button>
                 <h6 class="m-0 font-weight-bold text-primary">
-                  Contas a Pagar
+                  Contas a Receber
                   <i class="fas fa-search text-dark" align="right" data-toggle="modal" title="Buscar Contas a Pagar" data-target="#buscaCadastro" style="cursor: pointer;"></i> 
                 </h6>                       
               </div>
@@ -43,7 +43,7 @@
                         <span class="input-group-addon" style="cursor: pointer;" onclick="abreConta()"><i class="fas fa-bolt text-warning"></i></span>
                       </div>
                     </div>
-                    <div class="col-md-2 col-sm-2 col-6 pb-3" style="padding-top: 30px;">
+                    <div class="col-md-2 col-sm-2 col-6 pb-3 pt-2">
                       ##ctrc_situacao##
                     </div>
                     <div class="d-block d-sm-none clearfix">&nbsp;</div>
@@ -55,10 +55,13 @@
                     </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-6 col-sm-6 col-12 pb-3">
+                    <div class="col-md-6 col-sm-12 col-12 pb-3">
                       ##autoComplete_CampoPessoas##
                     </div>
-                    <div class="col-md-6 col-sm-6 col-12 pb-3">
+                    <div class="col-md-3 col-sm-6 col-12 pb-3">
+                      ##comboEmpresas##
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-12 pb-3">
                       ##comboBoxMeioPagto##
                     </div>
                   </div>
@@ -77,7 +80,7 @@
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_bruto" name="ctrc_vlr_bruto" value="##ctrc_vlr_bruto##" onkeyup="calculoJuros('porc'); calculoDesconto('porc')">
+                        <input type="text" class="form-control" placeholder="Bruto" id="ctrc_vlr_bruto" name="ctrc_vlr_bruto" value="##ctrc_vlr_bruto##" onkeyup="calculoJuros('porc'); calculoDesconto('porc')">
                       </div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-6 pb-3">
@@ -88,12 +91,12 @@
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_juros" name="ctrc_vlr_juros" value="##ctrc_vlr_juros##" onkeyup="calculoJuros('vlr')">
+                        <input type="text" class="form-control" placeholder="Juros" id="ctrc_vlr_juros" name="ctrc_vlr_juros" value="##ctrc_vlr_juros##" onkeyup="calculoJuros('vlr')">
                       </div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
-                        <input type="text" class="form-control" id="ctrc_porc_juros" name="ctrc_porc_juros" value="##ctrc_porc_juros##" onkeyup="calculoJuros('porc')">
+                        <input type="text" class="form-control" placeholder="Juros (%)" id="ctrc_porc_juros" name="ctrc_porc_juros" value="##ctrc_porc_juros##" onkeyup="calculoJuros('porc')">
                         <span class="input-group-addon">%</span>
                       </div>
                     </div>
@@ -102,12 +105,12 @@
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_desconto" name="ctrc_vlr_desconto" value="##ctrc_vlr_desconto##" onkeyup="calculoDesconto('vlr')">
+                        <input type="text" class="form-control" placeholder="Descontos" id="ctrc_vlr_desconto" name="ctrc_vlr_desconto" value="##ctrc_vlr_desconto##" onkeyup="calculoDesconto('vlr')">
                       </div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
-                        <input type="text" class="form-control" id="ctrc_porc_desconto" name="ctrc_porc_desconto" value="##ctrc_porc_desconto##" onkeyup="calculoDesconto('porc')">
+                        <input type="text" class="form-control" placeholder="Descontos (%)" id="ctrc_porc_desconto" name="ctrc_porc_desconto" value="##ctrc_porc_desconto##" onkeyup="calculoDesconto('porc')">
                         <span class="input-group-addon">%</span>
                       </div>
                     </div>
@@ -116,7 +119,7 @@
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_liquido" name="ctrc_vlr_liquido" value="##ctrc_vlr_liquido##" readonly>
+                        <input type="text" class="form-control" placeholder="Liquido" id="ctrc_vlr_liquido" name="ctrc_vlr_liquido" value="##ctrc_vlr_liquido##" readonly>
                       </div>
                     </div>
                     <div class="col-6 d-block d-sm-none">&nbsp;</div>
@@ -124,13 +127,13 @@
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_pago" name="ctrc_vlr_pago" value="##ctrc_vlr_pago##" readonly>
+                        <input type="text" class="form-control" placeholder="Pago" id="ctrc_vlr_pago" name="ctrc_vlr_pago" value="##ctrc_vlr_pago##" readonly>
                       </div>
                     </div>
                     <div class="col-md-2 col-sm-2 col-6 pb-3">
                       <div class="input-group">
                         <span class="input-group-addon">R$</span>
-                        <input type="text" class="form-control" id="ctrc_vlr_devedor" name="ctrc_vlr_devedor" value="##ctrc_vlr_devedor##" readonly>
+                        <input type="text" class="form-control" placeholder="Devedor" id="ctrc_vlr_devedor" name="ctrc_vlr_devedor" value="##ctrc_vlr_devedor##" readonly>
                       </div>
                     </div>
                   </div> 
@@ -216,7 +219,7 @@
                       <div class="col-md-4 col-sm-4 col-12">
                         <div class="input-group">
                           <span class="input-group-addon">R$</span>
-                          <input type="text" class="form-control" id="vlr_desconto" name="vlr_desconto" value="0" placeholder="Juros">
+                          <input type="text" class="form-control" id="vlr_desconto" name="vlr_desconto" value="0" placeholder="Desconto">
                         </div>
                       </div>
                     </div>

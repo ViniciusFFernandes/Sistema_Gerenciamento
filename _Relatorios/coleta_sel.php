@@ -14,11 +14,17 @@
     unset($_SESSION['mensagem'], $_SESSION['tipoMsg']);
   }
   //
+  //
+  //Monta variaveis de exibição
+  $sql = "SELECT * FROM empresas";
+  $comboBoxEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "idempresas", '', $sql, "form-control", "", true, "Selecione a Empresa");
+  //
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $html->buscaHtml("relatorios", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
   $html = str_replace("##autoComplete_CampoProduto##", $codigo_campo, $html);
+  $html = str_replace("##comboBoxEmpresas##", $comboBoxEmpresas, $html);
   $html = str_replace("##produtos##", "", $html);
   $html = str_replace("##idprodutos##", "", $html);
   echo $html;

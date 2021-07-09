@@ -9,5 +9,10 @@ function gerarRelatorio(){
         return;
     }    
 
+    if($("#idempresas").val() == ''){
+        alertaPequeno("Informe a empresa que desejado tirar o relatório!");
+        return;
+    }
+
     $("#form_edita").submit();
 }

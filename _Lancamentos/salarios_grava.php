@@ -263,7 +263,7 @@ if ($_POST['operacao'] == 'reabrir'){
       $sql = "SELECT * 
               FROM contapag 
                 JOIN contapag_hist ON (idcontapag = cphi_idcontapag)
-              WHERE ctpg_situacao = 'BaixaSistema'
+              WHERE ctpg_situacao = 'QSistema'
                 AND ctpg_processou = 'SIM'
                 AND cphi_operacao = 'BaixaSistema'
                 AND ctpg_idconta_salario = " . $reg['safu_idcontapag'];
@@ -274,11 +274,18 @@ if ($_POST['operacao'] == 'reabrir'){
         $db->setTabela("contapag_hist", "idcontapag_hist");
         $db->excluir($reg2['idcontapag_hist'], "Excluir");
         //
+        if($reg2['cphi_valor'] >= $reg2['ctpg_vlr_liquido']){
+          $situacao = "Pendente";
+        }else{
+          $situacao = "QParcial";
+        }
+        //
         $db->setTabela("contapag", "idcontapag");
         //
         unset($dados);
         $dados['id']                      = $reg2['idcontapag'];
-        $dados['ctpg_recalculou']  	      = $util->sgr("NAO");
+        $dados['ctpg_processou']  	      = $util->sgr("NAO");
+        $dados['ctpg_situacao']  	        = $util->sgr($situacao);
         $dados['ctpg_vlr_pago']  	        = "ctpg_vlr_pago - " . $util->vgr($valor);
         $dados['ctpg_idconta_salario']  	= " NULL ";
         //

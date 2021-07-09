@@ -19,15 +19,18 @@
   //Monta variaveis de exibição
   //
   $sql = "SELECT * FROM tipo_contas";
-  $comboBoxTipoConta = $html->criaSelectSql("tico_nome", "idtipo_contas", "ctpg_idtipo_contas", $reg['ctpg_idtipo_contas'], $sql, "form-control", "", true, "Selecione o Tipo");
+  $comboBoxTipoConta = $html->criaSelectSql("tico_nome", "idtipo_contas", "ctpg_idtipo_contas", $reg['ctpg_idtipo_contas'], $sql, "form-control", "", true, "Tipo");
   //
   $sql = "SELECT * FROM meio_pagto";
-  $comboBoxMeioPagto = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctpg_idmeio_pagto", $reg['ctpg_idmeio_pagto'], $sql, "form-control", "", true, "Selecione o Meio de Pagamento");
-  $comboBoxMeioPagtoModal = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctpg_idmeio_pagtoModal", '', $sql, "form-control", "", true, "Selecione o Meio de Pagamento");
+  $comboBoxMeioPagto = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctpg_idmeio_pagto", $reg['ctpg_idmeio_pagto'], $sql, "form-control", "", true, "Meio de Pagamento");
+  $comboBoxMeioPagtoModal = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "ctpg_idmeio_pagtoModal", '', $sql, "form-control", "", true, "Meio de Pagamento");
   //
   $sql = "SELECT * FROM bancos";
-  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ctpg_idbancos", $reg['ctpg_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"', true, "Selecione o Banco");
-  $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctpg_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"',  true, "Selecione o Banco");
+  $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ctpg_idbancos", $reg['ctpg_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"', true, "Banco");
+  $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctpg_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"',  true, "Banco");
+  //
+  $sql = "SELECT * FROM empresas";
+  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ctpg_idempresa", $reg['ctpg_idempresa'], $sql, "form-control", '', true, "Empresa");
   //
   $comboBoxCC = "<font color='red'>*</font> Selecione o banco";
   //
@@ -74,21 +77,22 @@
   $html = str_replace("##ctpg_situacao##", $ctpg_situacao, $html);
   $html = str_replace("##ctpg_inclusao##", $reg['ctpg_inclusao'], $html);
   $html = str_replace("##ctpg_vencimento##", $reg['ctpg_vencimento'], $html);
-  $html = str_replace("##ctpg_vlr_bruto##", $reg['ctpg_vlr_bruto'], $html);
-  $html = str_replace("##ctpg_vlr_juros##", $reg['ctpg_vlr_juros'], $html);
-  $html = str_replace("##ctpg_porc_juros##", $reg['ctpg_porc_juros'], $html);
-  $html = str_replace("##ctpg_vlr_desconto##", $reg['ctpg_vlr_desconto'], $html);
-  $html = str_replace("##ctpg_porc_desconto##", $reg['ctpg_porc_desconto'], $html);
-  $html = str_replace("##ctpg_vlr_liquido##", $reg['ctpg_vlr_liquido'], $html);
-  $html = str_replace("##ctpg_vlr_pago##", $reg['ctpg_vlr_pago'], $html);
-  $html = str_replace("##ctpg_vlr_devedor##", $reg['ctpg_vlr_devedor'], $html);
-  $html = str_replace("##vlr_pagamento##", $reg['ctpg_vlr_devedor'], $html);
+  $html = str_replace("##ctpg_vlr_bruto##", $util->formataMoeda($reg['ctpg_vlr_bruto'], 2, true), $html);
+  $html = str_replace("##ctpg_vlr_juros##", $util->formataMoeda($reg['ctpg_vlr_juros'], 2, true), $html);
+  $html = str_replace("##ctpg_porc_juros##", $util->formataMoeda($reg['ctpg_porc_juros'], 2, true), $html);
+  $html = str_replace("##ctpg_vlr_desconto##", $util->formataMoeda($reg['ctpg_vlr_desconto'], 2, true), $html);
+  $html = str_replace("##ctpg_porc_desconto##", $util->formataMoeda($reg['ctpg_porc_desconto'], 2, true), $html);
+  $html = str_replace("##ctpg_vlr_liquido##", $util->formataMoeda($reg['ctpg_vlr_liquido'], 2, true), $html);
+  $html = str_replace("##ctpg_vlr_pago##", $util->formataMoeda($reg['ctpg_vlr_pago'], 2, true), $html);
+  $html = str_replace("##ctpg_vlr_devedor##", $util->formataMoeda($reg['ctpg_vlr_devedor'], 2, true), $html);
+  $html = str_replace("##vlr_pagamento##", $util->formataMoeda($reg['ctpg_vlr_devedor'], 2, true), $html);
   $html = str_replace("##data_pagto##", date("Y-m-d"), $html);
   $html = str_replace("##comboBoxTipoConta##", $comboBoxTipoConta, $html);
   $html = str_replace("##comboBoxMeioPagto##", $comboBoxMeioPagto, $html);
   $html = str_replace("##comboBoxMeioPagtoModal##", $comboBoxMeioPagtoModal, $html);
   $html = str_replace("##comboBoxBancos##", $comboBoxBancos, $html);
   $html = str_replace("##comboBoxBancosModal##", $comboBoxBancosModal, $html);
+  $html = str_replace("##comboEmpresas##", $comboEmpresas, $html);
   $html = str_replace("##checkAVista##", $checkAVista, $html);
   $html = str_replace("##comboBoxCC##", $comboBoxCC, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);

@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    	<title>##nomeSistema##</title>
 
-     ##includes##
+     ##includesRelatorios##
   </head>
   <body onload="Javascript:window.print();">
     <div class="container">
-        <div class="row border" style="margin-bottom: 5px;">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 10px;">
-                <img src="../imagens/##logoRelatorios##" class="pull-left" width="85px;">
+        <div class="row border border-dark text-dark mb-5">
+            <div class="col-md-12 col-sm-12 col-12 text-center p-3" >
+                <img src="../uploads/##logoRelatorios##" class="pull-left" width="85px;">
                     ##nomeEmpresa## <br>
                     CNPJ: ##cnpjEmpresa## <br>
                     ##enderecoEmpresa##, ##cidadeEmpresa## - ##ufEmpresa##, ##cepEmpresa## <br>
@@ -20,156 +20,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 5px;">
-                <p style="padding-top: 2rem;"> 
-                    <b>Recibo de Despesas de Prestação de Serviços</b>
-                </p>  
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 5px;">
+            <div class="col-md-12 col-sm-12 col-xs-12 text-center border-dark text-dark p-2">
                 <p> 
-                    <b>##mesExtenso## de ##ano##</b>
+                    <b>##tituloRelatorio##</b>
                 </p>  
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="padding: 5px;">
-                <p> 
-                    <b>##pess_nome##</b>
-                </p>  
+            <div class="col-md-12 col-sm-12 col-12 p-2">
+                ##tabelaResultado##
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                MATERIAIS COMERCIALIZADO
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_bruto##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Complementação salarial
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_juros##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                TOTAL DA RECEITA
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##receita_total##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Falta
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                ##falta_dias## (R$ ##desconto_faltas##)
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Adiantamento
-            </div>
-            <div class="col-md-6 col.-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_adiantamento##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Desconto de Rateio - prensa/coleta/lider/estação
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ -----
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                OUTROS
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ -----
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Total de Despesas
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_desconto##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Total de Receita
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##receita_total##
-            </div>
-        </div><div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Total de Despesas
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_desconto##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">
-                Total Liquido a Receber
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6 border" style="padding: 5px;">
-                R$ ##vlr_liquido##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">
-            Recebi da ##nomeEmpresa## a importância de R$ ##vlr_liquido## (##vlr_liquito_extenso##) ##msg_cesta_basica##referente a serviços prestados no mes de ##mesExtenso## de ##ano##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">&nbsp;</div>
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;" align="center">
-             ______________________________________________ <br> 
-             ##pess_nome##
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 5px;">&nbsp;</div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;">&nbsp;</div>
-            <div class="col-md-6 col-sm-6 col-xs-6" style="padding: 5px;" align="center">
-                ##cidadeEmpresa##, ##diaAtual## de ##mesAtual## de ##anoAtual##
-            </div>
-        </div>
-    </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+        ##assinatura##
   </body>
 </html>
 

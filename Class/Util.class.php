@@ -77,7 +77,9 @@ class Util{
 				return $dataFormatada;
 	}
 
-	public function formataMoeda($valor = 0, $casas = 2) {
+	public function formataMoeda($valor = 0, $casas = 2, $retornaBranco = false) {
+		if($valor <= 0) return "";
+		//
 		return number_format($valor, $casas, ',', '.');
 	}
 	

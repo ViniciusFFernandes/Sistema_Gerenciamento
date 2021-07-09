@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.79;
+		private $ultimaVersao = 0.82;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,7 +77,44 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_82(){
+			//
+			// 09/07/2021 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idempresa INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_idempresa INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação de dos campos de código da empresa nas contas a receber e a pagar";
+		}
+
 		
+		private function versao_00_81(){
+			//
+			// 09/07/2021 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: codigo da empresa padrao", "", "Parametro usado para definir o código da empresa padrão no sistema", "constante", "CODIGO_EMPRESA"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para exibir assinatura no fim do relatório de coleta";
+		}
+
+		private function versao_00_80(){
+			//
+			// 09/07/2021 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: relatorio coleta exibe assinatura", "NAO", "Parametro usado para definir se o sistema deverá exibir a assinatura no fim da coleta"); 
+			$this->parametros->cadastraParametros("sistema: relatorio coleta texto para assinatura", "", "Parametro usado para definir o texto embaixo do campo de assinatura na coleta"); 
+			$this->parametros->cadastraParametros("sistema: relatorio coleta assinatura digital", "", "Parametro usado para definir a imagem da assinatura no final da coleta (se deixado em branco aparecerá uma linha para assinatura manual)"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para exibir assinatura no fim do relatório de coleta";
+		}
+
 		private function versao_00_79(){
 			//
 			// 10/05/2021 Vinicius

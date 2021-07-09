@@ -38,6 +38,9 @@
         }
 
         public function baixaConta($idconta, $valor, $multa, $desconto, $idcc, $idmeio_pagto, $data, $idoperador){
+            //
+            $valor = $this->util->vgr($valor);
+            //
             $sql = "SELECT * FROM contarec WHERE idcontarec = " . $idconta;
             $reg = $this->db->retornaUmReg($sql);
             //

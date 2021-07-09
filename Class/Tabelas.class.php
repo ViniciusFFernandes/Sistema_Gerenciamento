@@ -29,10 +29,10 @@ class Tabelas{
 		$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}'>";
 		$tabela .= "<thead>";
 			$tabela .= "<tr class='bg-primary'>";
-				$tabela .= "<td class='d-none d-sm-table-cell' style='position: sticky; top: 0;'><b>Código<b></td>";
-				$tabela .= "<td style='position: sticky; top: 0;'><b>Nome<b></td>";
-				$tabela .= "<td class='d-none d-sm-table-cell' style='position: sticky; top: 0;'><b>Endereço<b></td>";
-				$tabela .= "<td style='position: sticky; top: 0;'><b>Cidade<b></td>";
+				$tabela .= "<td class='d-none d-sm-table-cell'><b>Código<b></td>";
+				$tabela .= "<td><b>Nome<b></td>";
+				$tabela .= "<td class='d-none d-sm-table-cell'><b>Endereço<b></td>";
+				$tabela .= "<td><b>Cidade<b></td>";
 			$tabela .= "</tr>";
 		$tabela .= "</thead>";
 	    foreach ($res as $reg) {
@@ -78,7 +78,7 @@ class Tabelas{
 			$tabela .= "<thead>";
 				$tabela .= "<tr class='bg-primary'>";
 				foreach($cabecalho as $titulo => $config){
-					$tabela .= "<td {$config} style='position: sticky; top: 0;'><b>{$titulo}<b></td>";
+					$tabela .= "<td {$config}><b>{$titulo}<b></td>";
 				}
 				$tabela .= "</tr>";
 			$tabela .= "</thead>";
@@ -102,25 +102,23 @@ class Tabelas{
 		return $tabela;
 	}
 
-	public function geraTabelaPadrao($res, $db, $colunas, $titulo = '', $cabecalho = ''){
+	public function geraTabelaPadrao($res, $db, $colunas, $cabecalho = '', $campoTotal = '', $util = ''){
 		$linhaColorida = false;
 	    if(empty($res)){
 	    	$tabela .= "Nenhum registro encontrado!";
 	    	$escondeTabela = "display: none;";
 	    }
-		$tabela .= "<table class='table' style='margin-top: 3px;{$escondeTabela}' >";
-		if(!empty($titulo)){
-			$tabela .= "<caption class='tituloTable'>{$titulo}</caption>";
-		}
+		$tabela .= "<table class='table text-dark border-dark' style='margin-top: 3px;{$escondeTabela}' >";
 		if(!empty($cabecalho)){
 			$tabela .= "<thead>";
 				$tabela .= "<tr>";
 				foreach($cabecalho as $titulo => $config){
-					$tabela .= "<td class='bg-primary' {$config} style='position: sticky; top: 0;'><b>{$titulo}<b></td>";
+					$tabela .= "<td class='bg-primary' {$config}><b>{$titulo}<b></td>";
 				}
 				$tabela .= "</tr>";
 			$tabela .= "</thead>";
 		}
+		$total = 0;
 		foreach ($res as $reg) {
 		
 			//
@@ -133,11 +131,17 @@ class Tabelas{
 				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";
 			}
 			$tabela .- "</tr>";
+			if(!empty($campoTotal)){
+				$total += $reg[$campoTotal];
+			}
+		}
+		if(!empty($campoTotal)){
+			$tabela .= "<tr><td colspan='" . (count($colunas) - 1) . "' align='right'><b>Total...</b></td><td align='right'><b>" . $util->formataMoeda($total) . "</b></td></tr>";
 		}
 		$tabela .= "</table>";
 		//
 	  	//escreve a tabela
-		echo $tabela;
+		return $tabela;
 	}
 }
 ?>

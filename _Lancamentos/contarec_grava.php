@@ -63,6 +63,7 @@ $paginaRetorno = 'contarec_edita.php';
     $dados['ctrc_idbancos']       = $util->igr($_POST['ctrc_idbancos']);
     $dados['ctrc_idcc']           = $util->igr($_POST['ctrc_idcc']);
     $dados['ctrc_idmeio_pagto']   = $util->igr($_POST['ctrc_idmeio_pagto']);
+    $dados['ctrc_idempresa']      = $util->igr($_POST['ctrc_idempresa']);
     $dados['ctrc_vencimento'] 	  = $util->sgr($_POST['ctrc_vencimento']);
     $dados['ctrc_a_vista'] 	      = $util->sgr($_POST['ctrc_a_vista']);
     $dados['ctrc_inclusao'] 	    = $util->dgr(date('d/m/Y'));

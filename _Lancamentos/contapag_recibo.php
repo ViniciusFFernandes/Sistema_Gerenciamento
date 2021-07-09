@@ -26,15 +26,24 @@
         exit;
     }
     //
-    $logoRelatorios = $parametros->buscaValor("sistema: nome da logo usada para relatorios");
     //
-    $nomeEmpresa = $parametros->buscaValor("empresa: nome da empresa");
-    $cnpjEmpresa = $parametros->buscaValor("empresa: cnpj da empresa");
-    $enderecoEmpresa = $parametros->buscaValor("empresa: endereco da empresa");
-    $cidadeEmpresa = $parametros->buscaValor("empresa: cidade da empresa");
-    $ufEmpresa = $parametros->buscaValor("empresa: uf da empresa");
-    $cepEmpresa = $parametros->buscaValor("empresa: CEP da empresa");
-    $telefoneEmpresa = $parametros->buscaValor("empresa: telefone de contato da empresa");
+    $sqlEmpresas = "SELECT *
+                    FROM empresas 
+                        LEFT JOIN cidades ON (idcidades = emp_idcidades) 
+                        LEFT JOIN estados ON (cid_idestados = idestados)
+                    WHERE idempresas = {$reg['ctpg_idempresa']}";
+    $regEmpresas = $db->retornaUmReg($sqlEmpresas);
+    //
+    $logoRelatorios = $regEmpresas['emp_logo'];
+    //
+    $nomeEmpresa = $regEmpresas['emp_nome'];
+    $cnpjEmpresa = $regEmpresas['emp_cnpj'];
+    $enderecoEmpresa = $regEmpresas['emp_endereco'];
+    $cidadeEmpresa = $regEmpresas['cid_nome'];
+    $ufEmpresa = $regEmpresas['est_uf'];
+    $cepEmpresa = $regEmpresas['emp_cep'];
+    $telefoneEmpresa = $regEmpresas['emp_telefone'];
+    //
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
     $html = $html->buscaHtml("", $parametros);
