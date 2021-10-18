@@ -40,7 +40,7 @@ function gravaDadosSalarios(idsalarios_funcionarios){
     $("#spanAtt_" + idsalarios_funcionarios).html('<img src="../icones/carregando.gif" width="15px;">');
     //
     var faltas = $("#safu_dias_" + idsalarios_funcionarios).val();
-    var valor = $("#safu_total_" + idsalarios_funcionarios).val();;
+    var valor = $("#safu_total_" + idsalarios_funcionarios).val();
     //
     $.post("salarios_grava.php",
         {operacao: "gravaDadosSalario", idsalarios_funcionarios: idsalarios_funcionarios, safu_dias: faltas, safu_total: valor},

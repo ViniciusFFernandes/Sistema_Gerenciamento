@@ -37,13 +37,14 @@ $paginaRetorno = 'empresas_edita.php';
   	$db->setTabela("empresas", "idempresas");
 
     unset($dados);
-    $dados['id']                  = $_POST['id_cadastro'];
-    $dados['emp_nome'] 	          = $util->sgr($_POST['emp_nome']);
-    $dados['emp_cnpj'] 	          = $util->sgr($_POST['emp_cnpj']);
-    $dados['emp_endereco'] 	      = $util->sgr($_POST['emp_endereco']);
-    $dados['emp_cep'] 	          = $util->sgr($_POST['emp_cep']);
-    $dados['emp_telefone'] 	      = $util->sgr($_POST['emp_telefone']);
-    $dados['emp_idcidades'] 	    = $util->sgr($_POST['emp_idcidades']);
+    $dados['id']                    = $_POST['id_cadastro'];
+    $dados['emp_nome'] 	            = $util->sgr($_POST['emp_nome']);
+    $dados['emp_cnpj'] 	            = $util->sgr($_POST['emp_cnpj']);
+    $dados['emp_endereco'] 	        = $util->sgr($_POST['emp_endereco']);
+    $dados['emp_cep'] 	            = $util->sgr($_POST['emp_cep']);
+    $dados['emp_telefone'] 	        = $util->sgr($_POST['emp_telefone']);
+    $dados['emp_idcidades'] 	      = $util->sgr($_POST['emp_idcidades']);
+    $dados['emp_logo_relatorio'] 	  = $util->sgr($_POST['emp_logo_relatorio']);
     $db->gravarInserir($dados, true);
 
   	if ($_POST['id_cadastro'] > 0) {

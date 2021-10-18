@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.82;
+		private $ultimaVersao = 0.83;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,43 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_84(){
+			//
+			// 20/08/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedidos(
+						idpedidos int(11) NOT NULL AUTO_INCREMENT,
+						ped_idcliente int NULL,
+						ped_abertura DATETIME NULL,
+						ped_fechamento DATETIME NULL,
+						ped_situacao VARCHAR(100) NULL,
+						ped_idforma_pagto int NULL,
+						ped_obs TEXT NULL,
+						ped_qte_parcelas int NULL,
+						ped_total_produtos DECIMAL(10,2) NULL,
+						ped_frete DECIMAL(10,2) NULL,
+						ped_porc_desconto DECIMAL(10,2) NULL,
+						ped_valor_desconto DECIMAL(10,2) NULL,
+						ped_total_pedido DECIMAL(10,2) NULL,
+						PRIMARY KEY (idpedidos)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos";
+		}
+
+		private function versao_00_83(){
+			//
+			// 04/08/2021 Vinicius
+			//
+			$sql = "ALTER TABLE empresas ADD emp_logo_relatorio VARCHAR(10) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação de dos campos que define se a empresa usa apenas a logo nos relatórios";
+		}
 
 		private function versao_00_82(){
 			//

@@ -113,8 +113,8 @@ if($_POST['operacao'] == "gravaDadosSalario"){
   //
   unset($dados);
   $dados['id']                    = $_POST['idsalarios_funcionarios'];
-  $dados['safu_dias']             = $util->igr($_POST['safu_dias']);
-  $dados['safu_total']        = $util->vgr($_POST['safu_total']);
+  $dados['safu_dias']             = $util->vgr($_POST['safu_dias']);
+  $dados['safu_total']            = $util->vgr($_POST['safu_total']);
   //
   $db->gravarInserir($dados, true);
   //

@@ -96,7 +96,7 @@ function validarLogin(){
   }
 
   if(_pess_idgrupos_acessos == 1){
-    alertaPequeno('Não é permitido incluir usuarios no grupo Administradores!');
+    alertaPequeno('Não é permitido incluir usuarios no grupo Desenvolvedores!');
     return;
   }
 

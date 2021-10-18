@@ -26,6 +26,13 @@
     $cepEmpresa = $regEmpresas['emp_cep'];
     $telefoneEmpresa = $regEmpresas['emp_telefone'];
     //
+    if($regEmpresas['emp_logo_relatorio'] == 'SIM'){
+        $tamanhoLogo = "150px;";
+        $nomeEmpresa = "";
+    }else{
+        $tamanhoLogo = "85px;";
+    }
+    //
     $sql = "SELECT FORMAT(cole_qte, 2, 'de_DE') AS qte_coleta, 
                 prod_nome,
                 cole_placa_veiculo,
@@ -96,7 +103,8 @@
     $html = str_replace("##telefoneEmpresa##", $telefoneEmpresa, $html);
     $html = str_replace("##tabelaResultado##", $tabelaResultado, $html);
     $html = str_replace("##tituloRelatorio##", $titulo, $html);
-    $html = str_replace("##assinatura##", $assinatura, $html);
+    $html = str_replace("##assinatura##", $assinatura, $html); 
+    $html = str_replace("##tamanhoLogo##", $tamanhoLogo, $html); 
     echo $html;
     exit;
 ?>

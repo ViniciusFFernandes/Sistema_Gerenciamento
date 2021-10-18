@@ -35,19 +35,63 @@
     if(empty($reg['func_nome'])) $reg['func_nome'] = "Não Informado";
     if(empty($reg['set_nome'])) $reg['set_nome'] = "Não Informado";
     //
-    $logoRelatorios = $parametros->buscaValor("sistema: nome da logo usada para relatorios");
+    $sqlEmpresas = "SELECT *
+                    FROM empresas 
+                        LEFT JOIN cidades ON (idcidades = emp_idcidades) 
+                        LEFT JOIN estados ON (cid_idestados = idestados)
+                    WHERE idempresas = " . CODIGO_EMPRESA;
+    $regEmpresas = $db->retornaUmReg($sqlEmpresas);
     //
-    $nomeEmpresa = $parametros->buscaValor("empresa: nome da empresa");
-    $cnpjEmpresa = $parametros->buscaValor("empresa: cnpj da empresa");
-    $enderecoEmpresa = $parametros->buscaValor("empresa: endereco da empresa");
-    $cidadeEmpresa = $parametros->buscaValor("empresa: cidade da empresa");
-    $ufEmpresa = $parametros->buscaValor("empresa: uf da empresa");
-    $cepEmpresa = $parametros->buscaValor("empresa: CEP da empresa");
-    $telefoneEmpresa = $parametros->buscaValor("empresa: telefone de contato da empresa");
+    $logoRelatorios = $regEmpresas['emp_logo'];
+    //
+    $nomeEmpresa = $regEmpresas['emp_nome'];
+    $cnpjEmpresa = $regEmpresas['emp_cnpj'];
+    $enderecoEmpresa = $regEmpresas['emp_endereco'];
+    $cidadeEmpresa = $regEmpresas['cid_nome'];
+    $ufEmpresa = $regEmpresas['est_uf'];
+    $cepEmpresa = $regEmpresas['emp_cep'];
+    $telefoneEmpresa = $regEmpresas['emp_telefone'];
+    //
+    if($regEmpresas['emp_logo_relatorio'] == 'SIM'){
+        $tamanhoLogo = "150px;";
+        $nomeEmpresa = "";
+    }else{
+        $tamanhoLogo = "85px;";
+    }
     //
     $msgCesta = '';
     if($reg['safu_dias'] <= 0){
         $msgCesta = ' e uma cesta basica ';
+    }
+    //
+    $vlr_desconto = "---";
+    $receita_total = "---";
+    $vlr_liquido = "---";
+    $vlr_bruto = "---";
+    $vlr_juros = "---";
+    $desconto_faltas = "R$ 0,00";
+    $vlr_adiantamento = "---";
+    //
+    if($reg['ctpg_vlr_desconto'] > 0){
+        $vlr_desconto = "R$ " . $util->formataMoeda($reg['ctpg_vlr_desconto']);
+    }
+    if($reg['ctpg_vlr_bruto'] > 0 || $reg['ctpg_vlr_juros'] > 0){
+        $receita_total = "R$ " . $util->formataMoeda($reg['ctpg_vlr_bruto'] + $reg['ctpg_vlr_juros']);
+    }
+    if($reg['ctpg_vlr_liquido'] > 0){
+        $vlr_liquido = "R$ " . $util->formataMoeda($reg['ctpg_vlr_liquido']);
+    }
+    if($reg['ctpg_vlr_bruto'] > 0){
+        $vlr_bruto = "R$ " . $util->formataMoeda($reg['ctpg_vlr_bruto']);
+    }
+    if($reg['ctpg_vlr_juros'] > 0){
+        $vlr_juros = "R$ " . $util->formataMoeda($reg['ctpg_vlr_juros']);
+    }
+    if($reg['safu_vlr_desconto_faltas'] > 0){
+        $desconto_faltas = "R$ " . $util->formataMoeda($reg['safu_vlr_desconto_faltas']);
+    }
+    if($reg['ctpg_vlr_desconto'] > 0 || $reg['safu_vlr_desconto_faltas'] > 0){
+        $vlr_adiantamento = "R$ " . $util->formataMoeda($reg['ctpg_vlr_desconto'] - $reg['safu_vlr_desconto_faltas']);
     }
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
@@ -63,19 +107,20 @@
     $html = str_replace("##mesExtenso##", $util->mesExtenso($reg['sala_mes']), $html);
     $html = str_replace("##ano##", $reg['sala_ano'], $html);
     $html = str_replace("##pess_nome##", $reg['pess_nome'], $html);
-    $html = str_replace("##vlr_bruto##", $util->formataMoeda($reg['ctpg_vlr_bruto']), $html);
-    $html = str_replace("##vlr_juros##", $util->formataMoeda($reg['ctpg_vlr_juros']), $html);
-    $html = str_replace("##receita_total##", $util->formataMoeda($reg['ctpg_vlr_bruto'] + $reg['ctpg_vlr_juros']), $html);
+    $html = str_replace("##vlr_bruto##", $vlr_bruto, $html);
+    $html = str_replace("##vlr_juros##", $vlr_juros, $html);
+    $html = str_replace("##receita_total##", $receita_total, $html);
     $html = str_replace("##falta_dias##", $reg['safu_dias'], $html);
-    $html = str_replace("##desconto_faltas##", $util->formataMoeda($reg['safu_vlr_desconto_faltas']), $html);
-    $html = str_replace("##vlr_adiantamento##", $util->formataMoeda($reg['ctpg_vlr_desconto'] - $reg['safu_vlr_desconto_faltas']), $html);
-    $html = str_replace("##vlr_desconto##", $util->formataMoeda($reg['ctpg_vlr_desconto']), $html);
-    $html = str_replace("##vlr_liquido##", $util->formataMoeda($reg['ctpg_vlr_liquido']), $html);
+    $html = str_replace("##desconto_faltas##", $desconto_faltas, $html);
+    $html = str_replace("##vlr_adiantamento##", $vlr_adiantamento, $html);
+    $html = str_replace("##vlr_desconto##", $vlr_desconto, $html);
+    $html = str_replace("##vlr_liquido##", $vlr_liquido, $html);
     $html = str_replace("##vlr_liquito_extenso##", $util->valorPorExtenso($reg['ctpg_vlr_liquido']), $html);
     $html = str_replace("##diaAtual##", date('d'), $html);
     $html = str_replace("##mesAtual##", $util->mesExtenso(date('m')), $html);
     $html = str_replace("##anoAtual##", date('Y'), $html);
     $html = str_replace("##msg_cesta_basica##", $msgCesta, $html);
+    $html = str_replace("##tamanhoLogo##", $tamanhoLogo, $html); 
     echo $html;
     exit;
 ?>

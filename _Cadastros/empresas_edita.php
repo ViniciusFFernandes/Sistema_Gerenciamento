@@ -21,6 +21,8 @@
   if(!empty($reg['idempresas'])){ 
     $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     //
+    $checkLogoRelatoio = $html->defineChecked($reg['emp_logo_relatorio']);
+    //
     if(!empty($reg['cid_nome'])){
       $cidade = $reg['cid_nome'] . " - " . $reg['est_uf'];
     }
@@ -70,6 +72,7 @@
   $html = str_replace("##autoComplete_CampoCidades##", $codigo_campo, $html);
   $html = str_replace("##emp_cidades##", $cidade, $html);
   $html = str_replace("##emp_idcidades##", $reg['idcidades'], $html);
+  $html = str_replace("##CheckLogoRelatoio##", $checkLogoRelatoio, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnEnviaImg##", $btnEnviaImg, $html);
   $html = str_replace("##btnModalEnviaLogo##", $btnModalEnviaLogo, $html);

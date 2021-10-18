@@ -43,6 +43,13 @@
     $cepEmpresa = $regEmpresas['emp_cep'];
     $telefoneEmpresa = $regEmpresas['emp_telefone'];
     //
+    if($regEmpresas['emp_logo_relatorio'] == 'SIM'){
+        $tamanhoLogo = "150px;";
+        $nomeEmpresa = "";
+    }else{
+        $tamanhoLogo = "85px;";
+    }
+    //
     //Abre o arquivo html e Inclui mensagens e trechos php
     $html = $html->buscaHtml("", $parametros);
     $html = str_replace("##logoRelatorios##", $logoRelatorios, $html);
@@ -61,6 +68,7 @@
     $html = str_replace("##diaAtual##", date('d'), $html);
     $html = str_replace("##mesAtual##", $util->mesExtenso(date('m')), $html);
     $html = str_replace("##anoAtual##", date('Y'), $html);
+    $html = str_replace("##tamanhoLogo##", $tamanhoLogo, $html); 
     echo $html;
     exit;
 ?>

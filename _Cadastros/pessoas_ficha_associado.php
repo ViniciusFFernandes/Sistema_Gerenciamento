@@ -20,15 +20,29 @@
         if(empty($reg['func_nome'])) $reg['func_nome'] = "Não Informado";
         if(empty($reg['set_nome'])) $reg['set_nome'] = "Não Informado";
         //
-        $logoRelatorios = $parametros->buscaValor("sistema: nome da logo usada para relatorios");
+        $sqlEmpresas = "SELECT *
+                        FROM empresas 
+                            LEFT JOIN cidades ON (idcidades = emp_idcidades) 
+                            LEFT JOIN estados ON (cid_idestados = idestados)
+                        WHERE idempresas = " . CODIGO_EMPRESA;
+        $regEmpresas = $db->retornaUmReg($sqlEmpresas);
         //
-        $nomeEmpresa = $parametros->buscaValor("empresa: nome da empresa");
-        $cnpjEmpresa = $parametros->buscaValor("empresa: cnpj da empresa");
-        $enderecoEmpresa = $parametros->buscaValor("empresa: endereco da empresa");
-        $cidadeEmpresa = $parametros->buscaValor("empresa: cidade da empresa");
-        $ufEmpresa = $parametros->buscaValor("empresa: uf da empresa");
-        $cepEmpresa = $parametros->buscaValor("empresa: CEP da empresa");
-        $telefoneEmpresa = $parametros->buscaValor("empresa: telefone de contato da empresa");
+        $logoRelatorios = $regEmpresas['emp_logo'];
+        //
+        $nomeEmpresa = $regEmpresas['emp_nome'];
+        $cnpjEmpresa = $regEmpresas['emp_cnpj'];
+        $enderecoEmpresa = $regEmpresas['emp_endereco'];
+        $cidadeEmpresa = $regEmpresas['cid_nome'];
+        $ufEmpresa = $regEmpresas['est_uf'];
+        $cepEmpresa = $regEmpresas['emp_cep'];
+        $telefoneEmpresa = $regEmpresas['emp_telefone'];
+        //
+        if($regEmpresas['emp_logo_relatorio'] == 'SIM'){
+            $tamanhoLogo = "150px;";
+            $nomeEmpresa = "";
+        }else{
+            $tamanhoLogo = "85px;";
+        }
     }
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
@@ -50,6 +64,7 @@
     $html = str_replace("##pess_funcao##", $reg['func_nome'], $html);
     $html = str_replace("##pess_cpf##", $reg['pess_cpf'], $html);
     $html = str_replace("##pess_rg##", $reg['pess_rg'], $html);
+    $html = str_replace("##tamanhoLogo##", $tamanhoLogo, $html); 
     echo $html;
     exit;
 ?>

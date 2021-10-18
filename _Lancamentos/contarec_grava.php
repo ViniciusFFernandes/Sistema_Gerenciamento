@@ -7,7 +7,10 @@ require_once("contarec.class.php");
 $paginaRetorno = 'contarec_edita.php';
 //
   if ($_POST['operacao'] == "buscaCadastro") {
-    $sql = "SELECT *, format(ctrc_vlr_bruto,2,'de_DE') ctrc_bruto, DATE_FORMAT(STR_TO_DATE(ctrc_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencimento
+    $sql = "SELECT *, 
+                  format(ctrc_vlr_bruto,2,'de_DE') ctrc_bruto, 
+                  DATE_FORMAT(STR_TO_DATE(ctrc_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencimento,
+                  CONCAT(pess_nome, ' <br> <span style=''float: left;''>', DATE_FORMAT(STR_TO_DATE(ctrc_vencimento, '%Y-%m-%d'), '%d/%m/%Y'), '</span> <span style=''float: right;''>', format(ctrc_vlr_bruto,2,'de_DE'), '</span>') AS campo_celular
             FROM contarec 
               LEFT JOIN pessoas ON (ctrc_idcliente = idpessoas)";
     //
@@ -20,16 +23,18 @@ $paginaRetorno = 'contarec_edita.php';
     $tabelas = new Tabelas();
     //
     unset($dados);
-    $dados['idcontarec'] = "width='6%'";
-    $dados['pess_nome'] = "";
-    $dados['vencimento'] = "align='right'";
-    $dados['ctrc_bruto'] = "align='right'";
+    $dados['idcontarec'] = "width='6%' class='d-none d-sm-table-cell'";
+    $dados['campo_celular'] = "class='d-sm-none'";
+    $dados['pess_nome'] = "class='d-none d-sm-table-cell'";
+    $dados['vencimento'] = "align='right' class='d-none d-sm-table-cell'";
+    $dados['ctrc_bruto'] = "align='right' class='d-none d-sm-table-cell'";
     $dados['ctrc_situacao'] = "";
     //
-    $cabecalho["Código"] = "";
-    $cabecalho["Cliente"] = "";
-    $cabecalho["Vencimento"] = "align='right'";
-    $cabecalho["Valor"] = "align='right'";
+    $cabecalho["Código"] = "class='d-none d-sm-table-cell'";
+    $cabecalho["Dados"] = "class='d-sm-none'";
+    $cabecalho["Cliente"] = "class='d-none d-sm-table-cell'";
+    $cabecalho["Vencimento"] = "align='right' class='d-none d-sm-table-cell'";
+    $cabecalho["Valor"] = "align='right' class='d-none d-sm-table-cell'";
     $cabecalho["Situação"] = "";
     //
     echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);
