@@ -75,13 +75,17 @@ $paginaRetorno = 'contapag_edita.php';
     $dados['ctpg_idempresa']      = $util->igr($_POST['ctpg_idempresa']);
     $dados['ctpg_vencimento'] 	  = $util->sgr($_POST['ctpg_vencimento']);
     $dados['ctpg_a_vista'] 	      = $util->sgr($_POST['ctpg_a_vista']);
-    $dados['ctpg_inclusao'] 	    = $util->dgr(date('d/m/Y'));
     $dados['ctpg_vlr_bruto'] 	    = $util->vgr($_POST['ctpg_vlr_bruto']);
     $dados['ctpg_vlr_desconto'] 	= $util->vgr($_POST['ctpg_vlr_desconto']);
     $dados['ctpg_porc_desconto'] 	= $util->vgr($_POST['ctpg_porc_desconto']);
     $dados['ctpg_vlr_juros'] 	    = $util->vgr($_POST['ctpg_vlr_juros']);
     $dados['ctpg_porc_juros'] 	  = $util->vgr($_POST['ctpg_porc_juros']);
     $dados['ctpg_situacao']       = $util->sgr("Pendente");
+    //
+    if($_POST['id_cadastro'] <= 0){
+      $dados['ctpg_inclusao'] 	    = $util->dgr(date('d/m/Y'));
+    }
+    
     //
     $db->gravarInserir($dados, true);
     //

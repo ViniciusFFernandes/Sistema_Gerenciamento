@@ -71,13 +71,16 @@ $paginaRetorno = 'contarec_edita.php';
     $dados['ctrc_idempresa']      = $util->igr($_POST['ctrc_idempresa']);
     $dados['ctrc_vencimento'] 	  = $util->sgr($_POST['ctrc_vencimento']);
     $dados['ctrc_a_vista'] 	      = $util->sgr($_POST['ctrc_a_vista']);
-    $dados['ctrc_inclusao'] 	    = $util->dgr(date('d/m/Y'));
     $dados['ctrc_vlr_bruto'] 	    = $util->vgr($_POST['ctrc_vlr_bruto']);
     $dados['ctrc_vlr_desconto'] 	= $util->vgr($_POST['ctrc_vlr_desconto']);
     $dados['ctrc_porc_desconto'] 	= $util->vgr($_POST['ctrc_porc_desconto']);
     $dados['ctrc_vlr_juros'] 	    = $util->vgr($_POST['ctrc_vlr_juros']);
     $dados['ctrc_porc_juros'] 	  = $util->vgr($_POST['ctrc_porc_juros']);
     $dados['ctrc_situacao']       = $util->sgr("Pendente");
+    //
+    if($_POST['id_cadastro'] <= 0){
+      $dados['ctrc_inclusao'] 	    = $util->dgr(date('d/m/Y'));
+    }
     //
     $db->gravarInserir($dados, true);
     //

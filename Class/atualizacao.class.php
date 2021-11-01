@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.83;
+		private $ultimaVersao = 0.84;
 		private $db;
 		private $parametros;
 		private $util;
@@ -89,13 +89,18 @@
 						ped_fechamento DATETIME NULL,
 						ped_situacao VARCHAR(100) NULL,
 						ped_idforma_pagto int NULL,
+						ped_idmeio_pagto int NULL,
+						ped_idbancos int NULL,
+						ped_idcc int NULL,
+						ped_idempresas int NULL,
+						ped_idtipo_contas int NULL,
 						ped_obs TEXT NULL,
 						ped_qte_parcelas int NULL,
-						ped_total_produtos DECIMAL(10,2) NULL,
+						ped_total_produtos DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 						ped_frete DECIMAL(10,2) NULL,
 						ped_porc_desconto DECIMAL(10,2) NULL,
 						ped_valor_desconto DECIMAL(10,2) NULL,
-						ped_total_pedido DECIMAL(10,2) NULL,
+						ped_total_pedido DECIMAL(10,2) GENERATED ALWAYS AS (ped_total_produtos + ped_frete - ped_valor_desconto) VIRTUAL,
 						PRIMARY KEY (idpedidos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
 			$this->db->executaSQL($sql);
