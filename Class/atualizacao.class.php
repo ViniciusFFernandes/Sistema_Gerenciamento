@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.84;
+		private $ultimaVersao = 0.86;
 		private $db;
 		private $parametros;
 		private $util;
@@ -78,6 +78,51 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_00_86(){
+			//
+			// 24/11/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedidos_contas(
+						idpedidos_contas int(11) NOT NULL AUTO_INCREMENT,
+						pcon_idpedidos int NULL,
+						pcon_idcontarec int NULL,
+						pcon_idmeio_pagto int NULL,
+						pcon_idbancos int NULL,
+						pcon_idcc int NULL,
+						pcon_idempresas int NULL,
+						pcon_idtipo_contas int NULL,
+						pcon_vencimento_dias DATE NOT NULL,
+						pcon_vencimento DATE NOT NULL,
+						pcon_valor DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						PRIMARY KEY (idpedidos_contas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos contas";
+		}
+
+		private function versao_00_85(){
+			//
+			// 24/11/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedidos_itens(
+						idpedidos_itens int(11) NOT NULL AUTO_INCREMENT,
+						peit_idpedidos int NULL,
+						peit_idprodutos int NULL,
+						peit_qte DECIMAL(10,2) NOT NULL DEFAULT 1,
+						peit_vlr_unitario DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						peit_porc_desconto DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						peit_valor_desconto DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						peit_total_pedido DECIMAL(10,2) AS (peit_qte * peit_vlr_unitario - peit_valor_desconto) STORED,
+						PRIMARY KEY (idpedidos_itens)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos itens";
+		}
+
 		private function versao_00_84(){
 			//
 			// 20/08/2021 Vinicius
@@ -100,7 +145,7 @@
 						ped_frete DECIMAL(10,2) NULL,
 						ped_porc_desconto DECIMAL(10,2) NULL,
 						ped_valor_desconto DECIMAL(10,2) NULL,
-						ped_total_pedido DECIMAL(10,2) GENERATED ALWAYS AS (ped_total_produtos + ped_frete - ped_valor_desconto) VIRTUAL,
+						ped_total_pedido DECIMAL(10,2) AS (ped_total_produtos + ped_frete - ped_valor_desconto) STORED,
 						PRIMARY KEY (idpedidos)
 					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
 			$this->db->executaSQL($sql);

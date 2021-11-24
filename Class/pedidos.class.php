@@ -43,5 +43,18 @@
             return $dados;
         }
 
+        public function retornaItensPedido($idpedidos){
+            $sql = "SELECT * 
+                    FROM pedidos_itens 
+                        LEFT JOIN produtos ON (idprodutos = peit_idprodutos)
+                    WHERE peit_idpedidos = " . $idpedidos;
+            //
+            $div = '<div class="row">';
+                $div = '<div class="col-md-12 col-sm-12 col-12">';
+
+                $div = '</div>';
+            $div = '</div>';
+        }
+
     }
 ?>
