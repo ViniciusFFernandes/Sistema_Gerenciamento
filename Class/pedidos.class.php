@@ -48,12 +48,27 @@
                     FROM pedidos_itens 
                         LEFT JOIN produtos ON (idprodutos = peit_idprodutos)
                     WHERE peit_idpedidos = " . $idpedidos;
+            $res = $this->db->consultar($sql);
             //
             $div = '<div class="row">';
-                $div = '<div class="col-md-12 col-sm-12 col-12">';
-
-                $div = '</div>';
-            $div = '</div>';
+                $div .= '<div class="col-md-12 col-sm-12 col-12">';
+                //
+                    foreach($res AS $reg){
+                        $div .= '<div class="row">';
+                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
+                                $div .= $reg['prod_nome']
+                            $div .= '</div>';
+                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
+                                $div .= $reg['prod_nome']
+                            $div .= '</div>';
+                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
+                                $div .= $reg['prod_nome']
+                            $div .= '</div>';
+                        $div .= '</div>';
+                    }
+                //
+                $div .= '</div>';
+            $div .= '</div>';
         }
 
     }
