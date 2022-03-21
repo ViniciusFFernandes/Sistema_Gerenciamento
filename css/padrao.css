@@ -10255,6 +10255,15 @@ a:focus {
   border-bottom: 0.25rem solid #4e73df !important;
 }
 
+.dadosProdPed{
+  font-size: 12px;
+  font-style: italic;
+}
+
+.border-prod {
+  border-bottom: 0.15rem solid #C0C0C0 !important;
+}
+
 .border-left-secondary {
   border-left: 0.25rem solid #858796 !important;
 }

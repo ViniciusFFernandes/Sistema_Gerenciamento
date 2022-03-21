@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.86;
+		private $ultimaVersao = 0.88;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,28 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_88(){
+			//
+			// 30/11/2021 Vinicius
+			//
+			$sql = "ALTER TABLE pedidos_itens CHANGE COLUMN peit_total_pedido peit_total_item DECIMAL(10,2) AS (peit_qte * peit_vlr_unitario - peit_valor_desconto) STORED NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Corrção do campo na tabela de itens do pedido";
+		}
+
+		private function versao_00_87(){
+			//
+			// 30/11/2021 Vinicius
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_idsalarios_funcionarios INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo com o codigo do salario na tabela de contas a pagar";
+		}
 
 		private function versao_00_86(){
 			//
@@ -1496,14 +1518,14 @@
 			fclose($arquivoAtzInfo);
 			//
 			$conexaoFTP = ftp_connect($ftp_server);
-			if($conexaoFTP === false && $manual){
+			if($conexaoFTP === false){
 				echo "Erro ao se conectar com o servidor!";
 				return;
 			}
 			//
 			// login
 			$resultLogin = ftp_login($conexaoFTP, $ftp_user_name, $ftp_user_pass);
-			if($resultLogin === false && $manual){
+			if($resultLogin === false){
 				echo "Erro ao efetuar login no servidor!";
 				return;
 			}

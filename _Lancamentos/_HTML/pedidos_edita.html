@@ -8,7 +8,10 @@
         
         ##includes##
         <script src="../js/_Lancamentos/pedidos.js"></script>
-        <script>##autoComplete_Pessoas##</script>
+        <script>
+            ##autoComplete_Pessoas##
+            ##autoComplete_Produtos##
+        </script>
     </head>
 
     <body id="page-top">
@@ -45,11 +48,11 @@
                                 <div class="col-md-2 col-sm-2 col-6 pb-3 pt-2">
                                 ##ped_situacao##
                                 </div>
-                                <div class="d-block d-sm-none clearfix">&nbsp;</div>
-                                <div class="col-md-4 col-sm-4 col-6 pb-3">
+                                <div class="d-block d-sm-none clearfix"></div>
+                                <div class="col-md-4 col-sm-4 col-9 pb-3">
                                     <input type="datetime-local" class="form-control" id="ped_abertura" name="ped_abertura" value="##ped_abertura##" readonly disabled title="Data de Abertura">
                                 </div>
-                                <div class="col-md-4 col-sm-4 col-6 pb-3">
+                                <div class="col-md-4 col-sm-4 col-9 pb-3">
                                     <input type="datetime-local" class="form-control" id="ped_fechamento" name="ped_fechamento" value="##ped_fechamento##" readonly disabled title="Data de Fechamento">
                                 </div>
                             </div>
@@ -66,15 +69,15 @@
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="nav-item" ><a class="nav-link active" data-toggle="tab" href="#divVazia">-</a></li>
-                                <li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#divProdutos">Produtos</a></li>
-                                <li class="nav-item" ><a class="nav-link" data-toggle="tab" href="#divContas">Contas</a></li>
+                                <li class="nav-item ##escondeTab##" ><a class="nav-link" data-toggle="tab" href="#divProdutos">Produtos</a></li>
+                                <li class="nav-item ##escondeTab##" ><a class="nav-link" data-toggle="tab" href="#divContas">Contas</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="divVazia" class="tab-pane fade pb-3 active show"></div>
                                 <div id="divProdutos" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 pb-3 pt-3" align="center">
-                                            <button type="button" onclick="limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>
+                                            <button type="button" onclick="//limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>
                                         </div>
                                     </div>
                                     ##listaProdutos##
@@ -179,6 +182,68 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="modalProdutos" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+                        <div class="modal-dialog modal-md" role="document">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                            <h4 class="modal-title font-weight-bold">Inserir Produto</h4>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" name="idpedidos_itens" id="idpedidos_itens">
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-12 pb-3">
+                                        ##autoComplete_CampoProdutos##
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Qte" id="peit_qte" name="peit_qte" >
+                                            <span class="input-group-addon" id='peit_sigla_unidade'>&nbsp;&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" class="form-control" placeholder="Unitário" id="peit_unitario" name="peit_unitario" onkeyup="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" class="form-control" placeholder="Descontos" id="peit_desconto" name="peit_unitario" onkeyup="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Desconto" id="peit_desconto_porc" name="peit_desconto_porc">
+                                            <span class="input-group-addon" id='peit_sigla_unidade'>%</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" class="form-control" placeholder="Total" id="peit_total" name="peit_total" onkeyup="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Voltar</button>
+                            <button type="button" onclick="gravarProduto()" class="btn btn-primary">Gravar</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

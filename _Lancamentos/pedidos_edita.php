@@ -1,6 +1,7 @@
 <?php
   require_once("../_BD/conecta_login.php");
   require_once("autoComplete.class.php");
+  require_once("pedidos.class.php");
   //
   //Operações do banco de dados
   if(!empty($_REQUEST['id_cadastro'])){
@@ -11,10 +12,16 @@
     $reg = $db->retornaUmReg($sql);
   }
   //
+  //Inicia a Classe
+  $pedidos = New Pedidos($db);
+  //
   //Gera o autoComplete 
   $autoComplete = new autoComplete();
-  $codigo_js = $autoComplete->gerar("ped_pessoa", "ped_idcliente", "pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)", "CONCAT(pess_nome, ', ', cid_nome, ' - ', est_uf)", "idpessoas", "", "WHERE UPPER(pess_nome) LIKE UPPER('##valor##%') AND (pess_cliente = 'SIM' OR pess_funcionario = 'SIM' OR pess_associado = 'SIM')");
-  $codigo_campo = $autoComplete->criaCampos("ped_pessoa", "ped_idcliente", "Cliente");
+  $codigo_js_pessoas = $autoComplete->gerar("ped_pessoa", "ped_idcliente", "pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)", "CONCAT(pess_nome, ', ', cid_nome, ' - ', est_uf)", "idpessoas", "", "WHERE UPPER(pess_nome) LIKE UPPER('##valor##%') AND (pess_cliente = 'SIM' OR pess_funcionario = 'SIM' OR pess_associado = 'SIM')");
+  $codigo_campo_pessoas = $autoComplete->criaCampos("ped_pessoa", "ped_idcliente", "Cliente");
+  //
+  $codigo_js_produtos = $autoComplete->gerar("prod_nome", "idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%')");
+  $codigo_campo_produtos = $autoComplete->criaCampos("prod_nome", "idprodutos", "Produto", "onchange='buscaDadosProduto()'");
   //
   //Monta variaveis de exibição
   //
@@ -35,7 +42,11 @@
   //
   $btnGravarReabrir = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
   //
+  $escondeTab = 'd-none';
+  //
   if(!empty($reg['idpedidos'])){ 
+    $escondeTab = '';
+    //
     if($reg['ped_idbancos'] > 0){
       $sql = "SELECT * FROM cc WHERE cc_idbancos = " . $reg['ped_idbancos'];
       $comboBoxCC = $html->criaSelectSql("cc_nome", "idcc", "ped_idcc", $reg['ped_idcc'], $sql, "form-control");
@@ -52,6 +63,8 @@
       $btnFechar = '<button type="button" class="btn btn-warning" onclick="chamaGravar(\'fechar\')" >Fechar</button>';
       $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     }
+    //
+    $listaProdutos = $pedidos->retornaItensPedido($reg['idpedidos']);
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -62,8 +75,12 @@
   //Abre o arquivo html e Inclui mensagens e trechos php
   $html = $html->buscaHtml("lancamentos", $parametros);
   $html = str_replace("##Mensagem##", $msg, $html);
-  $html = str_replace("##autoComplete_Pessoas##", $codigo_js, $html);
-  $html = str_replace("##autoComplete_CampoPessoas##", $codigo_campo, $html);
+  $html = str_replace("##autoComplete_Pessoas##", $codigo_js_pessoas, $html);
+  $html = str_replace("##autoComplete_CampoPessoas##", $codigo_campo_pessoas, $html);
+  $html = str_replace("##autoComplete_Produtos##", $codigo_js_produtos, $html);
+  $html = str_replace("##autoComplete_CampoProdutos##", $codigo_campo_produtos, $html);
+  $html = str_replace("##prod_nome##", '', $html);
+  $html = str_replace("##idprodutos##", '', $html);
   $html = str_replace("##id_cadastro##", $reg['idpedidos'], $html);
   $html = str_replace("##idpedidos##", $reg['idpedidos'], $html);
   $html = str_replace("##ped_pessoa##", $reg['pess_nome'], $html);
@@ -76,6 +93,8 @@
   $html = str_replace("##comboBoxBancos##", $comboBoxBancos, $html);
   $html = str_replace("##comboEmpresas##", $comboEmpresas, $html);
   $html = str_replace("##comboBoxCC##", $comboBoxCC, $html);
+  $html = str_replace("##listaProdutos##", $listaProdutos, $html);
+  $html = str_replace("##escondeTab##", $escondeTab, $html);
   $html = str_replace("##ped_frete##", $util->formataMoeda($reg['ped_frete'], 2, true), $html);
   $html = str_replace("##ped_valor_desconto##", $util->formataMoeda($reg['ped_valor_desconto'], 2, true), $html);
   $html = str_replace("##ped_porc_desconto##", $util->formataMoeda($reg['ped_porc_desconto'], 2, true), $html);

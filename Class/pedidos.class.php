@@ -44,31 +44,82 @@
         }
 
         public function retornaItensPedido($idpedidos){
+            //
             $sql = "SELECT * 
                     FROM pedidos_itens 
                         LEFT JOIN produtos ON (idprodutos = peit_idprodutos)
                     WHERE peit_idpedidos = " . $idpedidos;
             $res = $this->db->consultar($sql);
             //
-            $div = '<div class="row">';
+            // if(empty($res)) return; //Retorna em branco caso nao tenha itens
+            //
+            $div = '<div class="row pb-3">';
                 $div .= '<div class="col-md-12 col-sm-12 col-12">';
                 //
+                    $div .= '<div class="row font-weight-bold">';
+                        $div .= '<div class="col-md-3 col-sm-3 d-none d-sm-block">';
+                            $div .= 'Produto';
+                        $div .= '</div>';
+                        $div .= '<div class="col-md-2 col-sm-2 d-none d-sm-block text-right">';
+                            $div .= 'Qte';
+                        $div .= '</div>';
+                        $div .= '<div class="col-md-2 col-sm-2 d-none d-sm-block text-right">';
+                            $div .= 'Unitário';
+                        $div .= '</div>';
+                        $div .= '<div class="col-md-2 col-sm-2 d-none d-sm-block text-right">';
+                            $div .= 'Desconto';
+                        $div .= '</div>';
+                        $div .= '<div class="col-md-2 col-sm-2 d-none d-sm-block text-right">';
+                            $div .= 'Total';
+                        $div .= '</div>';
+                        $div .= '<div class="col-md-1 col-sm-1 d-none d-sm-block text-right">';
+                        $div .= '</div>';
+                    $div .= '</div>';
+                    //
                     foreach($res AS $reg){
-                        $div .= '<div class="row">';
-                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
-                                $div .= $reg['prod_nome']
+                        $div .= '<div class="row border-prod">';
+                            $div .= '<div class="col-md-3 col-sm-3 col-12 pt-2">';
+                                $div .= $reg['idprodutos'] . ' - ' . $reg['prod_nome'];
+                                $div .= '<i style="cursor: pointer; float: right;" class="fas fa-trash-alt pl-1 d-block d-sm-none"  onclick="excluiItem(' . $reg['idpedidos_itens'] . ')"></i>';
+                                $div .= '<i style="cursor: pointer; float: right;" class="far fa-edit pr-1 d-block d-sm-none" onclick="editarItem(' . $reg['idpedidos_itens'] . ')"></i>';
+                                $div .= '<div class="row">';
+                                    $div .= '<div class="col-6 d-block d-sm-none dadosProdPed">';
+                                        $div .= 'Qte: ' . $this->util->formataNumero($reg['peit_qte']);
+                                    $div .= '</div>';
+                                    $div .= '<div class="col-6 d-block d-sm-none dadosProdPed">';
+                                        $div .= 'Unitário: ' . $this->util->formataMoeda($reg['peit_vlr_unitario']);
+                                    $div .= '</div>';
+                                    $div .= '<div class="col-6 d-block d-sm-none dadosProdPed">';
+                                        $div .= 'Desconto: ' . $this->util->formataMoeda($reg['peit_valor_desconto']);
+                                    $div .= '</div>';
+                                    $div .= '<div class="col-6 d-block d-sm-none dadosProdPed">';
+                                        $div .= 'Total: ' . $this->util->formataMoeda($reg['peit_total_item']);
+                                    $div .= '</div>';
+                                $div .= '</div>';
                             $div .= '</div>';
-                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
-                                $div .= $reg['prod_nome']
+                            $div .= '<div class="col-md-2 col-sm-2 pt-2 d-none d-sm-block text-right">';
+                                $div .= $this->util->formataNumero($reg['peit_qte']);
                             $div .= '</div>';
-                            $div .= '<div class="col-md-12 col-sm-12 col-12">';
-                                $div .= $reg['prod_nome']
+                            $div .= '<div class="col-md-2 col-sm-2 pt-2 d-none d-sm-block text-right">';
+                                $div .= $this->util->formataMoeda($reg['peit_vlr_unitario']);
+                            $div .= '</div>';
+                            $div .= '<div class="col-md-2 col-sm-2 pt-2 d-none d-sm-block text-right">';
+                                $div .= $this->util->formataMoeda($reg['peit_valor_desconto']);
+                            $div .= '</div>';
+                            $div .= '<div class="col-md-2 col-sm-2 pt-2 d-none d-sm-block text-right">';
+                                $div .= $this->util->formataMoeda($reg['peit_total_item']);
+                            $div .= '</div>';
+                            $div .= '<div class="col-md-1 col-sm-1 pt-2 d-none d-sm-block text-right">';
+                                $div .= '<i style="cursor: pointer;" class="far fa-edit mr-2" onclick="editarItem(' . $reg['idpedidos_itens'] . ')"></i>';
+                                $div .= '<i style="cursor: pointer;" class="fas fa-trash-alt ml-2"  onclick="excluiItem(' . $reg['idpedidos_itens'] . ')"></i>';
                             $div .= '</div>';
                         $div .= '</div>';
                     }
                 //
                 $div .= '</div>';
             $div .= '</div>';
+            //
+            return $div;
         }
 
     }

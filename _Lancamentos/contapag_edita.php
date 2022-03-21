@@ -71,6 +71,7 @@
   $html = str_replace("##autoComplete_Pessoas##", $codigo_js, $html);
   $html = str_replace("##autoComplete_CampoPessoas##", $codigo_campo, $html);
   $html = str_replace("##id_cadastro##", $reg['idcontapag'], $html);
+  $html = str_replace("##idEnvio##", $reg['ctpg_idsalarios_funcionarios'], $html);
   $html = str_replace("##idcontapag##", $reg['idcontapag'], $html);
   $html = str_replace("##ctpg_pessoa##", $reg['pess_nome'], $html);
   $html = str_replace("##ctpg_idcliente##", $reg['idpessoas'], $html);

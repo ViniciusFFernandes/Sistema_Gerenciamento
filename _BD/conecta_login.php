@@ -16,7 +16,7 @@ require_once("atualizacao.class.php");
 require_once("tarefas_diarias.class.php");
 require_once("usuarios.class.php");
 require_once("html.class.php");
-require_once("constantes.vf");
+require_once("constantes.strap");
 //
 //Se não existe define como null para evitar avisos de erro
 if (!isset($_POST['operacao'])) {

@@ -183,14 +183,16 @@ if ($_POST['operacao'] == 'fechar'){
     $db->setTabela("contapag", "idcontapag");
     //
     unset($dados);
-    $dados['ctpg_idcliente'] 	    = $util->igr($reg['idpessoas']);
-    $dados['ctpg_idtipo_contas']  = $util->igr($idtipo_conta);
-    $dados['ctpg_idbancos']       = $util->igr($idbancos);
-    $dados['ctpg_idcc']           = $util->igr($idcc);
-    $dados['ctpg_idmeio_pagto']   = $util->igr($idmeio_pagto);
-    $dados['ctpg_vencimento'] 	  = $util->dgr(date('d/m/Y'));
-    $dados['ctpg_inclusao'] 	    = $util->dgr(date('d/m/Y'));
-    $dados['ctpg_vlr_bruto'] 	    = $reg['safu_total'];
+    $dados['ctpg_idcliente'] 	              = $util->igr($reg['idpessoas']);
+    $dados['ctpg_idsalarios_funcionarios']  = $util->igr($reg['idsalarios_funcionarios']);
+    $dados['ctpg_idtipo_contas']            = $util->igr($idtipo_conta);
+    $dados['ctpg_idbancos']                 = $util->igr($idbancos);
+    $dados['ctpg_idcc']                     = $util->igr($idcc);
+    $dados['ctpg_idmeio_pagto']             = $util->igr($idmeio_pagto);
+    $dados['ctpg_idempresa']                = $util->igr(CODIGO_EMPRESA);
+    $dados['ctpg_vencimento'] 	            = $util->dgr(date('d/m/Y'));
+    $dados['ctpg_inclusao'] 	              = $util->dgr(date('d/m/Y'));
+    $dados['ctpg_vlr_bruto'] 	              = $reg['safu_total'];
     //
     $descontoPorFalta = $salarios->geraDescontoFaltas($reg['safu_total'], $reg['safu_dias'], $reg['sala_mes'], $reg['sala_ano']);
     $dados['ctpg_vlr_desconto'] 	= $descontoPorFalta;

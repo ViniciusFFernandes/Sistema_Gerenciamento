@@ -34,6 +34,7 @@
     }
     //
     $sql = "SELECT FORMAT(cole_qte, 2, 'de_DE') AS qte_coleta, 
+                DATE_FORMAT(STR_TO_DATE(cole_data_entrada, '%Y-%m-%d'), '%d/%m/%Y') as dataEntrada,
                 prod_nome,
                 cole_placa_veiculo,
                 cole_qte
@@ -46,15 +47,19 @@
         $sql .= " AND cole_idprodutos = {$_REQUEST['idprodutos']}";
     }
     //
+    $sql .= " ORDER BY cole_data_entrada";
+    //
     $res = $db->consultar($sql);
     $tabelas = new Tabelas();
     //
     unset($colunas);
     $colunas['prod_nome'] = "";
-    $colunas['cole_placa_veiculo'] = "width='25%'";
+    $colunas['dataEntrada'] = "width='15%'";
+    $colunas['cole_placa_veiculo'] = "width='20%'";
     $colunas['qte_coleta'] = "width='15%' align='right'";
     //
     $cabecalho['Produto'] = '';
+    $cabecalho['Data'] = '';
     $cabecalho['Placo Veiculo'] = '';
     $cabecalho['Quantidade'] = '';
     //

@@ -23,12 +23,12 @@ if ($_POST['operacao'] == "buscaCadastro") {
     unset($dados);
     $dados['idpedidos'] = "width='6%' ";
     $dados['pess_nome'] = "";
-    $dados['abertura'] = "align='right' class='d-none d-sm-table-cell'";
+    $dados['abertura'] = "class='d-none d-sm-table-cell'";
     $dados['ped_situacao'] = "";
     //
     $cabecalho["Código"] = "";
     $cabecalho["Cliente"] = "";
-    $cabecalho["Abertura"] = "align='right' class='d-none d-sm-table-cell'";
+    $cabecalho["Abertura"] = "class='d-none d-sm-table-cell'";
     $cabecalho["Situação"] = "";
     //
     echo $tabelas->geraTabelaBusca($res, $db, $dados, $paginaRetorno, $cabecalho);

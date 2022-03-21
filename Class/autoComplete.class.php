@@ -44,6 +44,7 @@
 					            }
 					          })
 					          .autocomplete('instance')._renderItem = function( ul, item ) {
+								$('.ui-autocomplete').css('z-index', '99999');
 					            return $( '<li>' )
 					              .append( '<div>' + item.mostra + '</div>' )
 					              .appendTo( ul );
@@ -63,11 +64,11 @@
 
 		}
 
-		public function criaCampos($campoTexto, $campoId, $placeholder){
+		public function criaCampos($campoTexto, $campoId, $placeholder, $js = ""){
 			$campos = '<div class="input-group">
 						<input type="text" class="form-control" id="' . $campoTexto . '" name="' . $campoTexto . '" value="##' . $campoTexto . '##" placeholder="' . $placeholder . '">
 						<span class="input-group-addon" style="padding: 0x 6px;">
-							<input type="text" class="idAutoComplementar" size="2" readonly id="' . $campoId . '" name="' . $campoId . '" value="##' . $campoId . '##">
+							<input type="text" class="idAutoComplementar" size="2" readonly id="' . $campoId . '" name="' . $campoId . '" value="##' . $campoId . '##" ' . $js . '>
 						</span>
 					</div>';
 			return $campos;

@@ -76,3 +76,17 @@ function carregaComboBoxCC(){
         }, 'html');
     }
 }
+
+function gravarProduto(){
+    var id_cadastro = ;
+    var idprodutos = ;
+    var peit_qte = ;
+    var peit_unitario = ;
+    var peit_desconto = ;
+    var peit_desconto_porc = ;
+    var peit_total = ;
+}
+
+function buscaDadosProduto(){
+    var idprodutos = ;
+}
