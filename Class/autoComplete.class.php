@@ -1,7 +1,7 @@
 <?php
 	class autoComplete{
 
-		public function gerar($inputConsulta, $inputId, $tabela, $campoMostra, $campoId, $campoValor = '', $where = '', $qteLimite = 10){
+		public function gerar($inputConsulta, $inputId, $tabela, $campoMostra, $campoId, $campoValor = '', $where = '', $qteLimite = 10, $functionSelected = ''){
 			//Caso esteja em branco vai setar o campoMostra
 			if(empty($campoValor)){
 				$campoValor = $campoMostra;
@@ -40,6 +40,7 @@
 					            select: function(event, ui) {
 					                $('#{$inputConsulta}').val(ui.item.valor);
 					                $('#{$inputId}').val(ui.item.id);
+									{$functionSelected}
 					                return false;
 					            }
 					          })
@@ -64,11 +65,11 @@
 
 		}
 
-		public function criaCampos($campoTexto, $campoId, $placeholder, $js = ""){
+		public function criaCampos($campoTexto, $campoId, $placeholder){
 			$campos = '<div class="input-group">
 						<input type="text" class="form-control" id="' . $campoTexto . '" name="' . $campoTexto . '" value="##' . $campoTexto . '##" placeholder="' . $placeholder . '">
 						<span class="input-group-addon" style="padding: 0x 6px;">
-							<input type="text" class="idAutoComplementar" size="2" readonly id="' . $campoId . '" name="' . $campoId . '" value="##' . $campoId . '##" ' . $js . '>
+							<input type="text" class="idAutoComplementar" size="2" readonly id="' . $campoId . '" name="' . $campoId . '" value="##' . $campoId . '##">
 						</span>
 					</div>';
 			return $campos;

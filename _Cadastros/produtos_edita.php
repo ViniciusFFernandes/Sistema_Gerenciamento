@@ -6,7 +6,7 @@
   //
   //Inicia classes nescessarias
   // $html = new html($db, $util);
-  $produtos = new produtos($db, $util);
+  $produtos = new produtos($db);
   //
   //Gera o autoComplete 
   $autoComplete = new autoComplete();

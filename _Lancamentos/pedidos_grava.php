@@ -2,6 +2,7 @@
 require_once("../_BD/conecta_login.php");
 require_once("tabelas.class.php");
 require_once("pedidos.class.php");
+require_once("produtos.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'pedidos_edita.php';
@@ -128,4 +129,57 @@ if($_POST['operacao'] == 'geraComboBoxCC'){
     $comboBoxTipoConta = $html->criaSelectSql("cc_nome", "idcc", $nomeCampo, '', $sql, "form-control");
     echo $comboBoxTipoConta;
 }
- ?>
+
+if($_POST['operacao'] == 'buscaDadosProduto'){
+    $produtos = new produtos($db);
+    //
+    $dados = $produtos->getDadosProdutos($_POST['idprodutos']); 
+    //
+    $ret = array();
+    $ret['prod_preco'] = $util->formataMoeda($dados['prod_preco_tabela']);
+    $ret['prod_unidade'] = $dados['uni_sigla'];
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'gravarProduto'){
+    //
+    $db->beginTransaction();
+    //
+    $db->setTabela("pedidos_itens", "idpedidos_itens");
+    //
+    unset($dados);
+    $dados['id']                    = $_POST['id_cadastro'];
+    $dados['peit_idpedidos'] 	    = $util->igr($_POST['idpedidos']);
+    $dados['peit_idprodutos']       = $util->igr($_POST['idprodutos']);
+    $dados['peit_qte']              = $util->vgr($_POST['peit_qte']);
+    $dados['peit_vlr_unitario']     = $util->vgr($_POST['peit_unitario']);
+    $dados['peit_porc_desconto']    = $util->vgr($_POST['peit_desconto_porc']);
+    $dados['peit_valor_desconto']   = $util->vgr($_POST['peit_desconto']);
+    //    
+    $db->gravarInserir($dados, false);
+    //
+    $ret = array();
+    //
+    if($db->erro()){
+        $ret['retorno'] = "erro";
+        $ret['msg'] = $db->getErro();
+    }else{
+        $ret['retorno'] = "ok";
+        $db->commit();
+    }
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'attlistaProdutos'){
+    $pedidos = new Pedidos($db);
+    $listaProdutos = $pedidos->retornaItensPedido($_POST['idpedidos']);
+    //
+    echo $listaProdutos;
+    exit;
+}
+
+?>

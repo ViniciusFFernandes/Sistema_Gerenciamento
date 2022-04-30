@@ -1,12 +1,13 @@
 <?php
+require_once("util.class.php");
 
 class produtos{
 	private $db;
 	private $util;
 
-	function __construct($db, $util){
+	function __construct($db){
 		$this->db = $db;
-		$this->util = $util;
+		$this->util = new Util();
 	}
 	public function getItensFormulaEdita($idprodutos){
 		$itensFormula = '<div id="formula" class="tab-pane fade" style="padding-top: 5px;">
@@ -93,6 +94,18 @@ class produtos{
 	    $itensFormula .= '</div>';
 	    //
 	   	return $itensFormula;
+	}
+
+	public function getDadosProdutos($idprodutos){
+		$sql = "SELECT * 
+						FROM produtos 
+							LEFT JOIN grupos ON (prod_idgrupos = idgrupos) 
+							LEFT JOIN subgrupos ON (prod_idsubgrupos = idsubgrupos) 
+							LEFT JOIN unidades ON (prod_idunidades = idunidades) 
+						WHERE idprodutos = {$idprodutos}";
+	    $reg = $this->db->retornaUmReg($sql);
+		//
+		return $reg;
 	}
 }
 ?>

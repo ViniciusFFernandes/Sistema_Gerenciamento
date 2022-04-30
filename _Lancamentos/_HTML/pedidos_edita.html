@@ -80,7 +80,9 @@
                                             <button type="button" onclick="//limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>
                                         </div>
                                     </div>
-                                    ##listaProdutos##
+                                    <span id="listaProdutos">
+                                        ##listaProdutos##
+                                    </span>
                                 </div>
                                 <div id="divContas" class="tab-pane fade">
                                     <div class="row">
@@ -187,7 +189,7 @@
                         <div class="modal-dialog modal-md" role="document">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                            <h4 class="modal-title font-weight-bold">Inserir Produto</h4>
+                                <h4 class="modal-title font-weight-bold">Inserir Produto</h4>
                             </div>
                             <div class="card-body">
                                 <input type="hidden" name="idpedidos_itens" id="idpedidos_itens">
@@ -199,8 +201,8 @@
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-6 pb-3">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Qte" id="peit_qte" name="peit_qte" >
-                                            <span class="input-group-addon" id='peit_sigla_unidade'>&nbsp;&nbsp;</span>
+                                            <input type="text" class="form-control" placeholder="Qte" id="peit_qte" name="peit_qte" onkeyup="calculoPreco()" readonly>
+                                            <span class="input-group-addon" id='peit_sigla_unidade' style="font-weight: bold;">&nbsp;&nbsp;</span>
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +210,7 @@
                                     <div class="col-md-6 col-sm-6 col-6 pb-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" class="form-control" placeholder="Unitário" id="peit_unitario" name="peit_unitario" onkeyup="">
+                                            <input type="text" class="form-control" placeholder="Unitário" id="peit_unitario" name="peit_unitario" onkeyup="calculoPreco()" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -216,13 +218,13 @@
                                     <div class="col-md-6 col-sm-6 col-6 pb-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" class="form-control" placeholder="Descontos" id="peit_desconto" name="peit_unitario" onkeyup="">
+                                            <input type="text" class="form-control" placeholder="Descontos" id="peit_desconto" name="peit_unitario" onkeyup="calculoDesconto('vlr')" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-6 pb-3">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Desconto" id="peit_desconto_porc" name="peit_desconto_porc">
-                                            <span class="input-group-addon" id='peit_sigla_unidade'>%</span>
+                                            <input type="text" class="form-control" placeholder="Desconto" id="peit_desconto_porc" name="peit_desconto_porc" onkeyup="calculoDesconto('porc')" readonly>
+                                            <span class="input-group-addon">%</span>
                                         </div>
                                         
                                     </div>
@@ -231,7 +233,7 @@
                                     <div class="col-md-6 col-sm-6 col-6 pb-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">R$</span>
-                                            <input type="text" class="form-control" placeholder="Total" id="peit_total" name="peit_total" onkeyup="">
+                                            <input type="text" class="form-control" placeholder="Total" id="peit_total" name="peit_total" onkeyup="" readonly>
                                         </div>
                                     </div>
                                 </div>

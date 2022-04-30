@@ -20,8 +20,8 @@
   $codigo_js_pessoas = $autoComplete->gerar("ped_pessoa", "ped_idcliente", "pessoas LEFT JOIN cidades ON (pess_idcidades = idcidades) LEFT JOIN estados ON (cid_idestados = idestados)", "CONCAT(pess_nome, ', ', cid_nome, ' - ', est_uf)", "idpessoas", "", "WHERE UPPER(pess_nome) LIKE UPPER('##valor##%') AND (pess_cliente = 'SIM' OR pess_funcionario = 'SIM' OR pess_associado = 'SIM')");
   $codigo_campo_pessoas = $autoComplete->criaCampos("ped_pessoa", "ped_idcliente", "Cliente");
   //
-  $codigo_js_produtos = $autoComplete->gerar("prod_nome", "idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%')");
-  $codigo_campo_produtos = $autoComplete->criaCampos("prod_nome", "idprodutos", "Produto", "onchange='buscaDadosProduto()'");
+  $codigo_js_produtos = $autoComplete->gerar("prod_nome", "idprodutos", "produtos", "prod_nome", "idprodutos", "", "WHERE UPPER(prod_nome) LIKE UPPER('##valor##%')", 10, 'buscaDadosProduto()');
+  $codigo_campo_produtos = $autoComplete->criaCampos("prod_nome", "idprodutos", "Produto");
   //
   //Monta variaveis de exibição
   //
