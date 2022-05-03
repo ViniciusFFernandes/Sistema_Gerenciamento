@@ -82,7 +82,7 @@
 			//
 			// 30/11/2021 Vinicius
 			//
-			$sql = "ALTER TABLE pedidos_itens CHANGE COLUMN peit_total_pedido peit_total_item DECIMAL(10,2) AS (peit_qte * peit_vlr_unitario - peit_valor_desconto) STORED NULL";
+			$sql = "ALTER TABLE pedidos_itens CHANGE COLUMN peit_total_pedido peit_total_item DECIMAL(10,2) AS (peit_qte * peit_vlr_unitario - peit_valor_desconto) STORED";
 			$this->db->executaSQL($sql); 
 			//
 			//Mensagem para o usuario
