@@ -61,8 +61,8 @@ $paginaRetorno = 'contapag_edita.php';
     //
     $db->setTabela("contapag", "idcontapag");
     //
-    if($_POST['ctpg_idempresas'] <= 0){
-      $_POST['ctpg_idempresas'] = CODIGO_EMPRESA;
+    if($_POST['ctpg_idempresa'] <= 0){
+      $_POST['ctpg_idempresa'] = CODIGO_EMPRESA;
     }
     //
     unset($dados);

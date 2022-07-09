@@ -61,6 +61,10 @@ $paginaRetorno = 'contarec_edita.php';
     //
     $db->setTabela("contarec", "idcontarec");
     //
+    if($_POST['ctrc_idempresa'] <= 0){
+      $_POST['ctrc_idempresa'] = CODIGO_EMPRESA;
+    }
+    //
     unset($dados);
     $dados['id']                  = $_POST['id_cadastro'];
     $dados['ctrc_idcliente'] 	    = $util->igr($_POST['ctrc_idcliente']);

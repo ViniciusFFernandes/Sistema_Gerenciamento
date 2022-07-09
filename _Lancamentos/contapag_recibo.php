@@ -27,6 +27,8 @@
     }
     //
     //
+    if(empty($reg['ctpg_idempresa'])) $reg['ctpg_idempresa'] = CODIGO_EMPRESA;
+    //
     $sqlEmpresas = "SELECT *
                     FROM empresas 
                         LEFT JOIN cidades ON (idcidades = emp_idcidades) 
