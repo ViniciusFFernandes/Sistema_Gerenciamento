@@ -26,6 +26,9 @@
   $sql = "SELECT * FROM funcoes";
   $comboBoxFuncoes = $html->criaSelectSql("func_nome", "idfuncoes", "pess_idfuncoes", $reg['pess_idfuncoes'], $sql, "form-control", "", true, "Selecione uma Função");
   //
+  $sql = "SELECT * FROM empresas";
+  $comboBoxEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "pess_idempresas", $reg['pess_idempresas'], $sql, "form-control", "", true, "Selecione a Empresa");
+  //
   if(!empty($reg['idpessoas'])){ 
     $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;color: #54565d;">';
     $editaLogin .=  '&nbsp;<i class="fas fa-user-lock"></i>';
@@ -81,6 +84,7 @@
   $html = str_replace("##pess_rg##", $reg['pess_rg'], $html);
   $html = str_replace("##comboBoxSetores##", "$comboBoxSetores", $html);
   $html = str_replace("##comboBoxFuncoes##", $comboBoxFuncoes, $html);
+  $html = str_replace("##comboBoxEmpresas##", $comboBoxEmpresas, $html);
   $html = str_replace("##pess_endereco##", $reg['pess_endereco'], $html);
   $html = str_replace("##pess_endereco_numero##", $reg['pess_endereco_numero'], $html);
   $html = str_replace("##pess_cidades##", $cidade, $html);

@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.88;
+		private $ultimaVersao = 0.90;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,53 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_90(){
+			//
+			// 22/09/2022 Vinicius
+			//
+			$sql = "CREATE TRIGGER pedidos_itens_insert
+						AFTER INSERT
+						ON pedidos_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedidos set ped_total_produtos = (ped_total_produtos + NEW.peit_total_item) WHERE idpedidos = NEW.peit_idpedidos;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			$sql = "CREATE TRIGGER pedidos_itens_update
+						AFTER UPDATE
+						ON  pedidos_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedidos set ped_total_produtos = (ped_total_produtos - OLD.peit_total_item) WHERE idpedidos = OLD.peit_idpedidos;
+								UPDATE pedidos set ped_total_produtos = (ped_total_produtos + NEW.peit_total_item) WHERE idpedidos = NEW.peit_idpedidos;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			$sql = "CREATE TRIGGER pedidos_itens_delete
+						AFTER delete
+						ON  pedidos_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedidos set ped_total_produtos = (ped_total_produtos - OLD.peit_total_item) WHERE idpedidos = OLD.peit_idpedidos;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da TRIGGER para gerar os valores de produtos no pedido";
+		}
+
+		private function versao_00_89(){
+			//
+			// 30/11/2021 Vinicius
+			//
+			$sql = "ALTER TABLE pessoas ADD pess_idempresas INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo com o codigo da empresa na tabela de pessoas";
+		}
 
 		private function versao_00_88(){
 			//
@@ -1089,8 +1136,8 @@
 			//
 			$this->parametros->cadastraParametros("sistema: data da ultima atualizacao", "", "Parametro usado para baixar novas versões do sistema", "parametro");
 			$this->parametros->cadastraParametros("sistema: endereco do servidor ftp", "files.000webhost.com", "Parametro usado para se conectar no servidor ftp", "parametro"); 
-			$this->parametros->cadastraParametros("sistema: usuario do servidor ftp", "sistematccbackup", "Parametro usado para se conectar no servidor ftp", "parametro");
-			$this->parametros->cadastraParametros("sistema: senha do servidor ftp", "viniciusff1", "Parametro usado para se conectar no servidor ftp", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: usuario do servidor ftp", "servidorbkpvweb", "Parametro usado para se conectar no servidor ftp", "parametro");
+			$this->parametros->cadastraParametros("sistema: senha do servidor ftp", "viniciusFF1!", "Parametro usado para se conectar no servidor ftp", "parametro"); 
 			//
 			//Mensagem para o usuario
 			return "Criação de parametro de data da ultima atualização";

@@ -12,9 +12,16 @@
                 WHERE idpessoas = {$_REQUEST['id_cadastro']}";
         $reg = $db->retornaUmReg($sql);
     }else{
-        $html->mostraErro("Pessoa não encontrada!<br>Código não infomado!");
+        $html->mostraErro("Pessoa não encontrada!<br>Código não infomado!", '', true);
         exit;
     }
+    //
+    //Valida se é um associado 
+    if($reg['pess_associado'] != 'SIM'){
+        $html->mostraErro("Esta pessoa não é um associad!<br>Impressão de ficha não permitida!", '', true);
+        exit;
+    }
+    //
     if($reg['idpessoas'] > 0){
         //
         if(empty($reg['func_nome'])) $reg['func_nome'] = "Não Informado";

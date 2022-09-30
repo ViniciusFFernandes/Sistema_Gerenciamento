@@ -26,7 +26,7 @@
 			return $comboBox;
 		}
 
-		public function mostraErro($mensagem, $link = null){
+		public function mostraErro($mensagem, $link = null, $fechaAba = false){
 			echo '
 			<!DOCTYPE html>
 			<html lang="pt">
@@ -52,6 +52,8 @@
 							<div class="card-footer">' ;
 			if ($link != "") {
 				echo '<button class="btn btn-danger btn-lg" onclick="window.location.replace(\'' . $link . '\');">Voltar</button>';
+			}elseif($fechaAba){
+				echo '<button class="btn btn-danger btn-lg" onclick="window.close();">Fechar</button>';
 			}else{
 				echo '<button class="btn btn-danger btn-lg" onclick="window.history.back();">Voltar</button>';
 			}

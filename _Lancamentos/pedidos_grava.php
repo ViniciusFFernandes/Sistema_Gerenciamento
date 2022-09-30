@@ -143,6 +143,16 @@ if($_POST['operacao'] == 'buscaDadosProduto'){
     exit;
 }
 
+if($_POST['operacao'] == 'atzTotalPedido'){
+    $sql = "SELECT ped_total_pedido 
+            FROM pedidos 
+            WHERE idpedidos = {$_REQUEST['id_cadastro']}";
+    $reg = $db->retornaUmReg($sql);
+    //
+    echo json_encode($reg);
+    exit;
+}
+
 if($_POST['operacao'] == 'gravarProduto'){
     //
     $db->beginTransaction();
@@ -168,6 +178,25 @@ if($_POST['operacao'] == 'gravarProduto'){
     }else{
         $ret['retorno'] = "ok";
         $db->commit();
+    }
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'editarProduto'){
+
+}
+
+if($_POST['operacao'] == 'excluirProduto'){
+    $db->setTabela("pedidos_itens", "idpedidos_itens");
+    $db->excluir($_POST['id_cadastro']);
+    //
+    if($db->erro()){
+        $ret['retorno'] = "erro";
+        $ret['msg'] = $db->getErro();
+    }else{
+        $ret['retorno'] = "ok";
     }
     //
     echo json_encode($ret);

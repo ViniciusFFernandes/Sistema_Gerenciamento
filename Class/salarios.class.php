@@ -37,8 +37,9 @@ class Salarios{
 		//
 		$sql = "SELECT * FROM salarios WHERE idsalarios = " . $idsalarios;
 		$situacao = $this->db->retornaUmCampoSql($sql, "sala_situacao"); 
+		$regSal = $this->db->retornaUmReg($sql);
 		$readonlye = '';
-		if($situacao != 'Aberto'){
+		if($regSal['sala_situacao'] != 'Aberto'){
 			$readonlye = ' readonly="true" ';
 		}
 		//
@@ -69,6 +70,7 @@ class Salarios{
 						$linhaFuncionarios .= '<span style="margin-left: 5px;" id="spanAtt_' . $reg['idsalarios_funcionarios'] . '">&nbsp;</span>';
 					}else{
 						$linhaFuncionarios .= '<button type="button" class="btn btn-light" id="btnImprimir_' . $reg['idsalarios_funcionarios'] . '" onclick="imprimir(\'contapag_recibo_associado.php\', ' . $reg['idsalarios_funcionarios'] . ')"><i class="fas fa-print text-primary"></i></button>';
+						$linhaFuncionarios .= '<button type="button" class="btn btn-light" id="btnImprimirCesta_' . $reg['idsalarios_funcionarios'] . '" onclick="imprimir(\'../_Cadastros/pessoas_recibo_cesta.php\', \'' . $reg['safu_idpessoas'] . '&mesano=' . $regSal['sala_mes'] . '-' . $regSal['sala_ano'] . '\')"><i class="fas fa-print text-primary"></i></button>';
 					}
 				$linhaFuncionarios .= '</div>';
 			$linhaFuncionarios .= '</div>';

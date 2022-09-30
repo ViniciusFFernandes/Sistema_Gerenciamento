@@ -86,6 +86,10 @@ function imprimir(link, id){
     window.open(linkCompleto, '_blank');
 }
 
+function imprimir2(link){
+    window.open(link, '_blank');
+}
+
 function moeda(a, e, r, t) {
     let n = ""
       , h = j = 0

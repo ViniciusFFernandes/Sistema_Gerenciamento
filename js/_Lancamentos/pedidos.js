@@ -174,6 +174,17 @@ function calculoPreco(){
     $("#peit_total").val(valor_total.toLocaleString('pt-BR'));
 }
 
+function atzTotalPedido(){
+    var id_cadastro = $("#idpedidos").val();
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'atzTotalPedido',
+        id_cadastro: id_cadastro
+    }, function(data){
+        $("#ped_total_pedido").val(data.ped_total_pedido);
+    }, "json");
+}
+
 function gravarProduto(){
     var id_cadastro = $("#idpedidos_itens").val();
     var idprodutos = $("#idprodutos").val();
@@ -216,6 +227,58 @@ function gravarProduto(){
     }, "json");
 }
 
+function editarItem(idpedidos_itens){
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'editarProduto',
+        id_cadastro: idpedidos_itens,
+        idpedidos: idpedidos,
+        idprodutos: idprodutos,
+        peit_qte: peit_qte,
+        peit_unitario: peit_unitario,
+        peit_desconto: peit_desconto,
+        peit_desconto_porc: peit_desconto_porc
+    }, function(data){
+        if(data.retorno == 'ok'){
+            $("#idpedidos_itens").val('');
+            $("#prod_nome").val('');
+            $("#idprodutos").val('');
+            $("#peit_qte").val('');
+            $("#peit_unitario").val('');
+            $("#peit_desconto").val('');
+            $("#peit_desconto_porc").val('');
+            $("#peit_total").val('');
+            $("#peit_sigla_unidade").html('');
+            $("#peit_qte").attr("readonly", true);
+            $("#peit_unitario").attr("readonly", true);
+            $("#peit_desconto").attr("readonly", true);
+            $("#peit_desconto_porc").attr("readonly", true);
+            //
+            attListaProdutos();
+        }else{
+            alertaGrande('Erro ao buscar produto produto');
+            console.log(data.msg);
+        }
+    }, "json");
+}
+
+
+function excluiItem(idpedidos_itens){
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'excluirProduto',
+        id_cadastro: idpedidos_itens
+    }, function(data){
+        if(data.retorno == 'ok'){
+            attListaProdutos();
+        }else{
+            alertaGrande('Erro ao excluir produto');
+            console.log(data.msg);
+        }
+    }, "json");
+}
+
+
 function attListaProdutos(){
     var idpedidos = $("#idpedidos").val();
     //
@@ -225,4 +288,6 @@ function attListaProdutos(){
     }, function(data){
         $("#listaProdutos").html(data)
     }, "html");
+    //
+    atzTotalPedido();
 }
