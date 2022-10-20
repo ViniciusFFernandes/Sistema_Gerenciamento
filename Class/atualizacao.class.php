@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.90;
+		private $ultimaVersao = 0.91;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,16 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_91(){
+			//
+			// 09/07/2021 Vinicius
+			//
+			$this->cadastraPrograma("pessoas_recibo_cesta.php", 'Impressões');
+			//
+			//Mensagem para o usuario
+			return "Cadastro de prgramas para recibo de cesta";
+		}
 
 		private function versao_00_90(){
 			//
