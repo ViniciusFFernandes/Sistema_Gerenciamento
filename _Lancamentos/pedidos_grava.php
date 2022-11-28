@@ -46,8 +46,8 @@ if ($_POST['operacao'] == 'gravar'){
         $sql = "SELECT * FROM pedidos WHERE idpedidos = " . $_POST['id_cadastro'];
         $reg = $db->retornaUmReg($sql);
         //
-        if($reg['ped_situacao'] != "Pendente"){
-            $util->mostraErro("Este pedido não está pendente e não pode ser alterada!");
+        if($reg['ped_situacao'] != "Aberto"){
+            $util->mostraErro("Este pedido não está aberto e não pode ser alterada!");
             exit;
         }
     }
@@ -73,7 +73,7 @@ if ($_POST['operacao'] == 'gravar'){
     $dados['ped_frete'] 	        = $util->vgr($_POST['ped_frete']);
     $dados['ped_porc_desconto'] 	= $util->vgr($dadosDesconto['porcentagem']);
     $dados['ped_valor_desconto'] 	= $util->vgr($dadosDesconto['valor']);
-    $dados['ped_situacao']         = $util->sgr("Pendente");
+    $dados['ped_situacao']         = $util->sgr("Aberto");
     
     if($_POST['id_cadastro'] <= 0){
         $dados['ped_abertura'] 	        = $util->dgr(date('d/m/Y H:i'));
@@ -167,6 +167,7 @@ if($_POST['operacao'] == 'gravarProduto'){
     $dados['peit_vlr_unitario']     = $util->vgr($_POST['peit_unitario']);
     $dados['peit_porc_desconto']    = $util->vgr($_POST['peit_desconto_porc']);
     $dados['peit_valor_desconto']   = $util->vgr($_POST['peit_desconto']);
+    $dados['peit_unidade_sigla']    = $util->sgr($_POST['peit_sigla_unidade']);
     //    
     $db->gravarInserir($dados, false);
     //
@@ -185,7 +186,20 @@ if($_POST['operacao'] == 'gravarProduto'){
 }
 
 if($_POST['operacao'] == 'editarProduto'){
-
+    $sql = "SELECT * 
+            FROM pedidos_itens
+                JOIN produtos ON (idprodutos = peit_idprodutos)
+            WHERE idpedidos_itens = {$_REQUEST['id_cadastro']}";
+    $reg = $db->retornaUmReg($sql);
+    //
+    $reg['peit_vlr_unitario'] = $util->formataMoeda($reg['peit_vlr_unitario']);
+    $reg['peit_qte'] = $util->formataMoeda($reg['peit_qte']);
+    $reg['peit_valor_desconto'] = $util->formataMoeda($reg['peit_valor_desconto']);
+    $reg['peit_porc_desconto'] = $util->formataMoeda($reg['peit_porc_desconto']);
+    $reg['peit_total_item'] = $util->formataMoeda($reg['peit_total_item']);
+    //
+    echo json_encode($reg);
+    exit;
 }
 
 if($_POST['operacao'] == 'excluirProduto'){

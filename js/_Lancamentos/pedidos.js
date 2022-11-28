@@ -185,6 +185,22 @@ function atzTotalPedido(){
     }, "json");
 }
 
+function limpaModalProd(){
+    $("#idpedidos_itens").val('');
+    $("#prod_nome").val('');
+    $("#idprodutos").val('');
+    $("#peit_qte").val('');
+    $("#peit_unitario").val('');
+    $("#peit_desconto").val('');
+    $("#peit_desconto_porc").val('');
+    $("#peit_total").val('');
+    $("#peit_sigla_unidade").html('');
+    $("#peit_qte").attr("readonly", true);
+    $("#peit_unitario").attr("readonly", true);
+    $("#peit_desconto").attr("readonly", true);
+    $("#peit_desconto_porc").attr("readonly", true);
+}
+
 function gravarProduto(){
     var id_cadastro = $("#idpedidos_itens").val();
     var idprodutos = $("#idprodutos").val();
@@ -193,6 +209,7 @@ function gravarProduto(){
     var peit_unitario = $("#peit_unitario").val();
     var peit_desconto = $("#peit_desconto").val();
     var peit_desconto_porc = $("#peit_desconto_porc").val();
+    var peit_sigla_unidade = $("#peit_sigla_unidade").html();
     //
     $.post("pedidos_grava.php", {
         operacao: 'gravarProduto',
@@ -202,24 +219,15 @@ function gravarProduto(){
         peit_qte: peit_qte,
         peit_unitario: peit_unitario,
         peit_desconto: peit_desconto,
-        peit_desconto_porc: peit_desconto_porc
+        peit_desconto_porc: peit_desconto_porc,
+        peit_sigla_unidade: peit_sigla_unidade
     }, function(data){
         if(data.retorno == 'ok'){
-            $("#idpedidos_itens").val('');
-            $("#prod_nome").val('');
-            $("#idprodutos").val('');
-            $("#peit_qte").val('');
-            $("#peit_unitario").val('');
-            $("#peit_desconto").val('');
-            $("#peit_desconto_porc").val('');
-            $("#peit_total").val('');
-            $("#peit_sigla_unidade").html('');
-            $("#peit_qte").attr("readonly", true);
-            $("#peit_unitario").attr("readonly", true);
-            $("#peit_desconto").attr("readonly", true);
-            $("#peit_desconto_porc").attr("readonly", true);
-            //
+            limpaModalProd();
             attListaProdutos();
+            if(id_cadastro > 0){
+                $('#modalProdutos').modal('hide');
+            }
         }else{
             alertaGrande('Erro ao inserir produto');
             console.log(data.msg);
@@ -231,34 +239,24 @@ function editarItem(idpedidos_itens){
     //
     $.post("pedidos_grava.php", {
         operacao: 'editarProduto',
-        id_cadastro: idpedidos_itens,
-        idpedidos: idpedidos,
-        idprodutos: idprodutos,
-        peit_qte: peit_qte,
-        peit_unitario: peit_unitario,
-        peit_desconto: peit_desconto,
-        peit_desconto_porc: peit_desconto_porc
+        id_cadastro: idpedidos_itens
     }, function(data){
-        if(data.retorno == 'ok'){
-            $("#idpedidos_itens").val('');
-            $("#prod_nome").val('');
-            $("#idprodutos").val('');
-            $("#peit_qte").val('');
-            $("#peit_unitario").val('');
-            $("#peit_desconto").val('');
-            $("#peit_desconto_porc").val('');
-            $("#peit_total").val('');
-            $("#peit_sigla_unidade").html('');
-            $("#peit_qte").attr("readonly", true);
-            $("#peit_unitario").attr("readonly", true);
-            $("#peit_desconto").attr("readonly", true);
-            $("#peit_desconto_porc").attr("readonly", true);
+            $('#modalProdutos').modal('show');
             //
-            attListaProdutos();
-        }else{
-            alertaGrande('Erro ao buscar produto produto');
-            console.log(data.msg);
-        }
+            $("#idpedidos_itens").val(idpedidos_itens);
+            $("#prod_nome").val(data.prod_nome);
+            $("#idprodutos").val(data.peit_idprodutos);
+            $("#peit_qte").val(data.peit_qte);
+            $("#peit_unitario").val(data.peit_vlr_unitario);
+            $("#peit_desconto").val(data.peit_valor_desconto);
+            $("#peit_desconto_porc").val(data.peit_porc_desconto);
+            $("#peit_sigla_unidade").html(data.peit_unidade_sigla);
+            $("#peit_total").val(data.peit_total_item);
+            $("#peit_qte").attr("readonly", false);
+            $("#peit_unitario").attr("readonly", false);
+            $("#peit_desconto").attr("readonly", false);
+            $("#peit_desconto_porc").attr("readonly", false);
+            //
     }, "json");
 }
 

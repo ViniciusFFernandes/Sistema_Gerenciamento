@@ -36,7 +36,7 @@
   $comboBoxBancos = $html->criaSelectSql("banc_nome", "idbancos", "ped_idbancos", $reg['ped_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC()"', true, "Banco");
   //
   $sql = "SELECT * FROM empresas";
-  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ped_idempresa", $reg['ped_idempresa'], $sql, "form-control", '', true, "Empresa");
+  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ped_idempresas", $reg['ped_idempresas'], $sql, "form-control", '', true, "Empresa");
   //
   $comboBoxCC = "<font color='red'>*</font> Selecione o banco";
   //
@@ -59,12 +59,13 @@
     }else{
       $ped_situacao = "<kbd><b>{$reg['ped_situacao']}</b></kbd>";
     }
-    if($reg['ped_situacao'] == 'Pendente'){
+    if($reg['ped_situacao'] == 'Aberto'){
       $btnFechar = '<button type="button" class="btn btn-warning" onclick="chamaGravar(\'fechar\')" >Fechar</button>';
       $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
     }
     //
     $listaProdutos = $pedidos->retornaItensPedido($reg['idpedidos']);
+    $listaContas = $pedidos->retornaContasPedido($reg['idpedidos']);
   }
   //
   if (isset($_SESSION['mensagem'])) {
@@ -94,6 +95,7 @@
   $html = str_replace("##comboEmpresas##", $comboEmpresas, $html);
   $html = str_replace("##comboBoxCC##", $comboBoxCC, $html);
   $html = str_replace("##listaProdutos##", $listaProdutos, $html);
+  $html = str_replace("##listaContas##", $listaContas, $html);
   $html = str_replace("##escondeTab##", $escondeTab, $html);
   $html = str_replace("##ped_frete##", $util->formataMoeda($reg['ped_frete'], 2, true), $html);
   $html = str_replace("##ped_valor_desconto##", $util->formataMoeda($reg['ped_valor_desconto'], 2, true), $html);

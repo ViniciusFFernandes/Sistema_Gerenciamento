@@ -47,9 +47,12 @@ if ($_POST['operacao'] == "logar") {
 	$dados = $db->buscarUsuario($_POST['usuario']);
 	if($dados['idpessoas'] > 0 && $_POST['senha'] == $dados['pess_senha']){
 		//
+		// 25/11/2022 Vinicius
+		// Removido pois agora o tarefas diarias será executado todos os dias uma vez por dia por agendamento de tarefas no servidor
+		//
 		//Executa tarefas diarias no primeiro login bem sucedido do dia
-		$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util, $atualizacao);
-		$tarefasDiarias->executa_tarefas();
+		//$tarefasDiarias = new Tarefas_Diarias($parametros, $db, $util, $atualizacao);
+		//$tarefasDiarias->executa_tarefas();
 		//
 		$_SESSION['logado'] 						= true;
 		$_SESSION['user'] 							= $_POST['usuario'];

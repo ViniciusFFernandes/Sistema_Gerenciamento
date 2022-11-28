@@ -56,7 +56,7 @@
             $div = '<div class="row pb-3">';
                 $div .= '<div class="col-md-12 col-sm-12 col-12">';
                 //
-                    $div .= '<div class="row font-weight-bold">';
+                    $div .= '<div class="row linhaPedidoItens font-weight-bold">';
                         $div .= '<div class="col-md-3 col-sm-3 d-none d-sm-block">';
                             $div .= 'Produto';
                         $div .= '</div>';
@@ -120,6 +120,10 @@
             $div .= '</div>';
             //
             return $div;
+        }
+
+        public function retornaContasPedido(){
+            return '';
         }
 
     }

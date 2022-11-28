@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.91;
+		private $ultimaVersao = 0.94;
 		private $db;
 		private $parametros;
 		private $util;
@@ -78,9 +78,42 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_00_94(){
+			//
+			// 28/11/2022 Vinicius
+			//
+			$sql = "ALTER TABLE pedidos_itens ADD peit_unidade_sigla VARCHAR(25) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo com a sigla da unidade no item do pedido para guardar a informação";
+		}
+
+		private function versao_00_93(){
+			//
+			// 25/11/2022 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: senha do email usado para contato do sistema", "", "Parametro usado para definir a senha do email pelo qual o sistema enviará as notificações"); 
+			$this->parametros->cadastraParametros("sistema: host smtp", "", "Parametro usado para definir o endereço do serviço smtp"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para configuração de email";
+		}
+
+		private function versao_00_92(){
+			//
+			// 25/11/2022 Vinicius
+			//
+			$this->parametros->cadastraParametros("sistema: email usado para contato do sistema", "", "Parametro usado para definir o email pelo qual o sistema enviará as notificações"); 
+			$this->parametros->cadastraParametros("sistema: email para o financeiro", "", "Parametro usado para definir o email que receberá alertas do financeiro"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para configuração de email";
+		}
+
 		private function versao_00_91(){
 			//
-			// 09/07/2021 Vinicius
+			// 09/10/2021 Vinicius
 			//
 			$this->cadastraPrograma("pessoas_recibo_cesta.php", 'Impressões');
 			//

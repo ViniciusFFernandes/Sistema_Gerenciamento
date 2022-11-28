@@ -6,6 +6,15 @@ body::-webkit-scrollbar {
   background-color: #F4F4F4;
 }
 
+.linhaPedidoItens {
+  background-color: #6584dd;
+  color: #f8faff;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
 .tableBusca::-webkit-scrollbar {
   width: 6px;
   background: #F4F4F4;
