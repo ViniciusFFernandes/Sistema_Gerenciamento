@@ -59,13 +59,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 col-sm-12 col-12 pb-3">
-                                ##autoComplete_CampoPessoas##
+                                    ##autoComplete_CampoPessoas##
                                 </div>
                                 <div class="col-md-3 col-sm-6 col-12 pb-3">
-                                ##comboEmpresas##
-                                </div>
-                                <div class="col-md-3 col-sm-6 col-12 pb-3">
-                                ##comboBoxFormaPagto##
+                                    ##comboEmpresas##
                                 </div>
                             </div>
                             <ul class="nav nav-tabs">
@@ -87,18 +84,31 @@
                                 </div>
                                 <div id="divContas" class="tab-pane fade">
                                     <div class="row">
-                                        <div class="col-md-4 col-sm-4 col-6 pb-3 pt-3">
+                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
                                           ##comboBoxMeioPagto##
                                         </div>
-                                        <div class="col-md-4 col-sm-4 col-6 pb-3 pt-3">
-                                          ##comboBoxBancos##
+                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                            ##comboBoxFormaPagto##
                                         </div>
-                                        <div class="col-md-4 col-sm-4 col-6 pb-3 pt-3">
-                                          <span id="comboBoxCC">
-                                            <font color='red'>*</font> Selecione o banco
-                                          </span>
+                                        <div class="col-md-1 col-sm-1 col-2 pb-3 pt-3">
+                                            <input type="text" class="form-control" id="ped_qte_parcelas" name="ped_qte_parcelas" value="##ped_qte_parcelas##" placeholder="Parcelas">
                                         </div>
-                                      </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                            ##comboBoxBancos##
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                            <span id="comboBoxCC">
+                                                ##comboBoxCC##
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12 col-12 pb-3 pt-3" align="center">
+                                            <button type="button" onclick="gerarParcelas()" class="btn btn-success"><i class="fas fa-percent"></i> Parcelar</button>
+                                        </div>
+                                    </div>
                                     ##listaContas##
                                 </div>
                             </div>

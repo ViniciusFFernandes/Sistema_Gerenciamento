@@ -44,7 +44,7 @@
   //
   $escondeTab = 'd-none';
   //
-  if(!empty($reg['idpedidos'])){ 
+  if($reg['idpedidos'] > 0){ 
     $escondeTab = '';
     //
     if($reg['ped_idbancos'] > 0){
@@ -86,6 +86,7 @@
   $html = str_replace("##idpedidos##", $reg['idpedidos'], $html);
   $html = str_replace("##ped_pessoa##", $reg['pess_nome'], $html);
   $html = str_replace("##ped_idcliente##", $reg['idpessoas'], $html);
+  $html = str_replace("##ped_qte_parcelas##", $reg['ped_qte_parcelas'], $html);
   $html = str_replace("##ped_situacao##", $ped_situacao, $html);
   $html = str_replace("##ped_abertura##", str_replace(" ", "T", $reg['ped_abertura']), $html);
   $html = str_replace("##ped_fechamento##", str_replace(" ", "T", $reg['ped_fechamento']), $html);

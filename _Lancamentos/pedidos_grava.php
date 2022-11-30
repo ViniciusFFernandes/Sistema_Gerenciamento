@@ -69,7 +69,7 @@ if ($_POST['operacao'] == 'gravar'){
     $dados['ped_idempresas']        = $util->igr($_POST['ped_idempresas']);
     $dados['ped_idforma_pagto']     = $util->igr($_POST['ped_idforma_pagto']);
     $dados['ped_obs'] 	            = $util->sgr($_POST['ped_obs']);
-    $dados['ped_qte_parcelas'] 	    = $util->igr($_POST['ped_qte_parcelas']);
+    $dados['ped_qte_parcelas'] 	    = $util->igrNULL($_POST['ped_qte_parcelas']);
     $dados['ped_frete'] 	        = $util->vgr($_POST['ped_frete']);
     $dados['ped_porc_desconto'] 	= $util->vgr($dadosDesconto['porcentagem']);
     $dados['ped_valor_desconto'] 	= $util->vgr($dadosDesconto['valor']);

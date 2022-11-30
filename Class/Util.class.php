@@ -30,6 +30,14 @@ class Util{
         }
 	}
 
+	public function igrNULL($num){
+		if ($num != "") {
+         	return intval($num);
+        }else{
+          	return "NULL";
+        }
+	}
+
 	public function vgr($num){
 		if ($num != "") {
 			if (strpos($num, ",")) {

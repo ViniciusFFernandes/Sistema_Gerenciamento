@@ -289,3 +289,14 @@ function attListaProdutos(){
     //
     atzTotalPedido();
 }
+
+function gerarParcelas(){
+    var idpedidos = $("#idpedidos").val();
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'gerarParcelas',
+        idpedidos: idpedidos
+    }, function(data){
+        // attListaContas();
+    }, 'json');
+}
