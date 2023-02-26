@@ -26,7 +26,7 @@
   //Monta variaveis de exibição
   //
   $sql = "SELECT * FROM forma_pagto";
-  $comboBoxFormaPagto = $html->criaSelectSql("forp_nome", "idforma_pagto", "ped_idforma_pagto", $reg['ped_idforma_pagto'], $sql, "form-control", "", true, "Forma de Pagamento");
+  $comboBoxFormaPagto = $html->criaSelectSql("forp_nome", "idforma_pagto", "ped_idforma_pagto", $reg['ped_idforma_pagto'], $sql, "form-control", 'onchange="alteraFormaPagto()"', true, "Forma de Pagamento");
   //
   //
   $sql = "SELECT * FROM meio_pagto";
@@ -38,9 +38,14 @@
   $sql = "SELECT * FROM empresas";
   $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ped_idempresas", $reg['ped_idempresas'], $sql, "form-control", '', true, "Empresa");
   //
+  $sql = "SELECT * FROM tipo_contas";
+  $comboBoxTipoConta = $html->criaSelectSql("tico_nome", "idtipo_contas", "ped_idtipo_contas", $reg['ped_idtipo_contas'], $sql, "form-control", '', true, "Tipo da Conta");
+  //
   $comboBoxCC = "<font color='red'>*</font> Selecione o banco";
   //
   $btnGravarReabrir = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
+  //
+  $checkComEntrada = $html->defineChecked($reg['ped_com_entrada']);
   //
   $escondeTab = 'd-none';
   //
@@ -95,6 +100,7 @@
   $html = str_replace("##comboBoxBancos##", $comboBoxBancos, $html);
   $html = str_replace("##comboEmpresas##", $comboEmpresas, $html);
   $html = str_replace("##comboBoxCC##", $comboBoxCC, $html);
+  $html = str_replace("##comboBoxTipoConta##", $comboBoxTipoConta, $html);
   $html = str_replace("##listaProdutos##", $listaProdutos, $html);
   $html = str_replace("##listaContas##", $listaContas, $html);
   $html = str_replace("##escondeTab##", $escondeTab, $html);
@@ -102,6 +108,7 @@
   $html = str_replace("##ped_valor_desconto##", $util->formataMoeda($reg['ped_valor_desconto'], 2, true), $html);
   $html = str_replace("##ped_porc_desconto##", $util->formataMoeda($reg['ped_porc_desconto'], 2, true), $html);
   $html = str_replace("##ped_total_pedido##", $util->formataMoeda($reg['ped_total_pedido'], 2, true), $html);
+  $html = str_replace("##ped_com_entrada##", $checkComEntrada, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnFechar##", $btnFechar, $html);
   $html = str_replace("##btnGravarReabrir##", $btnGravarReabrir, $html);

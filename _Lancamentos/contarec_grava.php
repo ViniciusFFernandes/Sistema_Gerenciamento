@@ -137,9 +137,19 @@ $paginaRetorno = 'contarec_edita.php';
 
   if ($_POST['operacao'] == "excluiCad") {
     //
+    $db->beginTransaction();
+    //
+    $situacao = $db->retornaUmCampoID('ctrc_stituacao', 'contarec', $_POST['id_cadastro']);
+    if($situacao == 'Quitada' || $situacao == 'QParcial'){
+      $db->rollBack();
+      $html->mostraErro("Está conta já esta paga e não pode ser excluida!<br>Operação cancelada!");
+      exit;
+    }
+    //
     $db->setTabela("contarec_hist", "crhi_idcontarec");
-    $db->excluir($_POST['id_cadastro'], "Excluir");
+    $db->excluir($_POST['id_cadastro']);
     if($db->erro()){
+      $db->rollBack();
       $html->mostraErro("Erro ao excluir o historico da conta<br>Operação cancelada!");
       exit;
     }
@@ -147,9 +157,13 @@ $paginaRetorno = 'contarec_edita.php';
     $db->setTabela("contarec", "idcontarec");
     $db->excluir($_POST['id_cadastro'], "Excluir");
     if($db->erro()){
-        $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
-        exit;
+      $db->rollBack();
+      $html->mostraErro("Erro ao excluir cadastro<br>Operação cancelada!");
+      exit;
     }
+    //
+    $db->commit();
+    //
     header('location:../_Lancamentos/' . $paginaRetorno);
     exit;
   }

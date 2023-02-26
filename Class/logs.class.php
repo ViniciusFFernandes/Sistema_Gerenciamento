@@ -1,32 +1,24 @@
 <?php
 	class log {
+		private $db;
+		private $util;
 
-		//public function gravaLog($idusuario, $obs, $db, $util){
+		function __construct($db){
+			$this->db = $db;
+			$this->util = new Util();
+		}
 
-		//}
-
-		public function gravaLogTempo($idsessao, $idusuario, $db, $util){
-			//Testa se ja existe essa sessão registrada
-			$db->setTabela("logs_acessos");
-			$where = " log_idsessao = '{$idsessao}'";
-			$res = $db->consultar($where, ' SUM(1) AS totalReg ');
-			//
-			unset($dados);
-			$dados['log_idsessao'] 				= $util->sgr($idsessao);
-			$dados['log_idusuario'] 			= $idusuario;
-			$dados['log_ultimo_acesso'] 	    = time();
-			$dados['log_ultimo_ip']             = $util->sgr($_SERVER['REMOTE_ADDR']);
-			//
-			foreach($res as $reg){
-			    if ($reg['totalReg'] > 0) {
-			    	//Caso exista atualiza o ultimo acesso
-	  		     $db->alterar($where, $dados);
-			    }else{
-			    	//caso não exista insere essa sessão nos registros
-			    	$db->gravar($dados);
-			    }
-	    	}
-		    
+		public function gravaLog(){
+			// //
+			// $db->setTabela("logs_acessos");
+			// //
+			// unset($dados);
+			// $dados['log_idsessao'] 				= $util->sgr($idsessao);
+			// $dados['log_idusuario'] 			= $idusuario;
+			// $dados['log_ultimo_acesso'] 	    = time();
+			// $dados['log_ultimo_ip']             = $util->sgr($_SERVER['REMOTE_ADDR']);
+			// //
+			// $this->db->gravarInserir($dados, false);
 		}
 
 	}

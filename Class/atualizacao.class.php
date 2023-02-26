@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.94;
+		private $ultimaVersao = 0.95;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,17 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_95(){
+			//
+			// 28/11/2022 Vinicius
+			//
+			$sql = "ALTER TABLE pedidos ADD ped_com_entrada VARCHAR(10) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação do campo para definir se o pedido é com ou sem entrada";
+		}
 
 		private function versao_00_94(){
 			//
@@ -203,7 +214,7 @@
 						pcon_idcc int NULL,
 						pcon_idempresas int NULL,
 						pcon_idtipo_contas int NULL,
-						pcon_vencimento_dias DATE NOT NULL,
+						pcon_vencimento_dias INT NOT NULL,
 						pcon_vencimento DATE NOT NULL,
 						pcon_valor DECIMAL(10,2) NOT NULL DEFAULT 0.00,
 						PRIMARY KEY (idpedidos_contas)

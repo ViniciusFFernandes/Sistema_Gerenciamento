@@ -29,7 +29,7 @@ if (!isset($_SESSION['logado'])) {
 //inicia as classes nescessarias
 $util = new Util();
 $db = new Db($SERVIDOR, $PORTA, $USUARIO, $SENHA, $DB_NAME);
-$log = new log();
+$log = new log($db);
 $parametros = new Parametros($db);
 $html = new html($db);
 $atualizacao = new Atualizacao($db);

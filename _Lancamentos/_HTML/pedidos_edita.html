@@ -84,32 +84,42 @@
                                 </div>
                                 <div id="divContas" class="tab-pane fade">
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                        <div class="col-md-3 col-sm-3 col-6 pb-3 pt-3">
                                           ##comboBoxMeioPagto##
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                        <div class="col-md-3 col-sm-3 col-6 pb-3 pt-3">
                                             ##comboBoxFormaPagto##
                                         </div>
-                                        <div class="col-md-1 col-sm-1 col-2 pb-3 pt-3">
+                                        <div class="col-md-1 col-sm-1 col-6 pb-3 pt-3">
                                             <input type="text" class="form-control" id="ped_qte_parcelas" name="ped_qte_parcelas" value="##ped_qte_parcelas##" placeholder="Parcelas">
+                                        </div>
+                                        <div class="col-md-2 col-sm-2 col-6 pb-3 pt-3" vlagin="middle">
+                                            <input type="checkbox" id="ped_com_entrada" name="ped_com_entrada" value="SIM" ##ped_com_entrada##> Com Entrada
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
                                             ##comboBoxBancos##
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-5 pb-3 pt-3">
+                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
                                             <span id="comboBoxCC">
                                                 ##comboBoxCC##
+                                            </span>
+                                        </div>
+                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
+                                            <span>
+                                                ##comboBoxTipoConta##
                                             </span>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 pb-3 pt-3" align="center">
-                                            <button type="button" onclick="gerarParcelas()" class="btn btn-success"><i class="fas fa-percent"></i> Parcelar</button>
+                                            <button type="button" onclick="gerarParcelas()" id="btnGerarParcelas" class="btn btn-primary" ><i class="fas fa-percent"></i> Parcelar</button>
                                         </div>
                                     </div>
-                                    ##listaContas##
+                                    <span id="listaContas">
+                                        ##listaContas##
+                                    </span>
                                 </div>
                             </div>
                             <div class="row">

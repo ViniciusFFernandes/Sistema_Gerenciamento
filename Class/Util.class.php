@@ -293,5 +293,18 @@ class Util{
 		}
 		return $retorno;
 	}
+
+	public function manipulaData($data, $valor, $tipo, $operacao = '+'){
+		//
+		$opcoes['dias'] = "days";
+		$opcoes['semanas'] = "week";
+		$opcoes['meses'] = "months";
+		$opcoes['anos'] = "years";
+		//
+		$novaData = date('Y-m-d', strtotime("{$operacao}{$valor} {$opcoes[$tipo]}", strtotime($data)));
+		//
+		return $novaData;
+	}
+
 }
 ?>

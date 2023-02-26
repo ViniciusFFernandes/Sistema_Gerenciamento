@@ -291,12 +291,64 @@ function attListaProdutos(){
 }
 
 function gerarParcelas(){
+    //
+    $("#btnGerarParcelas").html('<img src="../icones/carregando.gif" width="20px"> Gerando Parcelas...');
+    $("#btnGerarParcelas").attr("disabled", true);
+    //
     var idpedidos = $("#idpedidos").val();
+    var ped_com_entrada = '';
+    if($('#ped_com_entrada').is(":checked")){
+        ped_com_entrada = 'SIM';
+    }
     //
     $.post("pedidos_grava.php", {
         operacao: 'gerarParcelas',
+        ped_idmeio_pagto: $("#ped_idmeio_pagto option:selected").val(),
+        ped_idforma_pagto: $("#ped_idforma_pagto option:selected").val(),
+        ped_idbancos: $("#ped_idbancos option:selected").val(),
+        ped_idcc: $("#ped_idcc option:selected").val(),
+        ped_idtipo_contas: $("#ped_idtipo_contas option:selected").val(),
+        ped_qte_parcelas: $("#ped_qte_parcelas").val(),
+        ped_com_entrada: ped_com_entrada,
         idpedidos: idpedidos
     }, function(data){
-        // attListaContas();
+        $("#btnGerarParcelas").html('<i class="fas fa-percent"></i> Parcelar');
+        $("#btnGerarParcelas").attr("disabled", false);
+        //
+        if(data.erro == 1){
+            if(data.msgErro != ""){
+                alertaGrande(data.msgErro);
+            }else{
+                alertaGrande("Erro ao gerar parcelas!");
+            }
+        }else{
+            attListaContas();
+        }
+    }, 'json');
+}
+
+function attListaContas(){
+    // $("#listaContas").html('<img src="../icones/carregando.gif" width="25px"> Buscando Parcelas...');
+    //
+    var idpedidos = $("#idpedidos").val();
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'attParcelas',
+        idpedidos: idpedidos
+    }, function(data){
+        $("#listaContas").html(data)
+    }, 'html');
+}
+
+function alteraFormaPagto(){
+    $.post("pedidos_grava.php", {
+        operacao: 'retornaTipoFormaPagto',
+        idforma_pagto: $("#ped_idforma_pagto option:selected").val()
+    }, function(data){
+        if(data.retorno != 'Parcelamento Livre'){
+            $("#ped_qte_parcelas").attr("readonly", true);
+        }else{
+            $("#ped_qte_parcelas").attr("readonly", false);
+        }
     }, 'json');
 }
