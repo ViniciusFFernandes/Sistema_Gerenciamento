@@ -86,10 +86,13 @@ class Util{
 	}
 
 	public function formataMoeda($valor = 0, $casas = 2, $retornaBranco = false) {
-		if($valor <= 0) return "";
+		if(!is_numeric($valor))return "";
+		//
+		if($valor <= 0 && $retornaBranco) return "";
 		//
 		return number_format($valor, $casas, ',', '.');
 	}
+
 	
 	public function formataNumero($valor = 0, $casas = 2) {
 		return (number_format($valor, $casas, ',', ''));

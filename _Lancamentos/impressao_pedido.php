@@ -42,6 +42,28 @@
     //
     $regPedido = $db->retornaUmReg($sql);
     //
+    $tabelas = new Tabelas();
+    //
+    unset($valores);
+    $valores[0]["item"] = "Total dos Produtos";
+    $valores[0]["valor"] = $util->formataMoeda($regPedido['ped_total_produtos']);
+    $valores[1]["item"] = "Frete";
+    $valores[1]["valor"] = $util->formataMoeda($regPedido['ped_frete']);
+    if($regPedido['ped_valor_desconto'] > 0){
+        $valores[2]["item"] = "Desconto no Pedido";
+        $valores[2]["valor"] = $util->formataMoeda($regPedido['ped_valor_desconto'] * -1);
+    }
+    //
+    unset($colunas);
+    $colunas['item'] = "";
+    $colunas['valor'] = "width='15%' align='right'";
+    //
+    unset($cabecalho);
+    $cabecalho[' '] = '';
+    $cabecalho['Valor'] = "align='right'";
+    //
+    $tabelaValores = $tabelas->geraTabelaPadrao($valores, $db, $colunas, $cabecalho, "valor", $util, "table-primary", "Totais");
+    //
     if($regPedido['pess_cpf'] == ""){
        $mostraCPF = "d-none"; 
     }
@@ -55,6 +77,7 @@
     $sql = "SELECT CONCAT(FORMAT(peit_qte, 2, 'de_DE'), peit_unidade_sigla) AS qte_sigla, 
                 FORMAT(peit_vlr_unitario, 2, 'de_DE') AS vlr_unitario, 
                 FORMAT(peit_valor_desconto, 2, 'de_DE') AS vlr_desconto, 
+                FORMAT((peit_qte * peit_vlr_unitario), 2, 'de_DE') AS vlr_sem_desconto, 
                 FORMAT(peit_total_item, 2, 'de_DE') AS vlr_total, 
                 prod_nome
             FROM pedidos_itens
@@ -63,23 +86,24 @@
             ORDER BY prod_nome";
     //
     $res = $db->consultar($sql);
-    $tabelas = new Tabelas();
     //
     unset($colunas);
     $colunas['prod_nome'] = "";
-    $colunas['qte_sigla'] = "width='15%' align='right'";
-    $colunas['vlr_unitario'] = "width='15%' align='right'";
-    $colunas['vlr_desconto'] = "width='15%' align='right'";
-    $colunas['vlr_total'] = "width='15%' align='right'";
+    $colunas['qte_sigla'] = "width='12%' align='right'";
+    $colunas['vlr_unitario'] = "width='12%' align='right'";
+    $colunas['vlr_sem_desconto'] = "width='12%' align='right'";
+    $colunas['vlr_desconto'] = "width='12%' align='right'";
+    $colunas['vlr_total'] = "width='12%' align='right'";
     //
     unset($cabecalho);
     $cabecalho['Produto'] = '';
     $cabecalho['Quantidade'] = "align='right'";
-    $cabecalho['Valor Unitario'] = "align='right'";
-    $cabecalho['Valor Desconto'] = "align='right'";
-    $cabecalho['Valor Total'] = "align='right'";
+    $cabecalho['Unitário'] = "align='right'";
+    $cabecalho['Valor'] = "align='right'";
+    $cabecalho['Desconto'] = "align='right'";
+    $cabecalho['Total'] = "align='right'";
     //
-    $tabelaProdutos = $tabelas->geraTabelaPadrao($res, $db, $colunas, $cabecalho, "vlr_total", $util);
+    $tabelaProdutos .= $tabelas->geraTabelaPadrao($res, $db, $colunas, $cabecalho, "vlr_total", $util, "table-primary", "Lista de Produtos");
     //
     //
     $sql = "SELECT DATE_FORMAT(STR_TO_DATE(pcon_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencto,
@@ -101,7 +125,7 @@
     $cabecalho['Parcela'] = "align='right'";
     $cabecalho['Valor'] = "align='right'";
     //
-    $tabelaContas = $tabelas->geraTabelaPadrao($res, $db, $colunas, $cabecalho, "valor", $util);
+    $tabelaContas = $tabelas->geraTabelaPadrao($res, $db, $colunas, $cabecalho, "valor", $util, "table-primary", "Parcelamento");
     //
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
@@ -123,6 +147,7 @@
     $html = str_replace("##mostraCPF##", $mostraCPF, $html); 
     $html = str_replace("##mostraCNPJ##", $mostraCNPJ, $html); 
     $html = str_replace("##tabelaProdutos##", $tabelaProdutos, $html); 
+    $html = str_replace("##tabelaValores##", $tabelaValores, $html); 
     $html = str_replace("##tabelaContas##", $tabelaContas, $html);
     echo $html;
     exit;

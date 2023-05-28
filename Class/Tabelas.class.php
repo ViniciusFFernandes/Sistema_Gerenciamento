@@ -102,25 +102,33 @@ class Tabelas{
 		return $tabela;
 	}
 
-	public function geraTabelaPadrao($res, $db, $colunas, $cabecalho = '', $campoTotal = '', $util = ''){
-		$linhaColorida = false;
+	public function geraTabelaPadrao($res, $db, $colunas, $cabecalho = '', $campoTotal = '', $util = '', $corTituloColuna = 'bg-primary', $tituloTabela = "", $corTitulo = 'bg-primary'){
 	    if(empty($res)){
 	    	$tabela .= "Nenhum registro encontrado!";
 	    	$escondeTabela = "display: none;";
 	    }
+		//
+		$BordaRedonda = "rounded-top";
+		//
 		$tabela .= "<table class='table text-dark border-dark' style='margin-top: 3px;{$escondeTabela}' >";
 		if(!empty($cabecalho)){
-			$tabela .= "<thead>";
-				$tabela .= "<tr>";
-				foreach($cabecalho as $titulo => $config){
-					$tabela .= "<td class='bg-primary' {$config}><b>{$titulo}<b></td>";
-				}
-				$tabela .= "</tr>";
-			$tabela .= "</thead>";
+			$tabela .= "<tr>";
+				$tabela .= "<td class='{$corTitulo} {$BordaRedonda} border-0' colspan='" . count($colunas) . "' align='center'><b>{$tituloTabela}<b></td>";
+			$tabela .= "</tr>";
+			//
+			$BordaRedonda = '';
+		}
+		if(!empty($cabecalho)){
+			$tabela .= "<tr>";
+			foreach($cabecalho as $titulo => $config){
+				$tabela .= "<td class='{$corTituloColuna} {$BordaRedonda} border-0' {$config}><b>{$titulo}<b></td>";
+			}
+			$tabela .= "</tr>";
+			//
+			$BordaRedonda = "";
 		}
 		$total = 0;
 		foreach ($res as $reg) {
-		
 			//
 			$primeiraLinha = true;
 			foreach ($colunas as $coluna => $tamanho) {
@@ -132,7 +140,7 @@ class Tabelas{
 			}
 			$tabela .- "</tr>";
 			if(!empty($campoTotal)){
-				$total += $reg[$campoTotal];
+				$total += $util->vgr($reg[$campoTotal]);
 			}
 		}
 		if(!empty($campoTotal)){
