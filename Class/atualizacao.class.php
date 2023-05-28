@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.95;
+		private $ultimaVersao = 0.98;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,47 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_00_98(){
+			//
+			// 20/05/2023 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_parcela varchar(50) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_parcela varchar(50) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE pedidos_contas ADD pcon_parcela varchar(50) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para gravar a parcela da conta";
+		}
+
+		private function versao_00_97(){
+			//
+			// 20/05/2023 Vinicius
+			//
+			$sql = "ALTER TABLE contarec ADD ctrc_idpedidos int(11) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$sql = "ALTER TABLE contapag ADD ctpg_idpedcompra int(11) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para gravar o id dos pedidos nas contas";
+		}
+
+		private function versao_00_96(){
+			//
+			// 19/03/2023 Vinicius
+			//
+			$this->parametros->cadastraParametros("pedidos: baixa estoque no fechamento", "NAO", "Parametro usado para definir se no fechamento do pedido irá baixar o estoque dos produtos vendidos"); 
+			//
+			//Mensagem para o usuario
+			return "Criação de parametros para baixar estoque na venda";
+		}
 
 		private function versao_00_95(){
 			//

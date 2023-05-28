@@ -64,6 +64,9 @@ $paginaRetorno = 'contapag_edita.php';
     if($_POST['ctpg_idempresa'] <= 0){
       $_POST['ctpg_idempresa'] = CODIGO_EMPRESA;
     }
+    if($_POST['ctpg_parcela'] == ""){
+      $_POST['ctpg_parcela'] = "1/1";
+    }
     //
     unset($dados);
     $dados['id']                  = $_POST['id_cadastro'];
@@ -80,6 +83,7 @@ $paginaRetorno = 'contapag_edita.php';
     $dados['ctpg_porc_desconto'] 	= $util->vgr($_POST['ctpg_porc_desconto']);
     $dados['ctpg_vlr_juros'] 	    = $util->vgr($_POST['ctpg_vlr_juros']);
     $dados['ctpg_porc_juros'] 	  = $util->vgr($_POST['ctpg_porc_juros']);
+    $dados['ctpg_parcela'] 	      = $util->sgr($_POST['ctpg_parcela']);
     $dados['ctpg_situacao']       = $util->sgr("Pendente");
     //
     if($_POST['id_cadastro'] <= 0){

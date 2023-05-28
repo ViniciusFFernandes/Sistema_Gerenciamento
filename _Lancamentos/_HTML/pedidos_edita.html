@@ -75,7 +75,7 @@
                                 <div id="divProdutos" class="tab-pane fade">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 pb-3 pt-3" align="center">
-                                            <button type="button" onclick="limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>
+                                            ##btnNovoProduto##
                                         </div>
                                     </div>
                                     <span id="listaProdutos">
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-12 pb-3 pt-3" align="center">
-                                            <button type="button" onclick="gerarParcelas()" id="btnGerarParcelas" class="btn btn-primary" ><i class="fas fa-percent"></i> Parcelar</button>
+                                            ##btnParcelar##
                                         </div>
                                     </div>
                                     <span id="listaContas">
@@ -198,7 +198,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6 col-12">
-                                        <button type="button" class="btn btn-primary" onclick="imprimir('pedidos_recibo.php')">Recibo de Conta</button>
+                                        <button type="button" class="btn btn-primary" onclick="imprimir('impressao_pedido.php')">Pedido</button>
                                         </div>
                                     </div>
                                 </div>
@@ -207,10 +207,10 @@
                     </div>
 
                     <div class="modal fade" id="modalProdutos" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
-                        <div class="modal-dialog modal-md" role="document">
+                        <div class="modal-dialog modal-lg" role="document">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h4 class="modal-title font-weight-bold">Inserir Produto</h4>
+                                <h5 class="modal-title font-weight-bold text-primary" id="tituloModalProdutos">Inserir Produto</h5>
                             </div>
                             <div class="card-body">
                                 <input type="hidden" name="idpedidos_itens" id="idpedidos_itens">
@@ -262,6 +262,52 @@
                             <div class="card-footer">
                             <button type="button" class="btn btn-light" data-dismiss="modal" onclick="limpaModalProd()">Voltar</button>
                             <button type="button" onclick="gravarProduto()" class="btn btn-primary">Gravar</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="modalContas" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+                        <div class="modal-dialog modal-lg" role="document">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="modal-title font-weight-bold text-primary">Editar Conta</h5>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" name="idpedidos_contas" id="idpedidos_contas">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3" id="comboBoxMeioPagtoModal">
+                                       
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3" id="comboBoxTipoContaModal">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3" id="comboBoxBancosModal">
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3" id="comboBoxCCModal">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 col-sm-2 col-2 pb-3">
+                                        <input type="text" class="form-control" id="pcon_vencimento_dias" name="pcon_vencimento_dias" onchange="attDataVencto('dias')">
+                                    </div>
+                                    <div class="col-md-4 col-sm-4 col-4 pb-3">
+                                        <input type="date" class="form-control" id="pcon_vencimento" name="pcon_vencimento" onchange="attDataVencto('data')">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-6 pb-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">R$</span>
+                                            <input type="text" class="form-control" placeholder="Valor" id="pcon_valor" name="pcon_valor">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                            <button type="button" class="btn btn-light" data-dismiss="modal">Voltar</button>
+                            <button type="button" onclick="gravarConta()" class="btn btn-primary">Gravar</button>
                             </div>
                         </div>
                         </div>

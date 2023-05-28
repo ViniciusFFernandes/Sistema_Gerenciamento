@@ -3,6 +3,7 @@ require_once("../_BD/conecta_login.php");
 require_once("tabelas.class.php");
 require_once("pedidos.class.php");
 require_once("produtos.class.php");
+require_once("contarec.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'pedidos_edita.php';
@@ -39,7 +40,7 @@ if ($_POST['operacao'] == "buscaCadastro") {
 if ($_POST['operacao'] == 'novoCadastro'){
     header('location:../_Lancamentos/' . $paginaRetorno);
     exit;
-    }
+}
 
 if ($_POST['operacao'] == 'gravar'){
     if($_POST['id_cadastro'] > 0){
@@ -47,7 +48,7 @@ if ($_POST['operacao'] == 'gravar'){
         $reg = $db->retornaUmReg($sql);
         //
         if($reg['ped_situacao'] != "Aberto"){
-            $util->mostraErro("Este pedido não está aberto e não pode ser alterada!");
+            $html->mostraErro("Este pedido não está aberto e não pode ser alterada!");
             exit;
         }
     }
@@ -94,14 +95,6 @@ if ($_POST['operacao'] == 'gravar'){
     exit;
 }
 
-if ($_POST['operacao'] == 'reabrir'){
-    $contarec = New Contarec($db);
-    $contarec->reabrirConta($_POST['id_cadastro'], $_SESSION['idusuario']);
-    //
-    header('location:../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $_POST['id_cadastro']);
-    exit;
-}
-
 if ($_POST['operacao'] == "excluiCad") {
     //
     $db->beginTransaction();
@@ -137,9 +130,9 @@ if ($_POST['operacao'] == "excluiCad") {
 }
 
 if($_POST['operacao'] == 'geraComboBoxCC'){
-    $nomeCampo = "ctrc_idcc";
+    $nomeCampo = "ped_idcc";
     if($_POST['tipo'] != ""){
-        $nomeCampo = "idcc_pagamento";
+        $nomeCampo = "pcon_idcc";
     }
     $sql = "SELECT * FROM cc WHERE cc_idbancos = " . $_POST['idbancos'];
     $comboBoxTipoConta = $html->criaSelectSql("cc_nome", "idcc", $nomeCampo, '', $sql, "form-control");
@@ -325,12 +318,12 @@ if($_POST['operacao'] == 'gerarParcelas'){
         //
         $vencto = $util->manipulaData($data, $dias, "dias");
         //
-        if ($regNota["foRP_tipo"] == 'Dias informados') {
-            $dias_prazo = trim($regNota["forp_dias_prazo"]);
+        if ($reg["forp_tipo"] == 'Dias informados') {
+            $dias_prazo = trim($reg["forp_dias_prazo"]);
             //
             $diasPrazo = explode(',' , $dias_prazo);
-            $diasSoma = $diasPrazo[$i - 1];
-            $dados["pcon_vencto"] 		= dgr(m_datas::somarData($data, $diasSoma));
+            $diasSoma = $diasPrazo[$parcela - 1];
+            $dados["pcon_vencto"] 		= dgr($util->manipulaData($data, $diasSoma, "dias"));
             $dados["pcon_dias"]         = igr($diasPrazo[$i - 1]);
         }
         //
@@ -344,6 +337,7 @@ if($_POST['operacao'] == 'gerarParcelas'){
         $dados['pcon_idempresas']       = $util->igr($reg['ped_idempresas']);
         $dados['pcon_vencimento_dias']  = $util->igr($dias);
         $dados['pcon_vencimento']       = $util->sgr($vencto);
+        $dados['pcon_parcela']          = $util->sgr($parcela . "/" . $reg['ped_qte_parcelas']);
         $dados['pcon_valor']            = $util->vgr($valorParcela);
         //    
         $db->gravarInserir($dados, false);
@@ -362,6 +356,232 @@ if($_POST['operacao'] == 'attParcelas'){
     $listaProdutos = $pedidos->retornaContasPedido($_POST['idpedidos']);
     //
     echo $listaProdutos;
+    exit;
+}
+
+if($_POST['operacao'] == 'excluirConta'){
+    $db->setTabela("pedidos_contas", "idpedidos_contas");
+    $db->excluir($_POST['id_cadastro']);
+    //
+    if($db->erro()){
+        $ret['retorno'] = "erro";
+        $ret['msg'] = $db->getErro();
+    }else{
+        $ret['retorno'] = "ok";
+    }
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'gravarConta'){
+    $db->setTabela("pedidos_contas", "idpedidos_contas");
+    //
+    unset($dados);
+    $dados['id']                    = $_POST['id_cadastro'];
+    $dados['pcon_idmeio_pagto']     = $util->igr($_POST['ped_idmeio_pagto']);
+    $dados['pcon_idbancos']         = $util->igr($_POST['ped_idbancos']);
+    $dados['pcon_idcc']             = $util->igr($_POST['ped_idcc']);
+    $dados['pcon_idtipo_contas']    = $util->igr($_POST['ped_idtipo_contas']);
+    $dados['pcon_vencimento_dias']  = $util->igr($_POST['pcon_vencimento_dias']);
+    $dados['pcon_vencimento']       = $util->sgr($_POST['pcon_vencimento']);
+    $dados['pcon_valor']            = $util->vgr($_POST['pcon_valor']);
+    //    
+    $db->gravarInserir($dados, false); 
+    //
+    if($db->erro()){
+        $ret['retorno'] = "erro";
+        $ret['msg'] = $db->getErro();
+    }else{
+        $ret['retorno'] = "ok";
+    }
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'editarContas'){
+    $sql = "SELECT * 
+            FROM pedidos_contas
+                LEFT JOIN meio_pagto ON (idmeio_pagto = pcon_idmeio_pagto)
+                LEFT JOIN cc ON (idcc = pcon_idcc)
+                LEFT JOIN tipo_contas ON (idtipo_contas = pcon_idtipo_contas)
+            WHERE idpedidos_contas = {$_REQUEST['id_cadastro']}";
+    $reg = $db->retornaUmReg($sql);
+    //
+    $sql = "SELECT * FROM meio_pagto";
+    $ret["comboBoxMeioPagtoModal"] = $html->criaSelectSql("mpag_nome", "idmeio_pagto", "pcon_idmeio_pagto", $reg['pcon_idmeio_pagto'], $sql, "form-control", "", false, "Meio de Pagamento");
+    //
+    $sql = "SELECT * FROM bancos";
+    $ret["comboBoxBancosModal"] = $html->criaSelectSql("banc_nome", "idbancos", "pcon_idbancos", $reg['pcon_idbancos'], $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"', false, "Banco");
+    //
+    $sql = "SELECT * FROM cc WHERE cc_idbancos = " . $reg['pcon_idbancos'];
+    $ret["comboBoxCCModal"] = $html->criaSelectSql("cc_nome", "idcc", "pcon_idcc", $reg['pcon_idcc'], $sql, "form-control", '', false, "Conta Corrente");
+    //
+    $sql = "SELECT * FROM tipo_contas";
+    $ret["comboBoxTipoContaModal"] = $html->criaSelectSql("tico_nome", "idtipo_contas", "pcon_idtipo_contas", $reg['pcon_idtipo_contas'], $sql, "form-control", '', false, "Tipo da Conta");
+    //
+    $ret["pcon_vencimento"] = $reg['pcon_vencimento'];
+    $ret["pcon_vencimento_dias"] = $reg['pcon_vencimento_dias'];
+    $ret['pcon_valor'] = $util->formataMoeda($reg['pcon_valor']);
+    $ret['idpedidos_contas'] = $reg['idpedidos_contas'];
+    //
+    echo json_encode($ret);
+    exit;
+}
+
+if($_POST['operacao'] == 'fechar'){
+    //
+    $sql = "SELECT * 
+        FROM pedidos 
+        WHERE idpedidos = {$_REQUEST['id_cadastro']}";
+    $regPedidos = $db->retornaUmReg($sql);
+    //
+    if($regPedidos['ped_situacao'] != 'Aberto'){
+        $html->mostraErro("Este pedido não está aberto e não pode ser fechado!");
+        exit; 
+    }
+    //
+    $db->beginTransaction();
+    //
+    if($parametros->buscaValor("pedidos: baixa estoque no fechamento") == 'SIM'){
+        $sql = "SELECT SUM(peit_qte) AS qte_pedido,
+                    peit_idprodutos,
+                    prod_nome,
+                    prod_qte_estoque 
+                FROM pedidos_itens
+                    JOIN produtos ON (peit_idprodutos = idprodutos)
+                WHERE peit_idpedidos = {$regPedidos['idpedidos']}
+                GROUP BY peit_idprodutos, prod_nome, prod_qte_estoque";
+        $res = $db->consultar($sql);
+        //
+        $permiteEstoqueNegativo = $parametros->buscaValor("empresa: permite trabalhar com estoque negativo");
+        //
+        foreach ($res as $reg) {
+            if($permiteEstoqueNegativo != 'SIM' && $reg['prod_qte_estoque'] < $reg['qte_pedido']){
+                $db->rollBack();
+                $html->mostraErro("Estoque insufiente do produto {$reg['prod_nome']}!");
+                exit; 
+            }
+            //
+            $sql = "UPDATE produtos
+                    SET prod_qte_estoque = prod_qte_estoque - {$reg['qte_pedido']}
+                    WHERE idprodutos = {$reg['peit_idprodutos']}";
+            $db->executaSQL($sql);
+            //
+            if($db->erro()){
+                $db->rollBack();
+                $html->mostraErro("Impossivel atualizar estoque do produto {$reg['prod_nome']}!");
+                exit; 
+            }
+        }
+    }
+    //
+    //Valida o parcelamento do pedido
+    //
+    $sql = "SELECT SUM(pcon_valor) AS total_contas
+            FROM pedidos_contas
+            WHERE pcon_idpedidos = {$regPedidos['idpedidos']}";
+    $totalContas = $db->retornaUmCampoSql($sql, 'total_contas');
+    //
+    if($regPedidos['ped_total_pedido'] != $totalContas){
+        $html->mostraErro("Parcelamento incompativel com valor do pedido!");
+        exit; 
+    }
+    //
+    //Faz a geração das parcelas do pedido
+    //
+    $sql = "SELECT * 
+            FROM pedidos_contas
+            WHERE pcon_idpedidos = {$regPedidos['idpedidos']}";
+    $res = $db->consultar($sql);
+    //
+    $contarec = New Contarec($db);
+    foreach ($res as $reg) {
+        $db->setTabela("contarec", "idcontarec");
+        //
+        unset($dados);
+        $dados['id']                    = 0;
+        $dados['ctrc_idpedidos'] 	    = $util->igr($_POST['idpedidos']);
+        $dados['ctrc_idcliente'] 	    = $util->igr($regPedidos["ped_idcliente"]);
+        $dados['ctrc_inclusao']         = $util->dgr(date('d/m/Y H:i'));
+        $dados['ctrc_situacao']         = $util->sgr("Pendente");
+        $dados['ctrc_idmeio_pagto']     = $reg['pcon_idmeio_pagto'];
+        $dados['ctrc_idbancos']         = $reg['pcon_idbancos'];
+        $dados['ctrc_idcc']             = $reg['pcon_idcc'];
+        $dados['ctrc_idtipo_contas']    = $reg['pcon_idtipo_contas'];
+        $dados['ctrc_idempresa']        = $reg['pcon_idempresas'];
+        $dados['ctrc_parcela']          = $util->sgr($reg['pcon_parcela']);
+        $dados['ctrc_vencimento']       = $util->sgr($reg['pcon_vencimento']);
+        $dados['ctrc_vlr_bruto']        = $util->vgr($reg['pcon_valor']);
+        //    
+        $db->gravarInserir($dados, false); 
+        //
+        $idContarec = $db->getUltimoID();
+        $contarec->gerarHistorio($idContarec, "Inclusão", $reg['pcon_valor'], $_SESSION['idusuario'], '', $reg['pcon_idmeio_pagto'], $reg['pcon_idcc']);
+        //
+        $db->setTabela("pedidos_contas", "idpedidos_contas");
+        //
+        unset($dados);
+        $dados['id']                    = $reg['idpedidos_contas'];
+        $dados['pcon_idcontarec'] 	    = $idContarec;
+        //
+        $db->gravarInserir($dados, false); 
+    }
+    //
+    $db->setTabela("pedidos", "idpedidos");
+    //
+    unset($dados);
+    $dados['id']                    = $_POST['idpedidos'];
+    $dados['ped_fechamento'] 	    = $util->dgr(date('d/m/Y H:i'));
+    $dados['ped_situacao']          = $util->sgr("Fechado");
+    //    
+    $db->gravarInserir($dados, true, "Fechamento"); 
+    //
+    $db->commit();
+    //
+    header('location:../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $_POST['idpedidos']);
+    exit;
+}
+
+if($_POST['operacao'] == 'reabrir'){
+    //
+    $db->beginTransaction();
+    //
+    $sql = "SELECT COUNT(1) AS total_quitadas 
+            FROM contarec 
+            WHERE (ctrc_situacao = 'Quitada'
+                OR ctrc_situacao = 'QParcial')
+            AND ctrc_idpedidos = " . $_POST['idpedidos'];
+    //
+    $qteQuitadas = $db->retornaUmCampoSql($sql, "total_quitadas");
+    if($qteQuitadas > 0){
+        $html->mostraErro("Este pedido possui contas pagas e não pode ser alterada!");
+        exit;
+    }
+    //
+    //Apaga as contas e limpa o pedidos_contas
+    //
+    $db->setTabela("contarec", "ctrc_idpedidos");
+    $db->excluir($_POST['idpedidos']);
+    //
+    $sql = "UPDATE pedidos_contas
+            SET pcon_idcontarec = NULL
+            WHERE pcon_idpedidos = {$_POST['idpedidos']}";
+    $db->executaSQL($sql);
+    //
+    $db->setTabela("pedidos", "idpedidos");
+    //
+    unset($dados);
+    $dados['id']                    = $_POST['idpedidos'];
+    $dados['ped_fechamento'] 	    = " NULL ";
+    $dados['ped_situacao']          = $util->sgr("Aberto");
+    //    
+    $db->gravarInserir($dados, true, "reabertura"); 
+    //
+    $db->commit();
+    //
+    header('location:../_Lancamentos/' . $paginaRetorno . '?id_cadastro=' . $_POST['idpedidos']);
     exit;
 }
 

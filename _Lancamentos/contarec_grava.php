@@ -64,6 +64,9 @@ $paginaRetorno = 'contarec_edita.php';
     if($_POST['ctrc_idempresa'] <= 0){
       $_POST['ctrc_idempresa'] = CODIGO_EMPRESA;
     }
+    if($_POST['ctrc_parcela'] == ""){
+      $_POST['ctrc_parcela'] = "1/1";
+    }
     //
     unset($dados);
     $dados['id']                  = $_POST['id_cadastro'];
@@ -80,6 +83,7 @@ $paginaRetorno = 'contarec_edita.php';
     $dados['ctrc_porc_desconto'] 	= $util->vgr($_POST['ctrc_porc_desconto']);
     $dados['ctrc_vlr_juros'] 	    = $util->vgr($_POST['ctrc_vlr_juros']);
     $dados['ctrc_porc_juros'] 	  = $util->vgr($_POST['ctrc_porc_juros']);
+    $dados['ctrc_parcela'] 	      = $util->sgr($_POST['ctrc_parcela']);
     $dados['ctrc_situacao']       = $util->sgr("Pendente");
     //
     if($_POST['id_cadastro'] <= 0){

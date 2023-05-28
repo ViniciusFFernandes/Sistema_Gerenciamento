@@ -73,6 +73,7 @@
   $html = str_replace("##ctrc_idcliente##", $reg['idpessoas'], $html);
   $html = str_replace("##ctrc_situacao##", $ctrc_situacao, $html);
   $html = str_replace("##ctrc_inclusao##", $reg['ctrc_inclusao'], $html);
+  $html = str_replace("##ctrc_parcela##", $reg['ctrc_parcela'], $html);
   $html = str_replace("##ctrc_vencimento##", $reg['ctrc_vencimento'], $html);
   $html = str_replace("##ctrc_vlr_bruto##", $util->formataMoeda($reg['ctrc_vlr_bruto'], 2, true), $html);
   $html = str_replace("##ctrc_vlr_juros##", $util->formataMoeda($reg['ctrc_vlr_juros'], 2, true), $html);

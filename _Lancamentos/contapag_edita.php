@@ -77,6 +77,7 @@
   $html = str_replace("##ctpg_idcliente##", $reg['idpessoas'], $html);
   $html = str_replace("##ctpg_situacao##", $ctpg_situacao, $html);
   $html = str_replace("##ctpg_inclusao##", $reg['ctpg_inclusao'], $html);
+  $html = str_replace("##ctpg_parcela##", $reg['ctpg_parcela'], $html);
   $html = str_replace("##ctpg_vencimento##", $reg['ctpg_vencimento'], $html);
   $html = str_replace("##ctpg_vlr_bruto##", $util->formataMoeda($reg['ctpg_vlr_bruto'], 2, true), $html);
   $html = str_replace("##ctpg_vlr_juros##", $util->formataMoeda($reg['ctpg_vlr_juros'], 2, true), $html);

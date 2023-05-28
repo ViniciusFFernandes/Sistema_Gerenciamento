@@ -200,3 +200,8 @@ $(function(){
 
   })(jQuery); // End of use strict
   
+  function abreContaRec(idcontarec){
+    if(idcontarec > 0){
+        $(location).attr('href', "../_Lancamentos/contarec_edita.php?id_cadastro=" + idcontarec);
+    }
+  }

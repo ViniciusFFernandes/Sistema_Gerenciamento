@@ -67,6 +67,8 @@
     if($reg['ped_situacao'] == 'Aberto'){
       $btnFechar = '<button type="button" class="btn btn-warning" onclick="chamaGravar(\'fechar\')" >Fechar</button>';
       $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
+      $btnParcelar = '<button type="button" onclick="gerarParcelas()" id="btnGerarParcelas" class="btn btn-primary" ><i class="fas fa-percent"></i> Parcelar</button>';
+      $btnNovoProduto = '<button type="button" onclick="limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>';
     }
     //
     $listaProdutos = $pedidos->retornaItensPedido($reg['idpedidos']);
@@ -111,6 +113,8 @@
   $html = str_replace("##ped_com_entrada##", $checkComEntrada, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnFechar##", $btnFechar, $html);
+  $html = str_replace("##btnNovoProduto##", $btnNovoProduto, $html);
+  $html = str_replace("##btnParcelar##", $btnParcelar, $html);
   $html = str_replace("##btnGravarReabrir##", $btnGravarReabrir, $html);
   $html = str_replace("##btnImprimir##", $btnImprimir, $html);
   echo $html; 

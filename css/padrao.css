@@ -2,6 +2,9 @@ body::-webkit-scrollbar {
   display: none
 }
 
+.pointer{
+  cursor: pointer;
+}
 
 .tableBusca::-webkit-scrollbar-track {
   background-color: #F4F4F4;
@@ -11768,4 +11771,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-btn:last-child > .btn-group {
   z-index: 2;
   margin-left: -1px;
+}
+
+.modal{
+  z-index: 999999;
+}
+
+.ui-autocomplete{
+  z-index: 9999999 !important;
 }

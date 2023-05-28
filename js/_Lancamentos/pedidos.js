@@ -95,6 +95,16 @@ $(document).ready(function(){
         }, 
         reverse: true
     });
+
+    $("#pcon_valor").mask("9.999.999.999,99", 
+        {translation: {
+            '9': {
+            pattern: /[0-9]/,
+            optional: false
+            }
+        }, 
+        reverse: true
+    });
  });
  
 function testaDados(operacao){
@@ -112,17 +122,27 @@ function abrePedido(){
     }
 }
 
-function carregaComboBoxCC(){
-    $("#comboBoxCC").html("<br><img src='../icones/carregando.gif' width='20px'>");
+function abreConta(idconta){
+    window.location.replace("contarec_edita.php?id_cadastro=" + idconta);
+}
+
+function carregaComboBoxCC(tipo = ""){
+    $("#comboBoxCC" + tipo).html("<br><img src='../icones/carregando.gif' width='20px'>");
     //
-    var idbancos = $("#ped_idbancos").val();
+    var idbancos = '';
+    if(tipo == ''){
+        idbancos = $("#ped_idbancos").val();
+    }else{
+        idbancos = $("#pcon_idbancos").val();
+    }
+    
     if(idbancos == '' || idbancos <= 0){
-        $("#comboBoxCC").html("<br><font color='red'>*</font> Selecione o banco");
+        $("#comboBoxCC" + tipo).html("<br><font color='red'>*</font> Selecione o banco");
     }else{
         $.post("pedidos_grava.php", 
-        {operacao: 'geraComboBoxCC', idbancos: idbancos},
+        {operacao: 'geraComboBoxCC', idbancos: idbancos, tipo: tipo},
         function(data){
-            $("#comboBoxCC").html(data);
+            $("#comboBoxCC" + tipo).html(data);
         }, 'html');
     }
 }
@@ -199,6 +219,7 @@ function limpaModalProd(){
     $("#peit_unitario").attr("readonly", true);
     $("#peit_desconto").attr("readonly", true);
     $("#peit_desconto_porc").attr("readonly", true);
+    $("#tituloModalProdutos").html("Inserir Produto");
 }
 
 function gravarProduto(){
@@ -236,6 +257,8 @@ function gravarProduto(){
 }
 
 function editarItem(idpedidos_itens){
+    //
+    $("#tituloModalProdutos").html("Editar Produto");
     //
     $.post("pedidos_grava.php", {
         operacao: 'editarProduto',
@@ -351,4 +374,91 @@ function alteraFormaPagto(){
             $("#ped_qte_parcelas").attr("readonly", false);
         }
     }, 'json');
+}
+
+function excluiConta(idpedidos_contas){
+    $.post("pedidos_grava.php", {
+        operacao: 'excluirConta',
+        id_cadastro: idpedidos_contas
+    }, function(data){
+        if(data.retorno == 'ok'){
+            attListaContas();
+        }else{
+            alertaGrande('Erro ao excluir conta');
+            console.log(data.msg);
+        }
+    }, "json");
+}
+
+function limpaModalConta(){
+    $("#idpedidos_contas").val('');
+    $("#pcon_vencimento_dias").val('');
+    $("#pcon_vencimento").val('');
+    $("#pcon_valor").val('');
+    $("#comboBoxMeioPagtoModal").html('');
+    $("#comboBoxTipoContaModal").html('');
+    $("#comboBoxBancosModal").html('');
+    $("#comboBoxCCModal").html('');
+}
+
+function editarConta(idpedidos_contas){
+    limpaModalConta()
+    //
+    $.post("pedidos_grava.php", {
+        operacao: 'editarContas',
+        id_cadastro: idpedidos_contas
+    }, function(data){
+            $('#modalContas').modal('show');
+            //
+            $("#idpedidos_contas").val(data.idpedidos_contas);
+            $("#pcon_vencimento_dias").val(data.pcon_vencimento_dias);
+            $("#pcon_vencimento").val(data.pcon_vencimento);
+            $("#pcon_valor").val(data.pcon_valor);
+            $("#comboBoxMeioPagtoModal").html(data.comboBoxMeioPagtoModal);
+            $("#comboBoxTipoContaModal").html(data.comboBoxTipoContaModal);
+            $("#comboBoxBancosModal").html(data.comboBoxBancosModal);
+            $("#comboBoxCCModal").html(data.comboBoxCCModal);
+            //
+    }, "json");
+}
+
+function attDataVencto(tipo){
+    var dataAtual = moment();
+    var dataVencto = moment($("#pcon_vencimento").val());
+    if(tipo == 'dias'){
+        var dataCalculada = dataAtual.add($("#pcon_vencimento_dias").val(), 'days'); 
+        $("#pcon_vencimento").val(dataCalculada.format('YYYY-MM-DD'));
+    }
+    if(tipo == 'data'){
+        var diferencaDias = dataVencto.diff(dataAtual, 'days');
+        diferencaDias = diferencaDias + 1;
+        if(diferencaDias <= 0){
+            $("#pcon_vencimento").val(dataAtual.format('YYYY-MM-DD'));
+            $("#pcon_vencimento_dias").val(0);
+        }else{
+            $("#pcon_vencimento_dias").val(diferencaDias);
+        }
+    }
+}
+
+function gravarConta(){
+    $.post("pedidos_grava.php", {
+        operacao: 'gravarConta',
+        id_cadastro: $("#idpedidos_contas").val(),
+        pcon_vencimento_dias: $("#pcon_vencimento_dias").val(),
+        pcon_vencimento: $("#pcon_vencimento").val(),
+        pcon_valor: $("#pcon_valor").val(),
+        ped_idmeio_pagto: $("#pcon_idmeio_pagto").val(),
+        ped_idbancos: $("#pcon_idbancos").val(),
+        ped_idcc: $("#pcon_idcc").val(),
+        ped_idtipo_contas: $("#pcon_idtipo_contas").val()
+    }, function(data){
+            if(data.retorno == 'ok'){
+                attListaContas();
+                $('#modalContas').modal('hide');
+            }else{
+                alertaGrande('Erro ao gravar conta');
+                console.log(data.msg);
+            }
+    }, "json");
 }

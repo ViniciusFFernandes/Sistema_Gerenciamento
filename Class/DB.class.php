@@ -296,6 +296,10 @@
 				case 'Reabertura':
 					$_SESSION['mensagem'] = "Reabertura efetuado com sucesso!";
 					$_SESSION['tipoMsg'] = "warning";
+					break;
+				case 'Fechamento':
+					$_SESSION['mensagem'] = "Fechamento efetuado com sucesso!";
+					$_SESSION['tipoMsg'] = "success";
 					break;	
 				default:
 					break;
