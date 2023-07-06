@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 0.98;
+		private $ultimaVersao = 1.03;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,133 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_01_03(){
+			//
+			// 06/07/2021 Vinicius
+			//
+			$this->cadastraPrograma("impressao_pedidos.php", 'Impressões');
+			$this->cadastraPrograma("impressao_pedcompras.php", 'Impressões');
+			//
+			//Mensagem para o usuario
+			return "Cadastro de programas para impressão de pedidos";
+		}
+
+		private function versao_01_02(){
+			//
+			// 06/07/2022 Vinicius
+			//
+			$sql = "CREATE TRIGGER pedcompras_itens_insert
+						AFTER INSERT
+						ON pedcompras_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedcompras set pcom_total_produtos = (pcom_total_produtos + NEW.pcit_total_item) WHERE idpedcompras = NEW.pcit_idpedcompras;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			$sql = "CREATE TRIGGER pedcompras_itens_update
+						AFTER UPDATE
+						ON  pedcompras_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedcompras set pcom_total_produtos = (pcom_total_produtos - OLD.pcit_total_item) WHERE idpedcompras = OLD.pcit_idpedcompras;
+								UPDATE pedcompras set pcom_total_produtos = (pcom_total_produtos + NEW.pcit_total_item) WHERE idpedcompras = NEW.pcit_idpedcompras;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			$sql = "CREATE TRIGGER pedcompras_itens_delete
+						AFTER delete
+						ON  pedcompras_itens
+						FOR EACH ROW
+							BEGIN
+								UPDATE pedcompras set pcom_total_produtos = (pcom_total_produtos - OLD.pcit_total_item) WHERE idpedcompras = OLD.pcit_idpedcompras;
+							END";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da TRIGGER para gerar os valores de produtos no pedido de compra";
+		}
+
+		
+		private function versao_01_01(){
+			//
+			// 06/07/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedcompras_contas(
+						idpedcompras_contas int(11) NOT NULL AUTO_INCREMENT,
+						pccon_idpedcompras int NULL,
+						pccon_idcontarec int NULL,
+						pccon_idmeio_pagto int NULL,
+						pccon_idbancos int NULL,
+						pccon_idcc int NULL,
+						pccon_idempresas int NULL,
+						pccon_idtipo_contas int NULL,
+						pccon_vencimento_dias INT NOT NULL,
+						pccon_vencimento DATE NOT NULL,
+						pccon_valor DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						pccon_parcela varchar(50) NULL,
+						PRIMARY KEY (idpedcompras_contas)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos de compras contas";
+		}
+
+		private function versao_01_00(){
+			//
+			// 06/07/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedcompras_itens(
+						idpedcompras_itens int(11) NOT NULL AUTO_INCREMENT,
+						pcit_idpedcompras int NULL,
+						pcit_idprodutos int NULL,
+						pcit_qte DECIMAL(10,2) NOT NULL DEFAULT 1,
+						pcit_vlr_unitario DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						pcit_porc_desconto DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						pcit_valor_desconto DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						pcit_total_item DECIMAL(10,2) AS (pcit_qte * pcit_vlr_unitario - pcit_valor_desconto) STORED,
+						pcit_unidade_sigla VARCHAR(25) NULL,
+						PRIMARY KEY (idpedcompras_itens)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos de compras itens";
+		}
+
+		private function versao_00_99(){
+			//
+			// 06/07/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS pedcompras(
+						idpedcompras int(11) NOT NULL AUTO_INCREMENT,
+						pcom_idfornecedor int NULL,
+						pcom_abertura DATETIME NULL,
+						pcom_fechamento DATETIME NULL,
+						pcom_situacao VARCHAR(100) NULL,
+						pcom_idforma_pagto int NULL,
+						pcom_idmeio_pagto int NULL,
+						pcom_idbancos int NULL,
+						pcom_idcc int NULL,
+						pcom_idempresas int NULL,
+						pcom_idtipo_contas int NULL,
+						pcom_obs TEXT NULL,
+						pcom_qte_parcelas int NULL,
+						pcom_total_produtos DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+						pcom_frete DECIMAL(10,2) NULL,
+						pcom_porc_desconto DECIMAL(10,2) NULL,
+						pcom_valor_desconto DECIMAL(10,2) NULL,
+						pcom_total_pedido DECIMAL(10,2) AS (pcom_total_produtos + pcom_frete - pcom_valor_desconto) STORED,
+						pcom_com_entrada VARCHAR(10) NULL,
+						PRIMARY KEY (idpedcompras)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de pedidos de compras";
+		}
 
 		private function versao_00_98(){
 			//
