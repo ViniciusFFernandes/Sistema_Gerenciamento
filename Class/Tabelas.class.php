@@ -111,19 +111,36 @@ class Tabelas{
 		$BordaRedonda = "rounded-top";
 		//
 		$tabela .= "<table class='table text-dark border-dark' style='margin-top: 3px;{$escondeTabela}' >";
-		if(!empty($cabecalho)){
-			$tabela .= "<tr>";
-				$tabela .= "<td class='{$corTitulo} {$BordaRedonda} border-0' colspan='" . count($colunas) . "' align='center'><b>{$tituloTabela}<b></td>";
-			$tabela .= "</tr>";
+		if(!empty($tituloTabela)){
+			$tabela .= "<thead>";
+				$tabela .= "<tr>";
+					$tabela .= "<td class='{$corTitulo} {$BordaRedonda} border-0' colspan='" . count($colunas) . "' align='center'><b>{$tituloTabela}<b></td>";
+				$tabela .= "</tr>";
+			$tabela .= "</thead>";
 			//
 			$BordaRedonda = '';
 		}
+		//
+		if(!empty($BordaRedonda)){
+			$BordaRedondaP = "rounded-top-left";
+			$BordaRedondaU = "rounded-top-right";
+		}
 		if(!empty($cabecalho)){
-			$tabela .= "<tr>";
-			foreach($cabecalho as $titulo => $config){
-				$tabela .= "<td class='{$corTituloColuna} {$BordaRedonda} border-0' {$config}><b>{$titulo}<b></td>";
-			}
-			$tabela .= "</tr>";
+			$tabela .= "<thead>";
+				$tabela .= "<tr>";
+				$linha = 1;
+				foreach($cabecalho as $titulo => $config){
+					$BordaRedonda = "";
+					if($linha == 1){
+						$BordaRedonda = $BordaRedondaP; 
+					}elseif($linha == count($cabecalho)){
+						$BordaRedonda = $BordaRedondaU;
+					}
+					$tabela .= "<td class='{$corTituloColuna} {$BordaRedonda} border-0' {$config}><b>{$titulo}<b></td>";
+					$linha++;
+				}
+				$tabela .= "</tr>";
+			$tabela .= "</thead>";
 			//
 			$BordaRedonda = "";
 		}
@@ -138,7 +155,7 @@ class Tabelas{
 				}
 				$tabela .= "<td {$tamanho}>{$reg[$coluna]}</td>";
 			}
-			$tabela .- "</tr>";
+			$tabela .= "</tr>";
 			if(!empty($campoTotal)){
 				$total += $util->vgr($reg[$campoTotal]);
 			}

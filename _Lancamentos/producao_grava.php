@@ -7,7 +7,8 @@ require_once("producao.class.php");
 $paginaRetorno = 'producao_edita.php';
 //
   if ($_POST['operacao'] == "buscaCadastro") {
-    $sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(pdc_data_abertura, '%Y-%m-%d'), '%d/%m/%Y') as pdc_abertura
+    $sql = "SELECT *, 
+              DATE_FORMAT(pdc_data_abertura, '%d/%m/%Y') AS pdc_abertura
             FROM producao 
               LEFT JOIN produtos ON (idprodutos = pdc_idprodutos)";
 

@@ -105,6 +105,13 @@ $(document).ready(function(){
         }, 
         reverse: true
     });
+
+    $('#pesquisa').on('keydown', function(event) {
+        if (event.keyCode == 13) { // Código da tecla "Enter" é 13
+        buscaCadastro('pedcompra_grava.php');
+        }
+    });
+    
  });
  
 function testaDados(operacao){
@@ -123,7 +130,7 @@ function abrePedido(){
 }
 
 function abreConta(idconta){
-    window.location.replace("contarec_edita.php?id_cadastro=" + idconta);
+    window.location.replace("contapag_edita.php?id_cadastro=" + idconta);
 }
 
 function carregaComboBoxCC(tipo = ""){

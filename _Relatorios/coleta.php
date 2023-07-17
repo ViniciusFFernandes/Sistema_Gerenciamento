@@ -34,7 +34,7 @@
     }
     //
     $sql = "SELECT FORMAT(cole_qte, 2, 'de_DE') AS qte_coleta, 
-                DATE_FORMAT(STR_TO_DATE(cole_data_entrada, '%Y-%m-%d'), '%d/%m/%Y') as dataEntrada,
+                DATE_FORMAT(cole_data_entrada, '%d/%m/%Y') AS dataEntrada,
                 prod_nome,
                 cole_placa_veiculo,
                 cole_qte

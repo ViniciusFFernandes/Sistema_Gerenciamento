@@ -69,7 +69,7 @@ class Salarios{
 						$linhaFuncionarios .= '<button type="button" class="btn btn-light" id="btnExcluir_' . $reg['idsalarios_funcionarios'] . '" onclick="excluirFuncionario(' . $reg['idsalarios_funcionarios'] . ')"><i class="fas fa-trash text-danger"></i></button>';
 						$linhaFuncionarios .= '<span style="margin-left: 5px;" id="spanAtt_' . $reg['idsalarios_funcionarios'] . '">&nbsp;</span>';
 					}else{
-						$linhaFuncionarios .= '<button type="button" class="btn btn-light" id="btnImprimir_' . $reg['idsalarios_funcionarios'] . '" onclick="imprimir(\'contapag_recibo_associado.php\', ' . $reg['idsalarios_funcionarios'] . ')"><i class="fas fa-print text-primary"></i></button>';
+						$linhaFuncionarios .= '<button type="button" class="btn ml-2 btn-light" id="btnImprimir_' . $reg['idsalarios_funcionarios'] . '" onclick="imprimir(\'contapag_recibo_associado.php\', ' . $reg['idsalarios_funcionarios'] . ')"><i class="fas fa-print text-primary"></i></button>';
 						$linhaFuncionarios .= '<button type="button" class="btn btn-light" id="btnImprimirCesta_' . $reg['idsalarios_funcionarios'] . '" onclick="imprimir(\'../_Cadastros/pessoas_recibo_cesta.php\', \'' . $reg['safu_idpessoas'] . '&mesano=' . $regSal['sala_mes'] . '-' . $regSal['sala_ano'] . '\')"><i class="fas fa-print text-primary"></i></button>';
 					}
 				$linhaFuncionarios .= '</div>';

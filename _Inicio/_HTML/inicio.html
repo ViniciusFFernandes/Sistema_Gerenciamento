@@ -8,10 +8,19 @@
    	<title>##nomeSistema##</title>
 
     ##includes##
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
     <script type="text/javascript">
-       window.setTimeout(function(){
-          document.getElementById("botao_alerta").click();
-       }, 3000);
+      $(document).ready(function() {
+        ##scriptGraficoContasPagas##
+        ##scriptGraficoContasRecebidas##
+        ##scriptGraficoContasTotais##
+      });
+      window.setTimeout(function(){
+        document.getElementById("botao_alerta").click();
+      }, 3000);
     </script>
   </head>
 
@@ -28,6 +37,48 @@
               <div class="col-md-4 col-sm-1 col-xs-1"></div>
               <div class="col-md-4 col-sm-10 col-xs-10">##Mensagem##</div>
               <div class="col-md-4 col-sm-1 col-xs-1"></div>
+            </div>
+            <div class="row">
+              <div class="col-12 col-sm-4">
+                <div class="card shadow mb-4 border-left-primary">
+                  <div class="card-header py-3"> 
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <span style="float: right; padding: 0px 3px; margin-left: 6px;">##mesGrafico##</span>
+                      Gastos Mensais
+                    </h6>                       
+                  </div>
+                  <div class="card-body">
+                    <canvas id="graficoContasPagas"></canvas>
+                  </div>
+                </div>
+                <div class="card shadow border-left-primary">
+                  <div class="card-header py-3"> 
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <span style="float: right; padding: 0px 3px; margin-left: 6px;">##mesGrafico##</span>
+                      Ganhos Mensais
+                    </h6>                       
+                  </div>
+                  <div class="card-body">
+                    <canvas id="graficoContasRecebidas"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 mb-4 d-block d-sm-none"></div>
+              <div class="col-12 col-sm-4">
+                <div class="card shadow mb-4 border-left-primary" style="height: 100%;">
+                  <div class="card-header py-3"> 
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <span style="float: right; padding: 0px 3px; margin-left: 6px;">##mesGrafico##</span>
+                      Movimentos Mensais
+                    </h6>                       
+                  </div>
+                  <div class="card-body linhaGraficoMensaisTotais">
+                    <div class="graficoMensaisTotais">
+                      <canvas id="graficoContasTotais"></canvas>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <!-- End of Main Content -->

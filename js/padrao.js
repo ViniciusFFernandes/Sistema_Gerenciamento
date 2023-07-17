@@ -205,3 +205,9 @@ $(function(){
         $(location).attr('href', "../_Lancamentos/contarec_edita.php?id_cadastro=" + idcontarec);
     }
   }
+
+  function abreModalPesquisa(){
+    setTimeout(function() {
+        $("#pesquisa").focus();
+      }, 500);
+  }

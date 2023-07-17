@@ -3,6 +3,18 @@ $( document ).ready(function() {
   if($("#id_cadastro").val() > 0){
     consultarProgramas();
   }
+  //
+  $('#consulta').on('keydown', function(event) {
+    if (event.keyCode == 13) { // Código da tecla "Enter" é 13
+      consultarProgramas();
+    }
+  });
+  //
+  $('#pesquisa').on('keydown', function(event) {
+    if (event.keyCode == 13) { // Código da tecla "Enter" é 13
+      buscaCadastro('grupo_acessos_grava.php');
+    }
+  });
 });
 
 function ativarDesativar(operacao, idgrupos_acessos_programas){

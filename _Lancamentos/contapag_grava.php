@@ -9,8 +9,8 @@ $paginaRetorno = 'contapag_edita.php';
   if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT *, 
                   format(ctpg_vlr_bruto,2,'de_DE') ctpg_bruto, 
-                  DATE_FORMAT(STR_TO_DATE(ctpg_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencimento, 
-                  CONCAT(pess_nome, ' <br> <span style=''float: left;''>', DATE_FORMAT(STR_TO_DATE(ctpg_vencimento, '%Y-%m-%d'), '%d/%m/%Y'), '</span> <span style=''float: right;''>', format(ctpg_vlr_bruto,2,'de_DE'), '</span>') AS campo_celular
+                  DATE_FORMAT(ctpg_vencimento, '%d/%m/%Y') AS vencimento, 
+                  CONCAT(pess_nome, ' <br> <span style=''float: left;''>',   DATE_FORMAT(ctpg_vencimento, '%d/%m/%Y'), '</span> <span style=''float: right;''>', format(ctpg_vlr_bruto,2,'de_DE'), '</span>') AS campo_celular
             FROM contapag 
               LEFT JOIN pessoas ON (ctpg_idcliente = idpessoas)";
     //
@@ -124,7 +124,7 @@ $paginaRetorno = 'contapag_edita.php';
       //
       $db->setTabela("contapag", "idcontapag");
       unset($dados);
-      $dados['id']                  = $id;
+      $dados['id']                = $id;
       $dados['ctpg_vencimento'] 	= $util->dgr(date("d/m/Y"));
       //
       $db->gravarInserir($dados, false);

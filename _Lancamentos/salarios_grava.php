@@ -8,7 +8,10 @@ require_once("contapag.class.php");
 $paginaRetorno = 'salarios_edita.php';
 //
   if ($_POST['operacao'] == "buscaCadastro") {
-    $sql = "SELECT *, CONCAT(lpad(sala_mes,2,0), '/', sala_ano) AS sala_referente,  format(sala_vlr_total,2,'de_DE') sala_vlr_total, DATE_FORMAT(STR_TO_DATE(sala_data, '%Y-%m-%d'), '%d/%m/%Y') as sala_data
+    $sql = "SELECT *, 
+              CONCAT(lpad(sala_mes,2,0), '/', sala_ano) AS sala_referente,  
+              FORMAT(sala_vlr_total,2,'de_DE') sala_vlr_total, 
+              DATE_FORMAT(sala_data, '%d/%m/%Y') AS sala_data
             FROM salarios";
     //
     if ($_POST['pesquisa'] != "") {

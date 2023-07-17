@@ -3,8 +3,17 @@
     require_once("../Class/tabelas.class.php");
     //
     //
-    if(!empty($_REQUEST['idempresas'])){
-        $idempresa = $_REQUEST['idempresas'];
+    $sql = "SELECT *
+            FROM pedcompras 
+                JOIN pessoas ON (pcom_idfornecedor = idpessoas)
+                LEFT JOIN cidades ON (pess_idcidades = idcidades)
+                LEFT JOIN estados ON (cid_idestados = idestados)
+            WHERE idpedcompras = {$_REQUEST['id_cadastro']}";
+    //
+    $regPedido = $db->retornaUmReg($sql);
+    //
+    if(!empty($regPedido['pcom_idempresas'])){
+        $idempresa = $regPedido['pcom_idempresas'];
     }else{
         $idempresa = CODIGO_EMPRESA;
     }
@@ -32,15 +41,6 @@
     }else{
         $tamanhoLogo = "85px;";
     }
-    //
-    $sql = "SELECT *
-            FROM pedcompras 
-                JOIN pessoas ON (pcom_idfornecedor = idpessoas)
-                LEFT JOIN cidades ON (pess_idcidades = idcidades)
-                LEFT JOIN estados ON (cid_idestados = idestados)
-            WHERE idpedcompras = {$_REQUEST['id_cadastro']}";
-    //
-    $regPedido = $db->retornaUmReg($sql);
     //
     $tabelas = new Tabelas();
     //
@@ -106,7 +106,7 @@
     $tabelaProdutos .= $tabelas->geraTabelaPadrao($res, $db, $colunas, $cabecalho, "vlr_total", $util, "table-primary", "Lista de Produtos");
     //
     //
-    $sql = "SELECT DATE_FORMAT(STR_TO_DATE(pccon_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencto,
+    $sql = "SELECT DATE_FORMAT(pccon_vencimento, '%d/%m/%Y') AS vencto,
             FORMAT(pccon_valor, 2, 'de_DE') AS valor, 
             pccon_parcela
             FROM pedcompras_contas

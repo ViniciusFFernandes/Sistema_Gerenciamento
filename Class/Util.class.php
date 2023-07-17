@@ -344,5 +344,139 @@ class Util{
 		return $novaData;
 	}
 
+	public function criarGraficoBarraData($dados, $labels, $titulos, $cores, $elemento = 'lineChart') {
+		//
+		// Configuração do gráfico
+		//
+		if(!empty($dados)){
+			$labelsFormatados = array_map(function($label) {
+				return date('d/m', strtotime($label));
+			}, $labels);
+			
+			$datasets = [];
+			
+			foreach ($titulos as $titulo) {
+				$dataset = [
+				'label' => $titulo,
+				'data' => $dados[$titulo],
+				'backgroundColor' => $cores[$titulo],
+				'borderColor' => $cores[$titulo],
+				'borderWidth' => 1
+				];
+			
+				$datasets[] = $dataset;
+			}
+		}else{
+			$dataset = [
+				'label' => "Nenhum Registro Encontrado",
+				'data' => "",
+				'backgroundColor' => "#3e5ccb",
+				'borderColor' => "#3e5ccb",
+				'borderWidth' => 1
+				];
+			
+				$datasets[] = $dataset;
+		}
+		
+		  $config = [
+			'type' => 'bar',
+			'data' => [
+			  'labels' => $labelsFormatados,
+			  'datasets' => $datasets
+			],
+			'options' => [
+				'responsive' => true,
+				'scales' => [
+					'y' => [
+						'beginAtZero' => true,
+						'ticks' => [
+							'callback' => "function(value) {
+							return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(value);
+							}"
+						]
+					]
+				]
+			]
+		  ];
+			
+		// Saída HTML
+		$output = '
+					var ctx = document.getElementById("' . $elemento . '").getContext("2d");
+					new Chart(ctx, ' . json_encode($config) . ');
+				';
+	
+		return $output;
+	}
+
+	public function criarGraficoPizzaData($dados, $cores, $elemento = 'lineChart') {
+		//
+		// Configuração do gráfico
+		//
+		if (!empty($dados)) {
+			$labels = array_keys($dados);
+			$dataset = [
+				'data' => array_values($dados),
+				'backgroundColor' => array_values($cores),
+				'borderColor' => array_values($cores),
+				'borderWidth' => 1
+			];
+			$datasets = [$dataset];
+		} else {
+			$dataset = [
+				'data' => [0],
+				'backgroundColor' => ["#0062ff"],
+				'borderColor' => ["#0062ff"],
+				'borderWidth' => 1
+			];
+			$datasets = [$dataset];
+			$labels = ["Nenhum Registro Encontrado"];
+		}
+	
+		$config = [
+			'type' => 'pie',
+			'data' => [
+				'labels' => $labels,
+				'datasets' => $datasets
+			],
+			'options' => [
+				'responsive' => true,
+				'plugins' => [
+					'legend' => [
+						'display' => true,
+						'position' => 'bottom' // Posição da legenda (opcional)
+					],
+					'layout' => [
+						'padding' => [
+							'left' => 10,
+							'right' => 10,
+							'top' => 10,
+							'bottom' => 10
+						],
+					],
+					'maintainAspectRatio' => false, // Desativar a proporção automática
+					'aspectRatio' => 1, // Largura dividida pela altura
+					'responsive' => false, // Tornar o gráfico responsivo
+				],
+				'scales' => [
+					'y' => [
+						'beginAtZero' => true,
+						'ticks' => [
+							'callback' => "function(value) {
+								return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', minimumFractionDigits: 2 }).format(value);
+							}"
+						]
+					]
+				]
+			]
+		];
+	
+		$output = '
+			var ctx = document.getElementById("' . $elemento . '").getContext("2d");
+			new Chart(ctx, ' . json_encode($config) . ');
+		';
+	
+		return $output;
+	}
+
 }
 ?>

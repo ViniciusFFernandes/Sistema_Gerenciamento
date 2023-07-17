@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.03;
+		private $ultimaVersao = 1.06;
 		private $db;
 		private $parametros;
 		private $util;
@@ -78,12 +78,46 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_01_06(){
+			//
+			// 14/07/2021 Vinicius
+			//
+			$this->cadastraPrograma("contarec_sel.php", 'Relatório', 'Contas a Receber',  'menu', '', 'relatorios', 0, '_Relatorios');
+			$this->cadastraPrograma("contarec.php", 'Relatório');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa de relatórios de contas a receber";
+		}
+
+		private function versao_01_05(){
+			//
+			// 13/07/2023 Vinicius
+			//
+			$sql = "ALTER TABLE tipo_contas ADD tico_cor varchar(50) NOT NULL DEFAULT '#000000'";
+			$this->db->executaSQL($sql); 
+			//
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para gravar a cor do tipo conta nos graficos";
+		}
+
+		private function versao_01_04(){
+			//
+			// 11/07/2021 Vinicius
+			//
+			$this->cadastraPrograma("contapag_sel.php", 'Relatório', 'Contas a Pagar',  'menu', '', 'relatorios', 0, '_Relatorios');
+			$this->cadastraPrograma("contapag.php", 'Relatório');
+			//
+			//Mensagem para o usuario
+			return "Criação do programa de relatórios de contas a pagar";
+		}
+
 		private function versao_01_03(){
 			//
 			// 06/07/2021 Vinicius
 			//
 			$this->cadastraPrograma("impressao_pedidos.php", 'Impressões');
-			$this->cadastraPrograma("impressao_pedcompras.php", 'Impressões');
+			$this->cadastraPrograma("impressao_pedcompra.php", 'Impressões');
 			//
 			//Mensagem para o usuario
 			return "Cadastro de programas para impressão de pedidos";
@@ -133,7 +167,7 @@
 			$sql = "CREATE TABLE IF NOT EXISTS pedcompras_contas(
 						idpedcompras_contas int(11) NOT NULL AUTO_INCREMENT,
 						pccon_idpedcompras int NULL,
-						pccon_idcontarec int NULL,
+						pccon_idcontapag int NULL,
 						pccon_idmeio_pagto int NULL,
 						pccon_idbancos int NULL,
 						pccon_idcc int NULL,
@@ -229,7 +263,7 @@
 			$sql = "ALTER TABLE contarec ADD ctrc_idpedidos int(11) NULL";
 			$this->db->executaSQL($sql); 
 			//
-			$sql = "ALTER TABLE contapag ADD ctpg_idpedcompra int(11) NULL";
+			$sql = "ALTER TABLE contapag ADD ctpg_idpedcompras int(11) NULL";
 			$this->db->executaSQL($sql); 
 			//
 			//Mensagem para o usuario

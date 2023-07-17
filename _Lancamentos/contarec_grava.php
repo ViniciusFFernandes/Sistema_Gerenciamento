@@ -9,8 +9,8 @@ $paginaRetorno = 'contarec_edita.php';
   if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT *, 
                   format(ctrc_vlr_bruto,2,'de_DE') ctrc_bruto, 
-                  DATE_FORMAT(STR_TO_DATE(ctrc_vencimento, '%Y-%m-%d'), '%d/%m/%Y') as vencimento,
-                  CONCAT(pess_nome, ' <br> <span style=''float: left;''>', DATE_FORMAT(STR_TO_DATE(ctrc_vencimento, '%Y-%m-%d'), '%d/%m/%Y'), '</span> <span style=''float: right;''>', format(ctrc_vlr_bruto,2,'de_DE'), '</span>') AS campo_celular
+                  DATE_FORMAT(ctrc_vencimento, '%d/%m/%Y') AS vencimento,
+                  CONCAT(pess_nome, ' <br> <span style=''float: left;''>', DATE_FORMAT(ctrc_vencimento, '%d/%m/%Y'), '</span> <span style=''float: right;''>', format(ctrc_vlr_bruto,2,'de_DE'), '</span>') AS campo_celular
             FROM contarec 
               LEFT JOIN pessoas ON (ctrc_idcliente = idpessoas)";
     //
@@ -122,7 +122,9 @@ $paginaRetorno = 'contarec_edita.php';
       //
       $db->gravarInserir($dados, true);
       //
-      $contarec->baixaConta($id, ($_POST['ctrc_vlr_bruto'] + $_POST['ctrc_vlr_juros'] - $_POST['ctrc_vlr_desconto']), 0, 0, $_POST['ctrc_idcc'], $_POST['ctrc_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
+      $valorPago = $db->retornaUmCampoID("(ctrc_vlr_bruto + ctrc_vlr_juros) - ctrc_vlr_desconto", "contarec", $id);
+      //
+      $contarec->baixaConta($id, $valorPago, 0, 0, $_POST['ctrc_idcc'], $_POST['ctrc_idmeio_pagto'], date("d/m/Y"), $_SESSION['idusuario']);
     }
     //
     $db->commit();

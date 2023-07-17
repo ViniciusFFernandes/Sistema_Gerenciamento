@@ -6811,6 +6811,14 @@ button.bg-dark:focus {
   border-top-right-radius: 0.35rem !important;
 }
 
+.rounded-top-left {
+  border-top-left-radius: 0.35rem !important;
+}
+
+.rounded-top-right {
+  border-top-right-radius: 0.35rem !important;
+}
+
 .rounded-right {
   border-top-right-radius: 0.35rem !important;
   border-bottom-right-radius: 0.35rem !important;
@@ -11779,4 +11787,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 .ui-autocomplete{
   z-index: 9999999 !important;
+}
+
+.graficoMensaisTotais {
+  width: 400px; 
+  height: 400px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.linhaGraficoMensaisTotais {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

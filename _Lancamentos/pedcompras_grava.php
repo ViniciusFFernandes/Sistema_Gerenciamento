@@ -3,14 +3,14 @@ require_once("../_BD/conecta_login.php");
 require_once("tabelas.class.php");
 require_once("pedcompras.class.php");
 require_once("produtos.class.php");
-require_once("contarec.class.php");
+require_once("contapag.class.php");
 // print_r($_POST);
 // exit;
 $paginaRetorno = 'pedcompras_edita.php';
 //
 if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT *, 
-                DATE_FORMAT(STR_TO_DATE(pcom_abertura, '%Y-%m-%d'), '%d/%m/%Y') as abertura
+                DATE_FORMAT(pcom_abertura, '%d/%m/%Y') AS abertura
             FROM pedcompras 
             LEFT JOIN pessoas ON (pcom_idfornecedor = idpessoas)";
     //
@@ -248,6 +248,10 @@ if($_POST['operacao'] == 'gerarParcelas'){
     //
     $db->setTabela("pedcompras", "idpedcompras");
     //
+    if($db->retornaUmCampoID("forp_tipo", "forma_pagto", $_POST['pcom_idforma_pagto']) == "A Vista"){
+        $_POST['pcom_qte_parcelas'] = 1;
+    }
+    //
     unset($dados);
     $dados['id']                    = $_POST['idpedcompras'];
     $dados['pcom_idmeio_pagto'] 	    = $util->igr($_POST['pcom_idmeio_pagto']);
@@ -295,6 +299,7 @@ if($_POST['operacao'] == 'gerarParcelas'){
         echo json_encode($retorno);
         exit;
     }
+    
     //
     $db->setTabela("pedcompras_contas", "pccon_idpedcompras");
     $db->excluir($_POST['idpedcompras']);
@@ -447,6 +452,7 @@ if($_POST['operacao'] == 'fechar'){
     if($parametros->buscaValor("pedidos: baixa estoque no fechamento") == 'SIM'){
         $sql = "SELECT SUM(pcit_qte) AS qte_pedido,
                     pcit_idprodutos,
+                    pcit_idpedcompra,
                     prod_nome,
                     prod_qte_estoque 
                 FROM pedcompras_itens
@@ -464,16 +470,7 @@ if($_POST['operacao'] == 'fechar'){
                 exit; 
             }
             //
-            $sql = "UPDATE produtos
-                    SET prod_qte_estoque = prod_qte_estoque - {$reg['qte_pedido']}
-                    WHERE idprodutos = {$reg['pcit_idprodutos']}";
-            $db->executaSQL($sql);
-            //
-            if($db->erro()){
-                $db->rollBack();
-                $html->mostraErro("Impossivel atualizar estoque do produto {$reg['prod_nome']}!");
-                exit; 
-            }
+            $estoque->geraMovimento($reg['pcit_idprodutos'], "-", $reg['qte_pedido'], basename($_SERVER['PHP_SELF']), $reg['pcit_idpedcompra']);
         }
     }
     //
@@ -496,35 +493,35 @@ if($_POST['operacao'] == 'fechar'){
             WHERE pccon_idpedcompras = {$regPedcompras['idpedcompras']}";
     $res = $db->consultar($sql);
     //
-    $contarec = New Contarec($db);
+    $contapag = New Contapag($db);
     foreach ($res as $reg) {
-        $db->setTabela("contarec", "idcontarec");
+        $db->setTabela("contapag", "idcontapag");
         //
         unset($dados);
         $dados['id']                    = 0;
-        $dados['ctrc_idpedcompras'] 	    = $util->igr($_POST['idpedcompras']);
-        $dados['ctrc_idcliente'] 	    = $util->igr($regPedcompras["pcom_idfornecedor"]);
-        $dados['ctrc_inclusao']         = $util->dgr(date('d/m/Y H:i'));
-        $dados['ctrc_situacao']         = $util->sgr("Pendente");
-        $dados['ctrc_idmeio_pagto']     = $reg['pccon_idmeio_pagto'];
-        $dados['ctrc_idbancos']         = $reg['pccon_idbancos'];
-        $dados['ctrc_idcc']             = $reg['pccon_idcc'];
-        $dados['ctrc_idtipo_contas']    = $reg['pccon_idtipo_contas'];
-        $dados['ctrc_idempresa']        = $reg['pccon_idempresas'];
-        $dados['ctrc_parcela']          = $util->sgr($reg['pccon_parcela']);
-        $dados['ctrc_vencimento']       = $util->sgr($reg['pccon_vencimento']);
-        $dados['ctrc_vlr_bruto']        = $util->vgr($reg['pccon_valor']);
+        $dados['ctpg_idpedcompras'] 	= $util->igr($_POST['idpedcompras']);
+        $dados['ctpg_idcliente'] 	    = $util->igr($regPedcompras["pcom_idfornecedor"]);
+        $dados['ctpg_inclusao']         = $util->dgr(date('d/m/Y H:i'));
+        $dados['ctpg_situacao']         = $util->sgr("Pendente");
+        $dados['ctpg_idmeio_pagto']     = $reg['pccon_idmeio_pagto'];
+        $dados['ctpg_idbancos']         = $reg['pccon_idbancos'];
+        $dados['ctpg_idcc']             = $reg['pccon_idcc'];
+        $dados['ctpg_idtipo_contas']    = $reg['pccon_idtipo_contas'];
+        $dados['ctpg_idempresa']        = $reg['pccon_idempresas'];
+        $dados['ctpg_parcela']          = $util->sgr($reg['pccon_parcela']);
+        $dados['ctpg_vencimento']       = $util->sgr($reg['pccon_vencimento']);
+        $dados['ctpg_vlr_bruto']        = $util->vgr($reg['pccon_valor']);
         //    
         $db->gravarInserir($dados, false); 
         //
-        $idContarec = $db->getUltimoID();
-        $contarec->gerarHistorio($idContarec, "Inclusão", $reg['pccon_valor'], $_SESSION['idusuario'], '', $reg['pccon_idmeio_pagto'], $reg['pccon_idcc']);
+        $idContapag = $db->getUltimoID();
+        $contapag->gerarHistorio($idContapag, "Inclusão", $reg['pccon_valor'], $_SESSION['idusuario'], '', $reg['pccon_idmeio_pagto'], $reg['pccon_idcc']);
         //
         $db->setTabela("pedcompras_contas", "idpedcompras_contas");
         //
         unset($dados);
         $dados['id']                    = $reg['idpedcompras_contas'];
-        $dados['pccon_idcontarec'] 	    = $idContarec;
+        $dados['pccon_idcontapag'] 	    = $idContapag;
         //
         $db->gravarInserir($dados, false); 
     }
@@ -549,10 +546,10 @@ if($_POST['operacao'] == 'reabrir'){
     $db->beginTransaction();
     //
     $sql = "SELECT COUNT(1) AS total_quitadas 
-            FROM contarec 
-            WHERE (ctrc_situacao = 'Quitada'
-                OR ctrc_situacao = 'QParcial')
-            AND ctrc_idpedcompras = " . $_POST['idpedcompras'];
+            FROM contapag 
+            WHERE (ctpg_situacao = 'Quitada'
+                OR ctpg_situacao = 'QParcial')
+            AND ctpg_idpedcompras = " . $_POST['idpedcompras'];
     //
     $qteQuitadas = $db->retornaUmCampoSql($sql, "total_quitadas");
     if($qteQuitadas > 0){
@@ -562,11 +559,11 @@ if($_POST['operacao'] == 'reabrir'){
     //
     //Apaga as contas e limpa o pedcompras_contas
     //
-    $db->setTabela("contarec", "ctrc_idpedcompras");
+    $db->setTabela("contapag", "ctpg_idpedcompras");
     $db->excluir($_POST['idpedcompras']);
     //
     $sql = "UPDATE pedcompras_contas
-            SET pccon_idcontarec = NULL
+            SET pccon_idcontapag = NULL
             WHERE pccon_idpedcompras = {$_POST['idpedcompras']}";
     $db->executaSQL($sql);
     //

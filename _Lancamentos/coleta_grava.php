@@ -7,7 +7,7 @@ require_once("estoque.class.php");
 $paginaRetorno = 'coleta_edita.php';
 //
   if ($_POST['operacao'] == "buscaCadastro") {
-    $sql = "SELECT *, DATE_FORMAT(STR_TO_DATE(cole_data_entrada, '%Y-%m-%d'), '%d/%m/%Y') as cole_entrada
+    $sql = "SELECT *, DATE_FORMAT(cole_data_entrada, '%d/%m/%Y') AS cole_entrada
             FROM coleta 
               LEFT JOIN produtos ON (idprodutos = cole_idprodutos)";
 

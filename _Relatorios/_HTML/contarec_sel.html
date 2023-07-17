@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../imagens/favicon.ico">
+   	<title>##nomeSistema##</title>
+    
+    ##includes##
+    <script src="../js/_Relatorios/contapag_sel.js"></script>
+    <script>##autoComplete_Pessoas##</script>
+  </head>
+
+  <body id="page-top">
+    <div id="wrapper">
+      ##Menu##
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          ##topBar##
+          <div class="container-fluid">
+            <div class="row divMsg">
+              <div class="col-md-4 col-sm-1 col-1"></div>
+              <div class="col-md-4 col-sm-10 col-10">##Mensagem##</div>
+              <div class="col-md-4 col-sm-1 col-1"></div>
+            </div>
+            <div class="card shadow mb-4 border-left-primary">
+              <div class="card-header py-3"> 
+                <h6 class="m-0 font-weight-bold text-primary">
+                  Relatorio de Contas a Receber
+                </h6>                       
+              </div>
+              <div class="card-body">
+                <form action="contapag.php" id="form_edita" target="_blank" method="POST" enctype="multipart/form-data" autocomplete="off">
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12 pb-3">
+                      ##autoComplete_CampoPessoas##
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-6  pb-3">
+                      <input type="date" class="form-control" id="data_inicio" name="data_inicio">
+                    </div> 
+                    <div class="col-md-3 col-sm-3 col-6  pb-3">
+                      <input type="date" class="form-control" id="data_fim" name="data_fim">
+                    </div> 
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 col-sm-6 col-12 pb-3">
+                      ##comboBoxEmpresas##
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-12 pb-3">
+                        ##comboBoxTipoConta##
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12 pb-3">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="modelo" id="modeloTodas" value="TUDO" checked> Listar Todas as Contas
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="modelo" id="modeloPendentes" value="PENDENTE"> Listar Apenas as Contas Pendentes
+                            </label>
+                        </div>
+                        <div class="form-check">  
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="modelo" id="modeloPagas" value="PAGAS"> Listar Apenas as Contas Pagas
+                            </label>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-md-12 col-sm-12 col-12" >
+                      <input type="hidden" class="form-control" id="operacao" name="operacao" value="">
+                      <center>
+                        <button type="button" onclick="gerarRelatorio()" class="btn btn-info">Gerar</button>
+                      </center>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+  </body>
+</html>
+

@@ -170,9 +170,9 @@
                     foreach($res AS $reg){
                         $classePointer = "";
                         $functionAbreConta = "";
-                        if($reg['pccon_idcontarec'] > 0){
+                        if($reg['pccon_idcontapag'] > 0){
                             $classePointer = 'pointer';
-                            $functionAbreConta = 'onclick="abreConta(' . $reg['pccon_idcontarec'] . ')"';
+                            $functionAbreConta = 'onclick="abreConta(' . $reg['pccon_idcontapag'] . ')"';
                         }
                         $div .= '<div class="row border-prod">';
                             $div .= '<div class="col-md-1 col-sm-1 pt-2 d-none d-sm-block">';
@@ -190,7 +190,7 @@
                                         $div .= 'Pagamento: ' . $reg['mpag_nome'];
                                     $div .= '</div>';
                                     $div .= '<div class="col-6 d-block d-sm-none dadosContasPed ' . $classePointer . '" ' . $functionAbreConta . '>';
-                                        $div .= 'Código: ' . $reg['pccon_idcontarec'];
+                                        $div .= 'Código: ' . $reg['pccon_idcontapag'];
                                     $div .= '</div>';
                                     $div .= '<div class="col-6 d-block d-sm-none dadosContasPed">';
                                         $div .= 'Valor: ' . $this->util->formataMoeda($reg['pccon_valor']);
@@ -204,7 +204,7 @@
                                 $div .= $reg['mpag_nome'];
                             $div .= '</div>';
                             $div .= '<div class="col-md-1 col-sm-1 pt-2 d-none d-sm-block ' . $classePointer . '" ' . $functionAbreConta . '>';
-                                $div .= $reg['pccon_idcontarec'];
+                                $div .= $reg['pccon_idcontapag'];
                             $div .= '</div>';
                             $div .= '<div class="col-md-2 col-sm-2 pt-2 d-none d-sm-block">';
                                 $div .= $reg['tico_nome'];

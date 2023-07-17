@@ -9,13 +9,14 @@
 			$this->util = new Util();
 		}
 
-		public function criaSelectSql($campoMostra, $campoValue, $nameInput, $valueReg, $sql, $class = "", $js = "", $geraZero = true, $valorPadraoZero = '---'){
+		public function criaSelectSql($campoMostra, $campoValue, $nameInput, $valueReg, $sql, $class = "", $js = "", $geraZero = true, $valorPadraoZero = '---', $escondeOpcaoZero = true){
 			//
 			$res = $this->db->consultar($sql);
 			//
 			$comboBox = "<select name='{$nameInput}' id='{$nameInput}' class='{$class}' {$js}>";
 				if($valueReg == '' || $valueReg == 0) $selected  = "selected='selected'";
-				if($geraZero) $comboBox .= "<option value='' disabled hidden {$selected}>{$valorPadraoZero}</option>";
+				if($escondeOpcaoZero) $hide = "disabled hidden";
+				if($geraZero) $comboBox .= "<option value='' {$hide} {$selected}>{$valorPadraoZero}</option>";
 				foreach ($res as $reg) {
 					$selected = "";
 					if($reg[$campoValue] == $valueReg) $selected  = "selected='selected'";

@@ -29,7 +29,7 @@
               <div class="card-header py-3"> 
                 <h6 class="m-0 font-weight-bold text-primary">
                   Cadastro de Tipo de Conta
-                  <i class="fas fa-search text-dark" align="right" data-toggle="modal" title="Buscar Tipo de Conta" data-target="#buscaCadastro" style="cursor: pointer;"></i> 
+                  <i class="fas fa-search text-dark" align="right" data-toggle="modal" title="Buscar Tipo de Conta" data-target="#buscaCadastro" onclick="abreModalPesquisa()" style="cursor: pointer;"></i> 
                 </h6>                       
               </div>
               <div class="card-body">
@@ -38,6 +38,9 @@
                   <div class="row">
                     <div class="col-md-6 col-sm-6 col-12 pb-3">
                       <input type="text" class="form-control" id="tico_nome" name="tico_nome" value="##tico_nome##" placeholder="Nome" autofocus >
+                    </div>
+                    <div class="col-md-1 col-sm-1 col-2 pb-3">
+                      <input type="color" class="form-control" id="tico_cor" name="tico_cor" value="##tico_cor##" placeholder="Cor Graficos" autofocus >
                     </div>
                   </div>
                   <div class="row">

@@ -28,6 +28,7 @@
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idtipo_contas'], $html);
   $html = str_replace("##tico_nome##", $reg['tico_nome'], $html);
+  $html = str_replace("##tico_cor##", $reg['tico_cor'], $html);
   $html = str_replace("##CheckTipoVale##", $checkTipoVale, $html);
   $html = str_replace("##CheckTipoExtra##", $checkTipoExtra, $html);
   $html = str_replace("##CheckTipoSalario##", $checkTipoSalario, $html);

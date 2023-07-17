@@ -10,7 +10,7 @@ $paginaRetorno = 'pedidos_edita.php';
 //
 if ($_POST['operacao'] == "buscaCadastro") {
     $sql = "SELECT *, 
-                DATE_FORMAT(STR_TO_DATE(ped_abertura, '%Y-%m-%d'), '%d/%m/%Y') as abertura
+               DATE_FORMAT(ped_abertura, '%d/%m/%Y') AS abertura
             FROM pedidos 
             LEFT JOIN pessoas ON (ped_idcliente = idpessoas)";
     //
@@ -447,8 +447,9 @@ if($_POST['operacao'] == 'fechar'){
     if($parametros->buscaValor("pedidos: baixa estoque no fechamento") == 'SIM'){
         $sql = "SELECT SUM(peit_qte) AS qte_pedido,
                     peit_idprodutos,
+                    peit_idpedidos,
                     prod_nome,
-                    prod_qte_estoque 
+                    prod_qte_estoque
                 FROM pedidos_itens
                     JOIN produtos ON (peit_idprodutos = idprodutos)
                 WHERE peit_idpedidos = {$regPedidos['idpedidos']}
@@ -464,16 +465,7 @@ if($_POST['operacao'] == 'fechar'){
                 exit; 
             }
             //
-            $sql = "UPDATE produtos
-                    SET prod_qte_estoque = prod_qte_estoque - {$reg['qte_pedido']}
-                    WHERE idprodutos = {$reg['peit_idprodutos']}";
-            $db->executaSQL($sql);
-            //
-            if($db->erro()){
-                $db->rollBack();
-                $html->mostraErro("Impossivel atualizar estoque do produto {$reg['prod_nome']}!");
-                exit; 
-            }
+            $estoque->geraMovimento($reg['peit_idprodutos'], "+", $reg['prod_qte_estoque'], basename($_SERVER['PHP_SELF']), $reg['peit_idpedidos']);
         }
     }
     //

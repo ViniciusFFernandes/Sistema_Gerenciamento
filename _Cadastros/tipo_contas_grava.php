@@ -41,6 +41,7 @@ $paginaRetorno = 'tipo_contas_edita.php';
   	$dados['tico_tipo_vale'] 	    = $util->sgr($_POST['tico_tipo_vale']);
   	$dados['tico_tipo_extra'] 	  = $util->sgr($_POST['tico_tipo_extra']);
   	$dados['tico_tipo_salario'] 	= $util->sgr($_POST['tico_tipo_salario']);
+  	$dados['tico_cor'] 	          = $util->sgr($_POST['tico_cor']);
     $db->gravarInserir($dados, true);
 
   	if ($_POST['id_cadastro'] > 0) {
