@@ -3251,7 +3251,7 @@ input[type="button"].btn-block {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .dropdown-menu-md-left {
     right: auto;
     left: 0;
@@ -4458,7 +4458,7 @@ input[type="button"].btn-block {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .navbar-expand-md {
     flex-flow: row nowrap;
     justify-content: flex-start;
@@ -6919,6 +6919,16 @@ button.bg-dark:focus {
   }
   .d-sm-inline-flex {
     display: inline-flex !important;
+  }
+}
+
+@media (min-width: 576px) {
+  .escondeMenuCelular {
+    display: none !important;
+  }
+
+  .escondeMenuPC {
+    display: inline !important;
   }
 }
 
@@ -10762,7 +10772,7 @@ a:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .sidebar {
     width: 14rem !important;
   }
