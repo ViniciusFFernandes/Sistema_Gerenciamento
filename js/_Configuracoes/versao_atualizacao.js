@@ -10,7 +10,7 @@
               if(data.executado){
                 $("#versaoAtualSistema").html(data.novaVersao);
               }
-              $("#relatorioAtualizacao").prepend('<div class="row"><div class="col-md-12 col-sm-12 col-xs-12"><b>Versão: ' + parseFloat(data.novaVersao) + '</b><br><p>' + data.msg + '</p></div></div>');
+              $("#relatorioAtualizacao").prepend('<div class="row"><div class="col-md-12 col-sm-12 col-12"><b>Versão: ' + parseFloat(data.novaVersao) + '</b><br><p>' + data.msg + '</p></div></div>');
               if(data.executaNovamente){
                 atualizarSistema();
               }else{

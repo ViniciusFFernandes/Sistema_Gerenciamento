@@ -20,14 +20,14 @@ class produtos{
 								</span>  
 							</div>
 						  </div>
-				          <div class="col-xs-4 col-md-2 col-sm-2 col-lg-2 pb-3" style="margin-bottom: 5px;" align="right;">
+				          <div class="col-4 col-md-2 col-sm-2 col-lg-2 pb-3" style="margin-bottom: 5px;" align="right;">
 				            <input type="text" class="form-control" id="pfor_qte" name="pfor_qte" placeholder="Qte">
 				            <span id="prod_uni"></span>
 				          </div>
-				          <div class="col-xs-4 col-md-2 col-sm-2 col-lg-2 pb-3 pr-0" style="margin-bottom: 5px;" align="right;">
+				          <div class="col-4 col-md-2 col-sm-2 col-lg-2 pb-3 pr-0" style="margin-bottom: 5px;" align="right;">
 				              <input type="text" class="form-control" id="pfor_porc_perca" name="pfor_porc_perca" placeholder="Perca">
 				          </div>
-				          <div class="col-xs-4 col-md-1 col-sm-1 col-lg-1 pb-3" style="margin-bottom: 5px;" align="center">
+				          <div class="col-4 col-md-1 col-sm-1 col-lg-1 pb-3" style="margin-bottom: 5px;" align="center">
 				           <button class="btn btn-default" type="button" onclick="gravaItensFormula()"><i class="fas fa-plus text-success"></i></button>
 				          </div>
 				        </div>

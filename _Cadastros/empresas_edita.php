@@ -28,7 +28,7 @@
     }
     //
     $btnEnviaImg = ' <div class="row">
-                      <div class="col-md-12 col-sm-12 col-xs-12" align="center">
+                      <div class="col-md-12 col-sm-12 col-12" align="center">
                         <form name="formUpload" id="formUpload" method="post" enctype="multipart/form-data">
                           <input type="hidden" name="operacaoAjax" value="enviarLogo">
                           <input type="hidden" name="id_cadastro" value="' . $reg['idempresas'] . '">
@@ -42,7 +42,7 @@
                           <br>
                         </form>
                       </div>
-                      <div class="col-md-12 col-sm-12 col-xs-12" align="center" id="imgLogo">';
+                      <div class="col-md-12 col-sm-12 col-12" align="center" id="imgLogo">';
     if($reg['emp_logo'] != ''){
       $btnEnviaImg .= '<img src="../uploads/' . $reg['emp_logo'] . '" class="img-fluid" />';
     }
