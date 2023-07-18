@@ -40,28 +40,28 @@
                             <form action="pedcompras_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
                             <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-6 pb-3">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-6 pb-3">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="idpedcompras" name="idpedcompras" value="##idpedcompras##" placeholder="Código" autofocus >
                                     <span class="input-group-addon" style="cursor: pointer;" onclick="abrePedido()"><i class="fas fa-bolt text-warning"></i></span>
                                 </div>
                                 </div>
-                                <div class="col-md-2 col-sm-2 col-6 pb-3 pt-2">
+                                <div class="col-lg-4 col-md-2 col-sm-8 col-6 pb-3 pt-2 text-right">
                                 ##pcom_situacao##
                                 </div>
                                 <div class="d-block d-sm-none clearfix"></div>
-                                <div class="col-md-4 col-sm-4 col-9 pb-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-9 pb-3">
                                     <input type="datetime-local" class="form-control" id="pcom_abertura" name="pcom_abertura" value="##pcom_abertura##" readonly disabled title="Data de Abertura">
                                 </div>
-                                <div class="col-md-4 col-sm-4 col-9 pb-3">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col-9 pb-3">
                                     <input type="datetime-local" class="form-control" id="pcom_fechamento" name="pcom_fechamento" value="##pcom_fechamento##" readonly disabled title="Data de Fechamento">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 col-sm-12 col-12 pb-3">
+                                <div class="col-lg-5 col-md-6 col-sm-12 col-12 pb-3">
                                     ##autoComplete_CampoPessoas##
                                 </div>
-                                <div class="col-md-3 col-sm-6 col-12 pb-3">
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-12 pb-3">
                                     ##comboEmpresas##
                                 </div>
                             </div>
@@ -84,29 +84,29 @@
                                 </div>
                                 <div id="divContas" class="tab-pane fade">
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-6 pb-3 pt-3">
+                                        <div class="col-lg-2 col-md-3 col-sm-3 col-6 pb-3 pt-3">
                                           ##comboBoxMeioPagto##
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-6 pb-3 pt-3">
+                                        <div class="col-lg-2 col-md-3 col-sm-3 col-6 pb-3 pt-3">
                                             ##comboBoxFormaPagto##
                                         </div>
-                                        <div class="col-md-1 col-sm-1 col-6 pb-3 pt-3">
+                                        <div class="col-lg-1 col-md-2 col-sm-2 col-6 pb-3 pt-3">
                                             <input type="text" class="form-control" id="pcom_qte_parcelas" name="pcom_qte_parcelas" value="##pcom_qte_parcelas##" placeholder="Parcelas">
                                         </div>
-                                        <div class="col-md-2 col-sm-2 col-6 pb-3 pt-3" vlagin="middle">
+                                        <div class="col-lg-1 col-md-4 col-sm-4 col-6 pb-3 pt-3" vlagin="middle">
                                             <input type="checkbox" id="pcom_com_entrada" name="pcom_com_entrada" value="SIM" ##pcom_com_entrada##> Com Entrada
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
+                                        <div class="col-lg-2 col-md-4 col-sm-4 col-4 pb-3 pt-3">
                                             ##comboBoxBancos##
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
+                                        <div class="col-lg-2 col-md-4 col-sm-4 col-4 pb-3 pt-3">
                                             <span id="comboBoxCC">
                                                 ##comboBoxCC##
                                             </span>
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-4 pb-3 pt-3">
+                                        <div class="col-lg-2 col-md-4 col-sm-4 col-4 pb-3 pt-3">
                                             <span>
                                                 ##comboBoxTipoConta##
                                             </span>
@@ -123,7 +123,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-6 pb-3">
+                                <div class="col-lg-2 col-md-4 col-sm-4 col-6 col-6 pb-3">
                                   <div class="input-group">
                                     <span class="input-group-addon">R$</span>
                                     <input type="text" class="form-control" placeholder="Frete" id="pcom_frete" name="pcom_frete" value="##pcom_frete##">
@@ -131,13 +131,13 @@
                                 </div>
                             </div> 
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-6 pb-3">
+                                <div class="col-lg-2 col-md-4 col-sm-4 col-6 col-6 pb-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">R$</span>
                                         <input type="text" class="form-control" placeholder="Descontos" id="pcom_valor_desconto" name="pcom_valor_desconto" value="##pcom_valor_desconto##" onkeyup="calculoDesconto('vlr')">
                                     </div>
                                 </div>
-                                <div class="col-md-2 col-sm-2 col-6 pb-3">
+                                <div class="col-lg-2 col-md-4 col-sm-4 col-6 col-6 pb-3">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Descontos (%)" id="pcom_porc_desconto" name="pcom_porc_desconto" value="##pcom_porc_desconto##" onkeyup="calculoDesconto('porc')">
                                         <span class="input-group-addon">%</span>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2 col-sm-2 col-6 pb-3">
+                                <div class="col-lg-2 col-md-4 col-sm-4 col-6 col-6 pb-3">
                                     <div class="input-group">
                                         <span class="input-group-addon">R$</span>
                                         <input type="text" class="form-control" placeholder="Total do Pedido" id="pcom_total_pedido" name="pcom_total_pedido" value="##pcom_total_pedido##" readonly>
