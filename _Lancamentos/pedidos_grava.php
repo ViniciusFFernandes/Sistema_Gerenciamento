@@ -300,7 +300,7 @@ if($_POST['operacao'] == 'gerarParcelas'){
     $db->excluir($_POST['idpedidos']);
     //
     $valorParcela = $reg['ped_total_pedido'] / $reg['ped_qte_parcelas'];
-    if($reg['ped_com_entrada'] == 'SIM' || $reg['forp_tipo'] == 'Mensal com Entrada'){
+    if($reg['ped_com_entrada'] == 'SIM' || $reg['forp_tipo'] == 'Mensal com Entrada' || $reg['forp_tipo'] == 'A Vista'){
         $dias = 0;
     }else{
         if($reg['forp_dias'] > 0){
@@ -502,7 +502,7 @@ if($_POST['operacao'] == 'fechar'){
         $dados['ctrc_idbancos']         = $reg['pcon_idbancos'];
         $dados['ctrc_idcc']             = $reg['pcon_idcc'];
         $dados['ctrc_idtipo_contas']    = $reg['pcon_idtipo_contas'];
-        $dados['ctrc_idempresa']        = $reg['pcon_idempresas'];
+        $dados['ctrc_idempresas']        = $reg['pcon_idempresas'];
         $dados['ctrc_parcela']          = $util->sgr($reg['pcon_parcela']);
         $dados['ctrc_vencimento']       = $util->sgr($reg['pcon_vencimento']);
         $dados['ctrc_vlr_bruto']        = $util->vgr($reg['pcon_valor']);

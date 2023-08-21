@@ -239,6 +239,11 @@ function gravarProduto(){
     var pcit_desconto_porc = $("#pcit_desconto_porc").val();
     var pcit_sigla_unidade = $("#pcit_sigla_unidade").html();
     //
+    if(idprodutos <= 0){
+        alertaPequeno("Informe um Produto!");
+        return;
+    }
+    //
     $.post("pedcompras_grava.php", {
         operacao: 'gravarProduto',
         id_cadastro: id_cadastro,

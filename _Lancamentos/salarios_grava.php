@@ -61,8 +61,9 @@ $paginaRetorno = 'salarios_edita.php';
     unset($dados);
     $dados['id']                    = $_POST['id_cadastro'];
   	$dados['sala_data']             = $dataAbertura;
-    $dados['sala_mes']        = $util->igr($_POST['sala_mes']);
-    $dados['sala_ano']        = $util->igr($_POST['sala_ano']);
+    $dados['sala_mes']              = $util->igr($_POST['sala_mes']);
+    $dados['sala_ano']              = $util->igr($_POST['sala_ano']);
+    $dados['sala_idempresas']        = $util->igr($_POST['sala_idempresas']);
     if($_POST['id_cadastro'] <= 0){
       $dados['sala_situacao']        = $util->sgr("Aberto");
     }
@@ -159,6 +160,8 @@ if ($_POST['operacao'] == 'fechar'){
     exit;
   }
   //
+  $sql = "SELECT * FROM salarios WHERE idsalarios = " . $_POST['id_cadastro'];
+  $regSalario = $db->retornaUmReg($sql);
   //
   $db->setTabela("salarios", "idsalarios");
   //
@@ -166,6 +169,10 @@ if ($_POST['operacao'] == 'fechar'){
   $dados['id']                    = $_POST['id_cadastro'];
   $dados['sala_situacao']         = $util->sgr("Fechado");
   $dados['sala_data_fechamento']  = " NOW() ";
+  //
+  if($regSalario['sala_idempresas'] <= 0){
+    $dados['sala_idempresas']         = $util->igr(CODIGO_EMPRESA);
+  }
   //
   $db->gravarInserir($dados, true);
   //
@@ -192,7 +199,7 @@ if ($_POST['operacao'] == 'fechar'){
     $dados['ctpg_idbancos']                 = $util->igr($idbancos);
     $dados['ctpg_idcc']                     = $util->igr($idcc);
     $dados['ctpg_idmeio_pagto']             = $util->igr($idmeio_pagto);
-    $dados['ctpg_idempresa']                = $util->igr(CODIGO_EMPRESA);
+    $dados['ctpg_idempresas']                = $util->igr($reg['sala_idempresas']);
     $dados['ctpg_vencimento'] 	            = $util->dgr(date('d/m/Y'));
     $dados['ctpg_inclusao'] 	              = $util->dgr(date('d/m/Y'));
     $dados['ctpg_vlr_bruto'] 	              = $reg['safu_total'];

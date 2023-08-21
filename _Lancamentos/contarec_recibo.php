@@ -30,7 +30,7 @@
                     FROM empresas 
                         LEFT JOIN cidades ON (idcidades = emp_idcidades) 
                         LEFT JOIN estados ON (cid_idestados = idestados)
-                    WHERE idempresas = {$reg['ctrc_idempresa']}";
+                    WHERE idempresas = {$reg['ctrc_idempresas']}";
     $regEmpresas = $db->retornaUmReg($sqlEmpresas);
     //
     $logoRelatorios = $regEmpresas['emp_logo'];

@@ -25,14 +25,19 @@ $paginaRetorno = 'pessoas_edita.php';
   if ($_POST['operacao'] == "excluiTelefones") {
     $db->setTabela("pessoas_numeros", "idpessoas_numeros");
     $db->excluir($_POST['idtelefone']);
+    //
+    $ret['retorno'] = "ok";
+    echo json_encode($ret);
     exit;
   }
 
   if ($_POST['operacao'] == "gravaTelefones") {
+    $ret['retorno'] = "ok";
+    //
     if($db->retornaUmCampoID("pess_inativo", "pessoas", $_POST['id_cadastro']) == 'S'){
-      $dados['retorno'] = "erro";
-      $dados['msg'] = "Você não pode alterar os dados de uma pessoa invativa\nOperação cancelada!";
-      echo json_encode($dados);
+      $ret['retorno'] = "erro";
+      $ret['msg'] = "Você não pode alterar os dados de uma pessoa invativa\nOperação cancelada!";
+      echo json_encode($ret);
       exit;
     }
     //
@@ -41,6 +46,18 @@ $paginaRetorno = 'pessoas_edita.php';
     $dados['pnum_DDD']              = $util->sgr($_POST['pnum_DDD']);
     $dados['pnum_numero']           = $util->sgr($_POST['pnum_numero']);
     $db->gravarInserir($dados);
+    $idFone = $db->getUltimoID();
+    //
+    $linhaFone = "";
+    $linhaFone .= '<tr id="linhaFone_' . $idFone . '">';
+    $linhaFone .= '<td width="50px">(' . trim($_POST['pnum_DDD']) . ')</td>';
+    $linhaFone .= '<td>' . $_POST['pnum_numero'] . '</td>';
+    $linhaFone .= '<td width="40px;" class="pl-0 pr-0" align="center" id="btnExcluiTelefone_' . $idFone . '"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $idFone . ')" style="cursor:pointer;"></td>';
+    $linhaFone .= '</tr>';
+    //
+    $ret["linhaFone"] = $linhaFone;
+    //
+    echo json_encode($ret);
     exit;
   }
 

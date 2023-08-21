@@ -239,6 +239,11 @@ function gravarProduto(){
     var peit_desconto_porc = $("#peit_desconto_porc").val();
     var peit_sigla_unidade = $("#peit_sigla_unidade").html();
     //
+    if(idprodutos <= 0){
+        alertaPequeno("Informe um Produto!");
+        return;
+    }
+    //
     $.post("pedidos_grava.php", {
         operacao: 'gravarProduto',
         id_cadastro: id_cadastro,
@@ -377,6 +382,9 @@ function alteraFormaPagto(){
     }, function(data){
         if(data.retorno != 'Parcelamento Livre'){
             $("#ped_qte_parcelas").attr("readonly", true);
+            if(data.retorno == 'A Vista'){
+                $("#ped_qte_parcelas").val("1");
+            }
         }else{
             $("#ped_qte_parcelas").attr("readonly", false);
         }

@@ -27,11 +27,17 @@
         if(empty($reg['func_nome'])) $reg['func_nome'] = "Não Informado";
         if(empty($reg['set_nome'])) $reg['set_nome'] = "Não Informado";
         //
+        if(!empty($reg['pess_idempresas'])){
+            $idempresa = $reg['pess_idempresas'];
+        }else{
+            $idempresa = CODIGO_EMPRESA;
+        }
+        //
         $sqlEmpresas = "SELECT *
                         FROM empresas 
                             LEFT JOIN cidades ON (idcidades = emp_idcidades) 
                             LEFT JOIN estados ON (cid_idestados = idestados)
-                        WHERE idempresas = " . CODIGO_EMPRESA;
+                        WHERE idempresas = " . $idempresa;
         $regEmpresas = $db->retornaUmReg($sqlEmpresas);
         //
         $logoRelatorios = $regEmpresas['emp_logo'];

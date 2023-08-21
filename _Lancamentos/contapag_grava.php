@@ -61,8 +61,8 @@ $paginaRetorno = 'contapag_edita.php';
     //
     $db->setTabela("contapag", "idcontapag");
     //
-    if($_POST['ctpg_idempresa'] <= 0){
-      $_POST['ctpg_idempresa'] = CODIGO_EMPRESA;
+    if($_POST['ctpg_idempresas'] <= 0){
+      $_POST['ctpg_idempresas'] = CODIGO_EMPRESA;
     }
     if($_POST['ctpg_parcela'] == ""){
       $_POST['ctpg_parcela'] = "1/1";
@@ -75,7 +75,7 @@ $paginaRetorno = 'contapag_edita.php';
     $dados['ctpg_idbancos']       = $util->igr($_POST['ctpg_idbancos']);
     $dados['ctpg_idcc']           = $util->igr($_POST['ctpg_idcc']);
     $dados['ctpg_idmeio_pagto']   = $util->igr($_POST['ctpg_idmeio_pagto']);
-    $dados['ctpg_idempresa']      = $util->igr($_POST['ctpg_idempresa']);
+    $dados['ctpg_idempresas']      = $util->igr($_POST['ctpg_idempresas']);
     $dados['ctpg_vencimento'] 	  = $util->sgr($_POST['ctpg_vencimento']);
     $dados['ctpg_a_vista'] 	      = $util->sgr($_POST['ctpg_a_vista']);
     $dados['ctpg_vlr_bruto'] 	    = $util->vgr($_POST['ctpg_vlr_bruto']);

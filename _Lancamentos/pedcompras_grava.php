@@ -507,7 +507,7 @@ if($_POST['operacao'] == 'fechar'){
         $dados['ctpg_idbancos']         = $reg['pccon_idbancos'];
         $dados['ctpg_idcc']             = $reg['pccon_idcc'];
         $dados['ctpg_idtipo_contas']    = $reg['pccon_idtipo_contas'];
-        $dados['ctpg_idempresa']        = $reg['pccon_idempresas'];
+        $dados['ctpg_idempresas']        = $reg['pccon_idempresas'];
         $dados['ctpg_parcela']          = $util->sgr($reg['pccon_parcela']);
         $dados['ctpg_vencimento']       = $util->sgr($reg['pccon_vencimento']);
         $dados['ctpg_vlr_bruto']        = $util->vgr($reg['pccon_valor']);

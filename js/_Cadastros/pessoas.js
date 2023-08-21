@@ -235,7 +235,10 @@ function adicionaTelefone(){
       alertaPequeno(data.msg);
       return;
     }else{
-      buscaTelefones();
+      //buscaTelefones();
+      $(data.linhaFone).hide().appendTo("#listaTelefone").fadeIn(500);
+      $("#divTelefone").scrollTop(($("#divTelefone").prop("scrollHeight") + 49));
+      // $("#listaTelefone").append(data.linhaFone);
     }
     //alert(result);
   }, "json");
@@ -246,6 +249,11 @@ function excluirTelefone(idtelefone){
   $.post("pessoas_grava.php",
   {operacao: "excluiTelefones", idtelefone: idtelefone},
   function(result){
-    buscaTelefones();
-  });
+    if(result.retorno == 'ok'){
+      $("#linhaFone_" + idtelefone).fadeOut(250, function() {
+        $(this).remove();
+      });
+    }
+    //buscaTelefones();
+  }, "json");
 }

@@ -27,13 +27,13 @@
     }
     //
     //
-    if(empty($reg['ctpg_idempresa'])) $reg['ctpg_idempresa'] = CODIGO_EMPRESA;
+    if(empty($reg['ctpg_idempresas'])) $reg['ctpg_idempresas'] = CODIGO_EMPRESA;
     //
     $sqlEmpresas = "SELECT *
                     FROM empresas 
                         LEFT JOIN cidades ON (idcidades = emp_idcidades) 
                         LEFT JOIN estados ON (cid_idestados = idestados)
-                    WHERE idempresas = {$reg['ctpg_idempresa']}";
+                    WHERE idempresas = {$reg['ctpg_idempresas']}";
     $regEmpresas = $db->retornaUmReg($sqlEmpresas);
     //
     $logoRelatorios = $regEmpresas['emp_logo'];

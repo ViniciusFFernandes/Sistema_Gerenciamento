@@ -61,8 +61,8 @@ $paginaRetorno = 'contarec_edita.php';
     //
     $db->setTabela("contarec", "idcontarec");
     //
-    if($_POST['ctrc_idempresa'] <= 0){
-      $_POST['ctrc_idempresa'] = CODIGO_EMPRESA;
+    if($_POST['ctrc_idempresas'] <= 0){
+      $_POST['ctrc_idempresas'] = CODIGO_EMPRESA;
     }
     if($_POST['ctrc_parcela'] == ""){
       $_POST['ctrc_parcela'] = "1/1";
@@ -75,7 +75,7 @@ $paginaRetorno = 'contarec_edita.php';
     $dados['ctrc_idbancos']       = $util->igr($_POST['ctrc_idbancos']);
     $dados['ctrc_idcc']           = $util->igr($_POST['ctrc_idcc']);
     $dados['ctrc_idmeio_pagto']   = $util->igr($_POST['ctrc_idmeio_pagto']);
-    $dados['ctrc_idempresa']      = $util->igr($_POST['ctrc_idempresa']);
+    $dados['ctrc_idempresas']      = $util->igr($_POST['ctrc_idempresas']);
     $dados['ctrc_vencimento'] 	  = $util->sgr($_POST['ctrc_vencimento']);
     $dados['ctrc_a_vista'] 	      = $util->sgr($_POST['ctrc_a_vista']);
     $dados['ctrc_vlr_bruto'] 	    = $util->vgr($_POST['ctrc_vlr_bruto']);

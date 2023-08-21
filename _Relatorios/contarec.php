@@ -45,7 +45,7 @@
                 FORMAT(ctrc_vlr_devedor, 2, 'de_DE') AS valorDevedor
             FROM contarec 
                 JOIN pessoas ON (ctrc_idcliente = idpessoas)
-            WHERE ctrc_idempresa = {$idempresa}";
+            WHERE ctrc_idempresas = {$idempresa}";
     //
     if(!empty($_REQUEST['data_inicio'])){
         $sql .= " AND ctrc_vencimento >= '{$_REQUEST['data_inicio']}'";

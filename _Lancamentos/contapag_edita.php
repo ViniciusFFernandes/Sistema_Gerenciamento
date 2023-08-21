@@ -30,7 +30,7 @@
   $comboBoxBancosModal = $html->criaSelectSql("banc_nome", "idbancos", "ctpg_idbancosModal", '', $sql, "form-control", 'onchange="carregaComboBoxCC(\'Modal\')"',  true, "Banco");
   //
   $sql = "SELECT * FROM empresas";
-  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ctpg_idempresa", $reg['ctpg_idempresa'], $sql, "form-control", '', true, "Empresa");
+  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "ctpg_idempresas", $reg['ctpg_idempresas'], $sql, "form-control", '', true, "Empresa");
   //
   $comboBoxCC = "<font color='red'>*</font> Selecione o banco";
   //

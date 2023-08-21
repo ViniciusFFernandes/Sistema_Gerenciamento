@@ -45,7 +45,7 @@
                 FORMAT(ctpg_vlr_devedor, 2, 'de_DE') AS valorDevedor
             FROM contapag 
                 JOIN pessoas ON (ctpg_idcliente = idpessoas)
-            WHERE ctpg_idempresa = {$idempresa}";
+            WHERE ctpg_idempresas = {$idempresa}";
     //
     if(!empty($_REQUEST['data_inicio'])){
         $sql .= " AND ctpg_vencimento >= '{$_REQUEST['data_inicio']}'";

@@ -12,6 +12,10 @@
   //
   //Monta variaveis de exibição
   $btnGravar = '<button type="button" onclick="testaDados(\'gravar\')" class="btn btn-success">Gravar</button>';
+  //
+  $sql = "SELECT * FROM empresas";
+  $comboEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "sala_idempresas", $reg['sala_idempresas'], $sql, "form-control", '', true, "Empresa");
+  //
   if(!empty($reg['idsalarios'])){ 
     //
     $salarios = new Salarios($db);
@@ -41,6 +45,7 @@
   $html = str_replace("##sala_data_fechamento##", $util->convertData($reg['sala_data_fechamento']), $html);
   $html = str_replace("##sala_mes##", $reg['sala_mes'], $html);
   $html = str_replace("##sala_ano##", $reg['sala_ano'], $html);
+  $html = str_replace("##comboEmpresas##", $comboEmpresas, $html);
   $html = str_replace("##FuncionariosSalarios##", $tabelaFuncionarios, $html);
   $html = str_replace("##btnGravar##", $btnGravar, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);

@@ -34,8 +34,8 @@
     $editaLogin .=  '&nbsp;<i class="fas fa-user-lock"></i>';
     $editaLogin .= '</span>';
     //
-    $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger">Excluir</button>';
-    $btnImprimir = '<button type="button" class="btn btn-info" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
+    $btnExcluir = '<button type="button" onclick="excluiCadastro()" class="btn btn-danger mb-1">Excluir</button>';
+    $btnImprimir = '<button type="button" class="btn btn-info mb-1" data-target="#modelosImprimir"  data-toggle="modal">Imprimir</button>';
     //
     $checkCliente = $html->defineChecked($reg['pess_cliente']);
     $checkFornecedor = $html->defineChecked($reg['pess_fornecedor']);
@@ -53,9 +53,9 @@
     $comboGruposAcessos = $html->criaSelectSql("grac_nome", "idgrupos_acessos", "pess_idgrupos_acessos", $reg['pess_idgrupos_acessos'], $sql, "form-control");
     //
     if($reg['pess_inativo'] <> 'S'){
-      $btnAtivarInativar = "<button type='button' class='btn btn-warning' onclick=\"ativoInativo('S')\">Inativar</button>";
+      $btnAtivarInativar = "<button type='button' class='btn btn-warning mb-1' onclick=\"ativoInativo('S')\">Inativar</button>";
     }else{
-      $btnAtivarInativar = "<button type='button' class='btn btn-default' onclick=\"ativoInativo('N')\">Ativar</button>";
+      $btnAtivarInativar = "<button type='button' class='btn btn-default mb-1' onclick=\"ativoInativo('N')\">Ativar</button>";
     }
   }
   //

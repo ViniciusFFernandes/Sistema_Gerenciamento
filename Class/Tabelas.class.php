@@ -3,12 +3,12 @@
 class Tabelas{
 
 	public function geraTabelaTel($res){
-    	$tabela = "<table class='table' width='100%' style='margin-top: 3px;'>";
+    	$tabela = "<table class='table' width='100%' id='listaTelefone' style='margin-top: 3px; margin-bottom: 0px;'>";
 	    foreach ($res as $reg) {
-	     $tabela .= '<tr>';
-	     $tabela .= '<td width="80px">(' . trim($reg['pnum_DDD']) . ')</td>
+	     $tabela .= '<tr id="linhaFone_' . $reg['idpessoas_numeros'] . '">';
+	     $tabela .= '<td width="50px">(' . trim($reg['pnum_DDD']) . ')</td>
 	        <td>' . $reg['pnum_numero'] . '</td>
-	        <td width="20px;" align="left" id="btnExcluiTelefone_' . $reg['idpessoas_numeros'] . '"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
+	        <td width="40px;" class="pl-0 pr-0" align="center" id="btnExcluiTelefone_' . $reg['idpessoas_numeros'] . '"><img src="../icones/excluir.png" onclick="excluirTelefone(' . $reg['idpessoas_numeros'] . ')" style="cursor:pointer;"></td>
 	      </tr>';
 	  	}
 	  $tabela .= "</table>";

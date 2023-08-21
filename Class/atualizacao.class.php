@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.06;
+		private $ultimaVersao = 1.07;
 		private $db;
 		private $parametros;
 		private $util;
@@ -78,6 +78,18 @@
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
 
+		private function versao_01_07(){
+			//
+			// 06/08/2023 Vinicius
+			//
+			$sql = "ALTER TABLE salarios ADD sala_idempresas INT NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para gravar a empresa nas rotinas de salários";
+		}
+
 		private function versao_01_06(){
 			//
 			// 14/07/2021 Vinicius
@@ -116,7 +128,7 @@
 			//
 			// 06/07/2021 Vinicius
 			//
-			$this->cadastraPrograma("impressao_pedidos.php", 'Impressões');
+			$this->cadastraPrograma("impressao_pedido.php", 'Impressões');
 			$this->cadastraPrograma("impressao_pedcompra.php", 'Impressões');
 			//
 			//Mensagem para o usuario
@@ -494,10 +506,10 @@
 			//
 			// 09/07/2021 Vinicius
 			//
-			$sql = "ALTER TABLE contarec ADD ctrc_idempresa INT NULL";
+			$sql = "ALTER TABLE contarec ADD ctrc_idempresass INT NULL";
 			$this->db->executaSQL($sql); 
 			//
-			$sql = "ALTER TABLE contapag ADD ctpg_idempresa INT NULL";
+			$sql = "ALTER TABLE contapag ADD ctpg_idempresass INT NULL";
 			$this->db->executaSQL($sql); 
 			//
 			//Mensagem para o usuario

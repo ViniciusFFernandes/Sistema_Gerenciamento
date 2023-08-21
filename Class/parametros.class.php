@@ -97,7 +97,7 @@
 			//
 			//Cria o novo constante
 			$constante = fopen("../privado/constantes.vf", "a");
-			$textoConstante = '<?php ';
+			$textoConstante = "<?php \n";
 			foreach ($res as $reg) {
 				//prepara o valor
 				if($reg['para_valor'] == 'SIM'){
@@ -115,7 +115,7 @@
 					$textoConstante .= "$" . $reg['para_nome_constante'] . " = " . $valor . ";\n";
 				}
 			}
-			$textoConstante .= ' ?>';
+			$textoConstante .= '?>';
 			fwrite($constante, $textoConstante);
 			fclose($constante);
 		}
