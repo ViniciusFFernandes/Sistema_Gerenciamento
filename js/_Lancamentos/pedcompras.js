@@ -382,6 +382,9 @@ function alteraFormaPagto(){
     }, function(data){
         if(data.retorno != 'Parcelamento Livre'){
             $("#pcom_qte_parcelas").attr("readonly", true);
+            if(data.retorno != 'Parcelamento Livre'){
+                $("#pcom_qte_parcelas").val("1");
+            }
         }else{
             $("#pcom_qte_parcelas").attr("readonly", false);
         }

@@ -8,6 +8,7 @@
     $sql = "SELECT * 
             FROM pedcompras 
               LEFT JOIN pessoas ON (pcom_idfornecedor = idpessoas)
+              LEFT JOIN forma_pagto ON (pcom_idforma_pagto = idforma_pagto)
             WHERE idpedcompras = {$_REQUEST['id_cadastro']}";
     $reg = $db->retornaUmReg($sql);
   }
@@ -71,6 +72,11 @@
       $btnNovoProduto = '<button type="button" onclick="limpaModalProd()" class="btn btn-success" data-toggle="modal" data-target="#modalProdutos"><i class="fas fa-plus"></i> Produtos</button>';
     }
     //
+    $readonly_parcelas = "";
+    if($reg['forp_tipo'] == 'A Vista'){
+      $readonly_parcelas = "readonly='true'";
+    }
+    //
     $listaProdutos = $pedcompras->retornaItensPedido($reg['idpedcompras']);
     $listaContas = $pedcompras->retornaContasPedido($reg['idpedcompras']);
   }
@@ -111,6 +117,7 @@
   $html = str_replace("##pcom_porc_desconto##", $util->formataMoeda($reg['pcom_porc_desconto'], 2, true), $html);
   $html = str_replace("##pcom_total_pedido##", $util->formataMoeda($reg['pcom_total_pedido'], 2, true), $html);
   $html = str_replace("##pcom_com_entrada##", $checkComEntrada, $html);
+  $html = str_replace("##readonly_parcelas##", $readonly_parcelas, $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnFechar##", $btnFechar, $html);
   $html = str_replace("##btnNovoProduto##", $btnNovoProduto, $html);

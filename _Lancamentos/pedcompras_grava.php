@@ -305,7 +305,7 @@ if($_POST['operacao'] == 'gerarParcelas'){
     $db->excluir($_POST['idpedcompras']);
     //
     $valorParcela = $reg['pcom_total_pedido'] / $reg['pcom_qte_parcelas'];
-    if($reg['pcom_com_entrada'] == 'SIM' || $reg['forp_tipo'] == 'Mensal com Entrada'){
+    if($reg['pcom_com_entrada'] == 'SIM' || $reg['forp_tipo'] == 'Mensal com Entrada' || $reg['forp_tipo'] == 'A Vista'){
         $dias = 0;
     }else{
         if($reg['forp_dias'] > 0){
