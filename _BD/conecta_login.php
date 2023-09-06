@@ -60,6 +60,7 @@ if ($_POST['operacao'] == "logar") {
 		$_SESSION['idgrupos_acessos']				= $dados['pess_idgrupos_acessos'];
 	    $_SESSION['ultima_atividade'] 				= time();
 	    $_SESSION['permanece_logado'] 				= $_POST['permanece_logado'];
+	    $_SESSION['tamanho_tela'] 					= $_POST['tamanhoTela'];
 		header('Location: ../_Inicio/inicio.php');
 		exit;
 	}else{

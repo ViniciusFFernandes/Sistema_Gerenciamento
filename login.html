@@ -42,6 +42,7 @@
                                     </div>
                                     <form class="user" action="_BD/conecta_login.php" method="POST">
                                         <input type="hidden" class="form-control" id="operacao" name="operacao" value="logar">
+                                        <input type="hidden" class="form-control" id="tamanhoTela" name="tamanhoTela" value="">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="usuario" name="usuario" placeholder="Insira seu usuario..." autofocus>
                                         </div>
@@ -86,6 +87,10 @@
         window.setTimeout(function(){
             document.getElementById("botao_alerta").click();
         }, 3000);
+        //
+        $(function(){
+            $("#tamanhoTela").val($(window).width());
+        })
     </script>
 
 </body>

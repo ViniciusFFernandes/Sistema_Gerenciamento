@@ -108,10 +108,17 @@
 			//Até o momento a pagina inicio não possui menu para gerar por tanto ignora
 			if(!empty($btnMenu)) $opcoesMenu = $this->geraMenu($_SESSION['idgrupos_acessos']);
 			//
+			//
+			$toggled = "";
+			if($_SESSION['tamanho_tela'] < 992){
+				$toggled = "toggled";
+			}
+			//
 			$menu = str_replace($busca, 'class="active"', $menu);
 			$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
 			$menu = str_replace("##imgLogo##", LOGO_EMPRESA, $menu);
 			$menu = str_replace("##opcoesConfigGrupo##", $opcoesMenuConfig, $menu);
+			$menu = str_replace("##toggled##", $toggled, $menu);
 			//
 			$nome = explode(".", basename($_SERVER['PHP_SELF']));
 			$nomeArquivo = $nome[0] . ".html";
