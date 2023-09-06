@@ -23,7 +23,7 @@
     $comboBoxEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "idempresas", '', $sql, "form-control", "", true, "Selecione a Empresa", false);
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
-    $html = $html->buscaHtml("relatorios", $parametros);
+    $html = $html->buscaHtml(true);
     $html = str_replace("##Mensagem##", $msg, $html);
     $html = str_replace("##autoComplete_Pessoas##", $codigo_js, $html);
     $html = str_replace("##autoComplete_CampoPessoas##", $codigo_campo, $html);

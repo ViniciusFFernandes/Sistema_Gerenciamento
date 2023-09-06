@@ -74,6 +74,24 @@
               </div>
             </div>
           </div>
+
+          <div class="modal fade" id="buscaModelos" tabindex="-1" role="dialog" aria-labelledby="buscaLabel">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h4 class="modal-title" id="buscaLabel">Selecione o modelo</h4>
+                </div>
+                <div class="card-body" id="resultBuscaModelo">
+                  <input type="hidden" name="idprogramas" id="idprogramas">
+
+                </div>
+                <div class="card-footer">
+                  <button type="button" onclick="zeraBuscaModelo()" class="btn btn-light" data-dismiss="modal">Voltar</button>
+                  <button type="button" onclick="buscaModelo()" class="btn btn-primary">Gravar</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

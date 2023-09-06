@@ -38,7 +38,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("lancamentos", $parametros);
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idsalarios'], $html);
   $html = str_replace("##sala_data##", $util->convertData($reg['sala_data']), $html);

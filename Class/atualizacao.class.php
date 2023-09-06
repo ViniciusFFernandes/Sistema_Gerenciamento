@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.07;
+		private $ultimaVersao = 1.08;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,18 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_01_08(){
+			//
+			// 06/09/2023 Vinicius
+			//
+			$sql = "ALTER TABLE programas ADD prog_modelo VARCHAR(255) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			//
+			//Mensagem para o usuario
+			return "Criação de campo para gravar o modelo de programas";
+		}
 
 		private function versao_01_07(){
 			//

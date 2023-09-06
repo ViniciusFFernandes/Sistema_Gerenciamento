@@ -25,7 +25,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idcc'], $html);
   $html = str_replace("##cc_nome##", $reg['cc_nome'], $html);

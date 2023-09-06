@@ -20,7 +20,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##id_cadastro##", $reg['idfuncoes'], $html);
   $html = str_replace("##func_nome##", $reg['func_nome'], $html);

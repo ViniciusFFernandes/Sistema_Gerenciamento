@@ -87,7 +87,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("lancamentos", $parametros);
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Pessoas##", $codigo_js_pessoas, $html);
   $html = str_replace("##autoComplete_CampoPessoas##", $codigo_campo_pessoas, $html);

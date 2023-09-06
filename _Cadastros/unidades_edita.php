@@ -21,7 +21,7 @@
   }
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("cadastros", $parametros);
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Estados##", $codigo_js, $html);
   $html = str_replace("##id_cadastro##", $reg['idunidades'], $html);

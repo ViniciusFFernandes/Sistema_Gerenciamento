@@ -136,6 +136,8 @@ if($_POST['operacao'] == 'listarProgramas'){
           $btnAtivaDesativa = '<button type="button" onclick="ativarDesativar(\'Ativar\', ' . $regProg["idgrupos_acessos_programas"] . ')" class="btn btn-light"><i class="fas fa-times text-danger"></i></button>';
         }
         //
+        $btnModelo = '<button type="button" onclick="selecionaModelo(\'' .  $regProg["prog_file"] . '\', ' . $regProg["idprogramas"] . ')" class="btn btn-light"><i class="fas fa-times text-danger"></i></button>';
+        //
         $tabelaProgramas .= "<div class='row'>";
         $tabelaProgramas .= "<div class='col-sm-8 col-10 p-2' align='left'>{$regProg['prog_nome']}</div>"; 
         $tabelaProgramas .= "<div class='col-sm-4 col-2 p-2' align='right' id='btn_{$regProg["idgrupos_acessos_programas"]}' name='tdBtnAtivarDesativar'>{$btnAtivaDesativa}</div>";

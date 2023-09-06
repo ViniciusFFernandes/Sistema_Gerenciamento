@@ -96,7 +96,7 @@
 			}
 		}
 
-		public function buscaHtml($btnMenu = ''){
+		public function buscaHtml($gerarMenu = true, $modelo = ""){
 			$menu = file_get_contents('../menu.html');
 			$topBar = file_get_contents('../topBar.html');
 			//
@@ -105,8 +105,8 @@
 			$includes = file_get_contents('../includes.html');
 			$includesRelatorios = file_get_contents('../includesRelatorios.html');
 			//
-			//Até o momento a pagina inicio não possui menu para gerar por tanto ignora
-			if(!empty($btnMenu)) $opcoesMenu = $this->geraMenu($_SESSION['idgrupos_acessos']);
+			//
+			if($gerarMenu) $opcoesMenu = $this->geraMenu($_SESSION['idgrupos_acessos']);
 			//
 			//
 			$toggled = "";
@@ -120,7 +120,11 @@
 			$menu = str_replace("##opcoesConfigGrupo##", $opcoesMenuConfig, $menu);
 			$menu = str_replace("##toggled##", $toggled, $menu);
 			//
-			$nome = explode(".", basename($_SERVER['PHP_SELF']));
+			$programaPadrao = basename($_SERVER['PHP_SELF']);
+			if($modelo != ""){
+				$programaPadrao = $modelo;
+			}
+			$nome = explode(".", $programaPadrao);
 			$nomeArquivo = $nome[0] . ".html";
 			$html = file_get_contents("_HTML/" . $nomeArquivo);
 			$html = str_replace("##Menu##", $menu, $html);

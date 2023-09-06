@@ -97,7 +97,7 @@
     }
     //
     //Abre o arquivo html e Inclui mensagens e trechos php
-    $html = $html->buscaHtml("", $parametros);
+    $html = $html->buscaHtml(false);
     $html = str_replace("##logoRelatorios##", $logoRelatorios, $html);
     $html = str_replace("##nomeEmpresa##", $nomeEmpresa, $html);
     $html = str_replace("##cnpjEmpresa##", $cnpjEmpresa, $html);

@@ -169,7 +169,7 @@
   //
   //
   //Abre o arquivo html e Inclui mensagens e trechos php
-  $html = $html->buscaHtml("inicio");
+  $html = $html->buscaHtml(true);
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##mesGrafico##", $util->mesExtenso(date("m")), $html);
   $html = str_replace("##scriptGraficoContasPagas##", $scriptGraficoContasPagas, $html);
