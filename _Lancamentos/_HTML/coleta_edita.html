@@ -36,9 +36,13 @@
               </div>
               <div class="card-body">
                 <form action="coleta_grava.php" id="form_edita" method="POST" enctype="multipart/form-data" autocomplete="off">
+                  <input type="hidden" name="id_cadastro" id="id_cadastro" value="##id_cadastro##">
                   <div class="row">
                     <div class="col-md-2 col-sm-2 col-4 pb-3">
-                      <input type="text" class="form-control" name="id_cadastro" id="id_cadastro" value="##id_cadastro##" readonly="readonly" placeholder="Código">
+                      <div class="input-group">
+                        <input type="text" class="form-control" name="idcoleta" id="idcoleta" value="##idcoleta##" placeholder="Código">
+                        <span class="input-group-addon" style="cursor: pointer;" onclick="abreColeta()"><i class="fas fa-bolt text-warning"></i></span>
+                      </div>
                     </div>
                     <div class="col-md-7 col-sm-7 d-none d-sm-block"></div> 
                     <div class="col-md-3 col-sm-3 col-6 pb-3">

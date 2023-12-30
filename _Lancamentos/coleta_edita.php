@@ -42,6 +42,7 @@
   $html = str_replace("##Mensagem##", $msg, $html);
   $html = str_replace("##autoComplete_Produto##", $codigo_js, $html);
   $html = str_replace("##id_cadastro##", $reg['idcoleta'], $html);
+  $html = str_replace("##idcoleta##", $reg['idcoleta'], $html);
   $html = str_replace("##cole_situacao##", $cole_situacao, $html);
   $html = str_replace("##cole_data_entrada##", $reg['cole_data_entrada'], $html);
   $html = str_replace("##cole_produtos##", $reg['prod_nome'], $html);

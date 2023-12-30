@@ -4,7 +4,19 @@ $( document ).ready(function() {
         buscaCadastro('coleta_grava.php');
       }
     });
+
+    $('#idcoleta').on('keydown', function (e) {
+      if (e.keyCode === 13) {
+          abreColeta();
+      }
+  });
 });
+
+function abreColeta(){
+  if($("#idcoleta").val() > 0){
+      window.location.replace("coleta_edita.php?id_cadastro=" + $("#idcoleta").val());
+  }
+}
 
 function testaDados(operacao){
     if($("#cole_idprodutos").val() <= 0){
