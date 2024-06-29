@@ -29,6 +29,12 @@
   $sql = "SELECT * FROM empresas";
   $comboBoxEmpresas = $html->criaSelectSql("emp_nome", "idempresas", "pess_idempresas", $reg['pess_idempresas'], $sql, "form-control", "", true, "Selecione a Empresa");
   //
+  if(SISTEMA_SAC == "SIM"){
+    $divCodCliente = '<div class="col-md-4 col-sm-4 col-12 pb-3">';
+      $divCodCliente .= '<input type="text" class="form-control" id="pess_cod_cliente" name="pess_cod_cliente" value="##pess_cod_cliente##" placeholder="Codigo Cliente" >';
+    $divCodCliente .= '</div>';
+  }
+  //
   if(!empty($reg['idpessoas'])){ 
     $editaLogin = '<span align="right" data-toggle="modal" title="Cria/Edita login" data-target="#criaEditaLogin" style="cursor: pointer;color: #54565d;">';
     $editaLogin .=  '&nbsp;<i class="fas fa-user-lock"></i>';
@@ -92,6 +98,8 @@
   $html = str_replace("##pess_bairro##", $reg['pess_bairro'], $html);
   $html = str_replace("##pess_cep##", $reg['pess_cep'], $html);
   $html = str_replace("##pess_usuario##", $reg['pess_usuario'], $html);
+  $html = str_replace("##divCodCliente##", $divCodCliente, $html);
+  $html = str_replace("##pess_cod_cliente##", $reg['pess_cod_cliente'], $html);
   $html = str_replace("##btnExcluir##", $btnExcluir, $html);
   $html = str_replace("##btnImprimir##", $btnImprimir, $html);
   $html = str_replace("##btnAtivarInativar##", $btnAtivarInativar, $html);

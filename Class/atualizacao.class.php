@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.08;
+		private $ultimaVersao = 1.09;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,21 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_01_09(){
+			//
+			// 06/09/2023 Vinicius
+			//
+			$sql = "ALTER TABLE pessoas ADD pess_cod_cliente VARCHAR(255) NULL";
+			$this->db->executaSQL($sql); 
+			//
+			$this->parametros->cadastraParametros("sistema: sistema utilizado como SAC", "NAO", "Parametro usado para definir se o sistema é utilizado como SAC da empresa", "constante", "SISTEMA_SAC"); 
+			$this->parametros->cadastraParametros("sistema: codigo do cliente no SAC", "", "Parametro usado para definir o codigo do cliente definido no SAC", "constante", "COD_CLIENTE_SAC"); 
+			//
+			//
+			//Mensagem para o usuario
+			return "Criação de campo e parametros para integração com SAC";
+		}
 
 		private function versao_01_08(){
 			//

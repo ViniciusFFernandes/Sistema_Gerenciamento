@@ -164,7 +164,8 @@ $paginaRetorno = 'pessoas_edita.php';
   	$dados['pess_fornecedor'] 		   = $util->sgr($_POST['pess_fornecedor']);
   	$dados['pess_funcionario'] 		   = $util->sgr($_POST['pess_funcionario']);
   	$dados['pess_associado'] 		     = $util->sgr($_POST['pess_associado']);
-  	$dados['pess_idempresas'] 		     = $util->sgr($_POST['pess_idempresas']);
+  	$dados['pess_idempresas'] 		   = $util->sgr($_POST['pess_idempresas']);
+  	$dados['pess_cod_cliente'] 		   = $util->sgr($_POST['pess_cod_cliente']);
 
     $db->gravarInserir($dados, true);
 
