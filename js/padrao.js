@@ -1,6 +1,6 @@
 window.setTimeout(function(){
     document.getElementById("botao_alerta").click();
-    }, 6000);
+}, 6000);
 
 function alertaPequeno(msg, titulo = '', animate = ''){
     if(titulo == ''){

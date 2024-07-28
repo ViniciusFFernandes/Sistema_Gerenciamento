@@ -1,5 +1,0 @@
-criar o grac_menu
-mudar todas as index para menuRaiz e setar o prog_posi para 1, 2, 3 e etc
-manter apenas o grac_menu
-mudar imagens de icones para icones de font 
-criar um prog_posicao
