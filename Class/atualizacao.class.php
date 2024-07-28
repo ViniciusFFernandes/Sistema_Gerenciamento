@@ -86,7 +86,7 @@
 			$this->db->executaSQL($sql); 
 			//
 			//Mensagem para o usuario
-			return "Criado validação para impedir cadastro de dois programas com mesmo nome";
+			return "Criado validação para impedir cadastro de dois programas com mesmo nome de arquivo";
 		}
 
 		private function versao_01_10(){
@@ -97,7 +97,7 @@
 			$this->cadastraPrograma("programas_grava.php", 'Sistema');
 			//
 			//Mensagem para o usuario
-			return "Cadastro do programa grupos de acessos e suas dependencias";
+			return "Cadastro do programa para gerenciar modelos";
 		}
 
 		private function versao_01_09(){
