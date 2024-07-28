@@ -47,7 +47,7 @@
       $dados['retorno'] = 'ok';
       $sql = "SELECT * FROM grupos_acessos_programas JOIN programas ON (gap_idprogramas = idprogramas) WHERE idgrupos_acessos_programas = " . $_POST['idgrupos_acessos_programas'];
       $reg = $db->retornaUmReg($sql);
-      if($reg['prog_tipo'] == 'menu'){
+      if($reg['prog_tipo'] == 'menu' || $reg['prog_tipo'] == 'menuRaiz'){
         $ret = $html->criaMenu($reg['gap_idgrupos_acessos']);
         if(!$ret){
           // $db->rollBack();

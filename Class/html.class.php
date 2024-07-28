@@ -155,6 +155,11 @@
 			$menu = '';
 			//
 			foreach($resMenu as $regMenu){
+				//
+				//Se não puder ver no menu, não vai carregar as opçoes (ainda acessivel pela URL)
+				//
+				if($regMenu['gap_executa'] <> 1) continue;
+				//
 				if($regMenu['prog_tipo_menu'] == ''){
 					$menu .= '<li class="nav-item">
 										<a class="nav-link" href="#" onclick="direciona(\'../' . $regMenu['prog_raiz'] . '/' . $regMenu['prog_file'] . '\')">
