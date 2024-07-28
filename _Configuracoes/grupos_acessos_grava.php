@@ -91,7 +91,8 @@ if($_POST['operacao'] == 'listarProgramas'){
   $sql = "SELECT * 
             FROM grupos_acessos_programas 
               JOIN programas ON (gap_idprogramas = idprogramas)
-            WHERE gap_idgrupos_acessos = " . $_POST['id_cadastro'];
+            WHERE prog_tipo <> 'modelo'
+            AND gap_idgrupos_acessos = " . $_POST['id_cadastro'];
     
     if ($_POST['pesquisa'] != "") {
         $sql .= " AND prog_file LIKE " . $util->sgr("%" . $_POST['pesquisa'] ."%");
@@ -186,7 +187,7 @@ function inserePermissoes($idGruposAcessos){
   global $db;
   
   $sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
-            SELECT {$idGruposAcessos}, idprogramas, 0 FROM programas";
+            SELECT {$idGruposAcessos}, idprogramas, 0 FROM programas WHERE prog_tipo <> 'modelo'";
             echo $sql;
   $db->executaSQL($sql);
 }

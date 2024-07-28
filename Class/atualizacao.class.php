@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.09;
+		private $ultimaVersao = 1.11;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,28 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_01_11(){
+			//
+			// 28/03/2024 Vinicius
+			//
+			$sql = "ALTER TABLE programas ADD CONSTRAINT unique_prog_file UNIQUE (prog_file);";
+			$this->db->executaSQL($sql); 
+			//
+			//Mensagem para o usuario
+			return "Criado validação para impedir cadastro de dois programas com mesmo nome";
+		}
+
+		private function versao_01_10(){
+			//
+			// 28/03/2024 Vinicius
+			//
+			$this->cadastraPrograma("programas.php", 'Sistema', 'Programas',  'menu', '', 'configuracoes', 0, '_Configuracoes');
+			$this->cadastraPrograma("programas_grava.php", 'Sistema');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa grupos de acessos e suas dependencias";
+		}
 
 		private function versao_01_09(){
 			//
@@ -1430,9 +1452,9 @@
 			// 20/02/2020 Vinicius
 			//
 			$this->parametros->cadastraParametros("sistema: data da ultima atualizacao", "", "Parametro usado para baixar novas versões do sistema", "parametro");
-			$this->parametros->cadastraParametros("sistema: endereco do servidor ftp", "files.000webhost.com", "Parametro usado para se conectar no servidor ftp", "parametro"); 
-			$this->parametros->cadastraParametros("sistema: usuario do servidor ftp", "servidorbkpvweb", "Parametro usado para se conectar no servidor ftp", "parametro");
-			$this->parametros->cadastraParametros("sistema: senha do servidor ftp", "viniciusFF1!", "Parametro usado para se conectar no servidor ftp", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: endereco do servidor ftp", "ftp.servidor.vfweb.cloud", "Parametro usado para se conectar no servidor ftp", "parametro"); 
+			$this->parametros->cadastraParametros("sistema: usuario do servidor ftp", "u864966404.vf_atualizacoes", "Parametro usado para se conectar no servidor ftp", "parametro");
+			$this->parametros->cadastraParametros("sistema: senha do servidor ftp", "R90mzM1IwTCw7T07li2c", "Parametro usado para se conectar no servidor ftp", "parametro"); 
 			//
 			//Mensagem para o usuario
 			return "Criação de parametro de data da ultima atualização";
@@ -1769,6 +1791,7 @@
 						//ignora as pastas do git e a uploads
 						if(strpos($caminho, "git")) continue;
 						if(strpos($caminho, "uploads")) continue;
+						if(strpos($caminho, "instaladores")) continue;
 						foreach($ArquivosSub as $file){
 							if(!$file->isDot()){
 								if($file->isDir()){

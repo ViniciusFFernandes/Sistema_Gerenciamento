@@ -2,6 +2,8 @@
     require_once("../_BD/conecta_login.php");
     require_once("../Class/tabelas.class.php");
     //
+    require_once("../define_modelo.php");
+    //
     //
     if(!empty($_REQUEST['idempresas'])){
         $idempresa = $_REQUEST['idempresas'];
