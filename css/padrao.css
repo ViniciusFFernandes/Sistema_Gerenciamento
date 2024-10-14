@@ -1,3 +1,26 @@
+/* Ajustes para melhor aparencia do calendario em celulares */
+@media (max-width: 768px) {
+  #calendar {
+    max-width: 100%;
+    font-size: 0.8em; /* Reduz tamanho das fontes em dispositivos móveis */
+  }
+  .fc-toolbar-title {
+    font-size: 1.1em; /* Reduz o tamanho do título */
+  }
+  .fc-header-toolbar {
+    flex-wrap: wrap; /* Faz com que a barra de navegação se ajuste melhor em telas menores */
+  }
+  .fc-daygrid-day-number {
+    font-size: 0.9em; /* Ajusta tamanho dos números dos dias no calendário */
+  }
+  .fc-toolbar-chunk{
+    margin-top: 5px;
+  }
+  .row-full-calendar {
+    height: 70vh; /* 100% da altura da viewport */
+  }
+}
+/* CSS padrao */
 body::-webkit-scrollbar {
   display: none
 }

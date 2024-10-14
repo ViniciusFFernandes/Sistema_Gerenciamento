@@ -4,7 +4,7 @@
 	require_once("util.class.php");
 
 	class Atualizacao {
-		private $ultimaVersao = 1.11;
+		private $ultimaVersao = 1.13;
 		private $db;
 		private $parametros;
 		private $util;
@@ -77,6 +77,38 @@
 		//////////////////////////////////////
 		//Abaixo estão as versões do sistema//
 		//////////////////////////////////////
+
+		private function versao_01_13(){
+			//
+			// 13/10/2021 Vinicius
+			//
+			$sql = "CREATE TABLE IF NOT EXISTS agenda(
+						idagenda int(11) NOT NULL AUTO_INCREMENT,
+						agen_titulo VARCHAR(255) NOT NULL,
+						agen_inicio DATETIME NOT NULL,
+						agen_fim DATETIME NULL,
+						agen_descricao TEXT NULL,
+						agen_cor VARCHAR(100) NULL,
+						agen_idusuario INT NULL,
+						agen_data_registro DATETIME NULL,
+						PRIMARY KEY (idagenda)
+					)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
+			$this->db->executaSQL($sql);
+			//
+			//Mensagem para o usuario
+			return "Criação da tabela de agenda";
+		}
+
+		private function versao_01_12(){
+			//
+			// 13/10/2024 Vinicius
+			//
+			$this->cadastraPrograma("agenda.php", 'Menu', 'Agenda',  'menuRaiz', '<i class="fas fa-calendar d-none d-sm-inline"></i>', '', "1", '_Agenda', "1.1");
+			$this->cadastraPrograma("agenda_grava.php", 'Agenda', '', 'programa', '', '', '1');
+			//
+			//Mensagem para o usuario
+			return "Cadastro do programa para agenda";
+		}
 
 		private function versao_01_11(){
 			//
@@ -1928,29 +1960,30 @@
 			}   
 		}
 
-		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = '', $pode_executar = 0, $diretorioRaiz = ''){
+		private function cadastraPrograma($file, $tipo_origem = '', $nome = '', $tipo = 'programa', $imagem = '', $tipo_menu = '', $pode_executar = 0, $diretorioRaiz = '', $posicao = ''){
 			//
 			if($nome == '') $nome = $file;
 			//
 			$this->db->setTabela("programas", "idprogramas");
 			//
-			$dados['prog_nome']        = $this->util->sgr($nome);
-			$dados['prog_file']        = $this->util->sgr($file);
-			$dados['prog_tipo']        = $this->util->sgr($tipo);
-			$dados['prog_imagem']      = $this->util->sgr($imagem);
-			$dados['prog_tipo_origem'] = $this->util->sgr($tipo_origem);
-			$dados['prog_tipo_menu']   = $this->util->sgr($tipo_menu);
+			$dados['prog_nome']        	= $this->util->sgr($nome);
+			$dados['prog_file']        	= $this->util->sgr($file);
+			$dados['prog_tipo']        	= $this->util->sgr($tipo);
+			$dados['prog_imagem']      	= $this->util->sgr($imagem);
+			$dados['prog_tipo_origem'] 	= $this->util->sgr($tipo_origem);
+			$dados['prog_tipo_menu']   	= $this->util->sgr($tipo_menu);
 			$dados['prog_raiz']   		= $this->util->sgr($diretorioRaiz);
+			$dados['prog_posicao']   	= $this->util->sgr($posicao);
 			//
 			$this->db->gravarInserir($dados);
 			//
 			$idprogramas = $this->db->getUltimoID();
 			//
 			$sql = "INSERT INTO grupos_acessos_programas (gap_idgrupos_acessos, gap_idprogramas, gap_executa)
-						SELECT idgrupos_acessos, {$idprogramas}, {$pode_executar} FROM grupos_acessos";
+						SELECT idgrupos_acessos, {$idprogramas}, '{$pode_executar}' FROM grupos_acessos";
 			$this->db->executaSQL($sql);
 			//
-			if($tipo == 'menu'){
+			if($tipo == 'menu' || $tipo == 'menuRaiz'){
 				$this->html->criaMenu('');
 			}
 		}

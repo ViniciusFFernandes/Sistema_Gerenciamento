@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="../imagens/favicon.ico">
+    <title>##nomeSistema##</title>
+
+    ##includes##
+    <!-- FullCalendar CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/pt-br.js"></script>
+
+    <script src="../js/_Agenda/agenda.js"></script>
+
+
+    <script type="text/javascript">
+    </script>
+  </head>
+
+  <body id="page-top" class="sidebar-toggled">
+    <div id="wrapper">
+      ##Menu##
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          ##topBar##
+          <div class="container-fluid">
+            <div class="row divMsg">
+              <div class="col-md-4 col-sm-1 col-1"></div>
+              <div class="col-md-4 col-sm-10 col-10">##Mensagem##</div>
+              <div class="col-md-4 col-sm-1 col-1"></div>
+            </div>
+
+            <!-- Agenda Section -->
+            <div class="row ">
+              <div class="col-12">
+                <div class="card shadow mb-4 border-left-primary ">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                      <span style="float: right;">##mesAtual##</span>
+                      Agenda
+                    </h6>
+                  </div>
+                  <div class="card-body ">
+                    <div id="calendar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of Agenda Section -->
+
+          </div>
+          <!-- End of Main Content -->
+        </div>
+        <!-- End of Content Wrapper -->
+      </div>
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top" class="sidebar-toggled">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+
+    <div class="modal fade" id="eventModal" tabindex="-1" role="dialog" aria-labelledby="eventModalLabel">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h5 class="modal-title font-weight-bold text-primary" id="eventModalLabel">Receber Conta</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="agen_titulo" title="Titulo Do Evento" required>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <input type="color" class="form-control" id="agen_cor" value="#4e73df">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <input type="datetime-local" class="form-control" id="agen_inicio" title="Data de Inicio" required>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <input type="datetime-local" class="form-control" id="agen_fim" title="Data de Fim">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+                  <textarea class="form-control" id="agen_descricao" title="Descrição do Evento..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="id_cadastro">
+          <div class="card-footer d-flex justify-content-between">
+            <button type="button" onclick="excluirEvento()" class="btn btn-danger" id="btnApagaEvento">Excluir</button>
+            &nbsp;
+            <div>
+              <button type="button" onclick="limpaCamposAgenda()" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+              <button type="button" onclick="gravarEvento()" class="btn btn-primary">Gravar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
