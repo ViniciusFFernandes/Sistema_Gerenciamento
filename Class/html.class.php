@@ -117,7 +117,6 @@
 			$menu = str_replace($busca, 'class="active"', $menu);
 			$menu = str_replace("##opcoesConfig##", $opcoes_config, $menu);
 			$menu = str_replace("##imgLogo##", LOGO_EMPRESA, $menu);
-			$menu = str_replace("##opcoesConfigGrupo##", $opcoesMenuConfig, $menu);
 			$menu = str_replace("##toggled##", $toggled, $menu);
 			//
 			$programaPadrao = basename($_SERVER['PHP_SELF']);
